@@ -1,0 +1,67 @@
+PODS:
+  - Ads-CN (6.1.1.0):
+    - Ads-CN/BUAdSDK (= 6.1.1.0)
+  - Ads-CN/BUAdSDK (6.1.1.0)
+  - Alamofire (5.9.1)
+  - DeviceKit (5.2.3)
+  - LzmaSDK-ObjC (2.1.1)
+  - MijickPopupView (2.4.1)
+  - MMKV (1.3.4):
+    - MMKVCore (~> 1.3.4)
+  - MMKVCore (1.3.4)
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
+  - SDWebImageSwiftUI (3.1.1):
+    - SDWebImage (~> 5.10)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
+  - SwiftyJSON (5.0.2)
+  - Zip (2.1.2)
+
+DEPENDENCIES:
+  - Ads-CN
+  - Alamofire (~> 5.4)
+  - DeviceKit
+  - LzmaSDK-ObjC
+  - MijickPopupView
+  - MMKV (= 1.3.4)
+  - MMKVCore (= 1.3.4)
+  - SDWebImageSwiftUI
+  - SQLite.swift (~> 0.12.0)
+  - SwiftyJSON
+  - Zip (~> 2.1)
+
+SPEC REPOS:
+  trunk:
+    - Ads-CN
+    - Alamofire
+    - DeviceKit
+    - LzmaSDK-ObjC
+    - MijickPopupView
+    - MMKV
+    - MMKVCore
+    - SDWebImage
+    - SDWebImageSwiftUI
+    - SQLite.swift
+    - SwiftyJSON
+    - Zip
+
+SPEC CHECKSUMS:
+  Ads-CN: 2a056c03dffbfcc51c13a237bc8c877cbf2ba8f1
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
+  LzmaSDK-ObjC: 6c68c37743a658fc9a4c7b70f7d6045b587aa42b
+  MijickPopupView: 94fbcb0cfaf901ea46c6121e7069ff8ef7584eb9
+  MMKV: ed58ad794b3f88c24d604a5b74f3fba17fcbaf74
+  MMKVCore: a67a1cede26175c413176f404a7cedec43f96a0b
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
+  SDWebImageSwiftUI: dcff3d05fd0579ff280221ae8856c34ac3b67f25
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
+
+PODFILE CHECKSUM: 776b597b9c1833eaffee4c682bd30e7a112f41b4
+
+COCOAPODS: 1.15.2
