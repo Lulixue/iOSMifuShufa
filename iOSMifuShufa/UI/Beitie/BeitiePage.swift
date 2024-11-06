@@ -294,7 +294,6 @@ struct CategoryItem: View {
     }
     self.rowSize = Int(rowItemSize)
     self.itemSpacing = spacing
-    
     self.rowCount = works.size / rowSize + ((works.size % rowSize > 0) ? 1 : 0)
   }
   

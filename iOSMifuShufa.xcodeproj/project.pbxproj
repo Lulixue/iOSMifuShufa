@@ -62,6 +62,15 @@
 		F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB05D2CD3B6FF0009C0DC /* BeitieData.swift */; };
 		F9ECB0662CD778280009C0DC /* resource_version.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9ECB0652CD778280009C0DC /* resource_version.txt */; };
 		F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB06B2CD780BF0009C0DC /* SplashView.swift */; };
+		F9F97C672CDA2D3D00096ED1 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = F9F97C662CDA2D3D00096ED1 /* URLImage */; };
+		F9F97C6D2CDA2F0100096ED1 /* ImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = F9F97C6C2CDA2F0100096ED1 /* ImageViewer */; };
+		F9F97C6F2CDA2F0100096ED1 /* ImageViewerRemote in Frameworks */ = {isa = PBXBuildFile; productRef = F9F97C6E2CDA2F0100096ED1 /* ImageViewerRemote */; };
+		F9F97C712CDA424400096ED1 /* ChineseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C702CDA424100096ED1 /* ChineseConverter.swift */; };
+		F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C722CDAFA1700096ED1 /* FiltersView.swift */; };
+		F9F97C752CDAFD3300096ED1 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C742CDAFD3100096ED1 /* Filters.swift */; };
+		F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C762CDB164C00096ED1 /* TestView.swift */; };
+		F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */; };
+		F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +154,12 @@
 		F9ECB05D2CD3B6FF0009C0DC /* BeitieData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieData.swift; sourceTree = "<group>"; };
 		F9ECB0652CD778280009C0DC /* resource_version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = resource_version.txt; sourceTree = "<group>"; };
 		F9ECB06B2CD780BF0009C0DC /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		F9F97C702CDA424100096ED1 /* ChineseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseConverter.swift; sourceTree = "<group>"; };
+		F9F97C722CDAFA1700096ED1 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
+		F9F97C742CDAFD3100096ED1 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		F9F97C762CDB164C00096ED1 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIlterViewModel.swift; sourceTree = "<group>"; };
+		F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +167,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F97C6D2CDA2F0100096ED1 /* ImageViewer in Frameworks */,
+				F9F97C6F2CDA2F0100096ED1 /* ImageViewerRemote in Frameworks */,
 				F96E61252CD91511007329DB /* Collections in Frameworks */,
+				F9F97C672CDA2D3D00096ED1 /* URLImage in Frameworks */,
 				4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +215,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C702CDA424100096ED1 /* ChineseConverter.swift */,
 				F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */,
 				F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */,
 				F96E61522CD9C6D1007329DB /* KotlinBridge.swift */,
@@ -225,6 +244,8 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */,
+				F9F97C762CDB164C00096ED1 /* TestView.swift */,
 				F96E61662CD9C6DD007329DB /* SideMenu */,
 				F96E61672CD9C6DD007329DB /* Buttons.swift */,
 				F96E61682CD9C6DD007329DB /* Colors.swift */,
@@ -338,6 +359,7 @@
 		F9DA35382CD257E100A880BC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C742CDAFD3100096ED1 /* Filters.swift */,
 				F96E61022CD858C7007329DB /* Utils.swift */,
 				F96E61002CD8574B007329DB /* CurrentUser.swift */,
 				F9ECB05D2CD3B6FF0009C0DC /* BeitieData.swift */,
@@ -362,6 +384,8 @@
 		F9ECB0242CD25CD00009C0DC /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */,
+				F9F97C722CDAFA1700096ED1 /* FiltersView.swift */,
 				F9ECB03D2CD26C5C0009C0DC /* HomeViewModel.swift */,
 				F9ECB0232CD25CD00009C0DC /* HomePage.swift */,
 			);
@@ -478,6 +502,7 @@
 			mainGroup = F988203B2C3AC4500011DB04;
 			packageReferences = (
 				F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */,
+				F9F97C6B2CDA2F0100096ED1 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 			);
 			productRefGroup = F98820452C3AC4500011DB04 /* Products */;
 			projectDirPath = "";
@@ -668,6 +693,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F98820542C3AC4510011DB04 /* ShufaData.xcdatamodeld in Sources */,
+				F9F97C752CDAFD3300096ED1 /* Filters.swift in Sources */,
 				F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */,
 				F9ECB0302CD2669F0009C0DC /* Config.swift in Sources */,
 				F96E61032CD858C9007329DB /* Utils.swift in Sources */,
@@ -678,8 +704,10 @@
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
+				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
 				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
+				F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */,
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
 				F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */,
 				F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */,
@@ -693,15 +721,18 @@
 				F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */,
 				F9ECB02E2CD25F1C0009C0DC /* Chinese.swift in Sources */,
 				F96E616D2CD9C6DD007329DB /* CenterView.swift in Sources */,
+				F9F97C712CDA424400096ED1 /* ChineseConverter.swift in Sources */,
 				F96E616E2CD9C6DD007329DB /* DragGestureValueExtension.swift in Sources */,
 				F96E616F2CD9C6DD007329DB /* LeftMenuPanel.swift in Sources */,
 				F96E61702CD9C6DD007329DB /* RightMenuPanel.swift in Sources */,
 				F96E61712CD9C6DD007329DB /* SideMenu.swift in Sources */,
+				F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */,
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
 				F96E61752CD9C6DD007329DB /* Colors.swift in Sources */,
 				F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */,
+				F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */,
 				F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */,
 				F96E61782CD9C6DD007329DB /* Loading.swift in Sources */,
 			);
@@ -1051,6 +1082,22 @@
 				minimumVersion = 1.1.4;
 			};
 		};
+		F9F97C652CDA2D3D00096ED1 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+		F9F97C6B2CDA2F0100096ED1 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Jake-Short/swiftui-image-viewer.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1058,6 +1105,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
+		};
+		F9F97C662CDA2D3D00096ED1 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9F97C652CDA2D3D00096ED1 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		F9F97C6C2CDA2F0100096ED1 /* ImageViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9F97C6B2CDA2F0100096ED1 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			productName = ImageViewer;
+		};
+		F9F97C6E2CDA2F0100096ED1 /* ImageViewerRemote */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9F97C6B2CDA2F0100096ED1 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			productName = ImageViewerRemote;
 		};
 /* End XCSwiftPackageProductDependency section */
 

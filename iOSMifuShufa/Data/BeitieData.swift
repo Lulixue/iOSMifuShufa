@@ -416,8 +416,7 @@ extension BeitieWork {
       
     }
   }
-   
-   
+  
   var canJizi: Boolean {
     get {
       Settings.getBoolean(jiziKey, true) && this.matchVip
@@ -465,6 +464,23 @@ extension BeitieSingle {
   var work: BeitieWork {
     BeitieDbHelper.shared.getWorkById(workId)!
   }
+  
+  var showChars: String {
+    let wc = writtenChar
+    let chs = ChineseConverter.getChs(wc)
+    let cht = ChineseConverter.getCht(wc)
+    if (!Settings.langChs) {
+      if (cht == wc) {
+        return wc.toString()
+      }
+      return "\(wc)(\(cht))"
+    } else {
+      if (chs == wc) {
+        return wc.toString()
+      }
+      return "\(wc)(\(chs))"
+    }
+  }
 }
 
 extension BeitieWork {
@@ -473,6 +489,22 @@ extension BeitieWork {
   }
   var workName: String {
     "《\(chineseName())》\(smallChineseVersion)"
+  }
+  
+  func workNameAttrStr(_ font: Font, smallerFont: Font) -> AttributedString {
+    var name = AttributedString("《\(chineseName())》")
+    var version = AttributedString(chineseVersion() ?? "")
+    name.font = font
+    version.font = smallerFont
+    return name + version
+  }
+  
+  var workHtmlInfo: String {
+    chineseName() + smallChineseVersion
+  }
+  
+  var vipToast: String {
+    "VIP碑帖：\(workName)"
   }
 }
 

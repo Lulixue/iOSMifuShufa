@@ -4,6 +4,7 @@
 //
 //  Created by lulixue on 2024/10/30.
 //
+import Collections
 
 public typealias ArrayList = Array
 public typealias List = Array
@@ -12,7 +13,7 @@ public typealias Char = Character
 public typealias HashMap = Dictionary
 public typealias Map = Dictionary
 public typealias HashSet = Set
-public typealias LinkedHashMap = Dictionary
+public typealias LinkedHashMap = OrderedDictionary
 
 
 class AzureConfig: Codable {

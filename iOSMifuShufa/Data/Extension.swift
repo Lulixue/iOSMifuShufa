@@ -39,6 +39,8 @@ extension Collection where Element: Equatable {
     }
   }
 }
+
+
 extension Array {
   func apply(operation: @escaping (Array) -> Void) -> Array {
     operation(self)
@@ -127,8 +129,26 @@ extension Array where Element : Equatable {
     }
     return uniqueValues
   }
+  
+  
+  mutating func addDistinct(_ elem: Element) {
+    if (containsItem(elem)) {
+      return
+    }
+    add(elem)
+  }
 }
 
+
+extension Set {
+  var size: Int {
+    count
+  }
+  
+  func first() -> Element {
+    first!
+  }
+}
 
 extension String {
   var length: Int {

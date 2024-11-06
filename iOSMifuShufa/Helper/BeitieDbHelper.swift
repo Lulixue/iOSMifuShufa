@@ -54,6 +54,12 @@ enum WorkCategory: String, CaseIterable {
   static let CANSHU_NINE = "葛君德忱帖、家计帖、元日帖、吾友帖、论草书帖、中秋登海岱楼作诗帖、目穷帖、奉议帖、焚香帖".split(separator: "、")
 }
 
+extension AnySequence {
+  var first: Element? {
+    return Array(self).first
+  }
+}
+
 class BeitieDbHelper {
   static let shared = BeitieDbHelper()
   let CALLIGRAPHER = "米芾"
@@ -63,6 +69,24 @@ class BeitieDbHelper {
   
   var searchWorks = ArrayList<Int>()
   var jiziWorks = ArrayList<Int>()
+  
+  func getTodaySingles(_ id: Int) -> List<Int> {
+    var result = [Int]()
+    do {
+      let rows = try db.prepare(singleTable.filter(workIdExp == id).select([idExp]))
+      for row in rows {
+        result.append(try! row.get(idExp))
+      }
+    } catch {
+      println("getTodaySingles \(error)")
+    }
+    return result
+  }
+  
+  func getSingleById(_ id: Int) -> BeitieSingle? {
+    guard let row = try? db.prepare(singleTable.filter(idExp == id)).first else { return nil }
+    return try? BeitieSingle(from: row.decoder())
+  }
   
   private lazy var databaseFile: URL = {
     let dbUrl = ResourceHelper.dataDir?.appendingPathComponent(self.DB_NAME)
@@ -83,7 +107,9 @@ class BeitieDbHelper {
   
   private let workTable = Table("BeitieWork")
   private let imageTable = Table("BeitieImage")
+  private let singleTable = Table("BeitieSingle")
   private let workIdExp = Expression<Int>("workId")
+  private let idExp = Expression<Int>("id")
   
   func dao() -> BeitieDbHelper {
     Self.shared
@@ -289,6 +315,8 @@ extension BeitieSingle {
       url
     }
   }
+  
+  
   
   var url: String {
     return work.urlPrefix + "/" + ((AnalyzeHelper.shared.singleOriginal) ? path.orgPath : path )
