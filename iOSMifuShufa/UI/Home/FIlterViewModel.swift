@@ -33,9 +33,48 @@ extension Array where Element: Equatable {
 }
 
 class FilterViewModel: AlertViewModel {
+  @Published var viewWidth: CGFloat = 0
   @Published var radicals = [String]()
   @Published var structures = [String]()
   @Published var strokes = [String]()
+  
+  var filterCount: Int {
+    radicals.size + structures.size + strokes.size
+  }
+  
+  var hasFilter: Bool {
+    filterCount > 0
+  }
+  
+  func getFilterInfo() -> String {
+    var sb = StringBuilder()
+    SearchFilterType.allCases.forEach { type in
+      getFilter(type).forEach { f in
+        if f.isNotEmpty() {
+          sb.append(type.chinese)
+          sb.append(": ")
+          f.forEach { r in
+            sb.append(r)
+            sb.append(",")
+          }
+          sb = String(sb.dropLast())
+          sb.append(";")
+        }
+      }
+    }
+    return sb
+  }
+  
+  func getFilter(_ type: SearchFilterType) -> List<String> {
+    switch type {
+    case .Structure:
+      structures
+    case .Radical:
+      radicals
+    case .Stroke:
+      strokes
+    }
+  }
   
   func toggleFilter(filter: String, type: SearchFilterType) {
     switch type {
@@ -55,14 +94,7 @@ class FilterViewModel: AlertViewModel {
   }
   
   func getItemCount(_ type: SearchFilterType) -> Int {
-    switch type {
-    case .Structure:
-      structures.size
-    case .Radical:
-      radicals.size
-    case .Stroke:
-      strokes.size
-    }
+    getFilter(type).size
   }
   
   func resetFilters(type: SearchFilterType) {

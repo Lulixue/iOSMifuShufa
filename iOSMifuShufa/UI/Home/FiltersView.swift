@@ -114,75 +114,78 @@ struct PaddingValue {
 struct RadicalView: View {
   @EnvironmentObject var viewModel: FilterViewModel
   static let ITEM_WITH: CGFloat = 40
-  private var rowItemSize: Int
-  private let columns: [GridItem]
-  init() {
-    let size = (UIScreen.currentWidth - 100) / Self.ITEM_WITH
-    rowItemSize = Int(size)
-    columns = (0..<rowItemSize).map { _ in GridItem(.flexible()) }
+  var contentView: some View {
+    LazyVStack(spacing: 0) {
+      let keys = Array(RADICAL_DICT.keys)
+      ForEach(keys, id: \.self) { k in
+        Section {
+          let radicals = RADICAL_DICT[k]!
+          autoColumnGrid(radicals, space: 15, parentWidth: viewModel.viewWidth, maxItemWidth: Self.ITEM_WITH, rowSpace: 10, paddingValues: PaddingValue(horizontal: 0, vertical: 12)) { size, index, item in
+            let selected = viewModel.radicals.containsItem(item)
+            Button {
+              viewModel.toggleFilter(filter: item, type: .Radical)
+            } label: {
+              ZStack(alignment: .topTrailing) {
+                Text(item)
+                  .bold()
+                  .lineLimit(1)
+                  .foregroundStyle(Color.colorPrimary)
+                  .frame(height: size, alignment: .center)
+                  .frame(minWidth: size)
+                if selected {
+                  VStack {
+                    Image(systemName: "checkmark")
+                      .square(size: 6).foregroundStyle(.white)
+                  }
+                  .frame(width: 10, height: 10)
+                  .background {
+                    Circle().fill(Color.colorPrimary)
+                  }
+                  .padding(.top, 1)
+                  .padding(.trailing, 1)
+                }
+              }
+              .padding(.horizontal, item.length > 1 ? 10 : 0)
+              .frame(minWidth: size)
+              .frame(height: size)
+              .background {
+                RoundedRectangle(cornerRadius: 5).fill(selected ? Colors.searchHeader.swiftColor.opacity(0.35) : Colors.surfaceContainer.swiftColor)
+              }
+              .overlay {
+                RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+              }
+            }.buttonStyle(BgClickableButton())
+          }
+        } header: {
+          HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Text(k.radicalCountName).frame(alignment: .leading)
+              .foregroundColor(Colors.searchHeader.swiftColor)
+              .font(.system(size: 15))
+            Spacer()
+          }.padding(.leading, 10)
+            .padding(.trailing, 10)
+            .padding(.vertical, 8).background(Colors.surfaceVariant.swiftColor)
+        }
+        
+      }
+    }
   }
+  
   var body: some View {
     ScrollView {
-      LazyVStack(spacing: 0) {
-        let keys = Array(RADICAL_DICT.keys)
-        ForEach(keys, id: \.self) { k in
-          Section {
-            let radicals = RADICAL_DICT[k]!
-            autoColumnGrid(radicals, space: 15, parentWidth: UIScreen.currentWidth, maxItemWidth: Self.ITEM_WITH, rowSpace: 10, paddingValues: PaddingValue(horizontal: 0, vertical: 12)) { size, index, item in
-              let selected = viewModel.radicals.containsItem(item)
-              Button {
-                viewModel.toggleFilter(filter: item, type: .Radical)
-              } label: {
-                ZStack(alignment: .topTrailing) {
-                  Text(item)
-                    .bold()
-                    .lineLimit(1)
-                    .foregroundStyle(Color.colorPrimary)
-                    .frame(height: size, alignment: .center)
-                    .frame(minWidth: size)
-                  if selected {
-                    VStack {
-                      Image(systemName: "checkmark")
-                        .square(size: 6).foregroundStyle(.white)
-                    }
-                    .frame(width: 10, height: 10)
-                    .background {
-                      Circle().fill(Color.colorPrimary)
-                    }
-                    .padding(.top, 1)
-                    .padding(.trailing, 1)
-                  }
-                }
-                .padding(.horizontal, item.length > 1 ? 10 : 0)
-                .frame(minWidth: size)
-                .frame(height: size)
-                .background {
-                  RoundedRectangle(cornerRadius: 5).fill(selected ? Colors.searchHeader.swiftColor.opacity(0.35) : Colors.surfaceContainer.swiftColor)
-                }
-                .overlay {
-                  RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
-                }
-              }.buttonStyle(BgClickableButton())
-            }
-          } header: {
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-              Text(k.radicalCountName).frame(alignment: .leading)
-                .foregroundColor(Colors.searchHeader.swiftColor)
-                .font(.system(size: 15))
-              Spacer()
-            }.padding(.leading, 10)
-              .padding(.trailing, 10)
-              .padding(.vertical, 8).background(Colors.surfaceVariant.swiftColor)
-          }
-
-        }
+      if viewModel.viewWidth > 0 {
+        contentView
       }
     }
   }
 }
 
 #Preview("radical") {
-  RadicalView().environmentObject(FilterViewModel())
+  let vm = FilterViewModel()
+  return RadicalView().environmentObject(vm)
+    .onAppear {
+      vm.viewWidth = UIScreen.currentWidth
+    }
 }
 
 struct StructureList: View {
@@ -262,7 +265,6 @@ struct StrokeList: View {
           Divider().padding(.leading, 10)
         }
       }
-      
     }
   }
   
@@ -270,9 +272,11 @@ struct StrokeList: View {
     VStack(spacing: 0) {
       ScrollableTabView(activeIdx: $selectedIndex, dataSet: tabs, settings: ScrollableBarSettings(indicatorColor: .blue, alignment: .center)) { i, item in
         let selected = i == selectedIndex
-        VStack(spacing: 0) {
-          Text(item.0).foregroundStyle(selected ? .blue: Color.defaultText)
+        VStack(spacing: 2) {
+          Text(item.0.last().toString()).foregroundStyle(selected ? .blue: Color.defaultText)
+            .font(.system(size: 14))
           Text("(\(item.1))").foregroundStyle(selected ? .blue: Colors.defaultText.swiftColor)
+            .font(.system(size: 10))
         }.padding(.horizontal, 5)
       }.padding(.top, 5).frame(maxWidth: .infinity).background(Colors.surfaceContainer.swiftColor)
       ScrollView {
@@ -289,11 +293,10 @@ struct StrokeList: View {
 
 struct FilterView: View {
   @EnvironmentObject var viewModel: FilterViewModel
-  @Environment(\.safeAreaInsets) private var safeAreaInsets
-  @State var type = SearchFilterType.Radical
+  @State private var type = SearchFilterType.Radical
+  
   var body: some View {
     VStack(spacing: 0) {
-      safeAreaInsets.top.VSpacer()
       HStack(spacing: 0) {
         Text("filter".localized).font(.title3)
         Image("filter").renderingMode(.template).square(size: 16)
@@ -347,6 +350,20 @@ struct FilterView: View {
   }
 }
 
+struct WidthReaderView: View {
+  @Binding var binding: CGFloat
+  var body: some View {
+    GeometryReader { geo in
+      Color.clear
+        .preference(key: WidthPreferenceKey.self, value: max(geo.frame(in: .local).size.width, 0))
+    }
+    .onPreferenceChange(WidthPreferenceKey.self) { h in
+      if binding == 0 {
+        binding = h
+      }
+    }
+  }
+}
 
 #Preview("filter") {
   FilterView().environmentObject(FilterViewModel())

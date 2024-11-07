@@ -71,6 +71,8 @@
 		F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C762CDB164C00096ED1 /* TestView.swift */; };
 		F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */; };
 		F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */; };
+		F9F97C7D2CDC7B0000096ED1 /* Zoomable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */; };
+		F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +162,8 @@
 		F9F97C762CDB164C00096ED1 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIlterViewModel.swift; sourceTree = "<group>"; };
 		F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTabView.swift; sourceTree = "<group>"; };
+		F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoomable.swift; sourceTree = "<group>"; };
+		F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePreviewItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +248,7 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */,
 				F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */,
 				F9F97C762CDB164C00096ED1 /* TestView.swift */,
 				F96E61662CD9C6DD007329DB /* SideMenu */,
@@ -384,6 +389,7 @@
 		F9ECB0242CD25CD00009C0DC /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */,
 				F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */,
 				F9F97C722CDAFA1700096ED1 /* FiltersView.swift */,
 				F9ECB03D2CD26C5C0009C0DC /* HomeViewModel.swift */,
@@ -704,12 +710,14 @@
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
+				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
 				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
 				F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */,
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
 				F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */,
+				F9F97C7D2CDC7B0000096ED1 /* Zoomable.swift in Sources */,
 				F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */,
 				F96E615A2CD9C6D1007329DB /* KotlinBridge.swift in Sources */,
 				F96E615B2CD9C6D1007329DB /* ResourceHelper.swift in Sources */,

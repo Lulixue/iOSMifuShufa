@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import DeviceKit
+import SDWebImageSwiftUI
 
 struct TodayCardView<Content: View>: View {
   let title: String
@@ -49,7 +50,6 @@ struct TodayCardView<Content: View>: View {
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
-  @State var searching: Bool = false
   @FocusState var focused: Bool
   private let searchBarHeight = 36.0
   private let radius = 4.0
@@ -91,7 +91,7 @@ struct HomePage: View {
           onSearch()
         }
         Button {
-          
+          onSearch()
         } label: {
           HStack(spacing: 3) {
             Image(systemName: "magnifyingglass").square(size: 10)
@@ -104,20 +104,8 @@ struct HomePage: View {
   
   private func onSearch() {
     focused = false
-    let text = viewModel.text
-    let chars = text.toCharList.unique
-    if chars.isEmpty() {
-      viewModel.searchResults.clear()
-      viewModel.showAlertDlg("no_available_chinese".localized)
-      return
-    }
-    searching = true
-    DispatchQueue.global(qos: .background).async {
-      DispatchQueue.main.async {
-        searching = false
-        viewModel.searchResults.clear()
-      }
-    }
+    let text = viewModel.text 
+    viewModel.onSearch(text)
   }
   
   @ViewBuilder func todayWork(_ work: BeitieWork) -> some View {
@@ -182,25 +170,211 @@ struct HomePage: View {
       }
     }
   }
+  private let orderFont = Font.system(size: 15)
+  private let orderImgSize: CGFloat = 6
   
-  var resultView: some View {
-    ScrollView {
-      VStack(spacing: 0) {
-        HStack {
-          
-        }.background(Color.pullerBar)
-        ScrollViewReader { proxy in
-          LazyVStack(spacing: 0) {
-            
+  
+  @ViewBuilder func resultSection(_ key: AnyHashable, _ singles: List<BeitieSingle>) -> some View {
+    let collapseBinding = viewModel.collapseBinding(key)
+    let order = viewModel.order
+    Section {
+      
+      if !collapseBinding.wrappedValue {
+        
+        let showSubtitle = singles.hasAny { it in order.getSingleSubtitle(it)?.isNotEmpty() == true }
+        autoColumnGrid(singles, space: 10, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 8, paddingValues: PaddingValue(vertical: 10)) { width, i, single in
+          Button {
+            viewModel.onClickSinglePreview(i, collection: singles)
+          } label: {
+            VStack(spacing: 5) {
+              if showSubtitle {
+                if let subTitle = order.getSingleSubtitle(single) {
+                  Text(subTitle).font(.footnote)
+                    .foregroundStyle(single.work.btType.nameColor(baseColor: Color.defaultText))
+                }
+              }
+              let padding: CGFloat = 3
+              WebImage(url: single.thumbnailUrl.url!) { img in
+                img.image?.resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: width - 2 * padding)
+                  .clipShape(RoundedRectangle(cornerRadius: 2))
+              }.padding(padding).overlay {
+                RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
+              }
+              
+              Text(order.getSingleTitle(single))
+                .lineLimit(1)
+                .font(.footnote)
+                .foregroundStyle(single.work.btType.nameColor(baseColor: Color.defaultText))
+            }.frame(width: width)
           }
         }
       }
+    } header: {
+      Button {
+        collapseBinding.wrappedValue.toggle()
+      } label: {
+        HStack {
+          Text(key.toString().smallSuffix("(\(singles.size))"))
+            .foregroundStyle(Color.colorPrimary)
+          Spacer()
+          Image(systemName: "chevron.down").square(size: 10)
+            .rotationEffect(.degrees(collapseBinding.wrappedValue ? -90: 0))
+        }.padding(.horizontal, 10).frame(height: 40).background(Colors.surfaceContainer.swiftColor)
+      }.buttonStyle(BgClickableButton())
+    } footer: {
+      if collapseBinding.wrappedValue {
+        Divider.overlayColor(Color.gray.opacity(0.35))
+      }
     }
+  }
+  private let previewColor = Color.black.opacity(0.7)
+
+  private func hidePreview() {
+    viewModel.showPreview = false
+  }
+  
+  var previewResult: some View {
+    ZStack(alignment: .top) {
+      let singles = viewModel.selectedSingleCollection
+      let selectedSingle = singles[viewModel.selectedSingleIndex]
+      TabView(selection: $viewModel.selectedSingleIndex) {
+        ForEach(0..<singles.count, id: \.self) { i in
+          let single = singles[i]
+          ZStack(alignment: .top) {
+            ScrollView {
+              
+            }.onTapGesture {
+              hidePreview()
+            }
+            SinglePreviewItem(single: single, bgColor: previewColor) {
+              hidePreview()
+            }
+          }.tag(i)
+        }
+      }.tabViewStyle(.page(indexDisplayMode: .never))
+        
+      HStack {
+        Spacer()
+        Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
+          .foregroundStyle(.white)
+        Spacer()
+        Button {
+          hidePreview()
+        } label: {
+          Image(systemName: "xmark.circle").square(size: 20).foregroundStyle(.white)
+        }
+        10.HSpacer()
+      }.padding(.vertical, 8)
+      VStack {
+        let attr = {
+          var charAttr = AttributedString(selectedSingle.showChars)
+          charAttr.font = .title3
+          let sub = selectedSingle.work.workNameAttrStr(.body, smallerFont: .footnote)
+          return charAttr + sub
+        }()
+        Spacer()
+        Text(attr).foregroundStyle(.white)
+      }.padding(.bottom, 8)
+    }.background(previewColor)
+  }
+  private let orderSpacing: CGFloat = 14
+  private let orderBarHeight: CGFloat = 40
+  @State var resultProxy: ScrollViewProxy? = nil
+  var resultView: some View {
+    ZStack(alignment: .topLeading) {
+      VStack(spacing: 0) {
+        HStack(spacing: orderSpacing) {
+          Button {
+            viewModel.showOrder = true
+          } label: {
+            HStack(spacing: 5) {
+              Text(viewModel.order.chinese + "排序").font(orderFont)
+              Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize)
+                .rotationEffect(.degrees(viewModel.showOrder ? 180 : 0))
+            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+          }.background(WidthReaderView(binding: $viewModel.orderWidth))
+          Button {
+            viewModel.showFastRedirect = true
+          } label: {
+            HStack(spacing: 5) {
+              let fastResultKey = viewModel.resultKeys[max(viewModel.fastResultIndex, 0)]
+              Text(fastResultKey).font(orderFont)
+              Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFastRedirect ? 180 : 0))
+            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+          }.background(WidthReaderView(binding: $viewModel.fastRedirectWidth))
+          
+          Button {
+            viewModel.showFont = true
+          } label: {
+            HStack(spacing: 5) {
+              Text(viewModel.currentFontResultKey()).font(orderFont)
+              Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFont ? 180 : 0))
+            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+          }
+          Spacer()
+          Button {
+            viewModel.toggleCollapseAll()
+            resultProxy?.scrollTo(0, anchor: .top)
+          } label: {
+            HStack {
+              Image(systemName: "chevron.down.2").square(size: 9)
+                .rotationEffect(.degrees(viewModel.allCollapse ? 180 : 0))
+                .foregroundStyle(Colors.colorPrimary.swiftColor)
+            }.padding(.horizontal, 12).padding(.vertical, 7)
+              .overlay {
+                RoundedRectangle(cornerRadius: 5).stroke(Color.searchHeader.opacity(0.8), lineWidth: 0.3)
+              }
+          }.buttonStyle(BgClickableButton())
+            .background(WidthReaderView(binding: $viewModel.fontWidth))
+        }.padding(.horizontal, 10).frame(height: orderBarHeight).background(Colors.surfaceContainer.swiftColor)
+        Divider()
+        ZStack {
+          ScrollView {
+            ScrollViewReader { proxy in
+              LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                let results = viewModel.singleResult.elements
+                ForEach(0..<results.count, id: \.self) { i in
+                  let elem = results[i]
+                  resultSection(elem.key, elem.value)
+                    .id(i)
+                }
+              }.onAppear {
+                resultProxy = proxy
+              }
+            }
+          }.id(viewModel.resultId)
+        }
+      }.blur(radius: viewModel.showPreview ? 6 : 0)
+      if viewModel.showPreview {
+        previewResult
+      }
+      if viewModel.showOrder {
+        DropDownOptionsView(param: viewModel.orderTypeParam) { order in
+          viewModel.updateOrder(order)
+        }.offset(x: 10, y: orderBarHeight+1)
+      }
+      if viewModel.showFastRedirect {
+        DropDownOptionsView(param: viewModel.fastDirectParam) { index in
+          viewModel.fastResultIndex = index
+          resultProxy?.scrollTo(index - 1, anchor: .top)
+        }.offset(x: 10 + viewModel.orderWidth + orderSpacing, y: orderBarHeight+1)
+          
+      }
+      if viewModel.showFont {
+        DropDownOptionsView(param: viewModel.fontParam) { font in
+          viewModel.updatePreferredFont(font)
+        }.offset(x: 10 + viewModel.orderWidth + orderSpacing + viewModel.fastRedirectWidth, y: orderBarHeight+1)
+      }
+    }.simultaneousGesture(TapGesture().onEnded({ _ in
+      viewModel.hideDropdown()
+    }), isEnabled: viewModel.hasDropdown())
   }
   
   var defaultView: some View {
     ScrollView {
-      VStack(spacing: 10) {
+      VStack(spacing: 12) {
         let single = viewModel.todaySingle
         if single != nil {
           todaySingle(single!)
@@ -213,13 +387,30 @@ struct HomePage: View {
     }.background(Colors.surfaceVariant.swiftColor)
   }
   
+  @Environment(\.safeAreaInsets) private var safeAreaInsets
+  @State var filterWidth: CGFloat = 0
+  @State var tabBarHeight: CGFloat = 0
+  
   var sideMenu: some View {
-    FilterView().environmentObject(viewModel.filterViewModel)
+    VStack(spacing: 0) {
+      safeAreaInsets.top.VSpacer()
+      FilterView().environmentObject(viewModel.filterViewModel)
+      tabBarHeight.VSpacer()
+    }.background(WidthReaderView(binding: $viewModel.filterViewModel.viewWidth))
   }
   
   var body: some View {
     SideMenu(leftMenu: sideMenu, centerView: {
       centerView
+        .background(TabBarAccessor { tabBar in
+          printlnDbg(">> TabBar height: \(tabBar.bounds.height)")
+          tabBarHeight = tabBar.bounds.height
+          if #available(iOS 18.0, *) {
+            if Device.current.isPad {
+              tabBarHeight = 0
+            }
+          }
+        })
     }, viewModel: sideVM)
   }
   
@@ -258,10 +449,17 @@ struct HomePage: View {
         10.VSpacer()
       }
       0.4.HDivder()
-      defaultView
+      if viewModel.singleResult.isNotEmpty() {
+        resultView
+      } else {
+        defaultView
+      }
     }.background(.white)
       .onAppear {
         UITextField.appearance().clearButtonMode = .whileEditing
+//        onSearch()
+      }.alert(viewModel.alertTitle  , isPresented: $viewModel.showAlert) {
+        Button("好", role: .cancel, action: {})
       }
   }
 }
@@ -269,3 +467,5 @@ struct HomePage: View {
 #Preview {
   HomePage(viewModel: HomeViewModel())
 }
+
+

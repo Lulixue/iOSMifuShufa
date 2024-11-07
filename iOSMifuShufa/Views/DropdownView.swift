@@ -53,7 +53,7 @@ struct DropDownParam<T: Equatable> {
   let padding: DropDownPadding
   let largeFont: Font?
   
-  init(items: [T], texts: [String], colors: [Color], images: [DropDownIcon]? = nil, disabled: [Bool]? = nil, fonts: [UIFont] = [.preferredFont(forTextStyle: .body)],
+  init(items: [T], texts: [String], colors: [Color] = Colors.ICON_COLORS, images: [DropDownIcon]? = nil, disabled: [Bool]? = nil, fonts: [UIFont] = [.preferredFont(forTextStyle: .body)],
        largeFont: UIFont? = nil, radius: CGFloat = 1, padding: DropDownPadding = DropDownPadding(), bgColor: Color = Colors.background.swiftColor) {
     self.items = items
     self.colors = colors
@@ -92,7 +92,7 @@ struct DropDownParam<T: Equatable> {
     self.textFonts = fonts.map({ $0.swiftFont })
     self.texts = resultTexts
     self.maxWidth = maxWidth + 5 + padding.leading + padding.trailing
-    self.height = min(totalHeight + padding.itemVertical * CGFloat(texts.size * 2) + padding.extraTop + padding.extraBottom, UIHelper.screenHeight * 0.75)
+    self.height = min(totalHeight + padding.itemVertical * CGFloat(texts.size * 2) + padding.extraTop + padding.extraBottom, UIHelper.screenHeight * 0.5)
     self.radius = radius
     self.bgColor = bgColor
     self.disabled = disabled

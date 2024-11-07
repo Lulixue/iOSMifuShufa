@@ -60,6 +60,20 @@ extension AnySequence {
   }
 }
 
+extension String {
+  var stringExp: Expression<String> {
+    Expression<String>(self)
+  }
+  
+  var intExp: Expression<Int> {
+    Expression<Int>(self)
+  }
+  
+  var boolExp: Expression<Bool> {
+    Expression<Bool>(self)
+  }
+}
+
 class BeitieDbHelper {
   static let shared = BeitieDbHelper()
   let CALLIGRAPHER = "米芾"
@@ -69,6 +83,10 @@ class BeitieDbHelper {
   
   var searchWorks = ArrayList<Int>()
   var jiziWorks = ArrayList<Int>()
+  
+  init() {
+    syncWorkRanges()
+  }
   
   func getTodaySingles(_ id: Int) -> List<Int> {
     var result = [Int]()
@@ -112,7 +130,7 @@ class BeitieDbHelper {
   private let idExp = Expression<Int>("id")
   
   func dao() -> BeitieDbHelper {
-    Self.shared
+    self
   }
   
   func getWorkImages(_ id: Int) -> List<BeitieImage> {
@@ -257,6 +275,132 @@ class BeitieDbHelper {
   
   func getWorkById(_ id: Int) -> BeitieWork? {
     return worksMap[id]
+  }
+  
+//  @Query("select * from BeitieSingle where chars like :cLike " +
+//         "or radical like :cLike " +
+//         "or components like :cLike " +
+//         "or mainComponents like :cLike limit :lmt")
+  private func getSinglesByComponent(char: Char, lmt: Int = 10000) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let cLike = "%\(char)%"
+      let charsExp = "chars".stringExp
+      let radicalExp = "radical".stringExp
+      let componentsExp = "components".stringExp
+      let mainCExp = "mainComponents".stringExp
+      let rows = try db.prepare(singleTable.filter(charsExp.like(cLike) || radicalExp.like(cLike) ||
+                                                   componentsExp.like(cLike) || mainCExp.like(cLike)).limit(lmt))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("error \(error)")
+    }
+    return result
+  }
+
+  
+  func searchComponent(_ char: Char) -> List<BeitieSingle> {
+    getSinglesByComponent(char: char)
+  }
+  
+//  @Query("select * from BeitieSingle where strokes like '%' || :stroke || '%'")
+  func getSinglesByStroke(_ stroke: String) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let rows = try db.prepare(singleTable.filter(Expression<String>("strokes").like("%\(stroke)%")))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("error \(error)")
+    }
+    return result
+  }
+
+//  @Query("select * from BeitieSingle where structure in (:structures)")
+  func getSinglesByStructures(_ structures: List<String>) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let stExp = Expression<String>("structure")
+      let rows = try db.prepare(singleTable.filter(structures.contains(stExp)))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("error \(error)")
+    }
+    return result
+  }
+  
+//  @Query("select * from BeitieSingle where radical in (:radicals)")
+  func getSinglesByRadicals(_ radicals: List<String>) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let exp = Expression<String>("radical")
+      let rows = try db.prepare(singleTable.filter(radicals.contains(exp)))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("error \(error)")
+    }
+    return result
+  }
+  
+//  @Query("select * from BeitieSingle where chars like :cLike and repeat = 0")
+  func getSingles(_ char: Char) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let rows = try db.prepare(singleTable.filter(Expression<String>("chars").like("%\(char)%")))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("error \(error)")
+    }
+    return result
+  }
+  
+  
+  func searchByFilter(_ filter: FilterViewModel) -> List<BeitieSingle> {
+    let strokes = filter.strokes
+    let structures = filter.structures
+    let radicals = filter.radicals
+    var result = HashMap<Int, BeitieSingle>()
+    strokes.forEach { stroke in
+      dao().getSinglesByStroke(stroke.first().toStrokeInit()).forEach { it in
+        result[it.id] = it
+      }
+    }
+    if structures.isNotEmpty() {
+      dao().getSinglesByStructures(structures.map { it in it.toSearchStructure() }).forEach { it in
+        result[it.id] = it
+      }
+    }
+    if radicals.isNotEmpty() {
+      var mapped = Set<String>()
+      
+      radicals.forEach { it in
+        mapped.add(it)
+        if let m = radicalChsChtMap[it] {
+          mapped.add(m)
+        }
+      }
+      dao().getSinglesByRadicals(mapped.toList()).forEach { it in
+        result[it.id] = it
+      }
+    }
+    return result.values.map({ $0 })
+  }
+  
+  func search(_ char: Char) -> List<BeitieSingle> {
+    var result = Array<BeitieSingle>()
+    ChineseConverter.getAllCandidateChars(char).forEach { it in
+      result.addAll(dao().getSingles(it))
+    }
+    return result.distinctBy { it in it.id }
   }
 }
 

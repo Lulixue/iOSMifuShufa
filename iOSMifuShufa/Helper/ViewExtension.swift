@@ -187,3 +187,15 @@ extension NSAttributedString {
     return CGSizeMake(size.width, size.height.rounded(.up))
   }
 }
+
+
+extension String {
+  func smallSuffix(_ suffix: String, normal: Font = .callout, small: Font = .footnote) -> AttributedString {
+    var first = AttributedString(self)
+    first.font = normal
+    var second = AttributedString(suffix)
+    second.font = small
+    
+    return first + second
+  }
+}

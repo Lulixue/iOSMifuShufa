@@ -8,11 +8,55 @@
 import SwiftUI
 
 struct TestView: View {
+  @State private var currentZoom = 0.0
+  @State private var totalZoom = 1.0
+  private let maxZoom = 5.0
+  private let minZoom = 0.3
+  @State private var offsetX = 0.0
+  @State private var offsetY = 0.0
+  
+  init() {
+    let maxWidth = UIScreen.currentWidth - 20
+    if maxWidth < imageSize.width {
+      self.totalZoom = imageSize.width / maxWidth
+    }
+  }
+  
+  let imageSize = {
+    let img = UIImage(named: "background")!
+    let size = img.size
+    return size
+  }()
+  
   var body: some View {
     ZStack(alignment: .topTrailing) {
-      Text(".").frame(width: 80, height: 80)
-      Text("v").font(.footnote) 
-    }.padding(0).frame(width: 80, height: 80).background(Color.secondary)
+      VStack {
+          Image("background")
+            .resizable()
+            .scaleEffect(currentZoom + totalZoom)
+            .scaledToFit()
+            .padding(10)
+            .gesture(MagnificationGesture().onChanged({ offset in
+              println("offset \(offset)")
+              currentZoom = offset - 1
+            }).onEnded({ offset in
+              totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
+              currentZoom = 0
+            }))
+          
+            
+//            .gesture(DragGesture().onChanged({ drag in
+//              let offsetX = drag.translation.width
+//              let offsetY = drag.translation.height
+//              printlnDbg("offset: \(offsetX) \(offsetY)")
+//            }).onEnded({ drag in
+//              
+//            }))
+//            .onAppear {
+//              
+//            } 
+      }.padding(10)
+    }
   }
 }
 

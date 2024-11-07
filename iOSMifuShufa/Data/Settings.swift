@@ -98,6 +98,7 @@ class Settings {
 #endif
   
   
+  static var showVipSingles: Boolean { config?.defaultShowVipSingle ?? true }
   static var deviceId: String {
     var value = mmkv.getString(KEY_DEVICE_ID, "")
     if value.isEmpty {

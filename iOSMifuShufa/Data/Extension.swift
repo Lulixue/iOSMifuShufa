@@ -107,6 +107,10 @@ extension Array {
   func last() -> Element {
     return last!
   }
+  func hasAny(mapper: (Element) -> Bool) -> Bool {
+    self.filter { mapper($0) }.isNotEmpty()
+  }
+  
 }
 
 
@@ -225,5 +229,17 @@ extension Int {
   }
   func toString() -> String {
     "\(self)"
+  }
+}
+
+
+func StringBuilder() -> String {
+  ""
+}
+
+
+extension Set {
+  func toList() -> List<Element> {
+    List(self)
   }
 }

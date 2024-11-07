@@ -26,6 +26,9 @@ class AlertViewModel: BaseObservableObject {
     alertTitle = title
     showAlert = true
   }
+  func showAppDialog(_ title: String) {
+    showAlertDlg(title)
+  }
   
   func verifySearchText(text: String) -> Boolean {
     if text.isEmpty() {

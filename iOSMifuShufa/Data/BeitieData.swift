@@ -18,7 +18,7 @@ enum ShuType: String {
   }
 }
  
-enum CalligraphyFont: String {
+enum CalligraphyFont: String, CaseIterable {
   case Kai
   case XingKai
   case Xing
@@ -294,6 +294,8 @@ class BeitieSingle: Decodable {
   var components: String? = nil
   var mainComponents: String? = nil
   var box: String? = nil
+  var font: CalligraphyFont? = nil
+  var matched: Char? = nil
   
   enum CodingKeys: CodingKey {
     case id
@@ -519,3 +521,32 @@ extension BeitieImage {
   }
 }
 
+
+
+let radicalChsChtMap: [String: String] = [
+  "讠": "言", "门": "門", "马": "馬", "鸟": "鳥", "长": "長",
+  "见": "見", "车": "車", "贝": "貝", "页": "頁", "饣": "飠",
+  "钅": "釒", "齐": "齊", "卤": "鹵", "韦": "韋", "纟": "糹",
+  "麦": "麥", "风": "風", "鱼": "魚", "龙": "龍", "齿": "齒",
+  "仑": "龠"
+]
+
+extension String {
+  var lastIndex: Int {
+    count - 1
+  }
+  
+  mutating func deleteCharAt(_ index: Int) {
+    self.remove(at: self.index(startIndex, offsetBy: index))
+  }
+  var separatedChars: String {
+    var sb = StringBuilder()
+    this.forEach { it in
+      sb.append(it)
+      sb.append("/")
+    }
+    sb.deleteCharAt(sb.lastIndex)
+    return sb.toString()
+  }
+  
+}
