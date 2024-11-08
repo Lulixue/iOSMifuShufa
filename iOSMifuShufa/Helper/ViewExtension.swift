@@ -11,6 +11,15 @@ import UIKit
 
 private let DEFAULT_DIVIDER_COLOR = UIColor.lightGray.swiftColor
 
+let CUSTOM_NAVIGATION_HEIGHT: CGFloat = 40
+let CUSTOM_NAVI_ICON_SIZE: CGFloat = 20
+
+extension View {
+  @ViewBuilder func squareFrame(_ size: CGFloat) -> some View {
+    self.frame(width: size, height: size)
+  }
+}
+
 extension String {
   var isHtml: Bool {
     contains("</") || contains("/>")

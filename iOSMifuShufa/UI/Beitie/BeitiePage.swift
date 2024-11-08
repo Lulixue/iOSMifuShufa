@@ -427,7 +427,7 @@ struct BeitiePage: View {
           }.padding(.horizontal, 12)
           Text("title_beitie".localized)
             .foregroundStyle(btnColor)
-        }.frame(height: 40).background(Colors.surfaceVariant.swiftColor)
+        }.frame(height: CUSTOM_NAVIGATION_HEIGHT).background(Colors.surfaceVariant.swiftColor)
         Divider()
         ZStack(alignment: .top) {
           ScrollView {

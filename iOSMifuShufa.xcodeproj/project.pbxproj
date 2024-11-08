@@ -73,6 +73,10 @@
 		F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */; };
 		F9F97C7D2CDC7B0000096ED1 /* Zoomable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */; };
 		F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */; };
+		F9F97C812CDCD6A700096ED1 /* DrawPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C802CDCD6A000096ED1 /* DrawPanel.swift */; };
+		F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */; };
+		F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C842CDDB96900096ED1 /* SinglesView.swift */; };
+		F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C862CDDCE4900096ED1 /* NavigationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +168,10 @@
 		F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTabView.swift; sourceTree = "<group>"; };
 		F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoomable.swift; sourceTree = "<group>"; };
 		F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePreviewItem.swift; sourceTree = "<group>"; };
+		F9F97C802CDCD6A000096ED1 /* DrawPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPanel.swift; sourceTree = "<group>"; };
+		F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintHelper.swift; sourceTree = "<group>"; };
+		F9F97C842CDDB96900096ED1 /* SinglesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglesView.swift; sourceTree = "<group>"; };
+		F9F97C862CDDCE4900096ED1 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +227,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */,
 				F9F97C702CDA424100096ED1 /* ChineseConverter.swift */,
 				F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */,
 				F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */,
@@ -379,6 +388,7 @@
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C842CDDB96900096ED1 /* SinglesView.swift */,
 				F9E345FA2CDA27D600E65B2B /* WorkView.swift */,
 				F96E60FE2CD85326007329DB /* BeitieViewModel.swift */,
 				F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */,
@@ -389,6 +399,8 @@
 		F9ECB0242CD25CD00009C0DC /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C862CDDCE4900096ED1 /* NavigationViewModel.swift */,
+				F9F97C802CDCD6A000096ED1 /* DrawPanel.swift */,
 				F9F97C7E2CDC90A800096ED1 /* SinglePreviewItem.swift */,
 				F9F97C782CDB1E2200096ED1 /* FIlterViewModel.swift */,
 				F9F97C722CDAFA1700096ED1 /* FiltersView.swift */,
@@ -708,8 +720,10 @@
 				F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */,
 				F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */,
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
+				F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
+				F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */,
 				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
@@ -725,6 +739,7 @@
 				F96E615D2CD9C6D1007329DB /* ViewHelper.swift in Sources */,
 				F96E615E2CD9C6D1007329DB /* ViewModel.swift in Sources */,
 				F96E614F2CD9C6C9007329DB /* JiziPage.swift in Sources */,
+				F9F97C812CDCD6A700096ED1 /* DrawPanel.swift in Sources */,
 				F988204A2C3AC4500011DB04 /* ContentView.swift in Sources */,
 				F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */,
 				F9ECB02E2CD25F1C0009C0DC /* Chinese.swift in Sources */,
@@ -738,6 +753,7 @@
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
+				F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */,
 				F96E61752CD9C6DD007329DB /* Colors.swift in Sources */,
 				F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */,
 				F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */,

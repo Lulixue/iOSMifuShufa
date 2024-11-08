@@ -47,13 +47,16 @@ struct TodayCardView<Content: View>: View {
   }
 }
 
+
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
+  @StateObject var navVM = NavigationViewModel()
   @FocusState var focused: Bool
   private let searchBarHeight = 36.0
   private let radius = 4.0
   private let font = Font.system(size: 14)
+  
   
   var searchBar: some View {
     HStack {
@@ -110,16 +113,14 @@ struct HomePage: View {
   
   @ViewBuilder func todayWork(_ work: BeitieWork) -> some View {
     TodayCardView(title: "今日法帖") {
-      
     } content: {
       VStack(alignment: .center, spacing: 8) {
         HStack(alignment: .center) {
           Spacer()
           AsyncImage(url: work.cover.url!) { img in
             img.image?.resizable()
-              .scaledToFill()
-              .frame(height: 80, alignment: .center)
-              .frame(maxWidth: UIScreen.currentWidth * 0.75, alignment: .center)
+              .scaledToFit()
+              .frame(height: 90)
               .clipShape(RoundedRectangle(cornerRadius: 5))
           }
           .padding(3)
@@ -143,16 +144,21 @@ struct HomePage: View {
   
   @ViewBuilder func todaySingle(_ single: BeitieSingle) -> some View {
     TodayCardView(title: "今日单字".orCht("今日單字")) {
-      
+      Task {
+        let imageSingles = BeitieDbHelper.shared.getSinglesByImageId(single.imageId)
+        let index = imageSingles.firstIndex { $0.id == single.id }!
+        DispatchQueue.main.async {
+          self.navVM.gotoSingles(singles: imageSingles, index: index)
+        }
+      }
     } content: {
       VStack(alignment: .center) {
         HStack(alignment: .center) {
           Spacer()
           AsyncImage(url: single.thumbnailUrl.url!) { img in
             img.image?.resizable()
-              .scaledToFill()
+              .scaledToFit()
               .frame(height: 60)
-              .frame(maxWidth: 60)
               .clipShape(RoundedRectangle(cornerRadius: 5))
           }
           .padding(3)
@@ -229,7 +235,7 @@ struct HomePage: View {
       }
     }
   }
-  private let previewColor = Color.black.opacity(0.7)
+  private let previewColor = Color.black.opacity(0.9)
 
   private func hidePreview() {
     viewModel.showPreview = false
@@ -243,30 +249,15 @@ struct HomePage: View {
         ForEach(0..<singles.count, id: \.self) { i in
           let single = singles[i]
           ZStack(alignment: .top) {
-            ScrollView {
-              
-            }.onTapGesture {
+            SinglePreviewItem(single: single) {
               hidePreview()
-            }
-            SinglePreviewItem(single: single, bgColor: previewColor) {
-              hidePreview()
+            } onClick: {
+              navVM.gotoSingles(singles: singles, index: i)
             }
           }.tag(i)
         }
       }.tabViewStyle(.page(indexDisplayMode: .never))
-        
-      HStack {
-        Spacer()
-        Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
-          .foregroundStyle(.white)
-        Spacer()
-        Button {
-          hidePreview()
-        } label: {
-          Image(systemName: "xmark.circle").square(size: 20).foregroundStyle(.white)
-        }
-        10.HSpacer()
-      }.padding(.vertical, 8)
+      
       VStack {
         let attr = {
           var charAttr = AttributedString(selectedSingle.showChars)
@@ -277,6 +268,38 @@ struct HomePage: View {
         Spacer()
         Text(attr).foregroundStyle(.white)
       }.padding(.bottom, 8)
+      VStack {
+        ZStack {
+          HStack {
+            Spacer()
+            Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
+              .font(.body)
+              .foregroundStyle(.white).padding(.vertical, 12)
+            Spacer()
+          }
+          HStack(spacing: 12) {
+            Spacer()
+            
+            Button {
+              viewModel.showDrawPanel.toggle()
+              if !viewModel.showDrawPanel {
+                viewModel.drawViewModel.onClose()
+              }
+            } label: {
+              Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
+            }
+            Divider.overlayColor(.white).frame(width: 0.5, height: 16)
+            Button {
+              hidePreview()
+            } label: {
+              Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
+            }.padding(.trailing, 10)
+          }.padding(.vertical, 12)
+        }
+        if viewModel.showDrawPanel {
+          DrawPanel().environmentObject(viewModel.drawViewModel)
+        }
+      }
     }.background(previewColor)
   }
   private let orderSpacing: CGFloat = 14
@@ -411,7 +434,10 @@ struct HomePage: View {
             }
           }
         })
-    }, viewModel: sideVM)
+    }, viewModel: sideVM).navigationDestination(isPresented: $navVM.gotoSingleView) {
+      SinglesView(viewModel: navVM.singleViewModel!)
+        .navigationBarHidden(true)
+    }
   }
   
   var centerView: some View {
@@ -457,7 +483,6 @@ struct HomePage: View {
     }.background(.white)
       .onAppear {
         UITextField.appearance().clearButtonMode = .whileEditing
-//        onSearch()
       }.alert(viewModel.alertTitle  , isPresented: $viewModel.showAlert) {
         Button("好", role: .cancel, action: {})
       }
@@ -469,3 +494,13 @@ struct HomePage: View {
 }
 
 
+
+extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
+  open override func viewDidLoad() {
+    super.viewDidLoad()
+    interactivePopGestureRecognizer?.delegate = self
+  }
+  public func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
+    viewControllers.count > 1
+  }
+}

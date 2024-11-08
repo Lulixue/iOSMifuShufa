@@ -204,6 +204,8 @@ enum SearchResultOrder: String, CaseIterable {
 
 
 class HomeViewModel : AlertViewModel {
+  @Published var drawViewModel = DrawViewModel()
+  @Published var showDrawPanel = false
   @Published var orderWidth: CGFloat = 0.0
   @Published var fastRedirectWidth: CGFloat = 0.0
   @Published var fontWidth: CGFloat = 0.0
@@ -509,6 +511,9 @@ class HomeViewModel : AlertViewModel {
   override init() {
     super.init()
     initToday()
+    drawViewModel.onCloseDraw = { [weak self] in
+      self?.showDrawPanel = false
+    }
   }
   
   var historyBinding: Binding<[SearchLog]> {

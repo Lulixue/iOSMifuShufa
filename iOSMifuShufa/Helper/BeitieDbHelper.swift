@@ -146,6 +146,24 @@ class BeitieDbHelper {
     return result
   }
   
+  
+//  @Query("select * from BeitieSingle where imageId = :imageId")
+  func getSinglesByImageId(_ id: Int) -> List<BeitieSingle> {
+    var result = [BeitieSingle]()
+    do {
+      let exp = "imageId".intExp
+      let rows = try db.prepare(singleTable.filter(exp == id))
+      for row in rows {
+        result.append(try BeitieSingle(from: row.decoder()))
+      }
+    } catch {
+      println("getSinglesByImageId \(error)")
+    }
+    return result.sorted { f, s in
+      f.imageId > s.imageId
+    }
+  }
+  
   func getAllWorks() -> List<BeitieWork> {
     var result = [BeitieWork]()
     do {

@@ -10,8 +10,8 @@ import SDWebImageSwiftUI
 
 struct SinglePreviewItem: View {
   let single: BeitieSingle
-  var bgColor = Color.black.opacity(0.6)
   var onTouchOutside: () -> Void = {}
+  var onClick: () -> Void = {}
   @State private var loading = false
   @State private var currentZoom = 0.0
   @State private var totalZoom = 1.0
@@ -20,12 +20,19 @@ struct SinglePreviewItem: View {
   
   var body: some View {
     ZStack {
-      Color.clear
+      
+      ScrollView {
+        
+      }.onTapGesture {
+        onTouchOutside()
+      }
       WebImage(url: single.url.url!) { img in
         img.image?.resizable()
           .scaledToFit()
           .frame(minHeight: 20)
-        
+          .onTapGesture {
+            onClick()
+          }
       }
       .onSuccess(perform: { image, data, cacheType in
         DispatchQueue.main.async {

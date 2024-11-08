@@ -77,6 +77,8 @@ extension UIColor {
 
 
 class Colors {
+  
+  static let orange_red = UIColor(argb: 0xFFFF4500)
   static let editor_header = UIColor.init(rgb: 0x909090)
   static let light_search_header = UIColor.init(rgb: 0x8DAC6E)
   static let popup_menu_bg = UIColor.init(rgb: 0x4A4A4A)

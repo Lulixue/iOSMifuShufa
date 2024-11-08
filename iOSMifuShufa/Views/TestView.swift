@@ -27,35 +27,41 @@ struct TestView: View {
     let size = img.size
     return size
   }()
-  
+  @State var enabled = false
   var body: some View {
-    ZStack(alignment: .topTrailing) {
-      VStack {
-          Image("background")
-            .resizable()
-            .scaleEffect(currentZoom + totalZoom)
-            .scaledToFit()
-            .padding(10)
-            .gesture(MagnificationGesture().onChanged({ offset in
-              println("offset \(offset)")
-              currentZoom = offset - 1
-            }).onEnded({ offset in
-              totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
-              currentZoom = 0
-            }))
-          
+    NavigationStack {
+      ZStack(alignment: .topTrailing) {
+        VStack {
+          NavigationLink(isActive: $enabled) {
+            Text("call")
+          } label: {
+            Image("background")
+              .resizable()
+              .scaleEffect(currentZoom + totalZoom)
+              .scaledToFit()
+              .padding(10)
+              .gesture(MagnificationGesture().onChanged({ offset in
+                println("offset \(offset)")
+                currentZoom = offset - 1
+              }).onEnded({ offset in
+                totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
+                currentZoom = 0
+              }))
             
-//            .gesture(DragGesture().onChanged({ drag in
-//              let offsetX = drag.translation.width
-//              let offsetY = drag.translation.height
-//              printlnDbg("offset: \(offsetX) \(offsetY)")
-//            }).onEnded({ drag in
-//              
-//            }))
-//            .onAppear {
-//              
-//            } 
-      }.padding(10)
+            
+              //            .gesture(DragGesture().onChanged({ drag in
+              //              let offsetX = drag.translation.width
+              //              let offsetY = drag.translation.height
+              //              printlnDbg("offset: \(offsetX) \(offsetY)")
+              //            }).onEnded({ drag in
+              //
+              //            }))
+              //            .onAppear {
+              //
+              //            }
+          }
+        }.padding(10)
+      }
     }
   }
 }
