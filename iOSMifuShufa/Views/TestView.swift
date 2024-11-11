@@ -29,6 +29,15 @@ struct TestView: View {
   }()
   @State var enabled = false
   var body: some View {
+    ZStack {
+      Color.white
+      ProgressView().progressViewStyle(.circular).tint(.red)
+        .font(.title)
+        .scaleEffect(2)
+    }
+  }
+  
+  var stackView: some View {
     NavigationStack {
       ZStack(alignment: .topTrailing) {
         VStack {

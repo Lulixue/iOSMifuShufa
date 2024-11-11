@@ -339,7 +339,15 @@ class BeitieSingle: Decodable {
   }
 }
 
-class BeitieImage: Decodable {
+class BeitieImage: Decodable, Hashable {
+  static func == (lhs: BeitieImage, rhs: BeitieImage) -> Bool {
+    lhs.id == rhs.id
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id.toString())
+  }
+  
   var id: Int
   var fileName: String
   var path: String
@@ -493,8 +501,8 @@ extension BeitieWork {
     "《\(chineseName())》\(smallChineseVersion)"
   }
   
-  func workNameAttrStr(_ font: Font, smallerFont: Font) -> AttributedString {
-    var name = AttributedString("《\(chineseName())》")
+  func workNameAttrStr(_ font: Font = .body, smallerFont: Font = .footnote, curves: Bool = true) -> AttributedString {
+    var name = AttributedString(!curves ? chineseName() : "《\(chineseName())》")
     var version = AttributedString(chineseVersion() ?? "")
     name.font = font
     version.font = smallerFont

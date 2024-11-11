@@ -11,12 +11,15 @@ class NavigationViewModel : BaseObservableObject {
   @Published var singleViewModel: SingleViewModel!
   
   @Published var gotoWork = false
-  @Published var work: BeitieWork! = nil
-  @Published var imageIndex = 0
-   
+  @Published var workVM: WorkViewModel!
   
   func gotoSingles(singles: [BeitieSingle], index: Int = 0) {
     singleViewModel = SingleViewModel(singles: singles, selected: index)
     gotoSingleView = true
+  }
+  
+  func gotoWork(work: BeitieWork, index: Int = 0) {
+    workVM = WorkViewModel(work: work, pageIndex: index)
+    gotoWork = true
   }
 }

@@ -13,6 +13,7 @@ private let DEFAULT_DIVIDER_COLOR = UIColor.lightGray.swiftColor
 
 let CUSTOM_NAVIGATION_HEIGHT: CGFloat = 40
 let CUSTOM_NAVI_ICON_SIZE: CGFloat = 20
+let CUSTOM_NAVI_BACK_SIZE = CUSTOM_NAVI_ICON_SIZE - 4
 
 extension View {
   @ViewBuilder func squareFrame(_ size: CGFloat) -> some View {

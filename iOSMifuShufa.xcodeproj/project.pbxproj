@@ -77,6 +77,29 @@
 		F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */; };
 		F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C842CDDB96900096ED1 /* SinglesView.swift */; };
 		F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C862CDDCE4900096ED1 /* NavigationViewModel.swift */; };
+		F9F97C892CDDF28B00096ED1 /* NaviBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C882CDDF28800096ED1 /* NaviBarView.swift */; };
+		F9F97C8B2CDE54D600096ED1 /* ImagePreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C8A2CDE54CF00096ED1 /* ImagePreviewItem.swift */; };
+		F9F97C9B2CDF468E00096ED1 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */; };
+		F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F97C9C2CE0ED8800096ED1 /* BeitieImageView.swift */; };
+		F9FFC6992CE19915008AB5EE /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6912CE19915008AB5EE /* AgrumeServiceLocator.swift */; };
+		F9FFC69A2CE19915008AB5EE /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC68D2CE19915008AB5EE /* AgrumeDataSource.swift */; };
+		F9FFC69B2CE19915008AB5EE /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC68B2CE19915008AB5EE /* Agrume.swift */; };
+		F9FFC69C2CE19915008AB5EE /* AgrumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6922CE19915008AB5EE /* AgrumeView.swift */; };
+		F9FFC69D2CE19915008AB5EE /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6932CE19915008AB5EE /* Configuration.swift */; };
+		F9FFC69E2CE19915008AB5EE /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC68C2CE19915008AB5EE /* AgrumeCell.swift */; };
+		F9FFC69F2CE19915008AB5EE /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6942CE19915008AB5EE /* Foundation+Agrume.swift */; };
+		F9FFC6A02CE19915008AB5EE /* UIKit+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6972CE19915008AB5EE /* UIKit+Agrume.swift */; };
+		F9FFC6A12CE19915008AB5EE /* AgrumePhotoLibraryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6902CE19915008AB5EE /* AgrumePhotoLibraryHelper.swift */; };
+		F9FFC6A22CE19915008AB5EE /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC68F2CE19915008AB5EE /* AgrumeOverlayView.swift */; };
+		F9FFC6A32CE19915008AB5EE /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC68E2CE19915008AB5EE /* AgrumeImage.swift */; };
+		F9FFC6A42CE19915008AB5EE /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6952CE19915008AB5EE /* ImageDownloader.swift */; };
+		F9FFC6A52CE19915008AB5EE /* With.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6982CE19915008AB5EE /* With.swift */; };
+		F9FFC6AF2CE19A25008AB5EE /* NSImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6A92CE19A25008AB5EE /* NSImageView+SwiftyGif.swift */; };
+		F9FFC6B02CE19A25008AB5EE /* ObjcAssociatedWeakObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6AA2CE19A25008AB5EE /* ObjcAssociatedWeakObject.swift */; };
+		F9FFC6B12CE19A25008AB5EE /* UIImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6AD2CE19A25008AB5EE /* UIImage+SwiftyGif.swift */; };
+		F9FFC6B22CE19A25008AB5EE /* NSImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6A82CE19A25008AB5EE /* NSImage+SwiftyGif.swift */; };
+		F9FFC6B32CE19A25008AB5EE /* SwiftyGifManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6AC2CE19A25008AB5EE /* SwiftyGifManager.swift */; };
+		F9FFC6B42CE19A25008AB5EE /* UIImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFC6AE2CE19A25008AB5EE /* UIImageView+SwiftyGif.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +195,31 @@
 		F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintHelper.swift; sourceTree = "<group>"; };
 		F9F97C842CDDB96900096ED1 /* SinglesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglesView.swift; sourceTree = "<group>"; };
 		F9F97C862CDDCE4900096ED1 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
+		F9F97C882CDDF28800096ED1 /* NaviBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviBarView.swift; sourceTree = "<group>"; };
+		F9F97C8A2CDE54CF00096ED1 /* ImagePreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewItem.swift; sourceTree = "<group>"; };
+		F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		F9F97C9C2CE0ED8800096ED1 /* BeitieImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieImageView.swift; sourceTree = "<group>"; };
+		F9FFC68A2CE19915008AB5EE /* Agrume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Agrume.h; sourceTree = "<group>"; };
+		F9FFC68B2CE19915008AB5EE /* Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agrume.swift; sourceTree = "<group>"; };
+		F9FFC68C2CE19915008AB5EE /* AgrumeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
+		F9FFC68D2CE19915008AB5EE /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
+		F9FFC68E2CE19915008AB5EE /* AgrumeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeImage.swift; sourceTree = "<group>"; };
+		F9FFC68F2CE19915008AB5EE /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeOverlayView.swift; sourceTree = "<group>"; };
+		F9FFC6902CE19915008AB5EE /* AgrumePhotoLibraryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumePhotoLibraryHelper.swift; sourceTree = "<group>"; };
+		F9FFC6912CE19915008AB5EE /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
+		F9FFC6922CE19915008AB5EE /* AgrumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeView.swift; sourceTree = "<group>"; };
+		F9FFC6932CE19915008AB5EE /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		F9FFC6942CE19915008AB5EE /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
+		F9FFC6952CE19915008AB5EE /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		F9FFC6972CE19915008AB5EE /* UIKit+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Agrume.swift"; sourceTree = "<group>"; };
+		F9FFC6982CE19915008AB5EE /* With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = With.swift; sourceTree = "<group>"; };
+		F9FFC6A82CE19A25008AB5EE /* NSImage+SwiftyGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+SwiftyGif.swift"; sourceTree = "<group>"; };
+		F9FFC6A92CE19A25008AB5EE /* NSImageView+SwiftyGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
+		F9FFC6AA2CE19A25008AB5EE /* ObjcAssociatedWeakObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjcAssociatedWeakObject.swift; sourceTree = "<group>"; };
+		F9FFC6AB2CE19A25008AB5EE /* SwiftyGif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyGif.h; sourceTree = "<group>"; };
+		F9FFC6AC2CE19A25008AB5EE /* SwiftyGifManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyGifManager.swift; sourceTree = "<group>"; };
+		F9FFC6AD2CE19A25008AB5EE /* UIImage+SwiftyGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SwiftyGif.swift"; sourceTree = "<group>"; };
+		F9FFC6AE2CE19A25008AB5EE /* UIImageView+SwiftyGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +275,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */,
 				F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */,
 				F9F97C702CDA424100096ED1 /* ChineseConverter.swift */,
 				F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */,
@@ -257,6 +306,8 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C9C2CE0ED8800096ED1 /* BeitieImageView.swift */,
+				F9F97C882CDDF28800096ED1 /* NaviBarView.swift */,
 				F9F97C7C2CDC7B0000096ED1 /* Zoomable.swift */,
 				F9F97C7A2CDB26A700096ED1 /* ScrollTabView.swift */,
 				F9F97C762CDB164C00096ED1 /* TestView.swift */,
@@ -304,6 +355,8 @@
 		F98820462C3AC4500011DB04 /* iOSMifuShufa */ = {
 			isa = PBXGroup;
 			children = (
+				F9FFC6A72CE199F6008AB5EE /* SwiftGif */,
+				F9FFC6892CE198D5008AB5EE /* Agrume */,
 				F96E617B2CD9C6E0007329DB /* DebugResources */,
 				F96E616C2CD9C6DD007329DB /* Views */,
 				F96E61572CD9C6D1007329DB /* Helper */,
@@ -388,6 +441,7 @@
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
 			isa = PBXGroup;
 			children = (
+				F9F97C8A2CDE54CF00096ED1 /* ImagePreviewItem.swift */,
 				F9F97C842CDDB96900096ED1 /* SinglesView.swift */,
 				F9E345FA2CDA27D600E65B2B /* WorkView.swift */,
 				F96E60FE2CD85326007329DB /* BeitieViewModel.swift */,
@@ -408,6 +462,41 @@
 				F9ECB0232CD25CD00009C0DC /* HomePage.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		F9FFC6892CE198D5008AB5EE /* Agrume */ = {
+			isa = PBXGroup;
+			children = (
+				F9FFC68A2CE19915008AB5EE /* Agrume.h */,
+				F9FFC68B2CE19915008AB5EE /* Agrume.swift */,
+				F9FFC68C2CE19915008AB5EE /* AgrumeCell.swift */,
+				F9FFC68D2CE19915008AB5EE /* AgrumeDataSource.swift */,
+				F9FFC68E2CE19915008AB5EE /* AgrumeImage.swift */,
+				F9FFC68F2CE19915008AB5EE /* AgrumeOverlayView.swift */,
+				F9FFC6902CE19915008AB5EE /* AgrumePhotoLibraryHelper.swift */,
+				F9FFC6912CE19915008AB5EE /* AgrumeServiceLocator.swift */,
+				F9FFC6922CE19915008AB5EE /* AgrumeView.swift */,
+				F9FFC6932CE19915008AB5EE /* Configuration.swift */,
+				F9FFC6942CE19915008AB5EE /* Foundation+Agrume.swift */,
+				F9FFC6952CE19915008AB5EE /* ImageDownloader.swift */,
+				F9FFC6972CE19915008AB5EE /* UIKit+Agrume.swift */,
+				F9FFC6982CE19915008AB5EE /* With.swift */,
+			);
+			path = Agrume;
+			sourceTree = "<group>";
+		};
+		F9FFC6A72CE199F6008AB5EE /* SwiftGif */ = {
+			isa = PBXGroup;
+			children = (
+				F9FFC6A82CE19A25008AB5EE /* NSImage+SwiftyGif.swift */,
+				F9FFC6A92CE19A25008AB5EE /* NSImageView+SwiftyGif.swift */,
+				F9FFC6AA2CE19A25008AB5EE /* ObjcAssociatedWeakObject.swift */,
+				F9FFC6AB2CE19A25008AB5EE /* SwiftyGif.h */,
+				F9FFC6AC2CE19A25008AB5EE /* SwiftyGifManager.swift */,
+				F9FFC6AD2CE19A25008AB5EE /* UIImage+SwiftyGif.swift */,
+				F9FFC6AE2CE19A25008AB5EE /* UIImageView+SwiftyGif.swift */,
+			);
+			path = SwiftGif;
 			sourceTree = "<group>";
 		};
 		FA7AE8606FC7F52A40ABF162 /* Pods */ = {
@@ -721,13 +810,33 @@
 				F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */,
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
 				F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */,
+				F9FFC6AF2CE19A25008AB5EE /* NSImageView+SwiftyGif.swift in Sources */,
+				F9FFC6B02CE19A25008AB5EE /* ObjcAssociatedWeakObject.swift in Sources */,
+				F9FFC6B12CE19A25008AB5EE /* UIImage+SwiftyGif.swift in Sources */,
+				F9FFC6B22CE19A25008AB5EE /* NSImage+SwiftyGif.swift in Sources */,
+				F9FFC6B32CE19A25008AB5EE /* SwiftyGifManager.swift in Sources */,
+				F9FFC6B42CE19A25008AB5EE /* UIImageView+SwiftyGif.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
 				F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */,
+				F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */,
 				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
 				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
+				F9FFC6992CE19915008AB5EE /* AgrumeServiceLocator.swift in Sources */,
+				F9FFC69A2CE19915008AB5EE /* AgrumeDataSource.swift in Sources */,
+				F9FFC69B2CE19915008AB5EE /* Agrume.swift in Sources */,
+				F9FFC69C2CE19915008AB5EE /* AgrumeView.swift in Sources */,
+				F9FFC69D2CE19915008AB5EE /* Configuration.swift in Sources */,
+				F9FFC69E2CE19915008AB5EE /* AgrumeCell.swift in Sources */,
+				F9FFC69F2CE19915008AB5EE /* Foundation+Agrume.swift in Sources */,
+				F9FFC6A02CE19915008AB5EE /* UIKit+Agrume.swift in Sources */,
+				F9FFC6A12CE19915008AB5EE /* AgrumePhotoLibraryHelper.swift in Sources */,
+				F9FFC6A22CE19915008AB5EE /* AgrumeOverlayView.swift in Sources */,
+				F9FFC6A32CE19915008AB5EE /* AgrumeImage.swift in Sources */,
+				F9FFC6A42CE19915008AB5EE /* ImageDownloader.swift in Sources */,
+				F9FFC6A52CE19915008AB5EE /* With.swift in Sources */,
 				F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */,
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
 				F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */,
@@ -747,9 +856,11 @@
 				F9F97C712CDA424400096ED1 /* ChineseConverter.swift in Sources */,
 				F96E616E2CD9C6DD007329DB /* DragGestureValueExtension.swift in Sources */,
 				F96E616F2CD9C6DD007329DB /* LeftMenuPanel.swift in Sources */,
+				F9F97C8B2CDE54D600096ED1 /* ImagePreviewItem.swift in Sources */,
 				F96E61702CD9C6DD007329DB /* RightMenuPanel.swift in Sources */,
 				F96E61712CD9C6DD007329DB /* SideMenu.swift in Sources */,
 				F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */,
+				F9F97C892CDDF28B00096ED1 /* NaviBarView.swift in Sources */,
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
@@ -759,6 +870,7 @@
 				F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */,
 				F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */,
 				F96E61782CD9C6DD007329DB /* Loading.swift in Sources */,
+				F9F97C9B2CDF468E00096ED1 /* ImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

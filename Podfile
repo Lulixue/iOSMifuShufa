@@ -18,6 +18,7 @@ target 'iOSMifuShufa' do
   pod 'Zip', '~> 2.1'
   pod 'DeviceKit'
   pod 'SDWebImageSwiftUI'
+#  pod 'Agrume'
   
   target 'iOSMifuShufaTests' do
     inherit! :search_paths

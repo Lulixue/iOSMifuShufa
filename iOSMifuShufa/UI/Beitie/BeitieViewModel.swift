@@ -105,6 +105,8 @@ class BeitieViewModel: AlertViewModel {
     doSearch(text)
   }
   
+  
+  
   func doSearch(_ text: String) {
     Task {
       var result = BeitieDbHelper.BeitieDictionary()
@@ -143,6 +145,10 @@ class BeitieViewModel: AlertViewModel {
     withAnimation {
       self.showSearchBar = false
     }
+  }
+  
+  func onClickWork(_ work: BeitieWork) {
+    
   }
   
   func hideVersionWorks() {

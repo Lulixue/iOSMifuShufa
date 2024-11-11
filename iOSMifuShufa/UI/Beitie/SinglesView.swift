@@ -46,7 +46,7 @@ struct SinglesView: View {
   private let bottomBarHeight: CGFloat = 80
   var body: some View {
     VStack(spacing: 0) {
-      HStack(spacing: 12) {
+      NaviView {
         let title = {
           let s = currentSingle
           var t = AttributedString(s.showChars)
@@ -57,11 +57,8 @@ struct SinglesView: View {
           sub.foregroundColor = Color.colorPrimary
           return t + sub
         }()
-        Button {
+        BackButtonView {
           presentationMode.wrappedValue.dismiss()
-        } label: {
-          Image(systemName: "chevron.left").square(size: CUSTOM_NAVI_ICON_SIZE-4)
-            .foregroundStyle(Color.colorPrimary)
         }
         Spacer()
         Text(title)
@@ -78,7 +75,7 @@ struct SinglesView: View {
           Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
             .foregroundStyle(Color.colorPrimary)
         }
-      }.padding(.horizontal, 10).frame(height: CUSTOM_NAVIGATION_HEIGHT)
+      }
       Divider()
       ZStack {
         TabView(selection: $pageIndex) {

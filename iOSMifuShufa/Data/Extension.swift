@@ -143,6 +143,20 @@ extension Array where Element : Equatable {
   }
 }
 
+extension Array {
+  
+  func sortedBy(mapper: @escaping (Element) -> Int) -> Array {
+    sorted { l, r in
+      mapper(l) < mapper(r)
+    }
+  }
+  
+  func sortedByDescending(mapper: @escaping (Element) -> Int) -> Array {
+    sorted { l, r in
+      mapper(l) > mapper(r)
+    }
+  }
+}
 
 extension Set {
   var size: Int {

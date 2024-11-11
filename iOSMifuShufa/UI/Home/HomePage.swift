@@ -113,6 +113,7 @@ struct HomePage: View {
   
   @ViewBuilder func todayWork(_ work: BeitieWork) -> some View {
     TodayCardView(title: "今日法帖") {
+      self.navVM.gotoWork(work: work)
     } content: {
       VStack(alignment: .center, spacing: 8) {
         HStack(alignment: .center) {
@@ -437,6 +438,9 @@ struct HomePage: View {
     }, viewModel: sideVM).navigationDestination(isPresented: $navVM.gotoSingleView) {
       SinglesView(viewModel: navVM.singleViewModel!)
         .navigationBarHidden(true)
+    }
+    .navigationDestination(isPresented: $navVM.gotoWork) {
+      WorkView(viewModel: navVM.workVM!)
     }
   }
   

@@ -83,7 +83,7 @@ struct VersionWorkView: View {
                 let version = work.chineseVersion()
                 let name = version?.isNotEmpty() == true ? version! : work.chineseName()
                 Button {
-                  
+                  viewModel.onClickWork(works.first())
                 } label: {
                   HStack {
                     WebImage(url: work.cover.url!) { img in
@@ -148,6 +148,8 @@ struct WorkListItem: View {
     Button {
       if (works.size > 1) {
         viewModel.updateVersionWorks(works: works)
+      } else {
+        viewModel.onClickWork(works.first())
       }
     } label: {
       HStack(spacing: 6) {
@@ -192,7 +194,7 @@ struct WorkListItem: View {
             .foregroundStyle(Color.defaultText)
         }
         Button {
-          
+          viewModel.onClickWork(works.first())
         } label: {
           HStack(spacing: 3) {
             Image(systemName: "arrow.up.right.square").square(size: 10)
@@ -225,7 +227,7 @@ struct WorkItem: View {
   private func onClick() {
     printlnDbg("onClick")
     if works.size == 1 {
-      
+      viewModel.onClickWork(works.first())
     } else {
       viewModel.updateVersionWorks(works: works)
     }

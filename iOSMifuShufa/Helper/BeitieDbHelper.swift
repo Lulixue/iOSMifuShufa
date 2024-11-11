@@ -6,7 +6,7 @@
 //
 import SQLite
 import Collections
- 
+
 enum WorkCategory: String, CaseIterable {
   case Boutique
   case Handu
@@ -159,8 +159,8 @@ class BeitieDbHelper {
     } catch {
       println("getSinglesByImageId \(error)")
     }
-    return result.sorted { f, s in
-      f.imageId > s.imageId
+    return result.sortedBy {
+      $0.index
     }
   }
   
@@ -425,6 +425,15 @@ class BeitieDbHelper {
 
 extension BeitieImage {
   
+  func fileName(_ type: ImageLoadType) -> String {
+    switch type {
+    case .JpgCompressed, .JpgCompressedThumbnail:
+      fileName.replacing(".png", with: ".jpg")
+    default:
+      fileName
+    }
+  }
+  
   func toTypePath(_ type: ImageLoadType) -> String {
     switch type {
     case ImageLoadType.Original: path
@@ -477,8 +486,6 @@ extension BeitieSingle {
       url
     }
   }
-  
-  
   
   var url: String {
     return work.urlPrefix + "/" + ((AnalyzeHelper.shared.singleOriginal) ? path.orgPath : path )
