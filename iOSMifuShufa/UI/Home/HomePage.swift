@@ -51,7 +51,7 @@ struct TodayCardView<Content: View>: View {
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
-  @StateObject var navVM = NavigationViewModel()
+  @EnvironmentObject var navVM: NavigationViewModel
   @FocusState var focused: Bool
   private let searchBarHeight = 36.0
   private let radius = 4.0
@@ -189,7 +189,7 @@ struct HomePage: View {
       if !collapseBinding.wrappedValue {
         
         let showSubtitle = singles.hasAny { it in order.getSingleSubtitle(it)?.isNotEmpty() == true }
-        autoColumnGrid(singles, space: 10, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 8, paddingValues: PaddingValue(vertical: 10)) { width, i, single in
+        autoColumnGrid(singles, space: 12, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 12, paddingValues: PaddingValue(vertical: 10)) { width, i, single in
           Button {
             viewModel.onClickSinglePreview(i, collection: singles)
           } label: {
@@ -394,6 +394,9 @@ struct HomePage: View {
     }.simultaneousGesture(TapGesture().onEnded({ _ in
       viewModel.hideDropdown()
     }), isEnabled: viewModel.hasDropdown())
+    .simultaneousGesture(DragGesture().onChanged({ _ in
+      viewModel.hideDropdown()
+    }), isEnabled: viewModel.hasDropdown())
   }
   
   var defaultView: some View {
@@ -407,6 +410,7 @@ struct HomePage: View {
         if work != nil {
           todayWork(work!)
         }
+        Spacer()
       }.padding(.horizontal, 12).padding(.vertical, 12)
     }.background(Colors.surfaceVariant.swiftColor)
   }
@@ -435,16 +439,10 @@ struct HomePage: View {
             }
           }
         })
-    }, viewModel: sideVM).navigationDestination(isPresented: $navVM.gotoSingleView) {
-      SinglesView(viewModel: navVM.singleViewModel!)
-        .navigationBarHidden(true)
-    }
-    .navigationDestination(isPresented: $navVM.gotoWorkView) {
-      WorkView(viewModel: navVM.workVM!)
-    }
+    }, viewModel: sideVM)
   }
   
-  var centerView: some View {
+var centerView: some View {
     VStack(spacing: 0) {
       HStack(spacing: 0) {
         Image("mi").renderingMode(.template).resizable().frame(width: 18, height: 20)
@@ -495,6 +493,7 @@ struct HomePage: View {
 
 #Preview {
   HomePage(viewModel: HomeViewModel())
+    .environmentObject(NavigationViewModel())
 }
 
 

@@ -55,14 +55,32 @@ extension WorkViewModel {
   }
 }
 
+struct TappableSlider: View {
+  var value: Binding<CGFloat>
+  var range: ClosedRange<CGFloat>
+  
+  var body: some View {
+    GeometryReader { geometry in
+      Slider(value: self.value, in: self.range)
+        .gesture(DragGesture(minimumDistance: 0).onEnded { value in
+          let percent = min(max(0, Float(value.location.x / geometry.size.width * 1)), 1)
+          let newValue = self.range.lowerBound + round(CGFloat(percent) * (self.range.upperBound - self.range.lowerBound))
+          self.value.wrappedValue = newValue
+        })
+    }
+  }
+}
+
 struct WorkView: View {
   @StateObject var viewModel: WorkViewModel
   @StateObject var managerVM: ImageManager = ImageManager()
+  @StateObject var naviVM = NavigationViewModel()
   @Environment(\.presentationMode) var presentationmode
   @State var showImageViewer: Bool = true
   
   @State var tabIndex = 0
-  @State var sliderProgress: CGFloat = 0.0
+  @State var sliderProgress: CGFloat = 0
+  @State var galleryScroll = false
    
   
   var work: BeitieWork {
@@ -73,55 +91,68 @@ struct WorkView: View {
     viewModel.images
   }
   
+  var currentImage: BeitieImage {
+    images[viewModel.pageIndex]
+  }
+  
   @State private var scrollProxy: ScrollViewProxy? = nil
+  @ScrollState private var previewScrollState
   
   var previewBottom: some View {
-    HStack {
-      Spacer()
-      ScrollView(.horizontal) {
-        ScrollViewReader { proxy in
-          LazyHStack(spacing: 6) {
-            ForEach(0..<images.size, id: \.self) { i in
-              let image = images[i]
-              let selected = i == viewModel.pageIndex
-              ZStack {
-                Button {
-                  viewModel.pageIndex = i
-                } label: {
-                  WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
-                    img.image?.resizable()
-                      .aspectRatio(contentMode: .fill)
-                      .frame(maxWidth: 80)
-                  }.onSuccess(perform: { _, _, _ in
-                    
-                  }).clipShape(RoundedRectangle(cornerRadius: 2))
-                    .padding(0.5)
-                    .background {
-                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
-                    }.padding(.horizontal, selected ? 0 : 0.5)
+    ScrollView(.horizontal) {
+      ScrollViewReader { proxy in
+        LazyHStack(spacing: 6) {
+          ForEach(0..<images.size, id: \.self) { i in
+            let image = images[i]
+            let selected = i == viewModel.pageIndex
+            ZStack {
+              Button {
+                viewModel.pageIndex = i
+              } label: {
+                WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
+                  img.image?.resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: 80)
+                }.onSuccess(perform: { _, _, _ in
+                  
+                }).clipShape(RoundedRectangle(cornerRadius: 2))
+                  .padding(0.5)
+                  .background {
+                    RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
+                  }.padding(.horizontal, selected ? 0 : 0.5)
+              }
+              if selected {
+                Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
+              }
+            }.id(i)
+          }
+        }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: 80)
+          .onAppear {
+            scrollProxy = proxy
+            if viewModel.pageIndex > 0 {
+              Task {
+                sleep(1)
+                DispatchQueue.main.async {
+                  syncScroll(viewModel.pageIndex)
                 }
-                if selected {
-                  Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
-                }
-              }.id(i)
+              }
             }
-          }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: 80)
-            .onAppear {
-              scrollProxy = proxy
-                //              if viewModel.pageIndex > 0 {
-                //                Task {
-                //                  sleep(1)
-                //                  DispatchQueue.main.async {
-                //                    proxy.scrollTo(max(self.viewModel.pageIndex-1, 0), anchor: .leading)
-                //                  }
-                //                }
-                //              }
-            }
-        }
-      }.frame(height: 80)
-        .environment(\.layoutDirection, .rightToLeft)
-      Spacer()
+          }
+      }
     }
+      .frame(height: 80)
+      .environment(\.layoutDirection, .rightToLeft)
+      .scrollViewStyle(.defaultStyle($previewScrollState))
+      .onChange(of: previewScrollState.isDragging) { newValue in
+        if previewScrollState.isDragging {
+          galleryScroll = false
+        }
+      }
+  }
+  private func syncScroll(_ index: Int) {
+    let scrollIndex = min(index+1, images.size-1)
+    printlnDbg("syncScroll \(index)")
+    scrollProxy?.scrollTo(scrollIndex, anchor: index == images.lastIndex ? .trailing : .leading)
   }
   
   @State var imageSize: CGSize = .zero
@@ -135,11 +166,18 @@ struct WorkView: View {
         Text(work.workNameAttrStr(.body, smallerFont: .footnote, curves: false))
           .foregroundStyle(work.btType.nameColor(baseColor: Color.colorPrimary))
         Spacer()
-        Button {
-          
-        } label: {
-          Image("images").square(size: CUSTOM_NAVI_ICON_SIZE)
-            .foregroundStyle(Color.colorPrimary)
+        if currentImage.singleCount > 0 {
+          Button {
+            Task {
+              let singles = BeitieDbHelper.shared.getSinglesByImageId(currentImage.id)
+              DispatchQueue.main.async {
+                self.naviVM.gotoSingles(singles: singles)
+              }
+            }
+          } label: {
+            Image("singles").square(size: CUSTOM_NAVI_ICON_SIZE-1)
+              .foregroundStyle(Color.colorPrimary)
+          }
         }
         Button {
           
@@ -152,29 +190,32 @@ struct WorkView: View {
       ZStack(alignment: .bottom) {
         Color.black
         if imageSize.width > 0 {
-          BeitieGallerView(images: images, parentSize: imageSize, pageIndex: $tabIndex)
+          BeitieGallerView(images: images, parentSize: imageSize, pageIndex: $tabIndex, galleryScroll: $galleryScroll)
             .environment(\.layoutDirection, .rightToLeft)
         }
       }.background(.black)
         .background(SizeReaderView(binding: $imageSize))
       Divider()
       ScrollView {
-        HStack(spacing: 12) {
-          Button {
-            
-          } label: {
-            HStack(spacing: 5) {
-              Text("image_text".localized).font(.callout)
-              Image(systemName: "triangle.fill").square(size: 7)
-                .rotationEffect(.degrees(180))
-            }.foregroundStyle(Color.colorPrimary)
+        VStack(alignment: .center) {
+          HStack(spacing: 12) {
+            Button {
+              
+            } label: {
+              HStack(spacing: 5) {
+                Text("image_text".localized).font(.callout)
+                Image(systemName: "triangle.fill").square(size: 7)
+                  .rotationEffect(.degrees(180))
+              }.foregroundStyle(Color.colorPrimary)
+            }
+            ZStack {
+              Slider(value: $sliderProgress, in: 1...(CGFloat(viewModel.images.size))) .rotationEffect(.degrees(180))
+            }
+            Text("\(viewModel.pageIndex+1)/\(viewModel.images.size)\("页".orCht("頁"))")
+              .foregroundStyle(Color.colorPrimary)
           }
-          Slider(value: $sliderProgress, in: CGFloat(1)...CGFloat(viewModel.images.size)) {
-          }.rotationEffect(.degrees(180))
-          Text("\(viewModel.pageIndex+1)/\(viewModel.images.size)\("页".orCht("頁"))")
-            .foregroundStyle(Color.colorPrimary)
-        }.frame(height: 40)
-      }.padding(.horizontal, 10).frame(height: 40)
+        }.frame(height: scrollBarHeight)
+      }.padding(.horizontal, 10).frame(height: scrollBarHeight)
       if images.size > 1 && viewModel.showBottomBar {
         Divider()
         previewBottom
@@ -183,7 +224,9 @@ struct WorkView: View {
       .onChange(of: tabIndex) { newValue in
         if viewModel.pageIndex != newValue {
           viewModel.pageIndex = newValue
-          scrollProxy?.scrollTo(newValue, anchor: .leading)
+          if galleryScroll {
+            syncScroll(newValue)
+          }
         }
       }
       .onChange(of: viewModel.pageIndex) { newValue in
@@ -196,9 +239,14 @@ struct WorkView: View {
         let newIndex = Int(newValue) - 1
         if (newIndex != tabIndex) {
           tabIndex = newIndex
+          syncScroll(newIndex)
         }
+      }.navigationDestination(isPresented: $naviVM.gotoSingleView) {
+        SinglesView(viewModel: naviVM.singleViewModel!)
       }
   }
+  
+  private let scrollBarHeight: CGFloat = 44
 }
 
 #Preview {

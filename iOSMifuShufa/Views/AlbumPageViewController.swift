@@ -33,7 +33,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
       // Do any additional setup after loading the view.
     self.dataSource = self
     self.delegate = self
-    view.backgroundColor = .red
+    view.backgroundColor = .black
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {

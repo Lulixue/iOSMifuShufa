@@ -293,7 +293,7 @@ struct StrokeList: View {
 
 struct FilterView: View {
   @EnvironmentObject var viewModel: FilterViewModel
-  @State private var type = SearchFilterType.Radical
+  @State private var type = SearchFilterType.Structure
   
   var body: some View {
     VStack(spacing: 0) {
@@ -369,7 +369,10 @@ struct SizeReaderView: View {
         .preference(key: SizePreferenceKey.self, value: geo.frame(in: .local).size)
     }
     .onPreferenceChange(SizePreferenceKey.self) { h in
-      binding = h
+      let size = binding
+      if (h.width != size.width || h.height != size.height) {
+        binding = h
+      }
     }
   }
 }

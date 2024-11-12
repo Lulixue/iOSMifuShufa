@@ -209,7 +209,7 @@ struct WorkListItem: View {
         }.buttonStyle(PrimaryButton(bgColor: .blue, horPadding: 6, verPadding: 4))
           .padding(.leading, 3)
       }.padding(.vertical, 7)
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 13)
         .background(.white)
     }.buttonStyle(BgClickableButton())
   }
@@ -376,7 +376,7 @@ struct BeitiePage: View {
   @StateObject var viewModel: BeitieViewModel = BeitieViewModel()
   private let btnColor = Color.colorPrimary
   @State var showOrderDropdown = false
-  @StateObject var navigationVM = NavigationViewModel()
+  @EnvironmentObject var navigationVM: NavigationViewModel
    
   private let gridItemLayout = {
     var size = ((UIScreen.currentWidth - 100) / WorkItem.itemWidth)
@@ -452,11 +452,11 @@ struct BeitiePage: View {
                   scrollProxy = proxy
                 }
             }
-          }.blur(radius: viewModel.showVersionWorks ? 3 : 0)
+          }.blur(radius: viewModel.showVersionWorks ? 5 : 0)
             .padding(.top, viewModel.showSearchBar ? viewModel.searchBarHeight : 0)
           if viewModel.showVersionWorks {
             ZStack(alignment: .center) {
-              Color.black.opacity(0.65)
+              Color.black.opacity(0.8)
               VersionWorkView(works: viewModel.versionWorks)
             }
           }
@@ -484,6 +484,9 @@ struct BeitiePage: View {
       viewModel.syncShowMap()
       resetScroll()
     }
+    .onChange(of: viewModel.listView, perform: { newValue in
+      resetScroll()
+    })
     .onChange(of: viewModel.orderType) { _ in
       viewModel.syncShowMap()
       resetScroll()
@@ -493,17 +496,13 @@ struct BeitiePage: View {
         viewModel.syncShowMap()
       }
       resetScroll()
-    }.navigationDestination(isPresented: $navigationVM.gotoWorkView) {
-      WorkView(viewModel: navigationVM.workVM!)
-    }
-    .navigationDestination(isPresented: $navigationVM.gotoWorkIntroView) {
-      WorkIntroView(viewModel: navigationVM.introWorkVM!)
     }
   }
   
   private func resetScroll() {
+    printlnDbg("resetScroll")
     Task {
-      sleep(1)
+      try? await Task.sleep(nanoseconds: 300_000_000)
       DispatchQueue.main.async {
         self.scrollProxy?.scrollTo(0, anchor: .top)
       }
@@ -512,5 +511,5 @@ struct BeitiePage: View {
 }
 
 #Preview {
-  BeitiePage()
+  BeitiePage().environmentObject(NavigationViewModel())
 }

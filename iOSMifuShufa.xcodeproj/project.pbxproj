@@ -49,6 +49,21 @@
 		F988205E2C3AC4520011DB04 /* iOSMifuShufaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988205D2C3AC4520011DB04 /* iOSMifuShufaTests.swift */; };
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
+		F9E124752CE35D1000BB8CD4 /* JiziView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124742CE35D0C00BB8CD4 /* JiziView.swift */; };
+		F9E1248B2CE36D9200BB8CD4 /* ScrollState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124812CE36D9200BB8CD4 /* ScrollState.swift */; };
+		F9E1248C2CE36D9200BB8CD4 /* ScrollListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124792CE36D9200BB8CD4 /* ScrollListeners.swift */; };
+		F9E1248D2CE36D9200BB8CD4 /* SnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124872CE36D9200BB8CD4 /* SnapCarouselView.swift */; };
+		F9E1248E2CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124802CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift */; };
+		F9E1248F2CE36D9200BB8CD4 /* BindedSnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124862CE36D9200BB8CD4 /* BindedSnapCarouselView.swift */; };
+		F9E124902CE36D9200BB8CD4 /* HorizontalCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247C2CE36D9200BB8CD4 /* HorizontalCarouselView.swift */; };
+		F9E124912CE36D9200BB8CD4 /* ScrollViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124832CE36D9200BB8CD4 /* ScrollViewStyle.swift */; };
+		F9E124922CE36D9200BB8CD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124762CE36D9200BB8CD4 /* Extensions.swift */; };
+		F9E124932CE36D9200BB8CD4 /* PrefrenceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124772CE36D9200BB8CD4 /* PrefrenceKeys.swift */; };
+		F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247B2CE36D9200BB8CD4 /* CarouselView.swift */; };
+		F9E124952CE36D9200BB8CD4 /* ScrollContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124782CE36D9200BB8CD4 /* ScrollContext.swift */; };
+		F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247F2CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift */; };
+		F9E124972CE36D9200BB8CD4 /* VerticalCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247D2CE36D9200BB8CD4 /* VerticalCarouselView.swift */; };
+		F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124842CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift */; };
 		F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E345FA2CDA27D600E65B2B /* WorkView.swift */; };
 		F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */; };
 		F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0232CD25CD00009C0DC /* HomePage.swift */; };
@@ -153,6 +168,21 @@
 		F98820632C3AC4520011DB04 /* iOSMifuShufaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSMifuShufaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F9E124742CE35D0C00BB8CD4 /* JiziView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziView.swift; sourceTree = "<group>"; };
+		F9E124762CE36D9200BB8CD4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F9E124772CE36D9200BB8CD4 /* PrefrenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefrenceKeys.swift; sourceTree = "<group>"; };
+		F9E124782CE36D9200BB8CD4 /* ScrollContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContext.swift; sourceTree = "<group>"; };
+		F9E124792CE36D9200BB8CD4 /* ScrollListeners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollListeners.swift; sourceTree = "<group>"; };
+		F9E1247B2CE36D9200BB8CD4 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		F9E1247C2CE36D9200BB8CD4 /* HorizontalCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCarouselView.swift; sourceTree = "<group>"; };
+		F9E1247D2CE36D9200BB8CD4 /* VerticalCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCarouselView.swift; sourceTree = "<group>"; };
+		F9E1247F2CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScrollViewStyle.swift; sourceTree = "<group>"; };
+		F9E124802CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScrollViewStyleCoordinator.swift; sourceTree = "<group>"; };
+		F9E124812CE36D9200BB8CD4 /* ScrollState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollState.swift; sourceTree = "<group>"; };
+		F9E124832CE36D9200BB8CD4 /* ScrollViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewStyle.swift; sourceTree = "<group>"; };
+		F9E124842CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewStyleModifier.swift; sourceTree = "<group>"; };
+		F9E124862CE36D9200BB8CD4 /* BindedSnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindedSnapCarouselView.swift; sourceTree = "<group>"; };
+		F9E124872CE36D9200BB8CD4 /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
 		F9E345FA2CDA27D600E65B2B /* WorkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkView.swift; sourceTree = "<group>"; };
 		F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitiePage.swift; sourceTree = "<group>"; };
 		F9ECB0232CD25CD00009C0DC /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
@@ -231,6 +261,7 @@
 		F96E614E2CD9C6C9007329DB /* Jizi */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124742CE35D0C00BB8CD4 /* JiziView.swift */,
 				F96E614D2CD9C6C9007329DB /* JiziPage.swift */,
 			);
 			path = Jizi;
@@ -323,6 +354,7 @@
 		F98820462C3AC4500011DB04 /* iOSMifuShufa */ = {
 			isa = PBXGroup;
 			children = (
+				F9E1248A2CE36D9200BB8CD4 /* ScrollUI */,
 				F96E617B2CD9C6E0007329DB /* DebugResources */,
 				F96E616C2CD9C6DD007329DB /* Views */,
 				F96E61572CD9C6D1007329DB /* Helper */,
@@ -402,6 +434,75 @@
 				F9ECB02B2CD25CE10009C0DC /* Settings.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		F9E1247A2CE36D9200BB8CD4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F9E124762CE36D9200BB8CD4 /* Extensions.swift */,
+				F9E124772CE36D9200BB8CD4 /* PrefrenceKeys.swift */,
+				F9E124782CE36D9200BB8CD4 /* ScrollContext.swift */,
+				F9E124792CE36D9200BB8CD4 /* ScrollListeners.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F9E1247E2CE36D9200BB8CD4 /* CarouselView */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1247B2CE36D9200BB8CD4 /* CarouselView.swift */,
+				F9E1247C2CE36D9200BB8CD4 /* HorizontalCarouselView.swift */,
+				F9E1247D2CE36D9200BB8CD4 /* VerticalCarouselView.swift */,
+			);
+			path = CarouselView;
+			sourceTree = "<group>";
+		};
+		F9E124822CE36D9200BB8CD4 /* DefaultScrollViewStyle */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1247F2CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift */,
+				F9E124802CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift */,
+				F9E124812CE36D9200BB8CD4 /* ScrollState.swift */,
+			);
+			path = DefaultScrollViewStyle;
+			sourceTree = "<group>";
+		};
+		F9E124852CE36D9200BB8CD4 /* ScrollViewStyle */ = {
+			isa = PBXGroup;
+			children = (
+				F9E124822CE36D9200BB8CD4 /* DefaultScrollViewStyle */,
+				F9E124832CE36D9200BB8CD4 /* ScrollViewStyle.swift */,
+				F9E124842CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift */,
+			);
+			path = ScrollViewStyle;
+			sourceTree = "<group>";
+		};
+		F9E124882CE36D9200BB8CD4 /* SnapCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				F9E124862CE36D9200BB8CD4 /* BindedSnapCarouselView.swift */,
+				F9E124872CE36D9200BB8CD4 /* SnapCarouselView.swift */,
+			);
+			path = SnapCarousel;
+			sourceTree = "<group>";
+		};
+		F9E124892CE36D9200BB8CD4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1247E2CE36D9200BB8CD4 /* CarouselView */,
+				F9E124852CE36D9200BB8CD4 /* ScrollViewStyle */,
+				F9E124882CE36D9200BB8CD4 /* SnapCarousel */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F9E1248A2CE36D9200BB8CD4 /* ScrollUI */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1247A2CE36D9200BB8CD4 /* Helpers */,
+				F9E124892CE36D9200BB8CD4 /* Views */,
+			);
+			path = ScrollUI;
 			sourceTree = "<group>";
 		};
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
@@ -739,6 +840,7 @@
 				F96E61012CD8574D007329DB /* CurrentUser.swift in Sources */,
 				F9FFC6BE2CE233D8008AB5EE /* AlbumPageViewController.swift in Sources */,
 				F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */,
+				F9E124752CE35D1000BB8CD4 /* JiziView.swift in Sources */,
 				F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */,
 				F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */,
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
@@ -746,6 +848,20 @@
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
 				F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */,
+				F9E1248B2CE36D9200BB8CD4 /* ScrollState.swift in Sources */,
+				F9E1248C2CE36D9200BB8CD4 /* ScrollListeners.swift in Sources */,
+				F9E1248D2CE36D9200BB8CD4 /* SnapCarouselView.swift in Sources */,
+				F9E1248E2CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift in Sources */,
+				F9E1248F2CE36D9200BB8CD4 /* BindedSnapCarouselView.swift in Sources */,
+				F9E124902CE36D9200BB8CD4 /* HorizontalCarouselView.swift in Sources */,
+				F9E124912CE36D9200BB8CD4 /* ScrollViewStyle.swift in Sources */,
+				F9E124922CE36D9200BB8CD4 /* Extensions.swift in Sources */,
+				F9E124932CE36D9200BB8CD4 /* PrefrenceKeys.swift in Sources */,
+				F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */,
+				F9E124952CE36D9200BB8CD4 /* ScrollContext.swift in Sources */,
+				F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */,
+				F9E124972CE36D9200BB8CD4 /* VerticalCarouselView.swift in Sources */,
+				F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */,
 				F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */,
 				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,

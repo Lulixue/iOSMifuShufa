@@ -10,6 +10,7 @@ import UIKit
 import BUAdSDK
 import MMKVCore
 import MMKV
+import Combine
 
 class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelegate,
                         BUSplashZoomOutDelegate {
@@ -206,47 +207,52 @@ class SplashViewModel: AlertViewModel {
 
 struct SplashView: View {
   @StateObject var viewModel: SplashViewModel = SplashViewModel()
+  @Environment(\.presentationMode) var presentationMode
+  
   func onFinishAd() {
     withAnimation {
       viewModel.showAd = false
     }
     viewModel.finishAd()
   }
+  var splashView: some View {
+    ZStack {
+      Color.background
+      VStack {
+        Image("tizi")
+          .resizable()
+          .scaledToFit()
+        ProgressView(value: viewModel.progress)
+        Text(viewModel.status)
+          .foregroundStyle(Color.searchHeader)
+          .onTapGesture {
+#if DEBUG
+            viewModel.gotoMain = true
+#endif
+          }
+        (UIScreen.currentHeight*0.1).VSpacer()
+      }.frame(width: 200)
+      
+      if viewModel.showAd {
+        AdView(finishAd: onFinishAd)
+      }
+    }.ignoresSafeArea()
+      .navigationBarTitle("")
+      .navigationBarHidden(true)
+      .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
+        Button("ok".localized, role: .cancel) {
+          exit(0)
+        }
+      }
+  }
   
   var body: some View {
-    NavigationView {
-      ZStack {
-        Color.background
-        VStack {
-          Image("tizi")
-            .resizable()
-            .scaledToFit()
-          ProgressView(value: viewModel.progress)
-          Text(viewModel.status)
-            .foregroundStyle(Color.searchHeader)
-            .onTapGesture {
-              #if DEBUG
-              viewModel.gotoMain = true
-              #endif
-            }
-          (UIScreen.currentHeight*0.1).VSpacer()
-        }.frame(width: 200)
-        
-        if viewModel.showAd {
-          AdView(finishAd: onFinishAd)
-        }
-        NavigationLink(destination: ContentView()
-          .navigationBarTitle("")
-          .navigationBarHidden(true), isActive: $viewModel.gotoMain) {
-          EmptyView()
-          
-        }
-      }.ignoresSafeArea()
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
-          Button("ok".localized, role: .cancel) {}
-        }
+    NavigationStack {
+      if viewModel.gotoMain {
+        ContentView()
+      } else {
+        splashView
+      }
     }
     .navigationViewStyle(.stack)
   }

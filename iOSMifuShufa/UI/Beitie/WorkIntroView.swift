@@ -19,7 +19,7 @@ struct WorkIntroView: View {
     let title: String
     let value: String
     var body: some View {
-      HStack(alignment: .firstTextBaseline) {
+      HStack(alignment: .top) {
         Text(title).font(.footnote).bold().padding(.horizontal, 4).padding(.vertical, 3).foregroundStyle(.white).background {
           RoundedRectangle(cornerRadius: 5).fill(Color.searchHeader)
         }

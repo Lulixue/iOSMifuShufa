@@ -101,6 +101,12 @@ class BeitieDbHelper {
     return result
   }
   
+//  @Query("select * from BeitieImage where id = :id")
+  func getImageById(_ id: Int) -> BeitieImage? {
+    guard let row = try? db.prepare(imageTable.filter(idExp == id)).first else { return nil }
+    return try? BeitieImage(from: row.decoder())
+  }
+
   func getSingleById(_ id: Int) -> BeitieSingle? {
     guard let row = try? db.prepare(singleTable.filter(idExp == id)).first else { return nil }
     return try? BeitieSingle(from: row.decoder())

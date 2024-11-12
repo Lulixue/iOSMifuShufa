@@ -8,13 +8,100 @@
 import Foundation
 import SwiftUI
 
+class JiziViewModel: AlertViewModel {
+  @Published var text = ""
+  @Published var focused = false
+  
+  override init() {
+    super.init()
+#if DEBUG
+    text = "寒雨连江夜入吴，平明送客楚山孤"
+#endif
+  }
+}
+
 struct JiziPage : View {
-  var body: some View {
-    NavigationLink {
-      Text("jizi")
-    } label: {
-      Text("New Page")
+  @StateObject var viewModel = JiziViewModel()
+  @FocusState var focused: Bool
+  @State private var editHeight: CGFloat = 120
+  var text: String {
+    viewModel.text
+  }
+  var chineseCount: String {
+    if !text.containsChineseChar {
+      return ""
+    } else {
+      let count = text.chineseCount
+      return "共\(count)个汉字".orCht("共\(count)個漢字")
     }
+  }
+  private let paddingHor: CGFloat = 15
+  var body: some View {
+    VStack(spacing: 0) {
+      HStack(spacing: 0) {
+        Text("title_jizi".localized).font(.system(size: 24)).foregroundStyle(Color.colorPrimary).bold()
+        Image("jizi").renderingMode(.template).square(size: 14)
+          .padding(.leading, 5)
+        Spacer()
+        Button {
+          
+        } label: {
+          Image(systemName: "line.3.horizontal").square(size: 20)
+            .foregroundStyle(Color.colorPrimary)
+        }
+      }.padding(.horizontal, paddingHor)
+      10.VSpacer()
+      ZStack(alignment: .top) {
+        Color.white.onTapGesture {
+          focused = true
+        }
+        TextField("jizi_hint".localized, text: $viewModel.text,
+                  axis: .vertical)
+        .font(.body)
+        .focused($focused)
+        .foregroundStyle(Color.colorPrimary)
+        .multilineTextAlignment(.leading)
+        .textFieldStyle(.plain)
+        .padding(10)
+        .padding(.trailing, 16)
+        if viewModel.text.isNotEmpty() {
+          ZStack(alignment: .trailing) {
+            Color.clear
+            Button {
+              viewModel.text = ""
+            } label: {
+              Image(systemName: "xmark.circle.fill")
+                .foregroundStyle(.gray)
+            }
+          }.padding(.trailing, 8)
+        }
+      }
+      .frame(height: editHeight)
+      .clipShape(RoundedRectangle(cornerRadius: 10))
+      .background {
+        RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1)
+      }
+      .padding(.horizontal, paddingHor)
+      8.VSpacer()
+      HStack {
+        Text(chineseCount).foregroundStyle(.gray).font(.footnote)
+        Spacer()
+        Button {
+          
+        } label: {
+          Image(systemName: "chevron.up.2").square(size: 10).foregroundStyle(.gray)
+        }
+        Button {
+          
+        } label: {
+          HStack(spacing: 4) {
+            Image(systemName: "command").square(size: 12)
+            Text("title_jizi".localized).font(.callout)
+          }
+        }.buttonStyle(PrimaryButton(bgColor: .blue))
+      }.padding(.horizontal, paddingHor)
+      Spacer()
+    }.navigationBarHidden(true)
   }
 }
 

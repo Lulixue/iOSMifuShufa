@@ -11,6 +11,7 @@ import DeviceKit
 
 struct ContentView: View {
   @StateObject var homeViewModel = HomeViewModel()
+  @StateObject var navigationVM = NavigationViewModel()
   @State private var selection = 0
   
   var tabView: some View {
@@ -35,12 +36,20 @@ struct ContentView: View {
         }.tag(2)
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
+    }.navigationDestination(isPresented: $navigationVM.gotoWorkView) {
+      WorkView(viewModel: navigationVM.workVM!)
     }
+    .navigationDestination(isPresented: $navigationVM.gotoWorkIntroView) {
+      WorkIntroView(viewModel: navigationVM.introWorkVM!)
+    }.navigationDestination(isPresented: $navigationVM.gotoSingleView) {
+      SinglesView(viewModel: navigationVM.singleViewModel!)
+    }.environmentObject(navigationVM)
   }
   
   var body: some View {
     NavigationStack {
         tabView
+        .navigationBarHidden(true)
     }
   }
 }

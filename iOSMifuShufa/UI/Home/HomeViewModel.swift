@@ -412,13 +412,15 @@ class HomeViewModel : AlertViewModel {
     }()
     
     let orders = SearchResultOrder.allCases.filter({ $0 != .Author })
-    orderTypeParam = DropDownParam(items: orders, texts: orders.map({ $0.chinese + "(\(orderKeys[$0]!.count))" }), colors: Colors.ICON_COLORS)
+    let padding = DropDownPadding(itemVertical: 12)
+    orderTypeParam = DropDownParam(items: orders, texts: orders.map({ $0.chinese + "(\(orderKeys[$0]!.count))" }), colors: Colors.ICON_COLORS,
+                                   padding: padding)
     let range = 0..<resultKeys.size
-    fastDirectParam = DropDownParam(items: range.toList(), texts: resultKeys)
+    fastDirectParam = DropDownParam(items: range.toList(), texts: resultKeys, padding: padding)
     let keys = Array(fontResultKeys.keys)
     fontParam = DropDownParam(items: keys, texts: keys.map({ key in
       fontResultKeys[key]!
-    }))
+    }), padding: padding)
     allCollapse = false
   }
   

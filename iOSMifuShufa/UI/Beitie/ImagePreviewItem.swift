@@ -23,7 +23,6 @@ struct ImagePreviewItem: View {
   
   var body: some View {
     ZStack {
-      
       ScrollView {
         VStack {
           Text("offsetX: \(offsetX)")

@@ -17,7 +17,8 @@ target 'iOSMifuShufa' do
   pod 'MijickPopupView'
   pod 'Zip', '~> 2.1'
   pod 'DeviceKit'
-  pod 'SDWebImageSwiftUI' 
+  pod 'SwiftUIIntrospect'
+  pod 'SDWebImageSwiftUI'
   
   target 'iOSMifuShufaTests' do
     inherit! :search_paths

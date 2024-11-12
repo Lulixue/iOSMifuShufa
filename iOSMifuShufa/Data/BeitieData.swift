@@ -491,6 +491,9 @@ extension BeitieSingle {
       return "\(wc)(\(chs))"
     }
   }
+  var image: BeitieImage? {
+    BeitieDbHelper.shared.getImageById(imageId)
+  }
 }
 
 extension BeitieWork {

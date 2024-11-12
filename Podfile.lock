@@ -17,6 +17,7 @@ PODS:
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
+  - SwiftUIIntrospect (1.3.0)
   - SwiftyJSON (5.0.2)
   - Zip (2.1.2)
 
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - MMKVCore (= 1.3.4)
   - SDWebImageSwiftUI
   - SQLite.swift (~> 0.12.0)
+  - SwiftUIIntrospect
   - SwiftyJSON
   - Zip (~> 2.1)
 
@@ -45,6 +47,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageSwiftUI
     - SQLite.swift
+    - SwiftUIIntrospect
     - SwiftyJSON
     - Zip
 
@@ -59,9 +62,10 @@ SPEC CHECKSUMS:
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SDWebImageSwiftUI: dcff3d05fd0579ff280221ae8856c34ac3b67f25
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 298f58cbf81c1a648ece5c05754bce646ce42de6
+PODFILE CHECKSUM: 0b6c1986238a5cfdd0c76b2736433fbc0180eafb
 
 COCOAPODS: 1.15.2

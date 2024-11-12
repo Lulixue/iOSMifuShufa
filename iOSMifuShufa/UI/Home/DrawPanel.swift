@@ -9,12 +9,7 @@ import SwiftUI
 import DeviceKit
 
 typealias DrawPoint = CGPoint
-//struct DrawPoint {
-//  let id: Int
-//  let x: CGFloat
-//  let y: CGFloat
-//  let width: CGFloat
-//}
+
 
 class DrawViewModel: BaseObservableObject {
   var onCloseDraw: () -> Void = {}
@@ -82,7 +77,6 @@ struct DrawPanel : View {
   var current: [DrawPoint] {
     viewModel.current
   }
-  
   
   var divider: some View {
     Divider.overlayColor(.white.opacity(0.5)).frame(width: 1, height: 15)

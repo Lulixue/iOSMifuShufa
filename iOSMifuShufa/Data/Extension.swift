@@ -215,6 +215,16 @@ extension String {
   mutating func clear() {
     self = ""
   }
+  
+  var chineseCount: Int {
+    var count = 0
+    for c in self {
+      if c.charIsChinesChar() {
+        count += 1
+      }
+    }
+    return count
+  }
 }
 
 extension String? {
@@ -243,6 +253,10 @@ extension Int {
   }
   func toString() -> String {
     "\(self)"
+  }
+  
+  func toFloat() -> Float {
+    Float(self)
   }
 }
 

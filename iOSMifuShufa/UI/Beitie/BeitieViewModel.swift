@@ -146,11 +146,7 @@ class BeitieViewModel: AlertViewModel {
       self.showSearchBar = false
     }
   }
-  
-  func onClickWork(_ work: BeitieWork) {
-    
-  }
-  
+   
   func hideVersionWorks() {
     showVersionWorks = false 
   }

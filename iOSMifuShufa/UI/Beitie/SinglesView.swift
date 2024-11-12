@@ -35,6 +35,7 @@ class SingleViewModel: AlertViewModel {
 struct SinglesView: View {
   @Environment(\.presentationMode) var presentationMode
   @StateObject var viewModel: SingleViewModel
+  @StateObject var naviVM = NavigationViewModel()
   @State var scrollProxy: ScrollViewProxy? = nil
   @State var pageIndex = 0
   var singles: List<BeitieSingle> {
@@ -50,9 +51,9 @@ struct SinglesView: View {
         let s = currentSingle
         var t = AttributedString(s.showChars)
         var sub = AttributedString(" \(viewModel.currentIndex+1)/\(singles.size)")
-        t.font = .body
+        t.font = .title3
         t.foregroundColor = Color.colorPrimary
-        sub.font = .footnote
+        sub.font = .footnote.bold()
         sub.foregroundColor = Color.colorPrimary
         return t + sub
       }()
@@ -63,13 +64,12 @@ struct SinglesView: View {
       Text(title)
       Spacer()
       Button {
-        
       } label: {
         Image("collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
           .foregroundStyle(Color.colorPrimary)
       }
       Button {
-        
+        naviVM.gotoWork(work: currentSingle.work, index: currentSingle.image?.index ?? 0)
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
@@ -84,7 +84,11 @@ struct SinglesView: View {
         TabView(selection: $pageIndex) {
           ForEach(0..<singles.size, id: \.self) { i in
             let single = singles[i]
-            SinglePreviewItem(single: single)
+            ZStack(alignment: .bottom) {
+              SinglePreviewItem(single: single)
+              Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
+                .padding(.bottom, 14)
+            }.id(i)
           }
         }.tabViewStyle(.page(indexDisplayMode: .never))
           .background {
@@ -176,7 +180,10 @@ struct SinglesView: View {
             viewModel.currentIndex = pageIndex
           }
         }
-    }
+    }.navigationBarHidden(true)
+      .navigationDestination(isPresented: $naviVM.gotoWorkView) {
+        WorkView(viewModel: naviVM.workVM!)
+      }
   }
 }
 

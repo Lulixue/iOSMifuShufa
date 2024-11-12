@@ -13,9 +13,10 @@ public struct BeitieGallerView: View {
   let images: [BeitieImage]
   let parentSize: CGSize
   @Binding var pageIndex: Int
+  @Binding var galleryScroll: Bool
   
   public var body: some View {
-    WrapperImagePagesView(images: images, parentSize: parentSize, pageIndex: $pageIndex)
+    WrapperImagePagesView(images: images, parentSize: parentSize, pageIndex: $pageIndex, galleryScroll: $galleryScroll)
       .frame(width: parentSize.width, height: parentSize.height)
   }
 }
@@ -40,6 +41,7 @@ struct WrapperImagePagesView: UIViewControllerRepresentable {
   let images: [BeitieImage]
   let parentSize: CGSize
   @Binding var pageIndex: Int
+  @Binding var galleryScroll: Bool
   
   func makeUIViewController(context: Context) -> AlbumPageViewController {
     let page = AlbumPageViewController()
@@ -47,6 +49,7 @@ struct WrapperImagePagesView: UIViewControllerRepresentable {
     page.initPages(items: images, initPage: pageIndex)
     page.scrollToPage(page: pageIndex)
     page.afterScroll = { index in
+      galleryScroll = true
       if pageIndex != index {
         pageIndex = index
       }
