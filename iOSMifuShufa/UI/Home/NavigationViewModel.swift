@@ -10,8 +10,11 @@ class NavigationViewModel : BaseObservableObject {
   @Published var gotoSingleView = false
   @Published var singleViewModel: SingleViewModel!
   
-  @Published var gotoWork = false
+  @Published var gotoWorkView = false
   @Published var workVM: WorkViewModel!
+  
+  @Published var gotoWorkIntroView = false
+  @Published var introWorkVM: WorkViewModel!
   
   func gotoSingles(singles: [BeitieSingle], index: Int = 0) {
     singleViewModel = SingleViewModel(singles: singles, selected: index)
@@ -20,6 +23,12 @@ class NavigationViewModel : BaseObservableObject {
   
   func gotoWork(work: BeitieWork, index: Int = 0) {
     workVM = WorkViewModel(work: work, pageIndex: index)
-    gotoWork = true
+    gotoWorkView = true
   }
+  
+  func gotoWorkIntro(work: BeitieWork) {
+    introWorkVM = WorkViewModel(work: work)
+    gotoWorkIntroView = true
+  }
+  
 }

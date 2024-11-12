@@ -7,53 +7,61 @@
 
 import SwiftUI
 import UIKit
-//import Agrume
 
-@available(iOS 14.0, *)
-public struct BeitieImageView: View {
-  private let path: String
-  @Binding private var binding: Bool
-  @Namespace var namespace
-  
-  public init(path: String, isPresenting: Binding<Bool>) {
-    self.path = path
-    self._binding = isPresenting
-  }
+
+public struct BeitieGallerView: View {
+  let images: [BeitieImage]
+  let parentSize: CGSize
+  @Binding var pageIndex: Int
   
   public var body: some View {
-    WrapperBeitieImageView(images: [path], isPresenting: $binding)
-      .matchedGeometryEffect(id: "AgrumeView", in: namespace, properties: .frame, isSource: binding)
-      .ignoresSafeArea()
+    WrapperImagePagesView(images: images, parentSize: parentSize, pageIndex: $pageIndex)
+      .frame(width: parentSize.width, height: parentSize.height)
+  }
+}
+extension UIViewController {
+  func embed(_ viewController: UIViewController, inView view: UIView) {
+    addChild(viewController)
+    viewController.willMove(toParent: self)
+    viewController.view.frame = view.bounds
+    view.addSubview(viewController.view)
+    viewController.didMove(toParent: self)
   }
 }
 
-@available(iOS 13.0, *)
-struct WrapperBeitieImageView: UIViewControllerRepresentable {
-  
-  private let images: [String]
-  @Binding private var binding: Bool
-  
-  public init(images: [String], isPresenting: Binding<Bool>) {
-    self.images = images
-    self._binding = isPresenting
-  }
-  
-  public func makeUIViewController(context: UIViewControllerRepresentableContext<WrapperBeitieImageView>) -> UIViewController {
-    let agrume = Agrume(images: images.map({ path in
-      UIImage(contentsOfFile: path)!
-    }))
-    agrume.view.backgroundColor = .clear
-    agrume.addSubviews()
-//    agrume.addOverlayView()
-    agrume.willDismiss = {
-      withAnimation {
-        binding = false
-      }
-    }
-    return agrume
-  }
-  
-  public func updateUIViewController(_ uiViewController: UIViewController,
-                                     context: UIViewControllerRepresentableContext<WrapperBeitieImageView>) {
+extension UIView {
+  func embed(_ viewController: UIViewController) {
+    viewController.view.frame = bounds
+    addSubview(viewController.view)
   }
 }
+
+struct WrapperImagePagesView: UIViewControllerRepresentable {
+  let images: [BeitieImage]
+  let parentSize: CGSize
+  @Binding var pageIndex: Int
+  
+  func makeUIViewController(context: Context) -> AlbumPageViewController {
+    let page = AlbumPageViewController()
+    page.parentSize = parentSize
+    page.initPages(items: images, initPage: pageIndex)
+    page.scrollToPage(page: pageIndex)
+    page.afterScroll = { index in
+      if pageIndex != index {
+        pageIndex = index
+      }
+    }
+    return page
+  }
+  
+  func updateUIViewController(_ uiViewController: AlbumPageViewController, context: Context) {
+    printlnDbg("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
+    if uiViewController.currentIndex != pageIndex {
+      uiViewController.scrollToPage(page: pageIndex)
+    }
+  }
+  
+  typealias UIViewControllerType = AlbumPageViewController
+  
+}
+

@@ -16,6 +16,11 @@ struct ImageInfo {
   let contentMd5: String?
 }
 
+struct ImageSize {
+  let downloaded: CGFloat
+  let total: CGFloat
+}
+
 extension BeitieImage {
   func fileSuffix(_ type: ImageLoadType) -> String {
     "\(self.workFolder)/\(self.fileName(type))"
@@ -29,7 +34,7 @@ enum ImageLoadStatus: String {
 class ImageManager: BaseObservableObject {
   
   @Published var imageStatus = [BeitieImage: ImageLoadStatus]()
-  @Published var imageDownloaded = [BeitieImage: CGPoint]()
+  @Published var imageDownloaded = [BeitieImage: ImageSize]()
   @Published var imagePath = [BeitieImage: String]()
   private var imageUIViews = [BeitieImage: UIImageView]()
   var type: ImageLoadType = .JpgCompressed
@@ -90,11 +95,11 @@ class ImageManager: BaseObservableObject {
         DispatchQueue.main.async {
           if (downloaded != total) {
             let percent = downloaded.toDouble() * 1.0 / total.toDouble()
-            self.imageDownloaded[image] = CGPoint(x: downloaded, y: total)
+            self.imageDownloaded[image] = ImageSize(downloaded: downloaded.toCGFloat(), total: total.toCGFloat())
             printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName) \(percent)")
             self.imageStatus[image] = .Loading
           } else {
-            printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName) 1.0")
+            printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName) downloaded")
             self.imageStatus[image] = .Downloaded
           }
         }

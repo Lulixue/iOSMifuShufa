@@ -8,6 +8,22 @@
 import SwiftUI
 import SDWebImageSwiftUI
 //import Agrume
+ 
+extension CGFloat {
+  static let KB: CGFloat = 1024
+  static let MB: CGFloat = KB * 1024
+  static let GB: CGFloat = MB * 1024
+  
+  var size: String {
+    if self > Self.GB {
+      String(format: "%.2fG", self / Self.GB)
+    } else if self > Self.MB {
+      String(format: "%.2fM", self / Self.MB)
+    } else {
+      String(format: "%dK", Int(self / Self.KB))
+    }
+  }
+}
 
 class WorkViewModel: AlertViewModel {
   let work: BeitieWork
@@ -60,51 +76,55 @@ struct WorkView: View {
   @State private var scrollProxy: ScrollViewProxy? = nil
   
   var previewBottom: some View {
-    ScrollView(.horizontal) {
-      ScrollViewReader { proxy in
-        LazyHStack(spacing: 6) {
-          ForEach(0..<images.size, id: \.self) { i in
-            let image = images[i]
-            let selected = i == viewModel.pageIndex
-            ZStack {
-              Button {
-                viewModel.pageIndex = i
-              } label: {
-                WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
-                  img.image?.resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 80)
-                }.onSuccess(perform: { _, _, _ in
-                  
-                }).clipShape(RoundedRectangle(cornerRadius: 2))
-                  .padding(0.5)
-                  .background {
-                    RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
-                  }.padding(.horizontal, selected ? 0 : 0.5)
-              }
-              if selected {
-                Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
-              }
-            }.id(i)
-          }
-        }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: 80)
-          .onAppear {
-            scrollProxy = proxy
-              //              if viewModel.pageIndex > 0 {
-              //                Task {
-              //                  sleep(1)
-              //                  DispatchQueue.main.async {
-              //                    proxy.scrollTo(max(self.viewModel.pageIndex-1, 0), anchor: .leading)
-              //                  }
-              //                }
-              //              }
-          }.onChange(of: viewModel.pageIndex) { newValue in
-            tabIndex = newValue
-          }
-      }
-    }.frame(height: 80)
-      .environment(\.layoutDirection, .rightToLeft)
+    HStack {
+      Spacer()
+      ScrollView(.horizontal) {
+        ScrollViewReader { proxy in
+          LazyHStack(spacing: 6) {
+            ForEach(0..<images.size, id: \.self) { i in
+              let image = images[i]
+              let selected = i == viewModel.pageIndex
+              ZStack {
+                Button {
+                  viewModel.pageIndex = i
+                } label: {
+                  WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
+                    img.image?.resizable()
+                      .aspectRatio(contentMode: .fill)
+                      .frame(maxWidth: 80)
+                  }.onSuccess(perform: { _, _, _ in
+                    
+                  }).clipShape(RoundedRectangle(cornerRadius: 2))
+                    .padding(0.5)
+                    .background {
+                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
+                    }.padding(.horizontal, selected ? 0 : 0.5)
+                }
+                if selected {
+                  Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
+                }
+              }.id(i)
+            }
+          }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: 80)
+            .onAppear {
+              scrollProxy = proxy
+                //              if viewModel.pageIndex > 0 {
+                //                Task {
+                //                  sleep(1)
+                //                  DispatchQueue.main.async {
+                //                    proxy.scrollTo(max(self.viewModel.pageIndex-1, 0), anchor: .leading)
+                //                  }
+                //                }
+                //              }
+            }
+        }
+      }.frame(height: 80)
+        .environment(\.layoutDirection, .rightToLeft)
+      Spacer()
+    }
   }
+  
+  @State var imageSize: CGSize = .zero
   var body: some View {
     VStack(spacing: 0) {
       NaviView {
@@ -129,52 +149,31 @@ struct WorkView: View {
         }
       }
       Divider()
-      ZStack(alignment: .topTrailing) {
-        TabView(selection: $tabIndex) {
-          ForEach(0..<images.size, id: \.self) { i in
-            let image = images[i]
-            let status = managerVM.getImageStatus(image)
-            ZStack {
-              switch status {
-              case .Loading:
-                VStack {
-                  ProgressView().progressViewStyle(.circular).tint(.white)
-                    .scaleEffect(1.5)
-                }
-              case .Downloaded:
-                Text("下载完成，正在加载图片...".orCht("下載完成，正在加載圖片...")).foregroundStyle(Color.souyun)
-              case .Loaded:
-                if let path = managerVM.imagePath[image] {
-                  BeitieImageView(path: path, isPresenting: .constant(true))
-                }
-              case .Failed:
-                Button {
-                  managerVM.loadBeitieImage(image)
-                } label: {
-                  Text("download_error_click_retry".localized).font(.title3).foregroundStyle(.red)
-                }
-              }
-            }.tag(i).id(i.toString() + status.rawValue)
-          }
-        }.tabViewStyle(.page(indexDisplayMode: .never))
-          .environment(\.layoutDirection, .rightToLeft)
-      }.background(.black)
-      Divider()
-      HStack(spacing: 12) {
-        Button {
-          
-        } label: {
-          HStack(spacing: 5) {
-            Text("image_text".localized).font(.callout)
-            Image(systemName: "triangle.fill").square(size: 7)
-              .rotationEffect(.degrees(180))
-          }.foregroundStyle(Color.colorPrimary)
+      ZStack(alignment: .bottom) {
+        Color.black
+        if imageSize.width > 0 {
+          BeitieGallerView(images: images, parentSize: imageSize, pageIndex: $tabIndex)
+            .environment(\.layoutDirection, .rightToLeft)
         }
-        Slider(value: $sliderProgress, in: CGFloat(1)...CGFloat(viewModel.images.size)) {
-          
-        }.rotationEffect(.degrees(180))
-        Text("\(viewModel.pageIndex+1)/\(viewModel.images.size)\("页".orCht("頁"))")
-          .foregroundStyle(Color.colorPrimary)
+      }.background(.black)
+        .background(SizeReaderView(binding: $imageSize))
+      Divider()
+      ScrollView {
+        HStack(spacing: 12) {
+          Button {
+            
+          } label: {
+            HStack(spacing: 5) {
+              Text("image_text".localized).font(.callout)
+              Image(systemName: "triangle.fill").square(size: 7)
+                .rotationEffect(.degrees(180))
+            }.foregroundStyle(Color.colorPrimary)
+          }
+          Slider(value: $sliderProgress, in: CGFloat(1)...CGFloat(viewModel.images.size)) {
+          }.rotationEffect(.degrees(180))
+          Text("\(viewModel.pageIndex+1)/\(viewModel.images.size)\("页".orCht("頁"))")
+            .foregroundStyle(Color.colorPrimary)
+        }.frame(height: 40)
       }.padding(.horizontal, 10).frame(height: 40)
       if images.size > 1 && viewModel.showBottomBar {
         Divider()
@@ -182,8 +181,22 @@ struct WorkView: View {
       }
     }.navigationBarHidden(true)
       .onChange(of: tabIndex) { newValue in
-        viewModel.pageIndex = newValue
-        scrollProxy?.scrollTo(max(newValue-1, 0), anchor: .leading)
+        if viewModel.pageIndex != newValue {
+          viewModel.pageIndex = newValue
+          scrollProxy?.scrollTo(newValue, anchor: .leading)
+        }
+      }
+      .onChange(of: viewModel.pageIndex) { newValue in
+        if tabIndex != viewModel.pageIndex {
+          tabIndex = viewModel.pageIndex
+        }
+        sliderProgress = (newValue + 1).toCGFloat()
+      }
+      .onChange(of: sliderProgress) { newValue in
+        let newIndex = Int(newValue) - 1
+        if (newIndex != tabIndex) {
+          tabIndex = newIndex
+        }
       }
   }
 }

@@ -60,4 +60,20 @@ class Utils {
   }
   
   
+  public static func getLess(_ f1: CGFloat, _ f2: CGFloat) -> CGFloat {
+    return f1 < f2 ? f1 : f2
+  }
+  public static func getLess(_ f1: Int, _ f2: Int) -> Int  {
+    return f1 < f2 ? f1 : f2
+  }
+  public static func getMore(_ f1: CGFloat, _ f2: CGFloat) -> CGFloat  {
+    return f1 > f2 ? f1 : f2
+  }
+  public static func getMore(_ f1: Int, _ f2: Int)  -> Int {
+    return f1 > f2 ? f1 : f2
+  }
+  
+  public static let PHOTOVIEW_SCALE_MIN: CGFloat = 1.0
+  public static let PHOTOVIEW_SCALE_MEDIUM: CGFloat = 1.75
+  public static let PHOTOVIEW_SCALE_MAX: CGFloat = 3
 }

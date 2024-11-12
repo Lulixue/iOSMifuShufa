@@ -17,9 +17,9 @@ extension CGFloat {
 
 extension View {
   @ViewBuilder func listItemBox() -> some View {
-    self.font(.system(size: 11))
-    .padding(.horizontal, 5)
-    .padding(.vertical, 5)
+    self.font(.system(size: 10))
+    .padding(.horizontal, 4)
+    .padding(.vertical, 3)
     .fontWeight(.regular)
     .background(Colors.surfaceContainer.swiftColor)
     .clipShape(RoundedRectangle(cornerRadius: 2))
@@ -66,6 +66,7 @@ struct SearchBar: View {
 struct VersionWorkView: View {
   let works: List<BeitieWork>
   @EnvironmentObject var viewModel: BeitieViewModel
+  @EnvironmentObject var naviVM: NavigationViewModel
 
   var body: some View {
     VStack {
@@ -83,7 +84,11 @@ struct VersionWorkView: View {
                 let version = work.chineseVersion()
                 let name = version?.isNotEmpty() == true ? version! : work.chineseName()
                 Button {
-                  viewModel.onClickWork(works.first())
+                  if !viewModel.listView {
+                    naviVM.gotoWork(work: work)
+                  } else {
+                    naviVM.gotoWorkIntro(work: work)
+                  }
                 } label: {
                   HStack {
                     WebImage(url: work.cover.url!) { img in
@@ -104,7 +109,7 @@ struct VersionWorkView: View {
                     }
                     Spacer()
                     Button {
-                      
+                      naviVM.gotoWork(work: work)
                     } label: {
                       HStack(spacing: 3) {
                         Image(systemName: "arrow.up.right.square").square(size: 10)
@@ -143,13 +148,14 @@ struct VersionWorkView: View {
 struct WorkListItem: View {
   let works: List<BeitieWork>
   @EnvironmentObject var viewModel: BeitieViewModel
+  @EnvironmentObject var naviVM: NavigationViewModel
   
   var body: some View {
     Button {
       if (works.size > 1) {
         viewModel.updateVersionWorks(works: works)
       } else {
-        viewModel.onClickWork(works.first())
+        naviVM.gotoWorkIntro(work: works.first())
       }
     } label: {
       HStack(spacing: 6) {
@@ -194,7 +200,7 @@ struct WorkListItem: View {
             .foregroundStyle(Color.defaultText)
         }
         Button {
-          viewModel.onClickWork(works.first())
+          naviVM.gotoWork(work: works.first())
         } label: {
           HStack(spacing: 3) {
             Image(systemName: "arrow.up.right.square").square(size: 10)
@@ -214,6 +220,7 @@ struct WorkItem: View {
   static let itemHeight: CGFloat = 100
   let works: List<BeitieWork>
   @EnvironmentObject var viewModel: BeitieViewModel
+  @EnvironmentObject var naviVM: NavigationViewModel
   @State var coverUrl: URL
   @State var image: UIImage? = nil
   @State var loading: Bool = true
@@ -227,7 +234,7 @@ struct WorkItem: View {
   private func onClick() {
     printlnDbg("onClick")
     if works.size == 1 {
-      viewModel.onClickWork(works.first())
+      naviVM.gotoWork(work: works.first())
     } else {
       viewModel.updateVersionWorks(works: works)
     }
@@ -283,6 +290,7 @@ struct CategoryItem: View {
   @State var collapse: Bool = false
   let rowSize: Int
   @EnvironmentObject var viewModel: BeitieViewModel
+  @EnvironmentObject var naviVM: NavigationViewModel
   
   init(key: AnyHashable, works: List<List<BeitieWork>>) {
     self.key = key
@@ -368,6 +376,7 @@ struct BeitiePage: View {
   @StateObject var viewModel: BeitieViewModel = BeitieViewModel()
   private let btnColor = Color.colorPrimary
   @State var showOrderDropdown = false
+  @StateObject var navigationVM = NavigationViewModel()
    
   private let gridItemLayout = {
     var size = ((UIScreen.currentWidth - 100) / WorkItem.itemWidth)
@@ -379,13 +388,17 @@ struct BeitiePage: View {
   var workList: some View {
     LazyVStack(alignment: .center, spacing: 0, pinnedViews: [.sectionHeaders]) {
       let showMap = viewModel.showMap
-      ForEach(showMap.keys.map({ $0 }), id: \.self) { key in
+      let keys = showMap.keys.map({ $0 })
+      ForEach(0..<keys.size, id: \.self) { i in
+        let key = keys[i]
         let works = showMap[key]!
         CategoryItem(key: key, works: works)
+          .id(i)
       }
       Spacer()
     }
   }
+  @State var scrollProxy: ScrollViewProxy? = nil
   
   var body: some View {
     ZStack(alignment: .topTrailing) {
@@ -433,12 +446,17 @@ struct BeitiePage: View {
         Divider()
         ZStack(alignment: .top) {
           ScrollView {
-            workList
+            ScrollViewReader { proxy in
+              workList
+                .onAppear {
+                  scrollProxy = proxy
+                }
+            }
           }.blur(radius: viewModel.showVersionWorks ? 3 : 0)
             .padding(.top, viewModel.showSearchBar ? viewModel.searchBarHeight : 0)
           if viewModel.showVersionWorks {
             ZStack(alignment: .center) {
-              Color.black.opacity(0.35)
+              Color.black.opacity(0.65)
               VersionWorkView(works: viewModel.versionWorks)
             }
           }
@@ -461,15 +479,33 @@ struct BeitiePage: View {
       viewModel.hideVersionWorks()
     }), isEnabled: viewModel.showVersionWorks)
     .environmentObject(viewModel)
+    .environmentObject(navigationVM)
     .onChange(of: viewModel.organizeStack) { _ in
       viewModel.syncShowMap()
+      resetScroll()
     }
     .onChange(of: viewModel.orderType) { _ in
       viewModel.syncShowMap()
+      resetScroll()
     }
     .onChange(of: viewModel.showSearchBar) { _ in
       if !viewModel.showSearchBar {
         viewModel.syncShowMap()
+      }
+      resetScroll()
+    }.navigationDestination(isPresented: $navigationVM.gotoWorkView) {
+      WorkView(viewModel: navigationVM.workVM!)
+    }
+    .navigationDestination(isPresented: $navigationVM.gotoWorkIntroView) {
+      WorkIntroView(viewModel: navigationVM.introWorkVM!)
+    }
+  }
+  
+  private func resetScroll() {
+    Task {
+      sleep(1)
+      DispatchQueue.main.async {
+        self.scrollProxy?.scrollTo(0, anchor: .top)
       }
     }
   }

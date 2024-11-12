@@ -350,6 +350,30 @@ struct FilterView: View {
   }
 }
 
+struct SizePreferenceKey: PreferenceKey {
+  
+  static var defaultValue = CGSize.zero
+  
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+    value = nextValue()
+  }
+  
+  typealias Value = CGSize
+}
+
+struct SizeReaderView: View {
+  @Binding var binding: CGSize
+  var body: some View {
+    GeometryReader { geo in
+      Color.clear
+        .preference(key: SizePreferenceKey.self, value: geo.frame(in: .local).size)
+    }
+    .onPreferenceChange(SizePreferenceKey.self) { h in
+      binding = h
+    }
+  }
+}
+
 struct WidthReaderView: View {
   @Binding var binding: CGFloat
   var body: some View {

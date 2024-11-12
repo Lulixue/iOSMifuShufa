@@ -439,7 +439,7 @@ struct HomePage: View {
       SinglesView(viewModel: navVM.singleViewModel!)
         .navigationBarHidden(true)
     }
-    .navigationDestination(isPresented: $navVM.gotoWork) {
+    .navigationDestination(isPresented: $navVM.gotoWorkView) {
       WorkView(viewModel: navVM.workVM!)
     }
   }

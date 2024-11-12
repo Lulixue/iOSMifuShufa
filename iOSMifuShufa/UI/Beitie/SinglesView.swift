@@ -44,38 +44,41 @@ struct SinglesView: View {
     singles[viewModel.currentIndex]
   }
   private let bottomBarHeight: CGFloat = 80
+  var naviView: some View {
+    NaviView {
+      let title = {
+        let s = currentSingle
+        var t = AttributedString(s.showChars)
+        var sub = AttributedString(" \(viewModel.currentIndex+1)/\(singles.size)")
+        t.font = .body
+        t.foregroundColor = Color.colorPrimary
+        sub.font = .footnote
+        sub.foregroundColor = Color.colorPrimary
+        return t + sub
+      }()
+      BackButtonView {
+        presentationMode.wrappedValue.dismiss()
+      }
+      Spacer()
+      Text(title)
+      Spacer()
+      Button {
+        
+      } label: {
+        Image("collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
+          .foregroundStyle(Color.colorPrimary)
+      }
+      Button {
+        
+      } label: {
+        Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
+          .foregroundStyle(Color.colorPrimary)
+      }
+    }
+  }
   var body: some View {
     VStack(spacing: 0) {
-      NaviView {
-        let title = {
-          let s = currentSingle
-          var t = AttributedString(s.showChars)
-          var sub = AttributedString(" \(viewModel.currentIndex+1)/\(singles.size)")
-          t.font = .body
-          t.foregroundColor = Color.colorPrimary
-          sub.font = .footnote
-          sub.foregroundColor = Color.colorPrimary
-          return t + sub
-        }()
-        BackButtonView {
-          presentationMode.wrappedValue.dismiss()
-        }
-        Spacer()
-        Text(title)
-        Spacer()
-        Button {
-          
-        } label: {
-          Image("collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
-            .foregroundStyle(Color.colorPrimary)
-        }
-        Button {
-          
-        } label: {
-          Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
-            .foregroundStyle(Color.colorPrimary)
-        }
-      }
+      naviView
       Divider()
       ZStack {
         TabView(selection: $pageIndex) {
@@ -137,7 +140,9 @@ struct SinglesView: View {
                   WebImage(url: single.thumbnailUrl.url!) { img in
                     img.image?.resizable()
                       .aspectRatio(contentMode: .fit)
-                  }.clipShape(RoundedRectangle(cornerRadius: 2))
+                      .frame(minWidth: 10, minHeight: 10)
+                  }
+                  .indicator(.activity).clipShape(RoundedRectangle(cornerRadius: 2))
                     .padding(0.5)
                     .background {
                       RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 2 : 1)
@@ -145,7 +150,7 @@ struct SinglesView: View {
                 }
               }.id(i)
             }
-          }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
+          }.padding(.top, 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
             .onAppear {
               scrollProxy = proxy
               if viewModel.currentIndex > 0 {
