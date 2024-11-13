@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 import SDWebImageSwiftUI
+import DeviceKit
 
 class SingleViewModel: AlertViewModel {
   @Published var drawViewModel = DrawViewModel()
@@ -69,7 +70,7 @@ struct SinglesView: View {
           .foregroundStyle(Color.colorPrimary)
       }
       Button {
-        naviVM.gotoWork(work: currentSingle.work, index: currentSingle.image?.index ?? 0)
+        naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
@@ -154,7 +155,7 @@ struct SinglesView: View {
                 }
               }.id(i)
             }
-          }.padding(.top, 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
+          }.padding(.top, 10).padding(.bottom, Device.hasTopNotch ? 0 : 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
             .onAppear {
               scrollProxy = proxy
               if viewModel.currentIndex > 0 {

@@ -390,8 +390,8 @@ class HomeViewModel : AlertViewModel {
     map.elements.forEach { it in
       let singles = (font == nil) ? it.value : it.value.filter { s in s.font == font }
       if (singles.isNotEmpty()) {
-        orderResult[it.key] = singles.sorted(by: { f, s in
-          orderWorks[f.workId]! > orderWorks[s.workId]!
+        orderResult[it.key] = singles.sortedBy(mapper: { it in
+          orderWorks[it.workId]!
         })
         SearchResultOrder.allCases.forEach { o in
           singles.forEach { single in

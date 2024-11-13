@@ -16,6 +16,19 @@ class NavigationViewModel : BaseObservableObject {
   @Published var gotoWorkIntroView = false
   @Published var introWorkVM: WorkViewModel!
   
+  @Published var gotoJiziView = false
+  @Published var jiziVM: JiziViewModel!
+  
+  
+  func gotoJizi(_ text: String, after: @escaping () -> Void) {
+    let vm = JiziViewModel(text: text)
+    self.jiziVM = vm
+    vm.onSearch {
+      after()
+      self.gotoJiziView = true
+    }
+  }
+  
   func gotoSingles(singles: [BeitieSingle], index: Int = 0) {
     singleViewModel = SingleViewModel(singles: singles, selected: index)
     gotoSingleView = true

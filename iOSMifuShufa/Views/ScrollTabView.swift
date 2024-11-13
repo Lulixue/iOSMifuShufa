@@ -85,6 +85,14 @@ struct ScrollableTabView<Data, ItemView: View> : View {
     self.mapper = mapper
   }
   
+  var width: CGFloat {
+    if activeIdx < w.size {
+      w[activeIdx]
+    } else {
+      10
+    }
+  }
+  
   var body: some View {
     VStack(alignment: .underlineLeading, spacing: 0) {
       HStack {
@@ -109,7 +117,11 @@ struct ScrollableTabView<Data, ItemView: View> : View {
               mapper(i, dataSet[i])
                 .modifier(ScrollableTabViewModifier(activeIdx: $activeIdx, idx: i, onClickTab: onClickTab, animation: settings.selectAnimation))
                 .background(TextGeometry())
-                .onPreferenceChange(WidthPreferenceKey.self, perform: { self.w[i] = $0 })
+                .onPreferenceChange(WidthPreferenceKey.self, perform: {
+                  if self.w.size > i {
+                    self.w[i] = $0
+                  }
+                })
                 .id(i)
             }
           }
@@ -128,14 +140,14 @@ struct ScrollableTabView<Data, ItemView: View> : View {
             .frame(width: width, height: settings.indicatorHeight)
             .modifier(IndicatorModifier(animation: settings.selectAnimation))
         }
-        .frame(width: w[activeIdx])
+        .frame(width: width)
         .alignmentGuide(.underlineLeading) { d in d[.leading]}
       } else {
         Rectangle()
           .fill(settings.indicatorColor)
           .alignmentGuide(.underlineLeading) { d in d[.leading]}
           .cornerRadius(settings.indicatorRadius)
-          .frame(width: w[activeIdx],  height: settings.indicatorHeight)
+          .frame(width: width,  height: settings.indicatorHeight)
           .modifier(IndicatorModifier(animation: settings.selectAnimation))
       }
       if settings.indicatorPadding > 0 {

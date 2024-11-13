@@ -17,6 +17,20 @@ extension Set {
   }
 }
 
+extension Array {
+  func `let`(action: @escaping (Array) -> Array) -> Array {
+    return action(self)
+  }
+  
+  func ifEmpty(callback: @escaping () -> Array?) -> Array? {
+    if isEmpty() {
+      return callback()
+    } else {
+      return self
+    }
+  }
+}
+
 extension Char {
   func `let`(action: @escaping (Char) -> Void) -> Char {
     action(self)

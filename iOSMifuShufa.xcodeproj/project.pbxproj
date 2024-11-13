@@ -64,6 +64,10 @@
 		F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247F2CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift */; };
 		F9E124972CE36D9200BB8CD4 /* VerticalCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1247D2CE36D9200BB8CD4 /* VerticalCarouselView.swift */; };
 		F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124842CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift */; };
+		F9E1249F2CE43D1700BB8CD4 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1249D2CE43D1700BB8CD4 /* ArticleView.swift */; };
+		F9E124A22CE43D2300BB8CD4 /* DashboardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */; };
+		F9E124A42CE447E600BB8CD4 /* JiziViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */; };
+		F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A52CE476E100BB8CD4 /* SettingsView.swift */; };
 		F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E345FA2CDA27D600E65B2B /* WorkView.swift */; };
 		F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */; };
 		F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0232CD25CD00009C0DC /* HomePage.swift */; };
@@ -183,6 +187,10 @@
 		F9E124842CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewStyleModifier.swift; sourceTree = "<group>"; };
 		F9E124862CE36D9200BB8CD4 /* BindedSnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindedSnapCarouselView.swift; sourceTree = "<group>"; };
 		F9E124872CE36D9200BB8CD4 /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
+		F9E1249D2CE43D1700BB8CD4 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
+		F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPage.swift; sourceTree = "<group>"; };
+		F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziViewModel.swift; sourceTree = "<group>"; };
+		F9E124A52CE476E100BB8CD4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F9E345FA2CDA27D600E65B2B /* WorkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkView.swift; sourceTree = "<group>"; };
 		F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitiePage.swift; sourceTree = "<group>"; };
 		F9ECB0232CD25CD00009C0DC /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
@@ -261,6 +269,7 @@
 		F96E614E2CD9C6C9007329DB /* Jizi */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */,
 				F9E124742CE35D0C00BB8CD4 /* JiziView.swift */,
 				F96E614D2CD9C6C9007329DB /* JiziPage.swift */,
 			);
@@ -400,6 +409,8 @@
 		F9DA35192CD2551F00A880BC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124A02CE43D1A00BB8CD4 /* Dashboard */,
+				F9E1249E2CE43D1700BB8CD4 /* Article */,
 				F96E614E2CD9C6C9007329DB /* Jizi */,
 				F9ECB0222CD25CD00009C0DC /* Beitie */,
 				F9ECB0242CD25CD00009C0DC /* Home */,
@@ -503,6 +514,23 @@
 				F9E124892CE36D9200BB8CD4 /* Views */,
 			);
 			path = ScrollUI;
+			sourceTree = "<group>";
+		};
+		F9E1249E2CE43D1700BB8CD4 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1249D2CE43D1700BB8CD4 /* ArticleView.swift */,
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
+		F9E124A02CE43D1A00BB8CD4 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				F9E124A52CE476E100BB8CD4 /* SettingsView.swift */,
+				F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
@@ -869,6 +897,7 @@
 				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
 				F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */,
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
+				F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */,
 				F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */,
 				F9F97C7D2CDC7B0000096ED1 /* Zoomable.swift in Sources */,
 				F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */,
@@ -892,6 +921,7 @@
 				F9FFC6BA2CE230CD008AB5EE /* AlbumImageViewController.swift in Sources */,
 				F96E61712CD9C6DD007329DB /* SideMenu.swift in Sources */,
 				F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */,
+				F9E124A42CE447E600BB8CD4 /* JiziViewModel.swift in Sources */,
 				F9F97C892CDDF28B00096ED1 /* NaviBarView.swift in Sources */,
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
@@ -904,6 +934,8 @@
 				F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */,
 				F96E61782CD9C6DD007329DB /* Loading.swift in Sources */,
 				F9F97C9B2CDF468E00096ED1 /* ImageManager.swift in Sources */,
+				F9E1249F2CE43D1700BB8CD4 /* ArticleView.swift in Sources */,
+				F9E124A22CE43D2300BB8CD4 /* DashboardPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-class JiziViewModel: AlertViewModel {
+class JiziPageViewModel: AlertViewModel {
   @Published var text = ""
   @Published var focused = false
+  @Published var buttonEnabled = true
   
   override init() {
     super.init()
@@ -18,10 +19,20 @@ class JiziViewModel: AlertViewModel {
     text = "寒雨连江夜入吴，平明送客楚山孤"
 #endif
   }
+  func onSearch(navi: NavigationViewModel) {
+    if (!verifySearchText(text: text)) {
+      return
+    }
+    self.buttonEnabled = false
+    navi.gotoJizi(text) { [weak self] in
+      self?.buttonEnabled = true
+    }
+  }
 }
 
 struct JiziPage : View {
-  @StateObject var viewModel = JiziViewModel()
+  @StateObject var viewModel = JiziPageViewModel()
+  @StateObject var naviVM = NavigationViewModel()
   @FocusState var focused: Bool
   @State private var editHeight: CGFloat = 120
   var text: String {
@@ -37,6 +48,17 @@ struct JiziPage : View {
   }
   private let paddingHor: CGFloat = 15
   var body: some View {
+    NavigationStack {
+      content
+        .navigationDestination(isPresented: $naviVM.gotoJiziView) {
+          JiziView(viewModel: naviVM.jiziVM!)
+        }
+        .navigationDestination(isPresented: $naviVM.gotoWorkView) {
+          WorkView(viewModel: naviVM.workVM!)
+        }
+    }
+  }
+  var content: some View {
     VStack(spacing: 0) {
       HStack(spacing: 0) {
         Text("title_jizi".localized).font(.system(size: 24)).foregroundStyle(Color.colorPrimary).bold()
@@ -90,15 +112,16 @@ struct JiziPage : View {
           
         } label: {
           Image(systemName: "chevron.up.2").square(size: 10).foregroundStyle(.gray)
-        }
+        }.padding(.trailing, 5)
         Button {
-          
+          viewModel.onSearch(navi: naviVM)
         } label: {
           HStack(spacing: 4) {
             Image(systemName: "command").square(size: 12)
             Text("title_jizi".localized).font(.callout)
-          }
+          }.foregroundStyle(viewModel.buttonEnabled ? .white : .gray)
         }.buttonStyle(PrimaryButton(bgColor: .blue))
+          .disabled(!viewModel.buttonEnabled)
       }.padding(.horizontal, paddingHor)
       Spacer()
     }.navigationBarHidden(true)

@@ -20,6 +20,9 @@ enum ChineseVersion : String, Codable, CaseIterable {
     isChs ? chs : cht
   }
   
+  func toString() -> String {
+    rawValue
+  }
 }
 
 extension ChineseVersion {

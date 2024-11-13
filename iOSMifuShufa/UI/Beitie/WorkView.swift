@@ -81,7 +81,7 @@ struct WorkView: View {
   @State var tabIndex = 0
   @State var sliderProgress: CGFloat = 0
   @State var galleryScroll = false
-   
+  @State var showImageText = false
   
   var work: BeitieWork {
     viewModel.work
@@ -93,6 +93,14 @@ struct WorkView: View {
   
   var currentImage: BeitieImage {
     images[viewModel.pageIndex]
+  }
+  
+  var currentImageText: String {
+    currentImage.chineseText()?.emptyNull ?? ""
+  }
+  
+  var hasImageText: Bool {
+    currentImageText.isNotEmpty()
   }
   
   @State private var scrollProxy: ScrollViewProxy? = nil
@@ -193,6 +201,15 @@ struct WorkView: View {
           BeitieGallerView(images: images, parentSize: imageSize, pageIndex: $tabIndex, galleryScroll: $galleryScroll)
             .environment(\.layoutDirection, .rightToLeft)
         }
+        if showImageText && currentImageText.isNotEmpty() {
+          ZStack {
+            TextField("", text: .constant(currentImageText), axis: .vertical)
+              .multilineTextAlignment(.leading)
+              .font(.callout)
+              .padding(10)
+              .foregroundStyle(.white)
+          }.background(.black.opacity(0.55))
+        }
       }.background(.black)
         .background(SizeReaderView(binding: $imageSize))
       Divider()
@@ -200,14 +217,14 @@ struct WorkView: View {
         VStack(alignment: .center) {
           HStack(spacing: 12) {
             Button {
-              
+              showImageText.toggle()
             } label: {
               HStack(spacing: 5) {
                 Text("image_text".localized).font(.callout)
                 Image(systemName: "triangle.fill").square(size: 7)
-                  .rotationEffect(.degrees(180))
-              }.foregroundStyle(Color.colorPrimary)
-            }
+                  .rotationEffect(.degrees(showImageText ? 0 : 180))
+              }.foregroundStyle(hasImageText ? Color.colorPrimary : .gray)
+            }.disabled(!hasImageText)
             ZStack {
               Slider(value: $sliderProgress, in: 1...(CGFloat(viewModel.images.size))) .rotationEffect(.degrees(180))
             }

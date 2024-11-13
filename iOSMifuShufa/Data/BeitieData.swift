@@ -275,7 +275,11 @@ class BeitieWork: Decodable, Equatable {
   }
 }
 
-class BeitieSingle: Decodable {
+class BeitieSingle: Decodable, Equatable {
+  static func == (lhs: BeitieSingle, rhs: BeitieSingle) -> Bool {
+    lhs.id == rhs.id
+  }
+  
   var id: Int = 0
   var index: Int = 0
   var fileName: String = ""
@@ -357,6 +361,8 @@ class BeitieImage: Decodable, Hashable {
   var workId: Int
   var singleCount: Int
   var textCht: String? = nil
+  
+  func chineseText() -> String? { text?.orChtNullable(textCht) }
   
   enum CodingKeys: CodingKey {
     case id
@@ -560,4 +566,45 @@ extension String {
     return sb.toString()
   }
   
+}
+
+
+class Calligrapher: Decodable {
+  var id: Int
+  var name: String
+  var nameCht: String
+  var dynasty: Dynasty
+  var detailDynasty: String
+  var intro: String
+  var introCht: String
+  var avatarUrl: String? = nil
+  var az: String
+  var famous: Boolean
+  
+  enum CodingKeys: CodingKey {
+    case id
+    case name
+    case nameCht
+    case dynasty
+    case detailDynasty
+    case intro
+    case introCht
+    case avatarUrl
+    case az
+    case famous
+  }
+  
+  required init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.id = try container.decode(Int.self, forKey: .id)
+    self.name = try container.decode(String.self, forKey: .name)
+    self.nameCht = try container.decode(String.self, forKey: .nameCht)
+    self.dynasty = Dynasty(rawValue: try container.decode(String.self, forKey: .dynasty))!
+    self.detailDynasty = try container.decode(String.self, forKey: .detailDynasty)
+    self.intro = try container.decode(String.self, forKey: .intro)
+    self.introCht = try container.decode(String.self, forKey: .introCht)
+    self.avatarUrl = try container.decodeIfPresent(String.self, forKey: .avatarUrl)
+    self.az = try container.decode(String.self, forKey: .az)
+    self.famous = try container.decode(Boolean.self, forKey: .famous)
+  }
 }

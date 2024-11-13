@@ -59,6 +59,9 @@ extension Array {
   static func listOf(_ elems: Element...) -> Array<Element> {
     return elems
   }
+  static func mutableListOf(_ elems: Element...) -> Array<Element> {
+    return elems
+  }
   static func arrayListOf(_ elems: Element...) -> Array<Element> {
     return elems
   }
@@ -154,6 +157,12 @@ extension Array {
   func sortedByDescending(mapper: @escaping (Element) -> Int) -> Array {
     sorted { l, r in
       mapper(l) > mapper(r)
+    }
+  }
+  
+  func sortedByDescending(mapper: @escaping (Element) -> Bool) -> Array {
+    sorted { l, r in
+      (mapper(l) ? 1 : 0) > (mapper(r) ? 1 : 0)
     }
   }
 }

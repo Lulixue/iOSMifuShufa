@@ -25,17 +25,42 @@ struct ContentView: View {
       
       BeitiePage()
         .tabItem {
-          Label("title_beitie".localized, systemImage: "photo")
+          Label("title_beitie".localized, systemImage: selection == 1 ? "photo.on.rectangle.angled.fill" : "photo")
+            .environment(\.symbolVariants, .none)
         }.tag(1)
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
       
       JiziPage()
         .tabItem {
-          Label("title_jizi".localized, systemImage: "photo")
+//          Image(selection == 2 ? "vector_combine_fill" : "vector_combine").renderingMode(.template).resizable().scaledToFill()
+//            .rotationEffect(.degrees(90))
+//          Text("title_jizi".localized)
+          Label("title_jizi".localized, systemImage: selection == 2 ? "square.fill.on.square.fill" : "plus.square.on.square")
+            .environment(\.symbolVariants, .none)
         }.tag(2)
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
+      
+      ArticlePage()
+        .tabItem {
+          Image(systemName: selection == 3 ? "checkmark.circle.fill" : "checkmark.circle")
+            .renderingMode(.template)
+            .resizable()
+            .environment(\.symbolVariants, .none)
+          Text("title_article".localized)
+        }.tag(3)
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(Color.background, for: .tabBar)
+      
+      DashboardPage()
+        .tabItem {
+          Label("title_dashboard".localized, systemImage: selection == 4 ? "info.circle.fill" : "info.circle")
+            .environment(\.symbolVariants, .none)
+        }.tag(4)
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(Color.background, for: .tabBar)
+      
     }.navigationDestination(isPresented: $navigationVM.gotoWorkView) {
       WorkView(viewModel: navigationVM.workVM!)
     }

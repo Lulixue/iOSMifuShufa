@@ -383,8 +383,7 @@ struct HomePage: View {
         DropDownOptionsView(param: viewModel.fastDirectParam) { index in
           viewModel.fastResultIndex = index
           resultProxy?.scrollTo(index - 1, anchor: .top)
-        }.offset(x: 10 + viewModel.orderWidth + orderSpacing, y: orderBarHeight+1)
-          
+        }.offset(x: 10 + viewModel.orderWidth + orderSpacing, y: orderBarHeight+1)   
       }
       if viewModel.showFont {
         DropDownOptionsView(param: viewModel.fontParam) { font in
