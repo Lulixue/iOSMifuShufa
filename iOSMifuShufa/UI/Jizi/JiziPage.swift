@@ -53,9 +53,6 @@ struct JiziPage : View {
         .navigationDestination(isPresented: $naviVM.gotoJiziView) {
           JiziView(viewModel: naviVM.jiziVM!)
         }
-        .navigationDestination(isPresented: $naviVM.gotoWorkView) {
-          WorkView(viewModel: naviVM.workVM!)
-        }
     }
   }
   var content: some View {

@@ -5,6 +5,7 @@
 //  Created by lulixue on 2024/11/12.
 //
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct WorkIntroView: View {
   @StateObject var viewModel: WorkViewModel
@@ -59,16 +60,16 @@ struct WorkIntroView: View {
             Button {
               naviVM.gotoWork(work: work)
             } label: {
-              AsyncImage(url: work.cover.url!) { img in
+              WebImage(url: work.cover.url!) { img in
                 img.image?.resizable()
                   .scaledToFit()
                   .frame(height: 100)
                   .clipShape(RoundedRectangle(cornerRadius: 5))
+                  .padding(3)
+                  .background(content: {
+                    RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
+                  })
               }
-              .padding(3)
-              .background(content: {
-                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
-              })
             }
             Spacer()
           }.padding(.top, 20).padding(.horizontal, 20)

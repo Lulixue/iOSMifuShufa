@@ -68,6 +68,8 @@
 		F9E124A22CE43D2300BB8CD4 /* DashboardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */; };
 		F9E124A42CE447E600BB8CD4 /* JiziViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */; };
 		F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A52CE476E100BB8CD4 /* SettingsView.swift */; };
+		F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */; };
+		F9E124AA2CE5BCA500BB8CD4 /* PuzzleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */; };
 		F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E345FA2CDA27D600E65B2B /* WorkView.swift */; };
 		F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */; };
 		F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0232CD25CD00009C0DC /* HomePage.swift */; };
@@ -191,6 +193,8 @@
 		F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPage.swift; sourceTree = "<group>"; };
 		F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziViewModel.swift; sourceTree = "<group>"; };
 		F9E124A52CE476E100BB8CD4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
+		F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleLayout.swift; sourceTree = "<group>"; };
 		F9E345FA2CDA27D600E65B2B /* WorkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkView.swift; sourceTree = "<group>"; };
 		F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitiePage.swift; sourceTree = "<group>"; };
 		F9ECB0232CD25CD00009C0DC /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
@@ -269,6 +273,8 @@
 		F96E614E2CD9C6C9007329DB /* Jizi */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */,
+				F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */,
 				F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */,
 				F9E124742CE35D0C00BB8CD4 /* JiziView.swift */,
 				F96E614D2CD9C6C9007329DB /* JiziPage.swift */,
@@ -926,6 +932,7 @@
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
+				F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */,
 				F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */,
 				F96E61752CD9C6DD007329DB /* Colors.swift in Sources */,
 				F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */,
@@ -934,6 +941,7 @@
 				F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */,
 				F96E61782CD9C6DD007329DB /* Loading.swift in Sources */,
 				F9F97C9B2CDF468E00096ED1 /* ImageManager.swift in Sources */,
+				F9E124AA2CE5BCA500BB8CD4 /* PuzzleLayout.swift in Sources */,
 				F9E1249F2CE43D1700BB8CD4 /* ArticleView.swift in Sources */,
 				F9E124A22CE43D2300BB8CD4 /* DashboardPage.swift in Sources */,
 			);

@@ -76,4 +76,10 @@ class Utils {
   public static let PHOTOVIEW_SCALE_MIN: CGFloat = 1.0
   public static let PHOTOVIEW_SCALE_MEDIUM: CGFloat = 1.75
   public static let PHOTOVIEW_SCALE_MAX: CGFloat = 3
+  
+  public static let DEFAULT_JIZI_CHAR_PER_COL = 3
+  public static let DEFAULT_JIZI_SINGLE_GAP = 3
+  public static let DEFAULT_JIZI_INSET_GAP = 10
+  public static let DEFAULT_JIZI_BG_COLOR = 0 // black
+  private static let MI_GRID_LINE_WIDTH: CGFloat = 1
 }

@@ -19,13 +19,23 @@ class NavigationViewModel : BaseObservableObject {
   @Published var gotoJiziView = false
   @Published var jiziVM: JiziViewModel!
   
+  @Published var gotoPuzzleView = false
+  @Published var puzzleVM: PuzzleViewModel!
+  
+  func gotoPuzzle(_ items: [JiziItem]) {
+    puzzleVM = PuzzleViewModel(items: items)
+    gotoPuzzleView = true
+  }
   
   func gotoJizi(_ text: String, after: @escaping () -> Void) {
-    let vm = JiziViewModel(text: text)
-    self.jiziVM = vm
-    vm.onSearch {
-      after()
-      self.gotoJiziView = true
+    Task {
+      let items = JiziViewModel.search(text: text)
+      DispatchQueue.main.async {
+        let vm = JiziViewModel(text: text, items: items)
+        self.jiziVM = vm
+        after()
+        self.gotoJiziView = true
+      }
     }
   }
   

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-//import Agrume
  
 extension CGFloat {
   static let KB: CGFloat = 1024
@@ -115,19 +114,24 @@ struct WorkView: View {
             let selected = i == viewModel.pageIndex
             ZStack {
               Button {
+                galleryScroll = false
                 viewModel.pageIndex = i
               } label: {
                 WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
                   img.image?.resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 80)
+                    .frame(maxWidth: 80).clipShape(RoundedRectangle(cornerRadius: 2))
+                    .padding(0.5)
+                    .background {
+                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
+                    }
                 }.onSuccess(perform: { _, _, _ in
-                  
-                }).clipShape(RoundedRectangle(cornerRadius: 2))
-                  .padding(0.5)
-                  .background {
-                    RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
-                  }.padding(.horizontal, selected ? 0 : 0.5)
+                  if galleryScroll {
+                    DispatchQueue.main.async {
+                      syncScroll(tabIndex)
+                    }
+                  }
+                })
               }
               if selected {
                 Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
@@ -137,20 +141,9 @@ struct WorkView: View {
         }.padding(.vertical, 10).padding(.horizontal, 15).frame(height: 80)
           .onAppear {
             scrollProxy = proxy
-            if viewModel.pageIndex > 0 {
-              Task {
-                sleep(1)
-                DispatchQueue.main.async {
-                  syncScroll(viewModel.pageIndex)
-                }
-              }
-            }
           }
       }
-    }
-      .frame(height: 80)
-      .environment(\.layoutDirection, .rightToLeft)
-      .scrollViewStyle(.defaultStyle($previewScrollState))
+    }.environment(\.layoutDirection, .rightToLeft)
       .onChange(of: previewScrollState.isDragging) { newValue in
         if previewScrollState.isDragging {
           galleryScroll = false
@@ -164,6 +157,7 @@ struct WorkView: View {
   }
   
   @State var imageSize: CGSize = .zero
+
   var body: some View {
     VStack(spacing: 0) {
       NaviView {
@@ -213,7 +207,7 @@ struct WorkView: View {
       }.background(.black)
         .background(SizeReaderView(binding: $imageSize))
       Divider()
-      ScrollView {
+      ScrollView(showsIndicators: false) {
         VStack(alignment: .center) {
           HStack(spacing: 12) {
             Button {
@@ -256,6 +250,7 @@ struct WorkView: View {
         let newIndex = Int(newValue) - 1
         if (newIndex != tabIndex) {
           tabIndex = newIndex
+          galleryScroll = true
           syncScroll(newIndex)
         }
       }.navigationDestination(isPresented: $naviVM.gotoSingleView) {

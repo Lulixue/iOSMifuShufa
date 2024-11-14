@@ -101,7 +101,7 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       let dHeight = imgSize.height
       let dWidth = imgSize.width
       let pWidth = parSize.width
-      let pHeight = parSize.height
+      let pHeight = parSize.height - 6
       
       var min = ImageScale.MIN_SIZE_PERCENT
       var max = ImageScale.MAX_SIZE_PERCENT
@@ -149,8 +149,8 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       self.max = maxScale
       self.medium = medium
       
-      print("image Size: \(imgSize), parent Size: \(parSize)")
-      print("min: \(self.min), max: \(self.max), medium: \(self.medium), auto: \(self.auto)")
+      printlnDbg("image Size: \(imgSize), parent Size: \(parSize)")
+      printlnDbg("min: \(self.min), max: \(self.max), medium: \(self.medium), auto: \(self.auto)")
     }
   }
   var imageDefaultScale = ImageScale()
@@ -253,31 +253,8 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
     
   }
   
-  func setImageUrl(_ url: String, _ preloadImageUrl: String? = nil) {
-    
-      //        singleImage.sd_setImage(with: url, completed: { image, error, cacheType, imageURL in
-      //            self.sdDelegate?.downloadComplete()
-      //            self.image = singleImage.image
-      //            self.setup()
-      //        })
-      ////
-      //        if (preloadImageUrl != nil) {
-      //            let manager = SDWebImageManager.shared
-      //            if let key = manager.cacheKey(for: URL(string: preloadImageUrl!)) {
-      //               manager.imageCache.containsImage(forKey: key, cacheType: .disk, completion: { type in
-      //                    switch (type) {
-      //                    case .all, .disk, .memory:
-      //                        self.setShowedImageUrl(preloadImageUrl!)
-      //                        return
-      //                    default:
-      //                        self.setShowedImageUrl(url)
-      //                    }
-      //                })
-      //                return
-      //            }
-      //        }
+  func setImageUrl(_ url: String) {
     setShowedImageUrl(url)
-    
   }
     // MARK: - Functions
   
@@ -287,14 +264,8 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       x: contentSize.width > bounds.width ? (contentSize.width / 2) - (bounds.width / 2) : 0,
       y: contentSize.height > bounds.height ? (contentSize.height / 2) - (bounds.height / 2) : 0
     )
-    
-      //    print("contentSize: \(contentSize)")
-      //    print("boundSize: \(bounds)")
-      //    print("centerOffset: \(centerOffset)")
     contentOffset = centerOffset
   }
-  
-  
   
   open func setup() {
     
@@ -315,12 +286,9 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
     imageView.layer.borderWidth = drawBlackBorder ? 1 : 0
     
     zoomScale = 1
-      //    print("Setup Parent", self)
+    
     imageDefaultScale.calculateAutoScale(ImageSize: image!.size , ParentViewSize: parentSize, imageType)
-      //    if imageType == .single {
-      //        imageScale = imageDefaultScale.medium
-      //    } else {
-      //    }
+
     imageScale = imageDefaultScale.auto
     maximumZoomScale = imageDefaultScale.max
     minimumZoomScale = imageDefaultScale.min

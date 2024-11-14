@@ -1,9 +1,9 @@
-//
-//  Home.swift
-//  iOSMifuShufa
-//
-//  Created by lulixue on 2024/10/30.
-//
+  //
+  //  Home.swift
+  //  iOSMifuShufa
+  //
+  //  Created by lulixue on 2024/10/30.
+  //
 
 import SwiftUI
 import DeviceKit
@@ -107,7 +107,7 @@ struct HomePage: View {
   
   private func onSearch() {
     focused = false
-    let text = viewModel.text 
+    let text = viewModel.text
     viewModel.onSearch(text)
   }
   
@@ -118,16 +118,16 @@ struct HomePage: View {
       VStack(alignment: .center, spacing: 8) {
         HStack(alignment: .center) {
           Spacer()
-          AsyncImage(url: work.cover.url!) { img in
+          WebImage(url: work.cover.url!) { img in
             img.image?.resizable()
               .scaledToFit()
               .frame(height: 90)
               .clipShape(RoundedRectangle(cornerRadius: 5))
+              .padding(3)
+              .background(content: {
+                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
+              })
           }
-          .padding(3)
-          .background(content: {
-            RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
-          })
           Spacer()
         }.padding(.vertical, 5)
         
@@ -156,16 +156,16 @@ struct HomePage: View {
       VStack(alignment: .center) {
         HStack(alignment: .center) {
           Spacer()
-          AsyncImage(url: single.thumbnailUrl.url!) { img in
+          WebImage(url: single.thumbnailUrl.url!) { img in
             img.image?.resizable()
               .scaledToFit()
               .frame(height: 60)
               .clipShape(RoundedRectangle(cornerRadius: 5))
+              .padding(3)
+              .background(content: {
+                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
+              })
           }
-          .padding(3)
-          .background(content: {
-            RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
-          })
           Spacer()
         }
         Text(single.showChars)
@@ -237,7 +237,7 @@ struct HomePage: View {
     }
   }
   private let previewColor = Color.black.opacity(0.9)
-
+  
   private func hidePreview() {
     viewModel.showPreview = false
   }
@@ -383,7 +383,7 @@ struct HomePage: View {
         DropDownOptionsView(param: viewModel.fastDirectParam) { index in
           viewModel.fastResultIndex = index
           resultProxy?.scrollTo(index - 1, anchor: .top)
-        }.offset(x: 10 + viewModel.orderWidth + orderSpacing, y: orderBarHeight+1)   
+        }.offset(x: 10 + viewModel.orderWidth + orderSpacing, y: orderBarHeight+1)
       }
       if viewModel.showFont {
         DropDownOptionsView(param: viewModel.fontParam) { font in
@@ -401,13 +401,11 @@ struct HomePage: View {
   var defaultView: some View {
     ScrollView {
       VStack(spacing: 12) {
-        let single = viewModel.todaySingle
-        if single != nil {
-          todaySingle(single!)
+        if let single = viewModel.todaySingle {
+          todaySingle(single)
         }
-        let work = viewModel.todayWork
-        if work != nil {
-          todayWork(work!)
+        if let work = viewModel.todayWork {
+          todayWork(work)
         }
         Spacer()
       }.padding(.horizontal, 12).padding(.vertical, 12)
@@ -441,47 +439,49 @@ struct HomePage: View {
     }, viewModel: sideVM)
   }
   
-var centerView: some View {
+  var centerView: some View {
     VStack(spacing: 0) {
-      HStack(spacing: 0) {
-        Image("mi").renderingMode(.template).resizable().frame(width: 18, height: 20)
-          .foregroundStyle(Color.searchHeader)
-          .rotationEffect(.degrees(5))
-        3.HSpacer()
-        Image("fu").renderingMode(.template).resizable().scaledToFill().frame(width: 18, height: 22).rotationEffect(.degrees(2))
-          .foregroundStyle(Color.searchHeader)
-        Spacer()
-        Button {
-          sideVM.sideMenuLeftPanel.toggle()
-        } label: {
-          Image(systemName: "line.3.horizontal")
-            .square(size: 20)
-            .foregroundStyle(Color.colorPrimary)
-            .buttonStyle(PrimaryButton())
-          
-        }
-        5.HSpacer()
-      }.padding(.horizontal, 15)
-      10.VSpacer()
-      searchBar
-      if viewModel.showHistoryBar {
-        HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
-          viewModel.updateHistoryBarVisible()
-        }) { l in
-          viewModel.text = l.text!
-          onSearch()
-        }
-        8.VSpacer()
-      } else {
+      VStack(spacing: 0) {
+        HStack(spacing: 0) {
+          Image("mi").renderingMode(.template).resizable().frame(width: 18, height: 20)
+            .foregroundStyle(Color.searchHeader)
+            .rotationEffect(.degrees(5))
+          3.HSpacer()
+          Image("fu").renderingMode(.template).resizable().scaledToFill().frame(width: 18, height: 22).rotationEffect(.degrees(2))
+            .foregroundStyle(Color.searchHeader)
+          Spacer()
+          Button {
+            sideVM.sideMenuLeftPanel.toggle()
+          } label: {
+            Image(systemName: "line.3.horizontal")
+              .square(size: 20)
+              .foregroundStyle(Color.colorPrimary)
+              .buttonStyle(PrimaryButton())
+            
+          }
+          5.HSpacer()
+        }.padding(.horizontal, 15)
         10.VSpacer()
-      }
+        searchBar
+        if viewModel.showHistoryBar {
+          HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
+            viewModel.updateHistoryBarVisible()
+          }) { l in
+            viewModel.text = l.text!
+            onSearch()
+          }
+          8.VSpacer()
+        } else {
+          10.VSpacer()
+        }
+      }.background(.white)
       0.4.HDivder()
       if viewModel.singleResult.isNotEmpty() {
-        resultView
+        resultView.background(.white)
       } else {
         defaultView
       }
-    }.background(.white)
+    }.background(Colors.surfaceVariant.swiftColor)
       .onAppear {
         UITextField.appearance().clearButtonMode = .whileEditing
       }.alert(viewModel.alertTitle  , isPresented: $viewModel.showAlert) {
@@ -492,7 +492,7 @@ var centerView: some View {
 
 #Preview {
   HomePage(viewModel: HomeViewModel())
-    .environmentObject(NavigationViewModel())
+  .environmentObject(NavigationViewModel())
 }
 
 
@@ -501,8 +501,8 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
   open override func viewDidLoad() {
     super.viewDidLoad()
     interactivePopGestureRecognizer?.delegate = self
-  }
+    }
   public func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
     viewControllers.count > 1
-  }
+    }
 }

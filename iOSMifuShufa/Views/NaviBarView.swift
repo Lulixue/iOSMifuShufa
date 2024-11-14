@@ -21,3 +21,12 @@ import SwiftUI
     content()
   }.padding(.horizontal, 10).frame(height: CUSTOM_NAVIGATION_HEIGHT)
 }
+
+
+@ViewBuilder func NaviTitle(text: Any) -> some View {
+  if let title = text as? String {
+    Text(title).font(.title3).foregroundStyle(.colorPrimary)
+  } else {
+    Text(text as! AttributedString).foregroundStyle(.colorPrimary)
+  }
+}

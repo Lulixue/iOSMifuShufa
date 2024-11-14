@@ -70,6 +70,23 @@ extension JiziOptionType {
 enum JiziBgColor: String, CaseIterable {
   case Black, White;
   
+  var color: UIColor {
+    switch self {
+    case .Black:
+        .black
+    case .White:
+        .white
+    }
+  }
+  
+  var opposite: UIColor {
+    switch self {
+    case .Black:
+        .white
+    case .White:
+        .black
+    }
+  }
 }
 
 struct PuzzleItem: Codable {
@@ -190,7 +207,7 @@ class JiziItem: BaseObservableObject {
       let elements = ordered.elements
       for i in 0..<elements.count {
         let items = elements[i].value
-        for j in 0..<items.size {
+        for _ in 0..<items.size {
           resultWorkIndex[resultWorkIndex.size] = i
         }
       }
@@ -281,14 +298,25 @@ class JiziViewModel: AlertViewModel {
   @Published var selectedWork: BeitieWork? = nil
   @Published var selectedFont: CalligraphyFont? = nil
   @Published var jiziItems: [JiziItem] = []
+  @Published var jiziImageLoaded = [Int: Bool]()
   @Published var buttonEnabled = true
   @Published var selectedIndex = 0
   @Published var workIndex = 0
   @Published var singleIndex = 0
   @Published var singleStartIndex = 0
   
-  init(text: String) {
+  init(text: String, items: [JiziItem]) {
     self.text = text
+    self.jiziItems = items
+  }
+  
+  func loaded(index: Int) {
+    jiziImageLoaded[index] = true
+    syncButtonEnabled()
+  }
+  
+  private func syncButtonEnabled() {
+    buttonEnabled = jiziImageLoaded.values.sumOf(mapper: { $0 ? 1 : 0 }) == jiziItems.count
   }
   
   var currentItem: JiziItem {
@@ -301,6 +329,10 @@ class JiziViewModel: AlertViewModel {
     workIndex = currentItem.getWorkIndex(singleIndex)
   }
   
+  func resetLoaded(_ index: Int) {
+    jiziImageLoaded[index] = false
+    buttonEnabled = false
+  }
   
   func selectWork(_ index: Int) {
     workIndex = index
@@ -313,40 +345,31 @@ class JiziViewModel: AlertViewModel {
     workIndex = currentItem.getWorkIndex(index)
   }
   
-  private func doSearch(_ text: String, after: @escaping () -> Void) {
+   
+  static func search(text: String) -> [JiziItem] {
+    let chars = text.filter { it in it.charIsChinesChar() }.toCharList
+    var newItems = [JiziItem]()
     
-    Task {
-      let chars = text.filter { it in it.charIsChinesChar() }.toCharList
-      var newItems = [JiziItem]()
-      
-      var orderWorks = HashMap<Int, Int>()
-      BeitieDbHelper.shared.getOrderTypeWorks(BeitieOrderType.orderType, false).elements.forEach { it in
-        for work in it.value.map({ w in w.first() }) {
-          orderWorks[work.id] = orderWorks.size
-        }
-      }
-      chars.forEach { it in
-        let result = BeitieDbHelper.shared.search(it).matchJizi()
-          .sortedBy { s in orderWorks[s.workId]! }
-        
-        let jiziItem = {
-          if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
-            return JiziItem(char: it, ziResult: result)
-          } else {
-            return JiziItem(char: it, ziResult: result, componentCandidates: nil)
-          }
-        }()
-        jiziItem.syncWithPreferences(selectedFont, nil, work: selectedWork)
-        newItems.add(jiziItem)
-      }
-      DispatchQueue.main.async {
-        self.jiziItems = newItems
-        after()
+    var orderWorks = HashMap<Int, Int>()
+    BeitieDbHelper.shared.getOrderTypeWorks(BeitieOrderType.orderType, false).elements.forEach { it in
+      for work in it.value.map({ w in w.first() }) {
+        orderWorks[work.id] = orderWorks.size
       }
     }
-  }
-  
-  func onSearch(after: @escaping () -> Void) {
-    doSearch(text, after: after)
+    chars.forEach { it in
+      let result = BeitieDbHelper.shared.search(it).matchJizi()
+        .sortedBy { s in orderWorks[s.workId]! }
+      
+      let jiziItem = {
+        if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
+          return JiziItem(char: it, ziResult: result)
+        } else {
+          return JiziItem(char: it, ziResult: result, componentCandidates: nil)
+        }
+      }()
+      jiziItem.syncWithPreferences(nil, nil, work: nil)
+      newItems.add(jiziItem)
+    }
+    return newItems
   }
 }

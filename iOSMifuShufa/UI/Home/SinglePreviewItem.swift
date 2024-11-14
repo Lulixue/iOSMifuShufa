@@ -39,7 +39,7 @@ struct SinglePreviewItem: View {
           self.loading = false
         }
       })
-      .indicator(.activity).frame(alignment: loading ? .center : .topTrailing)
+      .indicator(.activity).tint(.white).frame(alignment: loading ? .center : .topTrailing)
       .clipShape(RoundedRectangle(cornerRadius: 2))
       .scaleEffect(currentZoom + totalZoom)
       .gesture(MagnificationGesture().onChanged({ offset in

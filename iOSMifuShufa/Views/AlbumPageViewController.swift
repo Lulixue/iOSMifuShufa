@@ -123,6 +123,18 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
     }
   }
   
+  func initPages(images: [UIImage], initPage: Int = 0) {
+    
+    pages.removeAll()
+    for i in 0..<images.count {
+      let item = images[i]
+      let aivc = AlbumImageViewController()
+      aivc.view.tag = i
+      aivc.initAlbumImage(item, parentSize)
+      pages.append(aivc)
+    }
+  }
+  
   func initPages(items: [BeitieImage], initPage: Int = 0) {
     
     pages.removeAll()

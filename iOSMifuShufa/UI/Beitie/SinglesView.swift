@@ -53,16 +53,14 @@ struct SinglesView: View {
         var t = AttributedString(s.showChars)
         var sub = AttributedString(" \(viewModel.currentIndex+1)/\(singles.size)")
         t.font = .title3
-        t.foregroundColor = Color.colorPrimary
         sub.font = .footnote.bold()
-        sub.foregroundColor = Color.colorPrimary
         return t + sub
       }()
       BackButtonView {
         presentationMode.wrappedValue.dismiss()
       }
       Spacer()
-      Text(title)
+      Text(title).foregroundStyle(.colorPrimary)
       Spacer()
       Button {
       } label: {
@@ -77,6 +75,14 @@ struct SinglesView: View {
       }
     }
   }
+  @State private var scrollFixed = false
+  @ScrollState private var scrollState
+  
+  func syncScroll(_ index: Int) {
+    let pageTo = index == singles.lastIndex ? index : (index - 1)
+    self.scrollProxy?.scrollTo(max(pageTo, 0), anchor: .leading)
+  }
+  
   var body: some View {
     VStack(spacing: 0) {
       naviView
@@ -134,24 +140,33 @@ struct SinglesView: View {
       Divider()
       ScrollView([.horizontal]) {
         ScrollViewReader { proxy in
-          LazyHStack(spacing: 12) {
+          LazyHStack(spacing: 0) {
             ForEach(0..<singles.size, id: \.self) { i in
               let single = singles[i]
               let selected = i == viewModel.currentIndex
               HStack{
                 Button {
+                  scrollFixed = true
                   viewModel.currentIndex = i
                 } label: {
                   WebImage(url: single.thumbnailUrl.url!) { img in
                     img.image?.resizable()
                       .aspectRatio(contentMode: .fit)
-                      .frame(minWidth: 10, minHeight: 10)
+                      .frame(minWidth: 20, minHeight: bottomBarHeight - 20)
+                      .clipShape(RoundedRectangle(cornerRadius: 2))
+                      .padding(0.5)
+                      .background {
+                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 3 : 0.5)
+                      }.padding(.horizontal, 5)
                   }
-                  .indicator(.activity).clipShape(RoundedRectangle(cornerRadius: 2))
-                    .padding(0.5)
-                    .background {
-                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 2 : 1)
-                    }.padding(.horizontal, selected ? 0 : 0.5)
+                  .onSuccess(perform: { _, _, _ in
+                    if !scrollFixed {
+                      DispatchQueue.main.async {
+                        syncScroll(pageIndex)
+                      }
+                    }
+                  })
+                  .indicator(.activity).tint(.white)
                 }
               }.id(i)
             }
@@ -168,7 +183,15 @@ struct SinglesView: View {
               }
             }
         }
-      }.frame(maxWidth: .infinity).frame(height: bottomBarHeight).background(Color.singlePreviewBackground)
+      }
+        .frame(height: bottomBarHeight)
+        .scrollViewStyle(.defaultStyle($scrollState))
+        .background(Color.singlePreviewBackground)
+        .onChange(of: scrollState.isDragging, perform: { newValue in
+          if newValue {
+            self.scrollFixed = true
+          }
+        })
         .onChange(of: viewModel.currentIndex) { newValue in
           pageIndex = newValue
         }
@@ -177,8 +200,9 @@ struct SinglesView: View {
         }
         .onChange(of: pageIndex) { newValue in
           if viewModel.currentIndex != newValue {
-            scrollProxy?.scrollTo(max(newValue-1, 0), anchor: .leading)
+            scrollFixed = false
             viewModel.currentIndex = pageIndex
+            syncScroll(newValue)
           }
         }
     }.navigationBarHidden(true)

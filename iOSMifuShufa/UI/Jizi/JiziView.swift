@@ -13,6 +13,8 @@ import DeviceKit
 
 struct JiziView : View {
   @StateObject var viewModel: JiziViewModel
+  @StateObject var naviVM: NavigationViewModel = NavigationViewModel()
+  @Environment(\.presentationMode) var presentationMode
   var items: List<JiziItem> {
     viewModel.jiziItems
   }
@@ -30,7 +32,7 @@ struct JiziView : View {
   var candidatePanel: some View {
     ScrollView {
       LazyVStack {
-        autoColumnGrid(items, space: 10, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 4, paddingValues: PaddingValue(vertical: 10)) { size, i, item in
+        autoColumnGrid(items, space: 6, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 2, paddingValues: PaddingValue(horizontal: 10, vertical: 10)) { size, i, item in
           let selected = i == viewModel.selectedIndex
           let single = item.selected
           Button {
@@ -45,13 +47,20 @@ struct JiziView : View {
                     .aspectRatio(contentMode: .fit)
                     .frame(height: size-16)
                 }
+                .onSuccess(perform: { _, _, _ in
+                  viewModel.loaded(index: i)
+                })
                 .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
                 .frame(height: size-16)
+                .id(single.id)
               } else {
                 Text(item.char.toString()).font(.largeTitle).frame(width: size-itemPaddingHor*2, height: size).background(.black)
                   .foregroundStyle(.white)
+                  .onAppear {
+                    viewModel.loaded(index: i)
+                  }
               }
-              Text(item.char.toString()).font(.callout).padding(.top, 5).padding(.bottom, 2)
+              Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout).padding(.top, 5).padding(.bottom, 2)
                 .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
             }.padding(.top, 5).padding(.bottom, 3).padding(.horizontal, itemPaddingHor).frame(width: size).frame(height: size+20)
               .background(selected ? .gray.opacity(0.4) : .white).clipShape(RoundedRectangle(cornerRadius: 4))
@@ -81,11 +90,10 @@ struct JiziView : View {
     VStack(spacing: 0) {
       NaviView {
         BackButtonView {
-          
+          presentationMode.wrappedValue.dismiss()
         }
         Spacer()
-        Text("title_jizi".localized).font(.title3)
-          .foregroundStyle(Color.colorPrimary)
+        NaviTitle(text: "title_jizi".localized)
         Spacer()
         Button {
           
@@ -123,13 +131,14 @@ struct JiziView : View {
         Spacer()
         
         Button {
-          
+          naviVM.gotoPuzzle(viewModel.jiziItems)
         } label: {
           HStack(spacing: 4) {
             Image(systemName: "command").square(size: 11)
             Text("puzzle".localized).font(.system(size: 14))
           }
-        }.buttonStyle(PrimaryButton(bgColor: .blue))
+        }.buttonStyle(PrimaryButton(enabled: viewModel.buttonEnabled, bgColor: .blue, horPadding: 8, verPadding: 6))
+          .disabled(!viewModel.buttonEnabled)
       }.padding(.vertical, 10).padding(.horizontal, 14)
       Divider().padding(.horizontal, 10)
       candidatePanel
@@ -178,12 +187,14 @@ struct JiziView : View {
                       WebImage(url: single.thumbnailUrl.url!) { img in
                         img.image?.resizable()
                           .aspectRatio(contentMode: .fit)
-                          .frame(minWidth: 10, minHeight: 10)
-                      }.clipShape(RoundedRectangle(cornerRadius: 2))
-                      .padding(0.5)
-                      .background {
-                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 2 : 0.5)
-                      }.padding(.horizontal, selected ? 0 : 0.5)
+                          .frame(minWidth: 40, minHeight: 40)
+                          .clipShape(RoundedRectangle(cornerRadius: 2))
+                          .padding(0.5)
+                          .background {
+                            RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 2 : 0.5)
+                          }
+                      }.indicator(.activity)
+                        .tint(.white)
                     }
                   }.id(i).padding(.horizontal, 5)
                 }
@@ -205,16 +216,18 @@ struct JiziView : View {
         }
       }
     }.navigationBarHidden(true)
+      .navigationDestination(isPresented: $naviVM.gotoPuzzleView) {
+        PuzzleView(viewModel: naviVM.puzzleVM!)
+      }
   }
 }
 
 
 #Preview {
   JiziView(viewModel: {
-    let vm = JiziViewModel(text: "寒雨连江夜入吴")
-    vm.onSearch {
-      
-    }
+    let text = "寒雨连江夜入吴"
+    let items = JiziViewModel.search(text: text)
+    let vm = JiziViewModel(text: text, items: items)
     return vm
   }())
 }

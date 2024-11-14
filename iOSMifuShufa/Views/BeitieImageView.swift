@@ -8,6 +8,46 @@
 import SwiftUI
 import UIKit
 
+public struct ZoomImages: View {
+  let images: [UIImage]
+  let parentSize: CGSize
+  @Binding var pageIndex: Int
+  
+  public var body: some View {
+    WrappedZoomImageView(images: images, parentSize: parentSize, pageIndex: $pageIndex)
+      .frame(width: parentSize.width, height: parentSize.height)
+  }
+}
+
+struct WrappedZoomImageView: UIViewControllerRepresentable {
+  let images: [UIImage]
+  let parentSize: CGSize
+  @Binding var pageIndex: Int
+  
+  func makeUIViewController(context: Context) -> AlbumPageViewController {
+    let page = AlbumPageViewController()
+    page.parentSize = parentSize
+    page.initPages(images: images, initPage: pageIndex)
+    page.scrollToPage(page: pageIndex)
+    page.afterScroll = { index in
+      if pageIndex != index {
+        pageIndex = index
+      }
+    }
+    return page
+  }
+  
+  func updateUIViewController(_ uiViewController: AlbumPageViewController, context: Context) {
+    printlnDbg("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
+    if uiViewController.currentIndex != pageIndex {
+      uiViewController.scrollToPage(page: pageIndex)
+    }
+  }
+  
+  typealias UIViewControllerType = AlbumPageViewController
+  
+}
+
 
 public struct BeitieGallerView: View {
   let images: [BeitieImage]
