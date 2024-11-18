@@ -53,10 +53,6 @@ enum ConstraintItem: String {
   
 }
 
-
-let STORAGE_URL = "https://appdatacontainer.blob.core.windows.net"
-
-
 extension String {
   var urlEncoded: String? {
     return self.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)

@@ -39,30 +39,31 @@ struct BgClickableButton: ButtonStyle {
 
 struct CheckboxStyle: ToggleStyle {
   var iconSize: CGFloat = 20
-  var leadingSpacing: CGFloat = 0
+  var leadingSpacing: CGFloat = 8
   var disabled: Bool = false
   var backgroundColor: Color = .white
+  var iconColor: Color = Colors.searchHeader.swiftColor
   var paddingVer: CGFloat = 6
   
   func makeBody(configuration: Self.Configuration) -> some View {
     Button {
       configuration.isOn.toggle()
     } label: {
-      HStack {
-        if leadingSpacing > 0 {
-          Spacer.width(leadingSpacing)
-        }
+      HStack(spacing: 0) {
         HStack {
           Image(systemName: configuration.isOn ? "checkmark" : "square")
             .resizable()
             .scaledToFit()
             .font(Font.title.weight(configuration.isOn ? .bold : .regular))
-            .foregroundColor(configuration.isOn ? .white : Colors.searchHeader.swiftColor)
+            .foregroundColor(configuration.isOn ? .white : iconColor)
         }
         .padding(.all, configuration.isOn ? 4 : 0)
         .frame(width: iconSize, height: iconSize)
-        .background(disabled ? .gray : (configuration.isOn ? Colors.searchHeader.swiftColor : .clear))
+        .background(disabled ? .gray : (configuration.isOn ? iconColor : .clear))
         .cornerRadius(2)
+        if leadingSpacing > 0 {
+          Spacer.width(leadingSpacing)
+        }
         configuration.label
       }.padding(.vertical, paddingVer).padding(.horizontal, 2).background(backgroundColor)
     }.cornerRadius(5).buttonStyle(BgClickableButton())

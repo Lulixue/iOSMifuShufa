@@ -70,6 +70,11 @@
 		F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A52CE476E100BB8CD4 /* SettingsView.swift */; };
 		F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */; };
 		F9E124AA2CE5BCA500BB8CD4 /* PuzzleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */; };
+		F9E124AF2CE723DC00BB8CD4 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */; };
+		F9E124B12CE7247600BB8CD4 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124B02CE7247100BB8CD4 /* ArticleViewModel.swift */; };
+		F9E124B32CE78B2300BB8CD4 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124B22CE78B2200BB8CD4 /* WebView.swift */; };
+		F9E124B52CE78C0300BB8CD4 /* WebViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124B42CE78C0300BB8CD4 /* WebViewStore.swift */; };
+		F9E124B72CE8AD5500BB8CD4 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124B62CE8AD5300BB8CD4 /* AboutView.swift */; };
 		F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E345FA2CDA27D600E65B2B /* WorkView.swift */; };
 		F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */; };
 		F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0232CD25CD00009C0DC /* HomePage.swift */; };
@@ -195,6 +200,12 @@
 		F9E124A52CE476E100BB8CD4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleLayout.swift; sourceTree = "<group>"; };
+		F9E124AD2CE71B9F00BB8CD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
+		F9E124B02CE7247100BB8CD4 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
+		F9E124B22CE78B2200BB8CD4 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		F9E124B42CE78C0300BB8CD4 /* WebViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewStore.swift; sourceTree = "<group>"; };
+		F9E124B62CE8AD5300BB8CD4 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		F9E345FA2CDA27D600E65B2B /* WorkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkView.swift; sourceTree = "<group>"; };
 		F9ECB0212CD25CD00009C0DC /* BeitiePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitiePage.swift; sourceTree = "<group>"; };
 		F9ECB0232CD25CD00009C0DC /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
@@ -285,6 +296,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */,
 				F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */,
 				F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */,
 				F9F97C702CDA424100096ED1 /* ChineseConverter.swift */,
@@ -369,6 +381,7 @@
 		F98820462C3AC4500011DB04 /* iOSMifuShufa */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124AD2CE71B9F00BB8CD4 /* Info.plist */,
 				F9E1248A2CE36D9200BB8CD4 /* ScrollUI */,
 				F96E617B2CD9C6E0007329DB /* DebugResources */,
 				F96E616C2CD9C6DD007329DB /* Views */,
@@ -525,6 +538,9 @@
 		F9E1249E2CE43D1700BB8CD4 /* Article */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124B42CE78C0300BB8CD4 /* WebViewStore.swift */,
+				F9E124B22CE78B2200BB8CD4 /* WebView.swift */,
+				F9E124B02CE7247100BB8CD4 /* ArticleViewModel.swift */,
 				F9E1249D2CE43D1700BB8CD4 /* ArticleView.swift */,
 			);
 			path = Article;
@@ -533,6 +549,7 @@
 		F9E124A02CE43D1A00BB8CD4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				F9E124B62CE8AD5300BB8CD4 /* AboutView.swift */,
 				F9E124A52CE476E100BB8CD4 /* SettingsView.swift */,
 				F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */,
 			);
@@ -879,6 +896,7 @@
 				F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */,
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
 				F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */,
+				F9E124AF2CE723DC00BB8CD4 /* NetworkHelper.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
 				F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */,
@@ -889,6 +907,7 @@
 				F9E1248F2CE36D9200BB8CD4 /* BindedSnapCarouselView.swift in Sources */,
 				F9E124902CE36D9200BB8CD4 /* HorizontalCarouselView.swift in Sources */,
 				F9E124912CE36D9200BB8CD4 /* ScrollViewStyle.swift in Sources */,
+				F9E124B32CE78B2300BB8CD4 /* WebView.swift in Sources */,
 				F9E124922CE36D9200BB8CD4 /* Extensions.swift in Sources */,
 				F9E124932CE36D9200BB8CD4 /* PrefrenceKeys.swift in Sources */,
 				F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */,
@@ -898,6 +917,7 @@
 				F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */,
 				F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */,
 				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
+				F9E124B12CE7247600BB8CD4 /* ArticleViewModel.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
 				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
@@ -912,6 +932,7 @@
 				F9FFC6B62CE21C8E008AB5EE /* ZoomImageView.swift in Sources */,
 				F96E615C2CD9C6D1007329DB /* ViewExtension.swift in Sources */,
 				F96E615D2CD9C6D1007329DB /* ViewHelper.swift in Sources */,
+				F9E124B72CE8AD5500BB8CD4 /* AboutView.swift in Sources */,
 				F96E615E2CD9C6D1007329DB /* ViewModel.swift in Sources */,
 				F96E614F2CD9C6C9007329DB /* JiziPage.swift in Sources */,
 				F9F97C812CDCD6A700096ED1 /* DrawPanel.swift in Sources */,
@@ -944,6 +965,7 @@
 				F9E124AA2CE5BCA500BB8CD4 /* PuzzleLayout.swift in Sources */,
 				F9E1249F2CE43D1700BB8CD4 /* ArticleView.swift in Sources */,
 				F9E124A22CE43D2300BB8CD4 /* DashboardPage.swift in Sources */,
+				F9E124B52CE78C0300BB8CD4 /* WebViewStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,8 +1133,10 @@
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSMifuShufa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "米芾书法字典";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1144,8 +1168,10 @@
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSMifuShufa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "米芾书法字典";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

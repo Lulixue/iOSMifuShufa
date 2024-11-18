@@ -7,6 +7,13 @@
 import SQLite
 import Collections
 
+let STORAGE_DIR = "mifu"
+var ABOUT_TEXT: String {
+  "米芾书法字典属于立人书法系列，字典收集了米芾的经典书法作品，希望对米芾书法爱好者学习、研究米芾书法有所帮助。<br /><br /><small>立雪网络科技（深圳）有限公司<br />2024年7月3日</small>"
+    .orCht("米芾書法字典屬於立人書法系列，字典收集了米芾的經典書法作品，希望對米芾書法愛好者學習、研究米芾書法有所幫助。<br /><br /><small>立雪網絡科技（深圳）有限公司<br />2024年7月3日</small>")
+}
+
+
 enum WorkCategory: String, CaseIterable {
   case Boutique
   case Handu

@@ -45,9 +45,9 @@ class UnitData {
 class PuzzleLayout {
   
   static let MIN_AVG_WIDTH: CGFloat = 60
-  static let MAX_AVG_WIDTH: CGFloat = 100
+  static let MAX_AVG_WIDTH: CGFloat = 1000
   static let MIN_AVG_HEIGHT: CGFloat = 60
-  static let MAX_AVG_HEIGHT: CGFloat = 100
+  static let MAX_AVG_HEIGHT: CGFloat = 1000
   
   static func getUnitData(_ images: [UIImage], _ start: Int,_ size: Int, _ type: PuzzleType) -> UnitData {
     let ud = UnitData()
@@ -133,10 +133,92 @@ class PuzzleLayout {
     PuzzleSettingsItem.JinMode.boolValue
   }
   
+  static var rowsPerCol: Int {
+    PuzzleSettingsItem.CharPerColumnRow.intValue
+  }
   
-  static func drawMultiColumns(bitmaps: [UIImage], bgColor: UIColor, rowsPerCol: Int = Utils.DEFAULT_JIZI_CHAR_PER_COL) -> UIImage {
+  static func drawMultiColumnsJin(bitmaps: [UIImage], bgColor: UIColor) -> UIImage {
     let SingleGap = SingleGap
     let InsetGap = InsetGap
+    let rowsPerCol = rowsPerCol
+    let gap = SingleGap
+    let count = bitmaps.count
+    var columns = count / rowsPerCol
+    if (count % rowsPerCol > 0) {
+      columns += 1
+    }
+    
+    var totalWidth: CGFloat = 0
+    var totalHeight: CGFloat = 0
+    
+    for bmp in bitmaps {
+      totalWidth += bmp.getWidth()
+      totalHeight += bmp.getHeight()
+    }
+    var destWidth: CGFloat = 0
+    var destHeight: CGFloat = 0
+    
+    var unitDatas: [UnitData] = []
+    
+    for i in (0..<columns) {
+      let ud = getUnitData(bitmaps, i * rowsPerCol, rowsPerCol, .Multi)
+      if (ud.TotalWidth > destWidth) {
+        destWidth = ud.TotalWidth
+      }
+      destHeight += ud.MaxHeight
+      unitDatas.append(ud)
+    }
+    
+    destWidth += CGFloat(columns - 1)  * gap
+    destHeight += CGFloat(rowsPerCol - 1) * gap
+    
+      // 添加边框宽度
+    destWidth += 2 * InsetGap
+    destHeight += 2 * InsetGap
+    
+    var dstBmpDrawY: CGFloat = 0.0
+    var offsetX: CGFloat = 0.0
+    var offsetY: CGFloat = 0.0
+    
+    
+    let size = CGSize(width: destWidth, height: destHeight)
+    UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+    let context = UIGraphicsGetCurrentContext()!
+    context.setFillColor(bgColor.cgColor)
+    context.fill(CGRect(origin: .zero, size: size))
+    
+    for i in 0..<unitDatas.count {
+      let ud = unitDatas[i]
+      
+      dstBmpDrawY = InsetGap
+      for j in 0..<i {
+        dstBmpDrawY += unitDatas[j].MaxHeight + gap
+      }
+      
+      offsetX = InsetGap
+      
+      for srcBitmap in ud.bitmaps {
+        let (drawWidth, drawHeight) = ud.getBitmapDrawSize(srcBitmap)
+        offsetY = (ud.MaxHeight - drawHeight) / 2
+        offsetY += dstBmpDrawY
+        
+        srcBitmap.draw(in: CGRect(x: offsetX, y: offsetY, width: drawWidth, height: drawHeight))
+        offsetX += drawWidth + gap
+      }
+    }
+    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+    return newImage
+  }
+  
+  
+  static func drawMultiColumns(bitmaps: [UIImage], bgColor: UIColor) -> UIImage {
+    if jinMode {
+      return drawMultiColumnsJin(bitmaps: bitmaps, bgColor: bgColor)
+    }
+    let SingleGap = SingleGap
+    let InsetGap = InsetGap
+    let rowsPerCol = rowsPerCol
     let gap = SingleGap
     let count = bitmaps.count
     var columns = count / rowsPerCol
@@ -207,11 +289,56 @@ class PuzzleLayout {
     return newImage
   }
   
+  static func drawDuilianJin(bitmaps: [UIImage], bgColor: UIColor) -> UIImage {
+    let SingleGap = SingleGap
+    let InsetGap = InsetGap
+    let gap = SingleGap
+    let count = bitmaps.count
+    let rows = count/2
+    let udLeft =  getUnitData(bitmaps, 0, rows, .Duilian)
+    let udRight = getUnitData(bitmaps, rows, 2*rows, .Duilian)
+    
+    let maxWidth = Utils.getMore(udLeft.TotalWidth, udRight.TotalWidth)
+    let destWidth = maxWidth + DuilianGap + 2 * InsetGap
+    let destHeight = udLeft.MaxHeight + udRight.MaxHeight + DuilianGap + 2 * InsetGap
+    
+    let size = CGSize(width: destWidth, height: destHeight)
+    UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+    let context = UIGraphicsGetCurrentContext()!
+    context.setFillColor(bgColor.cgColor)
+    context.fill(CGRect(origin: .zero, size: size))
+    
+    var offsetY = InsetGap
+    var offsetX: CGFloat = InsetGap + (maxWidth - udLeft.TotalWidth) / 2
+    
+    for bmp in udLeft.bitmaps {
+      let (drawWidth, drawHeight) = udLeft.getBitmapDrawSize(bmp)
+      offsetY = InsetGap + (udLeft.MaxHeight - drawHeight) / 2
+      
+      bmp.draw(in: CGRect(x: offsetX, y: offsetY, width: drawWidth, height: drawHeight))
+      offsetX += gap + drawWidth
+    }
+    
+    offsetX = InsetGap + (maxWidth - udRight.TotalWidth) / 2
+    for bmp in udRight.bitmaps {
+      let (drawWidth, drawHeight) = udLeft.getBitmapDrawSize(bmp)
+      offsetY = InsetGap + (udRight.MaxHeight - drawHeight) / 2 + DuilianGap + udLeft.MaxHeight
+      bmp.draw(in: CGRect(x: offsetX, y: offsetY, width: drawWidth, height: drawHeight))
+      offsetX += gap + drawWidth
+    }
+    
+    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+    return newImage
+  }
   
   static func drawDuilian(bitmaps: [UIImage], bgColor: UIColor) -> UIImage {
     
     if bitmaps.count % 2 != 0 {
       fatalError()
+    }
+    if jinMode {
+      return drawDuilianJin(bitmaps: bitmaps, bgColor: bgColor)
     }
     let SingleGap = SingleGap
     let InsetGap = InsetGap
@@ -245,7 +372,7 @@ class PuzzleLayout {
     offsetY = (maxHeight - udRight.TotalHeight) / 2 + InsetGap
     for bmp in udRight.bitmaps {
       let (drawWidth, drawHeight) = udLeft.getBitmapDrawSize(bmp)
-      offsetX = udLeft.MaxWidth + DuilianGap + gap + (udRight.MaxWidth - drawWidth) / 2
+      offsetX = udLeft.MaxWidth + DuilianGap + InsetGap + (udRight.MaxWidth - drawWidth) / 2
       bmp.draw(in: CGRect(x: offsetX, y: offsetY, width: drawWidth, height: drawHeight))
       offsetY += gap + drawHeight
     }
@@ -307,9 +434,10 @@ class PuzzleLayout {
   
   static func drawHorizontal(bitmaps: [UIImage], bgColor: UIColor) -> UIImage {
     let count = CGFloat(bitmaps.count)
+    let drawBitmaps = jinMode ? bitmaps : bitmaps.reversed()
     let SingleGap = SingleGap
     let InsetGap = InsetGap
-    let ud = getUnitData(bitmaps, 0, bitmaps.count, .SingleRow)
+    let ud = getUnitData(drawBitmaps, 0, bitmaps.count, .SingleRow)
     let gap: CGFloat = SingleGap
     
     let destWidth = ud.TotalWidth + (count - 1) * gap + 2 * InsetGap
@@ -323,8 +451,8 @@ class PuzzleLayout {
     
     var offsetY: CGFloat = 0
     var offsetX: CGFloat = InsetGap
-    for i in (0..<(bitmaps.count)).reversed() {
-      let bmp = bitmaps[i]
+    for i in (0..<(drawBitmaps.count)) {
+      let bmp = drawBitmaps[i]
       let (drawWidth, drawHeight) = ud.getBitmapDrawSize(bmp)
       offsetY = InsetGap + (ud.MaxHeight - drawHeight) / 2
       
@@ -352,8 +480,9 @@ class PuzzleLayout {
       fatalError()
     }
     let InsetGap = InsetGap
-    let bmpTop = [bitmaps[2], bitmaps[0]]
-    let bmpBottom = [bitmaps[3], bitmaps[1]]
+    let jinMode = jinMode
+    let bmpTop = jinMode ? [bitmaps[0], bitmaps[1]] : [bitmaps[2], bitmaps[0]]
+    let bmpBottom = jinMode ? [bitmaps[2], bitmaps[3]] : [bitmaps[3], bitmaps[1]]
     let gap: CGFloat = SingleGap
     
     let itemSize = {

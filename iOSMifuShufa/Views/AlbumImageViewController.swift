@@ -34,7 +34,7 @@ class AlbumImageViewController: UIViewController, SDImageDelegate {
     
     albumImage.sdDelegate = self
     loadingIndicator.startAnimating()
-    
+    self.view.backgroundColor = .clear
   }
   override func viewWillAppear(_ animated: Bool) {
     albumImage.imageType = .image

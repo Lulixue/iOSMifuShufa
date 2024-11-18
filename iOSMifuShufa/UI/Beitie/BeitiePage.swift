@@ -282,6 +282,15 @@ struct WorkItem: View {
   }
 }
 
+
+func keyToString(key: AnyHashable) -> String {
+  if key is WorkCategory {
+    (key as! WorkCategory).chinese
+  } else {
+    "\(key)"
+  }
+}
+
 struct CategoryItem: View {
   let key: AnyHashable
   let works: List<List<BeitieWork>>
@@ -305,14 +314,6 @@ struct CategoryItem: View {
     self.rowSize = Int(rowItemSize)
     self.itemSpacing = spacing
     self.rowCount = works.size / rowSize + ((works.size % rowSize > 0) ? 1 : 0)
-  }
-  
-  func keyToString(key: AnyHashable) -> String {
-    if key is WorkCategory {
-      (key as! WorkCategory).chinese
-    } else {
-      "\(key)"
-    }
   }
   
   var body: some View {
@@ -440,8 +441,7 @@ struct BeitiePage: View {
                 .foregroundStyle(btnColor)
             }
           }.padding(.horizontal, 12)
-          Text("title_beitie".localized)
-            .foregroundStyle(btnColor)
+          NaviTitle(text: "title_beitie".localized)
         }.frame(height: CUSTOM_NAVIGATION_HEIGHT).background(Colors.surfaceVariant.swiftColor)
         Divider()
         ZStack(alignment: .top) {

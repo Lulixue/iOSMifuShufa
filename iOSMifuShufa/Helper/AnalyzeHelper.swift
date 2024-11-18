@@ -31,7 +31,19 @@ class AnalyzeHelper {
       Settings.putString(SINGLE_ANALYZE_KEY, newValue.toString())
     }
   }
+  var singleRotate: Boolean {
+    get { Settings.getBoolean(SINGLE_ROTATE, true) }
+    set {
+      Settings.putBoolean(SINGLE_ROTATE, newValue)
+    }
+  }
   
+  var homeRotate: Boolean {
+    get { Settings.getBoolean(HOME_ROTATE, true) }
+    set {
+      Settings.putBoolean(HOME_ROTATE, newValue)
+    }
+  }
   var singleOriginal: Bool {
     get { Settings.getBoolean(SINGLE_ORIGINAL, false) }
     set {

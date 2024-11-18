@@ -18,6 +18,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
   var pages: [UIViewController] = []
   var parentSize: CGSize = .zero
   var afterScroll: (Int) -> Void = { _ in }
+  var bgColor: UIColor = .black
   
   override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
     super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
@@ -33,7 +34,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
       // Do any additional setup after loading the view.
     self.dataSource = self
     self.delegate = self
-    view.backgroundColor = .black
+    view.backgroundColor = bgColor
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {

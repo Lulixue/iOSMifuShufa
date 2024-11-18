@@ -8,9 +8,9 @@ import Foundation
 import UIKit
 
 enum ChineseVersion : String, Codable, CaseIterable {
+  case Unspecified
   case Simplified
   case Traditional
-  case Unspecified
   
   var isChs: Bool {
     self == .Simplified

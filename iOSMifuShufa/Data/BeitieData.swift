@@ -165,9 +165,12 @@ enum Dynasty: String {
   }
 }
 
-class BeitieWork: Decodable, Equatable {
+class BeitieWork: Decodable, Equatable, Hashable {
   static func == (lhs: BeitieWork, rhs: BeitieWork) -> Bool {
     lhs.id == rhs.id
+  }
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
   }
   
   var id: Int
@@ -425,7 +428,7 @@ extension BeitieWork {
       Settings.getBoolean(searchKey, true) && this.matchVip
     }
     set {
-      if (!this.matchVip) {
+      if (this.matchVip) {
         return
       }
       Settings.putBoolean(searchKey, newValue)
@@ -438,7 +441,7 @@ extension BeitieWork {
       Settings.getBoolean(jiziKey, true) && this.matchVip
     }
     set {
-      if (!this.matchVip) {
+      if (this.matchVip) {
         return
       }
       Settings.putBoolean(jiziKey, newValue)

@@ -12,9 +12,10 @@ public struct ZoomImages: View {
   let images: [UIImage]
   let parentSize: CGSize
   @Binding var pageIndex: Int
+  let bgColor: UIColor
   
   public var body: some View {
-    WrappedZoomImageView(images: images, parentSize: parentSize, pageIndex: $pageIndex)
+    WrappedZoomImageView(images: images, parentSize: parentSize, pageIndex: $pageIndex, bgColor: bgColor)
       .frame(width: parentSize.width, height: parentSize.height)
   }
 }
@@ -23,10 +24,12 @@ struct WrappedZoomImageView: UIViewControllerRepresentable {
   let images: [UIImage]
   let parentSize: CGSize
   @Binding var pageIndex: Int
+  let bgColor: UIColor
   
   func makeUIViewController(context: Context) -> AlbumPageViewController {
     let page = AlbumPageViewController()
     page.parentSize = parentSize
+    page.bgColor = bgColor
     page.initPages(images: images, initPage: pageIndex)
     page.scrollToPage(page: pageIndex)
     page.afterScroll = { index in

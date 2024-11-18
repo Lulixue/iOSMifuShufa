@@ -82,7 +82,7 @@ enum JiziBgColor: String, CaseIterable {
   var opposite: UIColor {
     switch self {
     case .Black:
-        .white
+        .gray
     case .White:
         .black
     }
@@ -311,8 +311,10 @@ class JiziViewModel: AlertViewModel {
   }
   
   func loaded(index: Int) {
-    jiziImageLoaded[index] = true
-    syncButtonEnabled()
+    DispatchQueue.main.async {
+      self.jiziImageLoaded[index] = true
+      self.syncButtonEnabled()
+    }
   }
   
   private func syncButtonEnabled() {
