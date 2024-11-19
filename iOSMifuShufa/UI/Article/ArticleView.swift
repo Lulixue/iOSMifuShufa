@@ -35,7 +35,7 @@ struct ArticlePage : View {
               } label: {
                 VStack {
                   Text(article.title)
-                    .font(.system(size: 18)).underline().foregroundStyle(clicked ? Color.darkSlateBlue : .blue).padding(.horizontal, 3).padding(.vertical, 4)
+                    .font(.system(size: 18)).underline().foregroundStyle(clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor).padding(.horizontal, 3).padding(.vertical, 4)
                 }.background(.white)
               }.buttonStyle(BgClickableButton())
             }

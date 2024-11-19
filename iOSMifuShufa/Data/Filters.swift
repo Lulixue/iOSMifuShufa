@@ -94,12 +94,20 @@ let RADICAL_DICT = {
   return map
 }()
 
-let STROKE_CHS_CHT_PAIRS = [
+let STROKE_CHS_CHT_PAIRS: [Char: Char] = [
   "钩": "鈎",
   "竖": "豎",
   "弯": "彎",
   "点": "點"
 ]
+
+let STROKE_CHT_CHS_PAIRS = {
+  var map = [Char: Char]()
+  for (k, v) in STROKE_CHS_CHT_PAIRS {
+    map[v] = k
+  }
+  return map
+}()
 
 
 let BASIC_HSTROKES = {
@@ -166,6 +174,22 @@ let BASIC_GSTROKES = {
 
 let ALL_STROKES = [BASIC_HSTROKES, BASIC_SSTROKES, BASIC_PSTROKES, BASIC_DSTROKES, BASIC_GSTROKES]
 
+let STROKE_ITEM_MAP = {
+  var map = [String: String]()
+  
+  for strokes in ALL_STROKES {
+    for (_, v) in strokes {
+      let key = v[0]
+      let value = v[2]
+      let cht = key.toChtStroke()
+      map[key] = value
+      map[cht] = value
+    }
+  }
+  
+  return map
+}()
+
 extension OrderedDictionary {
   func containsKey(_ key: Key) -> Bool {
     self.keys.contains(key)
@@ -190,5 +214,25 @@ extension Char {
 extension String {
   func toSearchStructure() -> String {
     STRUCTURE_CHT_CHS[this] ?? this
+  }
+  
+  func toSearchStroke() -> String {
+    STROKE_ITEM_MAP[this] ?? this
+  }
+  
+  func toChsStroke() -> String {
+    var sb = StringBuilder()
+    for c in self {
+      sb.append(STROKE_CHT_CHS_PAIRS[c] ?? c)
+    }
+    return sb
+  }
+  
+  func toChtStroke() -> String {
+    var sb = StringBuilder()
+    for c in self {
+      sb.append(STROKE_CHS_CHT_PAIRS[c] ?? c)
+    }
+    return sb
   }
 }

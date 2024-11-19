@@ -184,4 +184,49 @@ class Settings {
     UserDefaults.standard.set([lang], forKey: "AppleLanguages")
     UserDefaults.standard.synchronize()
   }
+  
+  class Jizi {
+    private static let KEY_LAST_JIZI_TEXT = "lastJiziText"
+    private static let KEY_LAST_JIZI_FONT = "lastJiziFont"
+    private static let KEY_LAST_JIZI_AUTHOR = "lastJiziAuthor"
+    private static let KEY_LAST_JIZI_WORK = "lastJiziWork"
+    
+    static var lastJiziText: String {
+      get {
+        getString(KEY_LAST_JIZI_TEXT, "")
+      }
+      set {
+        putString(KEY_LAST_JIZI_TEXT, newValue)
+      }
+    }
+    
+    static var lastPreferredFont: CalligraphyFont? {
+      get {
+        let text = getString(KEY_LAST_JIZI_FONT, "")
+        return CalligraphyFont(rawValue: text)
+      }
+      set {
+        putString(KEY_LAST_JIZI_FONT, newValue?.rawValue ?? "")
+      }
+    }
+    
+    static var lastPreferedWork: BeitieWork? {
+      get {
+        BeitieDbHelper.shared.getWorkById(getInt(KEY_LAST_JIZI_WORK, 0))
+      }
+      set {
+        putInt(KEY_LAST_JIZI_WORK, newValue?.id ?? 0)
+      }
+    }
+    
+    static var lastPreferredCalligrapher: String {
+      get {
+        getString(KEY_LAST_JIZI_AUTHOR, "")
+      }
+      set {
+        putString(KEY_LAST_JIZI_AUTHOR, newValue)
+      }
+    }
+    
+  }
 }

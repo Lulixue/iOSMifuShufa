@@ -25,10 +25,16 @@ extension Array where Element : Equatable {
 class SearchViewModel : BaseObservableObject {
   static var shared = SearchViewModel()
   @Published var allSearchLogs = [SearchPage: List<SearchLog>]()
+  
   func getSearchLogs(_ page: SearchPage) -> [SearchLog] {
     return allSearchLogs[page] ?? []
   }
   private lazy var managedContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+  
+  override init() {
+    super.init()
+    self.initSearchLogs()
+  }
   
   func initSearchLogs() {
     let fetchRequest = SearchLog.fetchRequest()
@@ -44,6 +50,10 @@ class SearchViewModel : BaseObservableObject {
     } catch {
       print("Failed")
     }
+  }
+  
+  func appendLog(_ page: SearchPage, _ text: String, _ extra: String? = nil) {
+    appendHistory(text: text, page: page, extra: extra)
   }
   
   func insertLog(log: SearchLog, page: SearchPage, new: Bool = false) {
@@ -160,8 +170,8 @@ struct HistoryBarView: View {
               Button {
                 onSelectLog(log)
               } label: {
-                Text(log.text!).font(.system(size: 16))
-                  .foregroundColor(Colors.darkSlateGray.swiftColor.opacity(0.55))
+                Text(log.text!).font(.system(size: 13))
+                  .foregroundColor(Colors.darkSlateGray.swiftColor)
                   .padding(.horizontal, 3)
                   .padding(.vertical, 2)
               }
@@ -201,7 +211,7 @@ struct HistoryBarView: View {
         getClearAlert()
       }
     }.padding(.horizontal, 2)
-      .padding(.vertical, 2)
+      .padding(.vertical, 3)
   }
   
   func getClearAlert() -> Alert {

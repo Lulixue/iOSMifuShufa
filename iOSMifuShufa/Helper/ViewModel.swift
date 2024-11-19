@@ -22,12 +22,19 @@ open class BaseObservableObject: ObservableObject {
 class AlertViewModel: BaseObservableObject {
   @Published var showAlert: Bool = false
   @Published var alertTitle: String = ""
+  @Published var showVip: Bool = false
+  @Published var vipTitle: String = ""
   func showAlertDlg(_ title: String) {
     alertTitle = title
     showAlert = true
   }
   func showAppDialog(_ title: String) {
     showAlertDlg(title)
+  }
+  
+  func showConstraintVip(_ text: String) {
+    showVip = true
+    vipTitle = text
   }
   
   func verifySearchText(text: String) -> Boolean {

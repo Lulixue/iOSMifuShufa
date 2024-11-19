@@ -1,4 +1,4 @@
-//
+ //
 //  JiziViewModel.swift
 //  iOSMifuShufa
 //
@@ -101,6 +101,20 @@ struct PuzzleItem: Codable {
     case thumbnailUrl
     case url
   }
+  init(char: String, id: Int, thumbnailUrl: String, url: String) {
+    self.char = char
+    self.id = id
+    self.thumbnailUrl = thumbnailUrl
+    self.url = url
+  }
+  
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.char, forKey: .char)
+    try container.encode(self.id, forKey: .id)
+    try container.encode(self.thumbnailUrl, forKey: .thumbnailUrl)
+    try container.encode(self.url, forKey: .url)
+  }
   
   init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -112,6 +126,11 @@ struct PuzzleItem: Codable {
 
 }
 
+extension Char {
+  var jiziCharUrl: URL? {
+    JiziItem.getCharUrl(self)
+  }
+}
 
 class JiziItem: BaseObservableObject {
   let char: Char
@@ -146,6 +165,64 @@ class JiziItem: BaseObservableObject {
     }
   }
   
+  var charUrl: URL? {
+    selected?.url.url ?? char.jiziCharUrl
+  }
+  
+  static private let charDir: URL? = {
+    let fileManager = FileManager.default
+    guard let directory = try? fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) as NSURL else {
+      return nil
+    }
+    let dataDirUrl = directory.appendingPathComponent("chars")
+    if !fileManager.fileExists(atPath: (dataDirUrl!.path)) {
+      do {
+        try fileManager.createDirectory(at: dataDirUrl!, withIntermediateDirectories: true, attributes: nil)
+      } catch {
+      }
+    }
+    return dataDirUrl
+  }()
+  
+  static func getCharUrl(_ char: Char) -> URL? {
+    if let url = charDir?.appendingPathComponent("\(char).png"), url.exists() {
+      return url
+    } else {
+      return nil
+    }
+  }
+  
+  static func getCharImage(_ char: Char) -> UIImage {
+    
+    let size = CGSize(width: 80, height: 80)
+    let renderer = UIGraphicsImageRenderer(size: size)
+    let newImage = renderer.image { ctx in
+      let context = UIGraphicsGetCurrentContext()!
+      context.setFillColor(UIColor.black.cgColor)
+      context.fill(CGRect(origin: .zero, size: size))
+      let paragraphStyle = NSMutableParagraphStyle()
+      paragraphStyle.alignment = .center
+      
+      let attrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 50),
+                   NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                   NSAttributedString.Key.foregroundColor: UIColor.white]
+      
+      let string = char.toString()
+      let bound = string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
+      string.draw(with: CGRect(x: (size.width - bound.width)/2, y: (size.height - bound.height)/2, width: bound.width, height: bound.height), options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
+    }
+    return newImage
+  }
+  
+  static func generateCharBitmap(_ char: Char) {
+    let url = charDir!.appendingPathComponent("\(char).png")
+    if url.exists() {
+      return
+    }
+    let newImage = getCharImage(char)
+    
+    try? newImage.pngData()?.write(to: url)
+  }
   
   init(char: Char, ziResult: List<BeitieSingle>,
        componentCandidates: OrderedDictionary<AnyHashable, List<BeitieSingle>>? = nil) {
@@ -160,6 +237,9 @@ class JiziItem: BaseObservableObject {
       all.addAll(ziResult)
     }
     allResult = all
+    if all.isEmpty {
+      Self.generateCharBitmap(char)
+    }
     super.init()
   }
   
@@ -175,6 +255,10 @@ class JiziItem: BaseObservableObject {
       orderedResult.addAll(list)
     }
     results = orderedResult
+  }
+  
+  func syncWithPuzzleItem(_ puzzle: PuzzleItem) {
+    presetSelected = allResult.first(where: { $0.id == puzzle.id })
   }
   
   func syncWithPreferences(_ font: CalligraphyFont?,
@@ -217,6 +301,7 @@ class JiziItem: BaseObservableObject {
       } else {
         candidates = nil
         selected = nil
+        Self.generateCharBitmap(char)
       }
     }
   }
@@ -295,8 +380,16 @@ extension Array where Element == BeitieSingle {
 
 class JiziViewModel: AlertViewModel {
   let text: String
-  @Published var selectedWork: BeitieWork? = nil
-  @Published var selectedFont: CalligraphyFont? = nil
+  @Published var selectedWork: BeitieWork? = Settings.Jizi.lastPreferedWork {
+    didSet {
+      Settings.Jizi.lastPreferedWork = selectedWork
+    }
+  }
+  @Published var selectedFont: CalligraphyFont? = Settings.Jizi.lastPreferredFont {
+    didSet {
+      Settings.Jizi.lastPreferredFont = selectedFont
+    }
+  }
   @Published var jiziItems: [JiziItem] = []
   @Published var jiziImageLoaded = [Int: Bool]()
   @Published var buttonEnabled = true
@@ -304,21 +397,97 @@ class JiziViewModel: AlertViewModel {
   @Published var workIndex = 0
   @Published var singleIndex = 0
   @Published var singleStartIndex = 0
+  var allFonts = OrderedDictionary<CalligraphyFont, Int>()
+  var allWorks = OrderedDictionary<BeitieWork?, Int>()
+  @Published var fontFilterType = JiziOptionType.Font.value {
+    didSet {
+      var font = JiziOptionType.Font
+      font.value = fontFilterType
+    }
+  }
+  
+  @Published var workFilterType = JiziOptionType.Work.value {
+    didSet {
+      var font = JiziOptionType.Work
+      font.value = workFilterType
+    }
+  }
+  
+  func selectFont(_ font: CalligraphyFont?) {
+    selectedFont = font
+    sync()
+  }
+  
+  func selectWork(_ work: BeitieWork?) {
+    selectedWork = work
+    sync()
+  }
+  
+  lazy var fontParam: DropDownParam<CalligraphyFont?> = {
+    let total = allFonts.entries.sumOf { $0.value }
+    var all = [CalligraphyFont?]()
+    all.add(nil)
+    all.addAll(Array(allFonts.keys))
+    return DropDownParam(items: all, texts: all.map({ it in
+      return if let it {
+        "\(it.chinese)(\(allFonts[it] ?? 0))"
+      } else {
+        "全部(\(total))"
+      }
+    }))
+  }()
+  lazy var workParam: DropDownParam<BeitieWork?> = {
+    let total = allWorks.entries.sumOf { $0.value }
+    var all = [BeitieWork?]()
+    all.add(nil)
+    all.addAll(Array(allWorks.keys))
+    return DropDownParam(items: all, texts: all.map({ it in
+      return if let it {
+        "\(it.chineseFolder())(\(allWorks[it] ?? 0))"
+      } else {
+        "全部(\(total))"
+      }
+    }))
+  }()
   
   init(text: String, items: [JiziItem]) {
     self.text = text
     self.jiziItems = items
+    var count = [CalligraphyFont: Int]()
+    var workCount = [BeitieWork: Int]()
+    items.forEach { item in
+      item.allResult.forEach { single in
+        workCount[single.work] = (workCount[single.work] ?? 0) + 1
+        count[single.work.font] = (count[single.work.font] ?? 0) + 1
+      }
+    }
+    super.init()
+    for font in CalligraphyFont.allCases {
+      guard let fontCount = count[font] else { continue }
+      allFonts[font] = fontCount
+    }
+    
+    for (_, v) in BeitieDbHelper.shared.getDefaultTypeWorks() {
+      for works in v {
+        for w in works {
+          if workCount.containsKey(w) {
+            allWorks[w] = workCount[w]!
+          }
+        }
+      }
+    }
+    self.sync()
+  }
+  
+  func sync() {
+    self.jiziItems.forEach { $0.syncWithPreferences(selectedFont, nil, work: selectedWork) }
   }
   
   func loaded(index: Int) {
     DispatchQueue.main.async {
       self.jiziImageLoaded[index] = true
-      self.syncButtonEnabled()
+      self.buttonEnabled = self.jiziImageLoaded.values.sumOf(mapper: { $0 ? 1 : 0 }) == self.jiziItems.count
     }
-  }
-  
-  private func syncButtonEnabled() {
-    buttonEnabled = jiziImageLoaded.values.sumOf(mapper: { $0 ? 1 : 0 }) == jiziItems.count
   }
   
   var currentItem: JiziItem {
@@ -369,7 +538,6 @@ class JiziViewModel: AlertViewModel {
           return JiziItem(char: it, ziResult: result, componentCandidates: nil)
         }
       }()
-      jiziItem.syncWithPreferences(nil, nil, work: nil)
       newItems.add(jiziItem)
     }
     return newItems

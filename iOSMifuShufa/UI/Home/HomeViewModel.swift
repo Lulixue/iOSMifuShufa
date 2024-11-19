@@ -245,6 +245,14 @@ class HomeViewModel : AlertViewModel {
     "\(order)\(String(describing: preferredFont))"
   }
   
+  var hint: String {
+    if filters.hasFilter {
+      filters.getFilterInfo()
+    } else {
+      searchCharType.hint
+    }
+  }
+  
   private lazy var orderKeys = {
     var map = Map<SearchResultOrder, ArrayList<String>>()
     SearchResultOrder.allCases.forEach { it in
@@ -290,12 +298,12 @@ class HomeViewModel : AlertViewModel {
         return verifySearchText(text: searchTextDo)
       }
     }
-//    if (validSearchText && searchTextDo.chineseCount > ConstraintItem.SearchZiCount.topMostConstraint) {
-//      appDialogData.showConstraintVip(context, ConstraintItem.SearchZiCount.topMostConstraintMessage)
-//      return false
-//    }
-//      let logText =  (validSearchText) ? searchTextDo : filterViewModel.getFiltersInfo()
-//      HistoryDbHelper.appendLog(page, logText, validSearchText.toString())
+    if (validSearchText && searchTextDo.chineseCount > ConstraintItem.SearchZiCount.topMostConstraint) {
+      showConstraintVip(ConstraintItem.SearchZiCount.topMostConstraintMessage)
+      return false
+    }
+    let logText =  (validSearchText) ? searchTextDo : filterViewModel.getFilterInfo()
+    SearchViewModel.shared.appendLog(page, logText, validSearchText.description.toString())
     doSearch(searchTextDo)
     return true
   }
@@ -316,9 +324,7 @@ class HomeViewModel : AlertViewModel {
               let key = s.writtenChar
               var existed = result[key] ?? ArrayList()
               existed.add(s)
-              if (!result.containsKey(key)) {
-                result[key] = existed
-              }
+              result[key] = existed
             }
           }
         }

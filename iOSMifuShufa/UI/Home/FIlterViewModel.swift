@@ -10,16 +10,33 @@ import Foundation
 enum SearchFilterType: String, CaseIterable {
   case Structure, Radical, Stroke;
   
-  var chinese: String {
+  var chs: String {
     switch self {
     case .Structure:
-      "结构".orCht("結構")
+      "结构"
     case .Radical:
       "部首"
     case .Stroke:
-      "笔画".orCht("筆畫")
+      "笔画"
     }
   }
+  
+  var cht: String {
+    switch self {
+    case .Structure:
+      ("結構")
+    case .Radical:
+      "部首"
+    case .Stroke:
+      ("筆畫")
+    }
+  }
+  
+  var chinese: String {
+    chs.orCht(cht)
+  }
+  
+  func isType(_ txt: String) -> Bool { chs == txt || cht == txt }
 }
 
 extension Array where Element: Equatable {
@@ -49,17 +66,16 @@ class FilterViewModel: AlertViewModel {
   func getFilterInfo() -> String {
     var sb = StringBuilder()
     SearchFilterType.allCases.forEach { type in
-      getFilter(type).forEach { f in
-        if f.isNotEmpty() {
-          sb.append(type.chinese)
-          sb.append(": ")
-          f.forEach { r in
-            sb.append(r)
-            sb.append(",")
-          }
-          sb = String(sb.dropLast())
-          sb.append(";")
+      let f = getFilter(type)
+      if f.isNotEmpty() {
+        sb.append(type.chinese)
+        sb.append(": ")
+        f.forEach { r in
+          sb.append(r)
+          sb.append(",")
         }
+        sb = String(sb.dropLast())
+        sb.append(";")
       }
     }
     return sb
@@ -76,7 +92,22 @@ class FilterViewModel: AlertViewModel {
     }
   }
   
+  private func containsFilter(filter: String, type: SearchFilterType) -> Bool {
+    switch type {
+    case .Structure:
+      structures.containsItem(filter)
+    case .Radical:
+      radicals.containsItem(filter)
+    case .Stroke:
+      strokes.containsItem(filter)
+    }
+  }
+  
   func toggleFilter(filter: String, type: SearchFilterType) {
+    if !CurrentUser.isVip && hasFilter && !containsFilter(filter: filter, type: type) {
+      showConstraintVip(ConstraintItem.SearchFilterCount.topMostConstraintMessage)
+      return
+    }
     switch type {
     case .Structure:
       structures.toggleItem(filter)
@@ -108,5 +139,31 @@ class FilterViewModel: AlertViewModel {
     }
   }
   
-  
+  static let FILTER_REGEX = /(\S{2}): (\S+?);/
+  func parseFilters(_ txt: String) {
+    let matches = txt.ranges(of: Self.FILTER_REGEX)
+    resetAll()
+    for it in matches {
+      let sub = txt[it]
+      guard let m = try? Self.FILTER_REGEX.wholeMatch(in: sub) else {
+        continue
+      }
+      let type = m.output.1.toString()
+      let value = m.output.2.split(separator: ",").map { $0.toString() }
+      
+      SearchFilterType.allCases.forEach { t in
+        if (t.isType(type)) {
+          for v in value {
+            toggleFilter(filter: v, type: t)
+          }
+        }
+      }
+    }
+  }
+}
+
+extension Substring {
+  func toString() -> String {
+    String(self)
+  }
 }

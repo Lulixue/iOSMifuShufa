@@ -156,7 +156,11 @@ enum PuzzleType: String, CaseIterable {
 
 extension Char {
   func charBitmap() -> UIImage {
-    PuzzleLayout.charImage(c: self)
+    if let path = jiziCharUrl?.absoluteString {
+      UIImage(contentsOfFile: path) ?? JiziItem.getCharImage(self)
+    } else {
+      JiziItem.getCharImage(self)
+    }
   }
 }
 

@@ -177,7 +177,7 @@ struct DropDownOptionsView<T: Equatable>: View {
   
   var body: some View {
     ScrollView {
-      VStack(alignment: .leading, spacing: 0) {
+      LazyVStack(alignment: .leading, spacing: 0) {
         param.padding.extraTop.VSpacer()
         ForEach(0..<param.items.size, id: \.self) { i in
           let item = param.items[i]

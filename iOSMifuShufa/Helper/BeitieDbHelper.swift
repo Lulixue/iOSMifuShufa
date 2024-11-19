@@ -396,8 +396,10 @@ class BeitieDbHelper {
   
   
   func searchByFilter(_ filter: FilterViewModel) -> List<BeitieSingle> {
-    let strokes = filter.strokes
-    let structures = filter.structures
+    let strokes = filter.strokes.map { it in
+      it.toSearchStroke()
+    }
+    let structures = filter.structures.map { it in it.toSearchStructure() }
     let radicals = filter.radicals
     var result = HashMap<Int, BeitieSingle>()
     strokes.forEach { stroke in
@@ -406,7 +408,7 @@ class BeitieDbHelper {
       }
     }
     if structures.isNotEmpty() {
-      dao().getSinglesByStructures(structures.map { it in it.toSearchStructure() }).forEach { it in
+      dao().getSinglesByStructures(structures).forEach { it in
         result[it.id] = it
       }
     }

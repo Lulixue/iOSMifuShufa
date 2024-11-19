@@ -198,9 +198,9 @@ struct StructureList: View {
           let elem = STRUCTURE_DICT.elements[i]
           let st = (Settings.langChs || elem.value.size == 1) ? elem.value[0] : elem.value[1]
           let binding = Binding {
-            viewModel.structures.containsItem(elem.key)
+            viewModel.structures.containsItem(st)
           } set: { newValue in
-            viewModel.toggleFilter(filter: elem.key, type: .Structure)
+            viewModel.toggleFilter(filter: st, type: .Structure)
           }
           if i == 0 {
             5.VSpacer()
@@ -233,7 +233,9 @@ struct StrokeList: View {
     var tabs = [(String, String)]()
     ALL_STROKES.forEach { dic in
       let first = dic.elements.first!
-      tabs.add((first.value.first(), first.key.toString()))
+      let value = first.value.first()
+      let show = Settings.langChs ? value : value.toChtStroke()
+      tabs.add((show, first.key.toString()))
     }
     return tabs
   }()
@@ -244,7 +246,7 @@ struct StrokeList: View {
       ForEach(0..<count, id: \.self) { i in
         let elem = items.elements[i]
         let value = elem.value
-        let stroke = value[1]
+        let stroke = value[0]
         let binding = Binding {
           viewModel.strokes.containsItem(stroke)
         } set: { newValue in
@@ -255,7 +257,8 @@ struct StrokeList: View {
         }
         Toggle(isOn: binding) {
           HStack {
-            Text("\(value[0])(\(elem.key))").font(.callout).foregroundColor(Colors.darkSlateGray.swiftColor)
+            let text = Settings.langChs ? value[0] : value[0].toChtStroke()
+            Text(text).font(.callout).foregroundColor(Colors.darkSlateGray.swiftColor)
             Spacer()
             Text("例字：\(value[3])").font(.footnote).foregroundColor(.gray)
           }.padding(.trailing, 10).padding(.vertical, 2)
@@ -275,8 +278,8 @@ struct StrokeList: View {
         VStack(spacing: 2) {
           Text(item.0.last().toString()).foregroundStyle(selected ? .blue: Color.defaultText)
             .font(.system(size: 14))
-          Text("(\(item.1))").foregroundStyle(selected ? .blue: Colors.defaultText.swiftColor)
-            .font(.system(size: 10))
+//          Text("(\(item.1))").foregroundStyle(selected ? .blue: Colors.defaultText.swiftColor)
+//            .font(.system(size: 10))
         }.padding(.horizontal, 5)
       }.padding(.top, 5).frame(maxWidth: .infinity).background(Colors.surfaceContainer.swiftColor)
       ScrollView {
@@ -350,6 +353,17 @@ struct FilterView: View {
   }
 }
 
+struct PositionPreferenceKey: PreferenceKey {
+  
+  static var defaultValue = CGSize.zero
+  
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+    value = nextValue()
+  }
+  
+  typealias Value = CGSize
+}
+
 struct SizePreferenceKey: PreferenceKey {
   
   static var defaultValue = CGSize.zero
@@ -386,6 +400,25 @@ struct WidthReaderView: View {
     }
     .onPreferenceChange(WidthPreferenceKey.self) { h in
       if binding == 0 {
+        binding = h
+      }
+    }
+  }
+}
+
+struct PositionReaderView: View {
+  @Binding var binding: CGSize
+  var body: some View {
+    GeometryReader { geo in
+      Color.clear
+        .preference(key: PositionPreferenceKey.self, value: {
+          let frame = geo.frame(in: .global)
+          return CGSize(width: frame.minX, height: frame.maxY)
+        }())
+    }
+    .onPreferenceChange(PositionPreferenceKey.self) { h in
+      let size = binding
+      if (h.width != size.width || h.height != size.height) {
         binding = h
       }
     }

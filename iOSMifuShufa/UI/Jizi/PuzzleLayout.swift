@@ -546,8 +546,8 @@ class PuzzleLayout {
 extension UIImage {
   func getHeight() -> CGFloat {
     return self.size.height
-    }
+  }
   func getWidth() -> CGFloat {
     return self.size.width
-    }
+  }
 }

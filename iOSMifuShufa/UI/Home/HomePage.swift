@@ -47,6 +47,20 @@ struct TodayCardView<Content: View>: View {
   }
 }
 
+struct VipContraintModifier: ViewModifier {
+  @StateObject var viewModel: AlertViewModel
+  
+  func body(content: Content) -> some View {
+    content.alert("VIP功能", isPresented: $viewModel.showVip, actions: {
+      HStack {
+        Button("开通VIP".orCht("開通VIP"), role: .destructive, action: {})
+        Button("取消", role: .cancel, action: {})
+      }
+    }) {
+      Text(viewModel.vipTitle)
+    }
+  }
+}
 
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
@@ -78,7 +92,7 @@ struct HomePage: View {
         
         Color.gray.frame(width: 0.4)
         
-        TextField(viewModel.searchCharType.hint, text: $viewModel.text,
+        TextField(viewModel.hint, text: $viewModel.text,
                   onEditingChanged: { focused in
           if viewModel.showDeleteAlert {
             return
@@ -102,7 +116,7 @@ struct HomePage: View {
           }
         }.buttonStyle(PrimaryButton(bgColor: .blue)).padding(.trailing, 5)
       }.clipShape(RoundedRectangle(cornerRadius: radius)).padding(0.6).background(RoundedRectangle(cornerRadius: radius, style: .circular).stroke(Color.gray, lineWidth: 0.6)).frame(height: searchBarHeight)
-    }.padding(.horizontal, 35)
+    }
   }
   
   private func onSearch() {
@@ -303,6 +317,7 @@ struct HomePage: View {
       }
     }.background(previewColor)
   }
+  
   private let orderSpacing: CGFloat = 14
   private let orderBarHeight: CGFloat = 40
   @State var resultProxy: ScrollViewProxy? = nil
@@ -369,6 +384,9 @@ struct HomePage: View {
               }
             }
           }.id(viewModel.resultId)
+            .simultaneousGesture(DragGesture().onChanged({ _ in
+              viewModel.hideDropdown()
+            }), isEnabled: viewModel.hasDropdown())
         }
       }.blur(radius: viewModel.showPreview ? 6 : 0)
       if viewModel.showPreview {
@@ -391,9 +409,6 @@ struct HomePage: View {
         }.offset(x: 10 + viewModel.orderWidth + orderSpacing + viewModel.fastRedirectWidth, y: orderBarHeight+1)
       }
     }.simultaneousGesture(TapGesture().onEnded({ _ in
-      viewModel.hideDropdown()
-    }), isEnabled: viewModel.hasDropdown())
-    .simultaneousGesture(DragGesture().onChanged({ _ in
       viewModel.hideDropdown()
     }), isEnabled: viewModel.hasDropdown())
   }
@@ -451,29 +466,35 @@ struct HomePage: View {
             .foregroundStyle(Color.searchHeader)
           Spacer()
           Button {
+            focused = false
             sideVM.sideMenuLeftPanel.toggle()
           } label: {
             Image(systemName: "line.3.horizontal")
               .square(size: 20)
               .foregroundStyle(Color.colorPrimary)
-              .buttonStyle(PrimaryButton())
-            
+              .buttonStyle(PrimaryButton()) 
           }
           5.HSpacer()
         }.padding(.horizontal, 15)
         10.VSpacer()
-        searchBar
-        if viewModel.showHistoryBar {
-          HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
-            viewModel.updateHistoryBarVisible()
-          }) { l in
-            viewModel.text = l.text!
-            onSearch()
+        VStack(spacing: 0) {
+          searchBar
+          if viewModel.showHistoryBar {
+            HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
+              viewModel.updateHistoryBarVisible()
+            }) { l in
+              if l.extra == "false" {
+                viewModel.filters.parseFilters(l.text!)
+              } else {
+                viewModel.text = l.text!
+              }
+              onSearch()
+            }
+            8.VSpacer()
+          } else {
+            10.VSpacer()
           }
-          8.VSpacer()
-        } else {
-          10.VSpacer()
-        }
+        }.padding(.horizontal, 35)
       }.background(.white)
       0.4.HDivder()
       if viewModel.singleResult.isNotEmpty() {
@@ -487,6 +508,9 @@ struct HomePage: View {
       }.alert(viewModel.alertTitle  , isPresented: $viewModel.showAlert) {
         Button("好", role: .cancel, action: {})
       }
+      .modifier(VipContraintModifier(viewModel: viewModel))
+      .modifier(VipContraintModifier(viewModel: viewModel.filterViewModel))
+
   }
 }
 

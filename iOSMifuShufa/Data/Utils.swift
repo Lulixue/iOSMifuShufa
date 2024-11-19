@@ -59,6 +59,37 @@ class Utils {
     return time
   }
   
+  static func getLogTime(_ date: Date) -> String {
+    return dataFormatter.string(from: date)
+  }
+  
+  private static let ONE_DAY: TimeInterval = 24 * 60 * 60
+  
+  static func getNaturalTime(_ date: Date) -> String {
+    let current = Date()
+    let dayOffset = date.distance(to: current)
+    let days = Int(dayOffset / ONE_DAY)
+    let monthDaySdf = monthDayFormatter
+    let hourMinSdf = hourFormatter
+    if days >= 3 {
+      if current.get(.year) != date.get(.year) {
+        return shortFormatter.format(date)
+      }
+      return monthDayFormatter.format(date)
+    }
+    else if days == 0 {
+      return hourMinSdf.format(date)
+    }
+    else if days == 1 {
+      return "昨天 " + hourMinSdf.format(date)
+    }
+    else if days == 2 {
+      return "前天 " + hourMinSdf.format(date)
+    }
+    else {
+      return monthDaySdf.format(date)
+    }
+  }
   
   public static func getLess(_ f1: CGFloat, _ f2: CGFloat) -> CGFloat {
     return f1 < f2 ? f1 : f2
@@ -82,4 +113,14 @@ class Utils {
   public static let DEFAULT_JIZI_INSET_GAP = 10
   public static let DEFAULT_JIZI_BG_COLOR = 0 // black
   private static let MI_GRID_LINE_WIDTH: CGFloat = 1
+}
+
+extension Date {
+  func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+    return calendar.dateComponents(Set(components), from: self)
+  }
+  
+  func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+    return calendar.component(component, from: self)
+  }
 }
