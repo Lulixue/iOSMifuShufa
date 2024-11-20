@@ -239,11 +239,7 @@ struct SplashView: View {
     }.ignoresSafeArea()
       .navigationBarTitle("")
       .navigationBarHidden(true)
-      .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
-        Button("ok".localized, role: .cancel) {
-          exit(0)
-        }
-      }
+      .modifier(AlertViewModifier(viewModel: viewModel))
   }
   
   var body: some View {

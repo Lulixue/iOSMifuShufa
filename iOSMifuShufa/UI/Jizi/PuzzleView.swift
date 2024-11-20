@@ -489,11 +489,7 @@ struct PuzzleView: View {
       }.onChange(of: viewModel.jinMode) { newValue in
         viewModel.syncPuzzles()
       }
-      .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
-        Button("好", role: .cancel) {
-          
-        }
-      }
+      .modifier(AlertViewModifier(viewModel: viewModel))
   }
 }
 

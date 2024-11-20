@@ -74,6 +74,7 @@ struct WorkView: View {
   @StateObject var viewModel: WorkViewModel
   @StateObject var managerVM: ImageManager = ImageManager()
   @StateObject var naviVM = NavigationViewModel()
+  @StateObject var collectVM = CollectionViewModel.shared
   @Environment(\.presentationMode) var presentationmode
   @State var showImageViewer: Bool = true
   
@@ -156,7 +157,7 @@ struct WorkView: View {
     scrollProxy?.scrollTo(scrollIndex, anchor: index == images.lastIndex ? .trailing : .leading)
   }
   
-  @State var imageSize: CGSize = .zero
+  @State private var imageSize: CGSize = .zero
 
   var body: some View {
     VStack(spacing: 0) {
@@ -181,10 +182,19 @@ struct WorkView: View {
               .foregroundStyle(Color.colorPrimary)
           }
         }
+        let collected = collectVM.itemCollected(currentImage)
         Button {
-          
-        } label: {
-          Image("collect").square(size: CUSTOM_NAVI_ICON_SIZE+1)
+          let c = collected
+          collectVM.toggleItem(currentImage)
+          viewModel.showToast(c ? "已取消收藏" : "已加入收藏")
+          Task {
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            DispatchQueue.main.async {
+              viewModel.showToast = false
+            }
+          }
+        }  label: {
+          Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
             .foregroundStyle(Color.colorPrimary)
         }
       }
@@ -203,6 +213,15 @@ struct WorkView: View {
               .padding(10)
               .foregroundStyle(.white)
           }.background(.black.opacity(0.55))
+        }
+        if viewModel.showToast {
+          ZStack {
+            VStack {
+              Spacer()
+              ToastView(title: viewModel.toastTitle)
+              Spacer()
+            }
+          }
         }
       }.background(.black)
         .background(SizeReaderView(binding: $imageSize))

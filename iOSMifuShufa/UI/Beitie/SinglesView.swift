@@ -32,11 +32,28 @@ class SingleViewModel: AlertViewModel {
   }
 }
 
+struct ToastView: View {
+  let title: String
+  var body: some View {
+    HStack {
+      Text(title)
+        .foregroundStyle(.white)
+        .padding(.horizontal, 30)
+        .padding(.vertical, 12)
+    }.background(Color.darkSlateGray)
+      .clipShape(RoundedRectangle(cornerRadius: 25))
+  }
+}
+
+#Preview("toast") {
+  ToastView(title: "hello")
+}
 
 struct SinglesView: View {
   @Environment(\.presentationMode) var presentationMode
   @StateObject var viewModel: SingleViewModel
   @StateObject var naviVM = NavigationViewModel()
+  @StateObject var collectVM = CollectionViewModel.shared
   @State var scrollProxy: ScrollViewProxy? = nil
   @State var pageIndex = 0
   var singles: List<BeitieSingle> {
@@ -48,6 +65,7 @@ struct SinglesView: View {
   private let bottomBarHeight: CGFloat = 80
   var naviView: some View {
     NaviView {
+      let collected = collectVM.itemCollected(currentSingle)
       let title = {
         let s = currentSingle
         var t = AttributedString(s.showChars)
@@ -63,8 +81,17 @@ struct SinglesView: View {
       Text(title).foregroundStyle(.colorPrimary)
       Spacer()
       Button {
+        let c = collected
+        collectVM.toggleItem(currentSingle)
+        viewModel.showToast(c ? "已取消收藏" : "已加入收藏")
+        Task {
+          try? await Task.sleep(nanoseconds: 2_000_000_000)
+          DispatchQueue.main.async {
+            viewModel.showToast = false
+          }
+        }
       } label: {
-        Image("collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
+        Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
           .foregroundStyle(Color.colorPrimary)
       }
       Button {
@@ -103,6 +130,9 @@ struct SinglesView: View {
           }
         if viewModel.showDrawPanel {
           DrawPanel().environmentObject(viewModel.drawViewModel)
+        }
+        if viewModel.showToast {
+          ToastView(title: viewModel.toastTitle)
         }
       }
       Divider()

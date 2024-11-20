@@ -22,8 +22,8 @@ extension Array where Element : Equatable {
   }
 }
 
-class SearchViewModel : BaseObservableObject {
-  static var shared = SearchViewModel()
+class HistoryViewModel : BaseObservableObject {
+  static var shared = HistoryViewModel()
   @Published var allSearchLogs = [SearchPage: List<SearchLog>]()
   
   func getSearchLogs(_ page: SearchPage) -> [SearchLog] {
@@ -139,7 +139,7 @@ class SearchViewModel : BaseObservableObject {
 
 
 struct HistoryBarView: View {
-  @StateObject var viewModel: SearchViewModel = SearchViewModel.shared
+  @StateObject var viewModel: HistoryViewModel = HistoryViewModel.shared
   let page: SearchPage
   @Binding var showDeleteAlert: Bool
   @State var textHeight: CGFloat = 0

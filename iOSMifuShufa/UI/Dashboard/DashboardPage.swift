@@ -87,7 +87,7 @@ struct DashboardItemView: View {
       }.frame(width: 24, height: 24)
       Spacer.width(10)
       Text(row.rawValue.interfaceStr)
-        .font(.system(size: 18))
+        .font(.system(size: 20))
         .foregroundColor(.black)
       Spacer()
       Text(row.subText).font(.callout)
@@ -106,40 +106,6 @@ struct DashboardItemView: View {
   }
 }
 
-struct UserItemView: View {
-  @StateObject var viewModel: UserViewModel = CurrentUser
-  var onClick: () -> Void = { }
-  var body: some View {
-    Button {
-      onClick()
-    } label: {
-      HStack(alignment: .center) {
-        Spacer().frame(width: 5)
-        Image(CurrentUser.userLogin ? "login_user" : "default_user")
-          .renderingMode(.original)
-          .square(size: 45)
-          .foregroundColor(Color(UIColor.gray))
-        Spacer().frame(width: 15)
-        VStack(alignment: .leading) {
-          Text("\(viewModel.userName)").font(.system(size: 17)).foregroundColor(.black)
-          if CurrentUser.userLogin {
-            Spacer().frame(height: 5)
-            Text("\(viewModel.userType)")
-              .font(.system(size: 14)).foregroundColor(.secondary)
-          }
-        }
-        Spacer()
-        Image(systemName: "chevron.right")
-          .resizable()
-          .scaledToFit()
-          .foregroundColor(.gray)
-          .frame(width: 8)
-      }.padding(EdgeInsets(top: 16, leading: 12, bottom: 16, trailing: 16)).background(ITEM_BG_COLOR)
-    }
-  }
-}
-
-
 struct DashboardPage : View {
   let middleItems: [DashboardRow] = [.about, .rate, .update, .feedback]
   var body: some View {
@@ -147,11 +113,14 @@ struct DashboardPage : View {
       contents
     }
   }
+  @StateObject var viewModel: UserViewModel = CurrentUser
   
   @ViewBuilder func destinationView(_ row: DashboardRow) -> some View {
     switch row {
     case .about:
       AboutView()
+    case .collection:
+      CollectionView()
     default:
       EmptyView()
     }
@@ -166,6 +135,31 @@ struct DashboardPage : View {
     }.background(ITEM_BG_COLOR).padding(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0)).frame(width: UIScreen.currentWidth, height: 1)
   }
   
+  var userItemView: some View {
+    HStack(alignment: .center) {
+      Spacer().frame(width: 5)
+      Image(CurrentUser.userLogin ? "login_user" : "default_user")
+        .renderingMode(.original)
+        .square(size: 45)
+        .foregroundColor(Color(UIColor.gray))
+      Spacer().frame(width: 15)
+      VStack(alignment: .leading) {
+        Text("\(viewModel.userName)").font(.system(size: 17)).foregroundColor(.black)
+        if CurrentUser.userLogin {
+          Spacer().frame(height: 5)
+          Text("\(viewModel.userType)")
+            .font(.system(size: 14)).foregroundColor(.secondary)
+        }
+      }
+      Spacer()
+      Image(systemName: "chevron.right")
+        .resizable()
+        .scaledToFit()
+        .foregroundColor(.gray)
+        .frame(width: 8)
+    }.padding(EdgeInsets(top: 16, leading: 12, bottom: 16, trailing: 16)).background(ITEM_BG_COLOR)
+  }
+  
   @State private var clickedRow: DashboardRow? = nil
   var contents: some View {
     VStack(spacing: 0) {
@@ -178,13 +172,18 @@ struct DashboardPage : View {
       ScrollView {
         VStack(spacing: 0) {
           Group {
-            UserItemView() {
-            }
+            NavigationLink {
+              
+            } label: {
+              userItemView
+            }.buttonStyle(BgClickableButton())
           }
           15.VSpacer()
           Group {
             DashboardDivider()
-            NavigationLink(destination: EmptyView()) {
+            NavigationLink(destination: {
+              CollectionView()
+            }) {
               DashboardItemView(row: .collection)
             }.buttonStyle(BgClickableButton())
             DashboardDivider()
@@ -192,16 +191,29 @@ struct DashboardPage : View {
           15.VSpacer()
           Group {
             DashboardDivider()
-            ForEach(middleItems, id:\.self) { row in
-              NavigationLink(destination: {
-                destinationView(row)
-              }) {
-                DashboardItemView(row: row)
-              }.buttonStyle(BgClickableButton())
-              if row != middleItems.last {
-                Divider().padding(.leading, 46)
-              }
-            }
+            NavigationLink(destination: {
+              AboutView()
+            }) {
+              DashboardItemView(row: .about)
+            }.buttonStyle(BgClickableButton())
+            Divider().padding(.leading, 46)
+            Button {
+              
+            } label: {
+              DashboardItemView(row: .rate)
+            }.buttonStyle(BgClickableButton())
+            Divider().padding(.leading, 46)
+            Button {
+              
+            } label: {
+              DashboardItemView(row: .update)
+            }.buttonStyle(BgClickableButton())
+            DashboardDivider()
+            NavigationLink {
+              FeedbackView()
+            } label: {
+              DashboardItemView(row: .feedback)
+            }.buttonStyle(BgClickableButton())
             DashboardDivider()
           }.background(.white)
           Spacer().frame(height: 15)
@@ -215,7 +227,7 @@ struct DashboardPage : View {
         }
       }.background(Colors.wx_background.swiftColor)
     }.navigationBarHidden(true)
-      
+    
   }
 }
 

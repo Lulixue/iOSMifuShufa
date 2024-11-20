@@ -303,7 +303,7 @@ class HomeViewModel : AlertViewModel {
       return false
     }
     let logText =  (validSearchText) ? searchTextDo : filterViewModel.getFilterInfo()
-    SearchViewModel.shared.appendLog(page, logText, validSearchText.description.toString())
+    HistoryViewModel.shared.appendLog(page, logText, validSearchText.description.toString())
     doSearch(searchTextDo)
     return true
   }
@@ -547,7 +547,7 @@ class HomeViewModel : AlertViewModel {
   }
   
   var logs: [SearchLog] {
-    SearchViewModel.shared.getSearchLogs(page)
+    HistoryViewModel.shared.getSearchLogs(page)
   }
 }
 

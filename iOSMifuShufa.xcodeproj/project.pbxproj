@@ -49,6 +49,9 @@
 		F988205E2C3AC4520011DB04 /* iOSMifuShufaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988205D2C3AC4520011DB04 /* iOSMifuShufaTests.swift */; };
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
+		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
+		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
+		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
 		F9E124752CE35D1000BB8CD4 /* JiziView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124742CE35D0C00BB8CD4 /* JiziView.swift */; };
 		F9E1248B2CE36D9200BB8CD4 /* ScrollState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124812CE36D9200BB8CD4 /* ScrollState.swift */; };
 		F9E1248C2CE36D9200BB8CD4 /* ScrollListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124792CE36D9200BB8CD4 /* ScrollListeners.swift */; };
@@ -80,7 +83,6 @@
 		F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0232CD25CD00009C0DC /* HomePage.swift */; };
 		F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9ECB0282CD25CD90009C0DC /* strings_chs.xml */; };
 		F9ECB02A2CD25CD90009C0DC /* strings.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9ECB0272CD25CD90009C0DC /* strings.xml */; };
-		F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB02B2CD25CE10009C0DC /* Settings.swift */; };
 		F9ECB02E2CD25F1C0009C0DC /* Chinese.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB02D2CD25F170009C0DC /* Chinese.swift */; };
 		F9ECB0302CD2669F0009C0DC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB02F2CD2669B0009C0DC /* Config.swift */; };
 		F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECB0312CD267390009C0DC /* Extension.swift */; };
@@ -179,6 +181,9 @@
 		F98820632C3AC4520011DB04 /* iOSMifuShufaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSMifuShufaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		F9E124742CE35D0C00BB8CD4 /* JiziView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziView.swift; sourceTree = "<group>"; };
 		F9E124762CE36D9200BB8CD4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F9E124772CE36D9200BB8CD4 /* PrefrenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefrenceKeys.swift; sourceTree = "<group>"; };
@@ -211,7 +216,6 @@
 		F9ECB0232CD25CD00009C0DC /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		F9ECB0272CD25CD90009C0DC /* strings.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = strings.xml; sourceTree = "<group>"; };
 		F9ECB0282CD25CD90009C0DC /* strings_chs.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = strings_chs.xml; sourceTree = "<group>"; };
-		F9ECB02B2CD25CE10009C0DC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		F9ECB02D2CD25F170009C0DC /* Chinese.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chinese.swift; sourceTree = "<group>"; };
 		F9ECB02F2CD2669B0009C0DC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F9ECB0312CD267390009C0DC /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -454,6 +458,7 @@
 		F9DA35382CD257E100A880BC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F9C3A60E2CEDA5970055ABA1 /* Settings.swift */,
 				F9F97C742CDAFD3100096ED1 /* Filters.swift */,
 				F96E61022CD858C7007329DB /* Utils.swift */,
 				F96E61002CD8574B007329DB /* CurrentUser.swift */,
@@ -461,7 +466,6 @@
 				F9ECB0312CD267390009C0DC /* Extension.swift */,
 				F9ECB02F2CD2669B0009C0DC /* Config.swift */,
 				F9ECB02D2CD25F170009C0DC /* Chinese.swift */,
-				F9ECB02B2CD25CE10009C0DC /* Settings.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -549,6 +553,8 @@
 		F9E124A02CE43D1A00BB8CD4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */,
+				F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */,
 				F9E124B62CE8AD5300BB8CD4 /* AboutView.swift */,
 				F9E124A52CE476E100BB8CD4 /* SettingsView.swift */,
 				F9E124A12CE43D2000BB8CD4 /* DashboardPage.swift */,
@@ -899,8 +905,10 @@
 				F9E124AF2CE723DC00BB8CD4 /* NetworkHelper.swift in Sources */,
 				F98820512C3AC4510011DB04 /* Persistence.swift in Sources */,
 				F9ECB0322CD2673D0009C0DC /* Extension.swift in Sources */,
+				F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */,
 				F9F97C852CDDB96E00096ED1 /* SinglesView.swift in Sources */,
 				F9E1248B2CE36D9200BB8CD4 /* ScrollState.swift in Sources */,
+				F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */,
 				F9E1248C2CE36D9200BB8CD4 /* ScrollListeners.swift in Sources */,
 				F9E1248D2CE36D9200BB8CD4 /* SnapCarouselView.swift in Sources */,
 				F9E1248E2CE36D9200BB8CD4 /* DefaultScrollViewStyleCoordinator.swift in Sources */,
@@ -913,6 +921,7 @@
 				F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */,
 				F9E124952CE36D9200BB8CD4 /* ScrollContext.swift in Sources */,
 				F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */,
+				F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */,
 				F9E124972CE36D9200BB8CD4 /* VerticalCarouselView.swift in Sources */,
 				F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */,
 				F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */,
@@ -920,7 +929,6 @@
 				F9E124B12CE7247600BB8CD4 /* ArticleViewModel.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,
-				F9ECB02C2CD25CE10009C0DC /* Settings.swift in Sources */,
 				F9F97C732CDAFA1E00096ED1 /* FiltersView.swift in Sources */,
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
 				F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */,

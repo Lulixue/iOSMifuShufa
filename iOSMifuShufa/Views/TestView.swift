@@ -14,6 +14,7 @@ struct TestView: View {
   private let minZoom = 0.3
   @State private var offsetX = 0.0
   @State private var offsetY = 0.0
+  @StateObject var alert = AlertViewModel()
   
   init() {
     let maxWidth = UIScreen.currentWidth - 20
@@ -34,6 +35,7 @@ struct TestView: View {
       ProgressView().progressViewStyle(.circular).tint(.red)
         .font(.title)
         .scaleEffect(2)
+      stackView
     }
   }
   
@@ -41,8 +43,10 @@ struct TestView: View {
     NavigationStack {
       ZStack(alignment: .topTrailing) {
         VStack {
-          NavigationLink(isActive: $enabled) {
-            Text("call")
+          Button {
+            alert.showFullAlert("hello", "this is the message", okTitle: "ok", okRole: .destructive) {
+              println("ok")
+            }
           } label: {
             Image("background")
               .resizable()
@@ -56,26 +60,28 @@ struct TestView: View {
                 totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
                 currentZoom = 0
               }))
-            
-            
-              //            .gesture(DragGesture().onChanged({ drag in
-              //              let offsetX = drag.translation.width
-              //              let offsetY = drag.translation.height
-              //              printlnDbg("offset: \(offsetX) \(offsetY)")
-              //            }).onEnded({ drag in
-              //
-              //            }))
-              //            .onAppear {
-              //
-              //            }
           }
         }.padding(10)
+      }.alert(alert.fullAlertTitle, isPresented: $alert.showFullAlert) {
+        Button(alert.fullAlertOkTitle, role: alert.okButtonRole) {
+          alert.fullAlertOk()
+        }
+        if let cancel = alert.fullAlertCancelTitle {
+          Button(cancel, role: alert.cancelButtonRole) {
+            alert.fullAlertCancle()
+          }
+        }
+      } message: {
+        if let msg = alert.fullAlertMsg {
+          Text(msg)
+        }
       }
+
     }
   }
 }
 
-#Preview {
+#Preview("first") {
   TestView()
 }
 

@@ -20,21 +20,58 @@ open class BaseObservableObject: ObservableObject {
 
 
 class AlertViewModel: BaseObservableObject {
-  @Published var showAlert: Bool = false
-  @Published var alertTitle: String = ""
-  @Published var showVip: Bool = false
-  @Published var vipTitle: String = ""
+  @Published var showToast: Bool = false
+  @Published var toastTitle: String = ""
+  
+  @Published var showFullAlert: Bool = false
+  @Published var fullAlertTitle: String = ""
+  @Published var fullAlertMsg: String? = nil
+  @Published var fullAlertCancelTitle: String? = nil
+  @Published var fullAlertOkTitle: String = ""
+  @Published var okButtonRole = ButtonRole.destructive
+  @Published var cancelButtonRole = ButtonRole.cancel
+  
+  @Published var fullAlertOk: () -> Void = {}
+  @Published var fullAlertCancle: () -> Void = {}
+  
+  func showFullAlert(_ title: String, _ msg: String? = nil,
+                     okTitle: String = "好",
+                     okRole: ButtonRole = .cancel,
+                     ok: @escaping () -> Void = {},
+                     cancelTitle: String? = nil,
+                     cancelRole: ButtonRole = .cancel,
+                     cancel: @escaping () -> Void = {}) {
+    
+    fullAlertTitle = title
+    fullAlertMsg = msg
+    
+    fullAlertOkTitle = okTitle
+    okButtonRole = okRole
+    fullAlertOk = ok
+    
+    fullAlertCancelTitle = cancelTitle
+    cancelButtonRole = cancelRole
+    fullAlertCancle = cancel
+    
+    showFullAlert = true
+  }
+  
   func showAlertDlg(_ title: String) {
-    alertTitle = title
-    showAlert = true
+    showFullAlert(title)
   }
   func showAppDialog(_ title: String) {
     showAlertDlg(title)
   }
   
+  func showToast(_ title: String) {
+    toastTitle = title
+    showToast = true
+  }
+  
   func showConstraintVip(_ text: String) {
-    showVip = true
-    vipTitle = text
+    showFullAlert("VIP功能", text, okTitle: "开通VIP".orCht("開通VIP"), okRole: .destructive, ok: {
+      
+    }, cancelTitle: "取消")
   }
   
   func verifySearchText(text: String) -> Boolean {

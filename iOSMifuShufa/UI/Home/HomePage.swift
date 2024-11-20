@@ -47,21 +47,26 @@ struct TodayCardView<Content: View>: View {
   }
 }
 
-struct VipContraintModifier: ViewModifier {
+struct AlertViewModifier: ViewModifier {
   @StateObject var viewModel: AlertViewModel
-  
   func body(content: Content) -> some View {
-    content.alert("VIP功能", isPresented: $viewModel.showVip, actions: {
-      HStack {
-        Button("开通VIP".orCht("開通VIP"), role: .destructive, action: {})
-        Button("取消", role: .cancel, action: {})
+    content.alert(viewModel.fullAlertTitle, isPresented: $viewModel.showFullAlert) {
+      Button(viewModel.fullAlertOkTitle, role: viewModel.okButtonRole) {
+        viewModel.fullAlertOk()
       }
-    }) {
-      Text(viewModel.vipTitle)
+      if let cancel = viewModel.fullAlertCancelTitle {
+        Button(cancel, role: viewModel.cancelButtonRole) {
+          viewModel.fullAlertCancle()
+        }
+      }
+    } message: {
+      if let msg = viewModel.fullAlertMsg {
+        Text(msg)
+      }
     }
   }
 }
-
+ 
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
@@ -452,6 +457,8 @@ struct HomePage: View {
           }
         })
     }, viewModel: sideVM)
+    .modifier(AlertViewModifier(viewModel: viewModel.filterViewModel))
+    .modifier(AlertViewModifier(viewModel: viewModel))
   }
   
   var centerView: some View {
@@ -505,11 +512,7 @@ struct HomePage: View {
     }.background(Colors.surfaceVariant.swiftColor)
       .onAppear {
         UITextField.appearance().clearButtonMode = .whileEditing
-      }.alert(viewModel.alertTitle  , isPresented: $viewModel.showAlert) {
-        Button("好", role: .cancel, action: {})
       }
-      .modifier(VipContraintModifier(viewModel: viewModel))
-      .modifier(VipContraintModifier(viewModel: viewModel.filterViewModel))
 
   }
 }

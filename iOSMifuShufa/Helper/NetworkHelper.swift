@@ -12,7 +12,7 @@ import Foundation
 let STORAGE_URL = "https://appdatacontainer.blob.core.windows.net"
 let OYX_WEB_URL = "http://www.ouyangxun.net/"
 let OUYANGXUN_AZURE_WEB = "https://ouyangxunshufa.azurewebsites.net/"
-let LIXUE_TEST_URL = "http://lulixuetest.azurewebsites.net/"
+let LIXUE_TEST_URL = "https://lulixuetest.azurewebsites.net/"
 
 #if DEBUG
 let AZURE_WEB_URL = LIXUE_TEST_URL

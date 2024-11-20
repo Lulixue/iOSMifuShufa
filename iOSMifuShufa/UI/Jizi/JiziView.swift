@@ -30,7 +30,7 @@ struct DragDismissModifier: ViewModifier {
 
 struct JiziView : View {
   @StateObject var viewModel: JiziViewModel
-  @StateObject var historyVM = SearchViewModel.shared
+  @StateObject var historyVM = HistoryViewModel.shared
   @StateObject var naviVM: NavigationViewModel = NavigationViewModel()
   @Environment(\.presentationMode) var presentationMode
   var items: List<JiziItem> {
@@ -49,33 +49,31 @@ struct JiziView : View {
   }
   var candidatePanel: some View {
     ScrollView {
-      LazyVStack {
-        autoColumnGrid(items, space: 6, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 2, paddingValues: PaddingValue(horizontal: 10, vertical: 10)) { size, i, item in
-          let selected = i == viewModel.selectedIndex
-          let single = item.selected
-          Button {
-            workIndex = 0
-            singleIndex = 0
-            viewModel.selectChar(i)
-          } label: {
-            VStack(spacing: 0) {
-              WebImage(url: item.charUrl!) { img in
-                img.image?.resizable()
-                  .aspectRatio(contentMode: .fit)
-                  .frame(height: size-16)
-              }
-              .onSuccess(perform: { _, _, _ in
-                viewModel.loaded(index: i)
-              })
-              .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
-              .frame(height: size-16)
-              .id(single?.id ?? i)
-              Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout).padding(.top, 5).padding(.bottom, 2)
-                .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
-            }.padding(.top, 5).padding(.bottom, 3).padding(.horizontal, itemPaddingHor).frame(width: size).frame(height: size+20)
-              .background(selected ? .gray.opacity(0.4) : .white).clipShape(RoundedRectangle(cornerRadius: 4))
-          }.buttonStyle(BgClickableButton())
-        }
+      autoColumnLazyGrid(items, space: 6, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 2, paddingValues: PaddingValue(horizontal: 10, vertical: 10)) { size, i, item in
+        let selected = i == viewModel.selectedIndex
+        let single = item.selected
+        Button {
+          workIndex = 0
+          singleIndex = 0
+          viewModel.selectChar(i)
+        } label: {
+          VStack(spacing: 0) {
+            WebImage(url: item.charUrl!) { img in
+              img.image?.resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: size-16)
+            }
+            .onSuccess(perform: { _, _, _ in
+              viewModel.loaded(index: i)
+            })
+            .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
+            .frame(height: size-16)
+            .id(single?.id ?? i)
+            Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout).padding(.top, 5).padding(.bottom, 2)
+              .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
+          }.padding(.top, 5).padding(.bottom, 3).padding(.horizontal, itemPaddingHor).frame(width: size).frame(height: size+20)
+            .background(selected ? .gray.opacity(0.4) : .white).clipShape(RoundedRectangle(cornerRadius: 4))
+        }.buttonStyle(BgClickableButton())
       }
     }
   }

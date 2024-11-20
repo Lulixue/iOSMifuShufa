@@ -37,6 +37,23 @@ class NavigationViewModel : BaseObservableObject {
     gotoWebView = true
   }
   
+  func gotoCollectionSingles(_ collections: [CollectionItem], _ selected: Int) {
+    Task {
+      let singles = collections.map { BeitieDbHelper.shared.getSingleById(Int($0.collectionId)) }.filter { $0 != nil }
+        .map { $0! }
+      let viewModel = SingleViewModel(singles: singles, selected: selected)
+      DispatchQueue.main.async {
+        self.singleViewModel = viewModel
+        self.gotoSingleView = true
+      }
+    }
+  }
+  
+  func gotoCollectionWork(_ imageId: Int) {
+    guard let image = BeitieDbHelper.shared.getImageById(imageId) else { return }
+    gotoWork(work: image.work, index: image.index-1)
+  }
+  
   func gotoJizi(_ text: String, _ puzzles: [PuzzleItem]?, after: @escaping () -> Void) {
     Task {
       let items = JiziViewModel.search(text: text)

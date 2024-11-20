@@ -38,7 +38,7 @@ class JiziPageViewModel: AlertViewModel {
 struct JiziPage : View {
   @StateObject var viewModel = JiziPageViewModel()
   @StateObject var naviVM = NavigationViewModel()
-  @StateObject var historyVM = SearchViewModel.shared
+  @StateObject var historyVM = HistoryViewModel.shared
   @State var historyExpanded = [SearchLog: Bool]()
   @FocusState var focused: Bool
   @State private var editHeight: CGFloat = 120

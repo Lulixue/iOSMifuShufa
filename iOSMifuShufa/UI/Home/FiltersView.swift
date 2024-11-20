@@ -67,10 +67,51 @@ struct PaddingValue {
     self.init(top: vertical, bottom: vertical, leading: horizontal, trailing: horizontal)
   }
 }
-
+@ViewBuilder func autoColumnLazyGrid<T>(_ items: List<T>, space: CGFloat,
+                                    parentWidth: CGFloat, maxItemWidth: CGFloat,
+                                    rowSpace: CGFloat, minSize: Int = 3,
+                                    paddingValues: PaddingValue = PaddingValue(),
+                                        @ViewBuilder itemView: @escaping (CGFloat, Int, T) -> some View) -> some View {
+  
+  let destWidth = parentWidth - paddingValues.leading - paddingValues.trailing
+  let rowItemSize = max(space.rowCount(total: destWidth, itemSize: maxItemWidth), minSize)
+  let itemWidth = (destWidth - (rowItemSize.toCGFloat() + 1) * space) / rowItemSize.toCGFloat()
+  let rowCount = items.size / rowItemSize + ((items.size % rowItemSize > 0) ? 1 : 0)
+  LazyVStack(spacing: 0) {
+    ForEach(0..<rowCount, id: \.self) { row in
+      HStack(spacing: 0) {
+        let start = rowItemSize * row
+        let end = min(rowItemSize * (row + 1), items.size)
+        ForEach(start..<end, id: \.self) { i in
+          let item = items[i]
+          space.HSpacer()
+          HStack(spacing: 0) {
+            itemView(itemWidth, i, item)
+          }.frame(minWidth: itemWidth)
+        }
+        if end - start < rowItemSize {
+          Spacer()
+        } else {
+          space.HSpacer()
+        }
+      }
+      if row != rowCount - 1 {
+        rowSpace.VSpacer()
+      }
+    }
+  }.padding(.leading, paddingValues.leading)
+    .padding(.trailing, paddingValues.trailing)
+    .padding(.top, paddingValues.top)
+    .padding(.bottom, paddingValues.bottom)
+    .onAppear {
+      printlnDbg("rowItemSize: \(rowItemSize)")
+      printlnDbg("rowCount: \(rowCount)")
+      printlnDbg("itemWidth: \(itemWidth)")
+    }
+}
 @ViewBuilder func autoColumnGrid<T>(_ items: List<T>, space: CGFloat,
                                     parentWidth: CGFloat, maxItemWidth: CGFloat,
-                                    rowSpace: CGFloat, minSize: Int = 3, keepLastItems: Bool = false,
+                                    rowSpace: CGFloat, minSize: Int = 3,
                                     paddingValues: PaddingValue = PaddingValue(),
                                     @ViewBuilder itemView: @escaping (CGFloat, Int, T) -> some View) -> some View {
   
