@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import SDWebImageSwiftUI
+import DeviceKit
 
 
 struct SinglePreviewItem: View {
@@ -14,7 +15,7 @@ struct SinglePreviewItem: View {
   var onClick: () -> Void = {}
   @State private var loading = false
   @State private var currentZoom = 0.0
-  @State private var totalZoom = 1.0
+  @State private var totalZoom = Device.current.isPad ? 0.5 : 0.95
   private let maxZoom = 5.0
   private let minZoom = 0.3
   

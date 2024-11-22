@@ -73,6 +73,18 @@ struct AlertViewModifier: ViewModifier {
   }
 }
 
+struct DeviceRotationViewModifier: ViewModifier {
+  let action: (UIDeviceOrientation) -> Void
+  
+  func body(content: Content) -> some View {
+    content
+      .onAppear()
+      .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+        action(UIDevice.current.orientation)
+      }
+  }
+}
+
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
@@ -270,6 +282,25 @@ struct HomePage: View {
     viewModel.showPreview = false
   }
   
+  var rotation: Double {
+    switch viewModel.orientation {
+    case .portrait:
+      0
+    case .portraitUpsideDown:
+      180
+    case .landscapeLeft:
+      90
+    case .landscapeRight:
+      270
+    case .faceUp:
+      0
+    case .faceDown:
+      0
+    default:
+      0
+    }
+  }
+  
   var previewResult: some View {
     ZStack(alignment: .top) {
       let singles = viewModel.selectedSingleCollection
@@ -282,7 +313,7 @@ struct HomePage: View {
               hidePreview()
             } onClick: {
               navVM.gotoSingles(singles: singles, index: i)
-            }
+            }.rotationEffect(.degrees(rotation))
           }.tag(i)
         }
       }.tabViewStyle(.page(indexDisplayMode: .never))
@@ -555,6 +586,13 @@ struct HomePage: View {
     .modifier(TapDismissModifier(show: $showCharType))
     .modifier(DragDismissModifier(show: $showCharType))
     .background(Colors.surfaceVariant.swiftColor)
+    .modifier(DeviceRotationViewModifier(action: { orientation in
+      if !Device.current.isPad && AnalyzeHelper.shared.homeRotate {
+        viewModel.orientation = orientation
+      } else {
+        viewModel.orientation = .unknown
+      }
+    }))
     .onAppear {
       UITextField.appearance().clearButtonMode = .whileEditing
 #if DEBUG

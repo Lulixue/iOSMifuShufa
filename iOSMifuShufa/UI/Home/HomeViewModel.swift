@@ -218,6 +218,7 @@ class HomeViewModel : AlertViewModel {
   @Published var focused = false
   @Published var showHistoryBar = false
   @Published var showDeleteAlert: Bool = false
+  @Published var orientation = UIDeviceOrientation.unknown
   private let page = SearchPage.Search
   
   @Published var showPreview = false

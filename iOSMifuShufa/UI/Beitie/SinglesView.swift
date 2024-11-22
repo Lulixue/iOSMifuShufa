@@ -15,6 +15,7 @@ class SingleViewModel: AlertViewModel {
   let singles: List<BeitieSingle>
   @Published var showDrawPanel = false
   @Published var currentIndex: Int = 0
+  @Published var orientation = UIDeviceOrientation.unknown
   var uiImage: UIImageView? = nil
   init(singles: List<BeitieSingle>, selected: Int = 0) {
     self.singles = singles
@@ -24,6 +25,7 @@ class SingleViewModel: AlertViewModel {
       self?.showDrawPanel = false
     }
   }
+  
   
   func toggleDrawPanel() {
     showDrawPanel.toggle()
@@ -144,6 +146,24 @@ struct SinglesView: View {
       .modifier(AlertViewModifier(viewModel: viewModel))
   }
   
+  var rotation: Double {
+    switch viewModel.orientation {
+    case .portrait:
+      0
+    case .portraitUpsideDown:
+      180
+    case .landscapeLeft:
+      90
+    case .landscapeRight:
+      270
+    case .faceUp:
+      0
+    case .faceDown:
+      0
+    default:
+      0
+    }
+  }
   var content: some View {
     VStack(spacing: 0) {
       naviView
@@ -155,6 +175,8 @@ struct SinglesView: View {
             ZStack(alignment: .bottom) {
               Image("background").resizable().scaledToFill()
               SinglePreviewItem(single: single)
+                .padding(40)
+                .rotationEffect(.degrees(rotation))
               Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
                 .padding(.bottom, 14)
             }.id(i)
@@ -265,7 +287,13 @@ struct SinglesView: View {
             viewModel.currentIndex = pageIndex
             syncScroll(newValue)
           }
-        }
+        }.modifier(DeviceRotationViewModifier(action: { orientation in
+          if !Device.current.isPad && AnalyzeHelper.shared.singleRotate {
+            viewModel.orientation = orientation
+          } else {
+            viewModel.orientation = .unknown
+          }
+        }))
     }
   }
 }

@@ -30,7 +30,11 @@ struct ContentView: View {
             if #available(iOS 18, *) {
               Image(systemName: "photo.on.rectangle.angled.fill").environment(\.symbolVariants, .none)
             } else {
-              Image(systemName: "photo.fill.on.rectangle.fill").environment(\.symbolVariants, .none)
+              if Device.current.isPad {
+                Image("image_filter_fill").renderingMode(.template)
+              } else {
+                Image(systemName: "photo.fill.on.rectangle.fill").environment(\.symbolVariants, .none)
+              }
             }
           } else {
             Image("image_filter").renderingMode(.template)
