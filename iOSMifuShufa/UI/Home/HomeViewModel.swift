@@ -298,7 +298,7 @@ class HomeViewModel : AlertViewModel {
         return verifySearchText(text: searchTextDo)
       }
     }
-    if (validSearchText && searchTextDo.chineseCount > ConstraintItem.SearchZiCount.topMostConstraint) {
+    if (validSearchText &&  searchTextDo.chineseCount > ConstraintItem.SearchZiCount.topMostConstraint && !CurrentUser.isVip) {
       showConstraintVip(ConstraintItem.SearchZiCount.topMostConstraintMessage)
       return false
     }
@@ -556,20 +556,12 @@ extension Array where Element == BeitieSingle {
   func matchSearch() -> List<BeitieSingle> {
     let ok = filter { it in it.brokenLevel < 4 }
     let filtered = ok.filter { it in BeitieDbHelper.shared.searchWorks.contains(it.workId) }
-    return if (!CurrentUser.userIsVip && (filtered.isEmpty() || Settings.showVipSingles)) {
-      ok
-    } else {
-      filtered
-    }
+    return filtered
   }
   
   func matchJizi() -> List<BeitieSingle> {
-    let filtered = filter { it in it.brokenLevel < 3 }
-    return if (!CurrentUser.userIsVip && (filtered.isEmpty() || Settings.showVipSingles)) {
-      filtered
-    } else {
-      filtered.filter { it in BeitieDbHelper.shared.jiziWorks.contains(it.workId) }
-    }
+    let filtered = filter { it in it.brokenLevel < 3 }.filter { it in BeitieDbHelper.shared.jiziWorks.contains(it.workId) }
+    return filtered
   }
 }
 

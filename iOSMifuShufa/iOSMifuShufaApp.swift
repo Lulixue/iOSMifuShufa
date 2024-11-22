@@ -9,11 +9,15 @@ import SwiftUI
 
 @main
 struct iOSMifuShufaApp: App {
-    let persistenceController = PersistenceController.shared
-
-    var body: some Scene {
-        WindowGroup {
-            SplashView()
-        }
+  let persistenceController = PersistenceController.shared
+  
+  init() {
+    Settings.syncLocale()
+  }
+  
+  var body: some Scene {
+    WindowGroup {
+      SplashView()
     }
+  }
 }

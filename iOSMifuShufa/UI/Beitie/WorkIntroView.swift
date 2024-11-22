@@ -106,9 +106,7 @@ struct WorkIntroView: View {
           Spacer()
         }.padding(.vertical, 5).background(.white)
       }.buttonStyle(BgClickableButton())
-    }.navigationDestination(isPresented: $naviVM.gotoWorkView) {
-      WorkView(viewModel: naviVM.workVM!)
-    }
+    }.modifier(WorkDestinationModifier(naviVM: naviVM))
     .navigationBarHidden(true)
   }
 }

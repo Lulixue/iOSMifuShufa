@@ -69,7 +69,7 @@ class ImageManager: BaseObservableObject {
   func loadBeitieImage(_ image: BeitieImage) {
     let file = image.fileSuffix(type)
     let path = Self.BEITIE_DIR!.path() + file
-    printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName)")
+    debugPrint("loadBeiteiImage(\(image.index)): \(image.fileName)")
     let folder = Self.BEITIE_DIR!.appendingPathComponent(image.workFolder)
     let manager = FileManager.default
     DispatchQueue.main.async {
@@ -96,10 +96,10 @@ class ImageManager: BaseObservableObject {
           if (downloaded != total) {
             let percent = downloaded.toDouble() * 1.0 / total.toDouble()
             self.imageDownloaded[image] = ImageSize(downloaded: downloaded.toCGFloat(), total: total.toCGFloat())
-            printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName) \(percent)")
+            debugPrint("loadBeiteiImage(\(image.index)): \(image.fileName) \(percent)")
             self.imageStatus[image] = .Loading
           } else {
-            printlnDbg("loadBeiteiImage(\(image.index)): \(image.fileName) downloaded")
+            debugPrint("loadBeiteiImage(\(image.index)): \(image.fileName) downloaded")
             self.imageStatus[image] = .Downloaded
           }
         }

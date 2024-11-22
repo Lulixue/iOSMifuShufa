@@ -27,7 +27,7 @@ extension String {
   }
   
   var url: URL? {
-    URL(string: self)
+    URL(string: self.getEncodedURL())
   }
   
   func calculateUITextViewFreeSize(font: UIFont) -> CGSize {

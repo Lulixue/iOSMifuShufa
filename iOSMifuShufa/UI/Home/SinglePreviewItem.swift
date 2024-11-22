@@ -20,7 +20,6 @@ struct SinglePreviewItem: View {
   
   var body: some View {
     ZStack {
-      
       ScrollView {
         
       }.onTapGesture {
@@ -43,7 +42,7 @@ struct SinglePreviewItem: View {
       .clipShape(RoundedRectangle(cornerRadius: 2))
       .scaleEffect(currentZoom + totalZoom)
       .gesture(MagnificationGesture().onChanged({ offset in
-        println("offset \(offset)")
+        debugPrint("offset \(offset)")
         currentZoom = offset - 1
       }).onEnded({ offset in
         totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)

@@ -23,6 +23,10 @@ class AlertViewModel: BaseObservableObject {
   @Published var showToast: Bool = false
   @Published var toastTitle: String = ""
   
+  @Published var nextAlert: Bool = false
+  @Published var nextTitle: String = ""
+  @Published var nextMessage: String = ""
+  
   @Published var showFullAlert: Bool = false
   @Published var fullAlertTitle: String = ""
   @Published var fullAlertMsg: String? = nil
@@ -62,15 +66,41 @@ class AlertViewModel: BaseObservableObject {
   func showAppDialog(_ title: String) {
     showAlertDlg(title)
   }
+  func showMessageDialog(_ title: String) {
+    showAlertDlg(title)
+  }
   
   func showToast(_ title: String) {
     toastTitle = title
     showToast = true
+    Task {
+      try? await Task.sleep(nanoseconds: 2_000_000_000)
+      DispatchQueue.main.async {
+        self.showToast = false
+      }
+    }
   }
   
   func showConstraintVip(_ text: String) {
-    showFullAlert("VIP功能", text, okTitle: "开通VIP".orCht("開通VIP"), okRole: .destructive, ok: {
-      
+    showFullAlert("功能不可用", text, okTitle: "联系客服".orCht("聯繫客服"), okRole: .destructive, ok: {
+      DispatchQueue.main.async {
+        UIPasteboard.general.string = "sf_lulixue"
+        self.nextTitle = "客服微信号(sf_lulixue)已拷贝到剪贴板".orCht("客服微信號(sf_lulixue)已拷貝到剪貼板")
+        self.nextAlert = true
+      }
+    }, cancelTitle: "取消")
+  }
+  
+  func checkUpdate() {
+    showFullAlert(DashboardRow.update.name, "是否前往应用商店检测更新".orCht("是否前往應用商店檢查更新"), okTitle: "前往",
+                  okRole: .destructive, ok: {
+      Utils.gotoAppStore()
+    }, cancelTitle: "cancel".resString)
+  }
+  
+  func rateApp() {
+    showFullAlert("rate_app".resString, "tell_us_what_you_think".resString, okTitle: "i_think_good".localized, okRole: .destructive, ok: {
+      Utils.gotoAppStore()
     }, cancelTitle: "取消")
   }
   

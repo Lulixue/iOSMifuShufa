@@ -8,11 +8,45 @@ import SQLite
 import Collections
 
 let STORAGE_DIR = "mifu"
+let APP_ID = "6520390752"
 var ABOUT_TEXT: String {
   "米芾书法字典属于立人书法系列，字典收集了米芾的经典书法作品，希望对米芾书法爱好者学习、研究米芾书法有所帮助。<br /><br /><small>立雪网络科技（深圳）有限公司<br />2024年7月3日</small>"
     .orCht("米芾書法字典屬於立人書法系列，字典收集了米芾的經典書法作品，希望對米芾書法愛好者學習、研究米芾書法有所幫助。<br /><br /><small>立雪網絡科技（深圳）有限公司<br />2024年7月3日</small>")
 }
 
+enum WorkTime: String, CaseIterable{
+  case Early
+  case Middle
+  case Late
+  case Unknown
+  
+  var chinese:String {
+    switch self {
+    case .Early: "早期"
+    case .Middle: "中期"
+    case .Late: "晚期"
+    case .Unknown: "未知"
+    }
+  }
+  
+  var start: Int {
+    switch self {
+    case .Early: 1050
+    case .Middle: 1091
+    case .Late: 1101
+    case .Unknown: 0
+    }
+  }
+  
+  var end: Int {
+    switch self {
+    case .Early: 1090
+    case .Middle: 1100
+    case .Late: 1199
+    case .Unknown: 0
+    }
+  }
+}
 
 enum WorkCategory: String, CaseIterable {
   case Boutique
@@ -80,6 +114,16 @@ extension String {
     Expression<Bool>(self)
   }
 }
+
+let AZ_INITS = {
+  var azs = [Char]()
+  let startingValue = Int(("A" as UnicodeScalar).value) // 65
+  for i in 0 ..< 26 {
+    let c = (Character(UnicodeScalar(i + startingValue)!))
+    azs.append(c)
+  }
+  return azs
+}()
 
 class BeitieDbHelper {
   static let shared = BeitieDbHelper()
@@ -202,18 +246,114 @@ class BeitieDbHelper {
     jiziWorks.addAll(singleWorks.filter { it in it.canJizi }.map { it in it.id })
   }
   
+  private lazy var azWorks = {
+    var azAll = LinkedHashMap<AnyHashable, List<List<BeitieWork>>>()
+    var left = List(works)
+    for az in AZ_INITS {
+      guard var zis = BeitieOrderType.azMap[az] else { continue }
+      let works = left.filter { it in
+        zis.contains(it.name.first())
+      }
+      if (works.isNotEmpty()) {
+        azAll[az.toString()] = works.map { it in Array.listOf(it) }
+        left.removeAll { works.contains($0) }
+      }
+    }
+    if (left.isNotEmpty()) {
+      azAll[UNKNOWN] = left.map { it in Array.listOf(it) }
+    }
+    return azAll
+  }()
+  
+  private lazy var azWorksStack = {
+    return toStack(ordered: azWorks)
+  }()
   
   func getDefaultTypeWorks(_ stack: Boolean = BeitieOrderType.organizeStack) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
     return getOrderTypeWorks(BeitieOrderType.orderType, stack)
   }
+  private lazy var worksByType = {
+    var ordered = LinkedHashMap<AnyHashable, List<List<BeitieWork>>>()
+    CalligraphyType.allCases.forEach { type in
+      let w = works.filter { it in it.type == type }
+      if (w.isNotEmpty()) {
+        ordered[type.typeChinese] = w.sortedByDescending { it in it.isTrue() }.map { it in Array.listOf(it) }
+      }
+    }
+    return ordered
+  }()
+  
+  private lazy var worksByTypeStack = {
+    toStack(ordered: worksByType)
+  }()
+  private lazy var worksByFontStack = {
+    toStack(ordered: worksByFont)
+  }()
+  private lazy var worksByFont = {
+    var ordered = LinkedHashMap<AnyHashable, List<List<BeitieWork>>>()
+    CalligraphyFont.allCases.forEach { font in
+      let w = works.filter { it in it.font == font }
+      if (w.isNotEmpty()) {
+        ordered[font.longChinese] = w.sortedByDescending { it in it.isTrue() }.map { it in Array.listOf(it) }
+      }
+    }
+    return ordered
+  }()
+  
+  private lazy var worksByTimeDescStack = {
+    toStack(ordered: worksByTimeDesc)
+  }()
+  
+  private lazy var worksByTimeDesc = {
+    var ordered = LinkedHashMap<AnyHashable, List<List<BeitieWork>>>()
+    
+    Array.arrayOf(WorkTime.Late, WorkTime.Middle, WorkTime.Early, WorkTime.Unknown).map({ $0.chinese }).forEach { it in
+      if let value = worksByTimeAsc[it] {
+        if (it == WorkTime.Unknown.chinese) {
+          ordered[it] = value
+        } else {
+          ordered[it] = value.reversed()
+        }
+      }
+    }
+    return ordered
+  }()
+  
+  private lazy var worksByTimeAsc = {
+    var ordered = LinkedHashMap<AnyHashable, List<List<BeitieWork>>>()
+    WorkTime.allCases.forEach { it in
+      let result = if (it == WorkTime.Unknown) {
+        works.filter { w in w.ceYear == 0 }.sortedByDescending { it in it.isTrue() }.map { w in Array.listOf(w) }
+      } else {
+        works.filter { w in w.ceYear >= it.start && w.ceYear <= it.end }
+          .sortedBy { w in w.ceYear }.sortedByDescending { it in it.isTrue() }.map { w in Array.listOf(w) }
+      }
+      if result.isNotEmpty() {
+        ordered[it.chinese] = result
+      }
+    }
+    return ordered
+  }()
+  
+  private lazy var worksByTImeAscStack = {
+    toStack(ordered: worksByTimeAsc)
+  }()
 
   typealias BeitieDictionary = OrderedDictionary<AnyHashable, List<List<BeitieWork>>>
   func getOrderTypeWorks(_ orderType: BeitieOrderType, _ stack: Boolean = BeitieOrderType.organizeStack) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
     let result = switch orderType {
     case .Default:
       stack ? defaultWorksStack : defaultWorks
-    default:
-      stack ? defaultWorksStack : defaultWorks
+    case .Az:
+      stack ? azWorksStack : azWorks
+    case .Type:
+      stack ? worksByTypeStack : worksByType
+    case .Font:
+      stack ? worksByFontStack : worksByFont
+    case .TimeAsc:
+      stack ? worksByTImeAscStack : worksByTimeAsc
+    case .TimeDesc:
+      stack ? worksByTimeDescStack: worksByTimeDesc
     }
     
     return result

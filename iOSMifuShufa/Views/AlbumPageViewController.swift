@@ -13,7 +13,8 @@ protocol AlbumImageDelegate {
 }
 
 class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-  
+ 
+  var tapDelegate: SinglePreviewDelegate!
   var albumDelegate: AlbumImageDelegate?
   var pages: [UIViewController] = []
   var parentSize: CGSize = .zero
@@ -73,7 +74,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
   func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
     if (completed) {
       currentIndex = pageViewController.viewControllers?.first?.view.tag ?? 0
-      printlnDbg("didFinishAnimating \(currentIndex)")
+      debugPrint("didFinishAnimating \(currentIndex)")
       afterScroll(currentIndex)
     }
   }
@@ -113,7 +114,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
   
   func scrollToPage(page: Int) {
     let firstViewController = pages[page]
-    printlnDbg("scrollToPage \(page)")
+    debugPrint("scrollToPage \(page)")
     setViewControllers([firstViewController],
                        direction: currentIndex < page ? .reverse : .forward,
                        animated: true) { finished in
@@ -131,6 +132,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
       let item = images[i]
       let aivc = AlbumImageViewController()
       aivc.view.tag = i
+      aivc.tapDelegate = tapDelegate
       aivc.initAlbumImage(item, parentSize)
       pages.append(aivc)
     }
@@ -143,6 +145,7 @@ class AlbumPageViewController: UIPageViewController , UIPageViewControllerDelega
       let item = items[i]
       let aivc = AlbumImageViewController()
       aivc.view.tag = i
+      aivc.tapDelegate = tapDelegate
       aivc.initAlbumImage(item, parentSize)
       pages.append(aivc)
     }

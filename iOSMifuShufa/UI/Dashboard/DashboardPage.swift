@@ -74,7 +74,7 @@ struct DashboardDivider: View {
 struct DashboardItemView: View {
   let row: DashboardRow
   @ViewBuilder var content: some View {
-    let verticalPadding: CGFloat = row == .vip ? 15 : 12
+    let verticalPadding: CGFloat = row == .vip ? 18 : 15
     let extraSize = row.extraSize
     HStack(alignment: .center, spacing: 0) {
       ZStack(alignment: .center) {
@@ -87,8 +87,8 @@ struct DashboardItemView: View {
       }.frame(width: 24, height: 24)
       Spacer.width(10)
       Text(row.rawValue.interfaceStr)
-        .font(.system(size: 20))
-        .foregroundColor(.black)
+        .font(.system(size: 18))
+        .foregroundColor(Color.darkSlateGray)
       Spacer()
       Text(row.subText).font(.callout)
         .foregroundColor(Color.gray)
@@ -115,17 +115,6 @@ struct DashboardPage : View {
   }
   @StateObject var viewModel: UserViewModel = CurrentUser
   
-  @ViewBuilder func destinationView(_ row: DashboardRow) -> some View {
-    switch row {
-    case .about:
-      AboutView()
-    case .collection:
-      CollectionView()
-    default:
-      EmptyView()
-    }
-  }
-  
   var itemDivider: some View {
     
     HStack(spacing: 0) {
@@ -144,7 +133,8 @@ struct DashboardPage : View {
         .foregroundColor(Color(UIColor.gray))
       Spacer().frame(width: 15)
       VStack(alignment: .leading) {
-        Text("\(viewModel.userName)").font(.system(size: 17)).foregroundColor(.black)
+        Text("\(viewModel.userName)").font(.system(size: 17))
+          .foregroundColor(Color.darkSlateGray)
         if CurrentUser.userLogin {
           Spacer().frame(height: 5)
           Text("\(viewModel.userType)")
@@ -172,11 +162,20 @@ struct DashboardPage : View {
       ScrollView {
         VStack(spacing: 0) {
           Group {
-            NavigationLink {
-              
-            } label: {
-              userItemView
-            }.buttonStyle(BgClickableButton())
+            if CurrentUser.userLogin {
+              NavigationLink {
+                UserView()
+              } label: {
+                userItemView
+              }.buttonStyle(BgClickableButton())
+            } else {
+              NavigationLink {
+                LoginView()
+              } label: {
+                userItemView
+              }.buttonStyle(BgClickableButton())
+            }
+            
           }
           15.VSpacer()
           Group {
@@ -198,17 +197,17 @@ struct DashboardPage : View {
             }.buttonStyle(BgClickableButton())
             Divider().padding(.leading, 46)
             Button {
-              
+              viewModel.rateApp()
             } label: {
               DashboardItemView(row: .rate)
             }.buttonStyle(BgClickableButton())
             Divider().padding(.leading, 46)
             Button {
-              
+              viewModel.checkUpdate()
             } label: {
               DashboardItemView(row: .update)
             }.buttonStyle(BgClickableButton())
-            DashboardDivider()
+            Divider().padding(.leading, 46)
             NavigationLink {
               FeedbackView()
             } label: {
@@ -226,8 +225,9 @@ struct DashboardPage : View {
           }
         }
       }.background(Colors.wx_background.swiftColor)
+        .modifier(AlertViewModifier(viewModel: viewModel))
+        .id(viewModel.language)
     }.navigationBarHidden(true)
-    
   }
 }
 

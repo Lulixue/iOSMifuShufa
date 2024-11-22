@@ -63,10 +63,16 @@ struct AlertViewModifier: ViewModifier {
       if let msg = viewModel.fullAlertMsg {
         Text(msg)
       }
+    }.alert(viewModel.nextTitle, isPresented: $viewModel.nextAlert) {
+      Button {
+        
+      } label: {
+        Text("好")
+      }
     }
   }
 }
- 
+
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
@@ -77,23 +83,26 @@ struct HomePage: View {
   private let font = Font.system(size: 14)
   
   
+  @State private var charTypePosition: CGRect = .zero
   var searchBar: some View {
     HStack {
       HStack {
         HStack {
           8.HSpacer()
           Button {
-            
+            showCharType = true
           } label: {
             HStack(spacing: 0) {
               Text(viewModel.searchCharType.chinese).font(font)
               3.HSpacer()
               Image(systemName: "chevron.down").square(size: 8)
+                .rotationEffect(.degrees(showCharType ? 180: 0))
             }.padding(.horizontal, 3).foregroundStyle(Color.gray)
               .font(.callout)
           }
           8.HSpacer()
         }.frame(height: searchBarHeight).background(Color.background)
+          .background(PositionReaderView(binding: $charTypePosition))
         
         Color.gray.frame(width: 0.4)
         
@@ -298,8 +307,6 @@ struct HomePage: View {
             Spacer()
           }
           HStack(spacing: 12) {
-            Spacer()
-            
             Button {
               viewModel.showDrawPanel.toggle()
               if !viewModel.showDrawPanel {
@@ -308,13 +315,13 @@ struct HomePage: View {
             } label: {
               Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
             }
-            Divider.overlayColor(.white).frame(width: 0.5, height: 16)
+            Spacer()
             Button {
               hidePreview()
             } label: {
               Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
-            }.padding(.trailing, 10)
-          }.padding(.vertical, 12)
+            }
+          }.padding(.vertical, 12).padding(.horizontal, 10)
         }
         if viewModel.showDrawPanel {
           DrawPanel().environmentObject(viewModel.drawViewModel)
@@ -325,6 +332,7 @@ struct HomePage: View {
   
   private let orderSpacing: CGFloat = 14
   private let orderBarHeight: CGFloat = 40
+  private let clickedColor: Color = .gray
   @State var resultProxy: ScrollViewProxy? = nil
   var resultView: some View {
     ZStack(alignment: .topLeading) {
@@ -337,7 +345,7 @@ struct HomePage: View {
               Text(viewModel.order.chinese + "排序").font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize)
                 .rotationEffect(.degrees(viewModel.showOrder ? 180 : 0))
-            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+            }.foregroundStyle(viewModel.showOrder ? clickedColor : Colors.colorPrimary.swiftColor)
           }.background(WidthReaderView(binding: $viewModel.orderWidth))
           Button {
             viewModel.showFastRedirect = true
@@ -346,7 +354,7 @@ struct HomePage: View {
               let fastResultKey = viewModel.resultKeys[max(viewModel.fastResultIndex, 0)]
               Text(fastResultKey).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFastRedirect ? 180 : 0))
-            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+            }.foregroundStyle(viewModel.showFastRedirect ? clickedColor : Colors.colorPrimary.swiftColor)
           }.background(WidthReaderView(binding: $viewModel.fastRedirectWidth))
           
           Button {
@@ -355,7 +363,7 @@ struct HomePage: View {
             HStack(spacing: 5) {
               Text(viewModel.currentFontResultKey()).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFont ? 180 : 0))
-            }.foregroundStyle(Colors.colorPrimary.swiftColor)
+            }.foregroundStyle(viewModel.showFont ? clickedColor : Colors.colorPrimary.swiftColor)
           }
           Spacer()
           Button {
@@ -363,8 +371,8 @@ struct HomePage: View {
             resultProxy?.scrollTo(0, anchor: .top)
           } label: {
             HStack {
-              Image(systemName: "chevron.down.2").square(size: 9)
-                .rotationEffect(.degrees(viewModel.allCollapse ? 180 : 0))
+              Image("chevron.up.2").renderingMode(.template).square(size: 9)
+                .rotationEffect(.degrees(viewModel.allCollapse ? 0 : 180))
                 .foregroundStyle(Colors.colorPrimary.swiftColor)
             }.padding(.horizontal, 12).padding(.vertical, 7)
               .overlay {
@@ -391,6 +399,9 @@ struct HomePage: View {
           }.id(viewModel.resultId)
             .simultaneousGesture(DragGesture().onChanged({ _ in
               viewModel.hideDropdown()
+            }), isEnabled: viewModel.hasDropdown())
+            .simultaneousGesture(TapGesture().onEnded({ _ in
+              self.viewModel.hideDropdown()
             }), isEnabled: viewModel.hasDropdown())
         }
       }.blur(radius: viewModel.showPreview ? 6 : 0)
@@ -447,8 +458,10 @@ struct HomePage: View {
   var body: some View {
     SideMenu(leftMenu: sideMenu, centerView: {
       centerView
+        .modifier(AlertViewModifier(viewModel: viewModel.filterViewModel))
+        .modifier(AlertViewModifier(viewModel: viewModel))
         .background(TabBarAccessor { tabBar in
-          printlnDbg(">> TabBar height: \(tabBar.bounds.height)")
+          debugPrint(">> TabBar height: \(tabBar.bounds.height)")
           tabBarHeight = tabBar.bounds.height
           if #available(iOS 18.0, *) {
             if Device.current.isPad {
@@ -457,69 +470,106 @@ struct HomePage: View {
           }
         })
     }, viewModel: sideVM)
-    .modifier(AlertViewModifier(viewModel: viewModel.filterViewModel))
-    .modifier(AlertViewModifier(viewModel: viewModel))
   }
   
+  var otherwiseCharType: some View {
+    Button {
+      viewModel.searchCharType = viewModel.searchCharType.otherwise
+      showCharType = false
+    } label: {
+      HStack {
+        8.HSpacer()
+        HStack(spacing: 0) {
+          Text(viewModel.searchCharType.otherwise.chinese).font(font)
+            .foregroundStyle(.colorPrimary)
+            .bold()
+          3.HSpacer()
+        }.padding(.horizontal, 3)
+          .font(.callout).padding(.vertical, 8)
+        16.HSpacer()
+      }.background(Colors.surfaceContainer.swiftColor)
+        .cornerRadius(2)
+        .background {
+          RoundedRectangle(cornerRadius: 2).stroke(.gray, lineWidth: 0.5)
+        }
+    }.buttonStyle(BgClickableButton())
+  }
+  
+  @State private var showCharType = false
   var centerView: some View {
     VStack(spacing: 0) {
-      VStack(spacing: 0) {
-        HStack(spacing: 0) {
-          Image("mi").renderingMode(.template).resizable().frame(width: 18, height: 20)
-            .foregroundStyle(Color.searchHeader)
-            .rotationEffect(.degrees(5))
-          3.HSpacer()
-          Image("fu").renderingMode(.template).resizable().scaledToFill().frame(width: 18, height: 22).rotationEffect(.degrees(2))
-            .foregroundStyle(Color.searchHeader)
-          Spacer()
-          Button {
-            focused = false
-            sideVM.sideMenuLeftPanel.toggle()
-          } label: {
-            Image(systemName: "line.3.horizontal")
-              .square(size: 20)
-              .foregroundStyle(Color.colorPrimary)
-              .buttonStyle(PrimaryButton()) 
-          }
-          5.HSpacer()
-        }.padding(.horizontal, 15)
-        10.VSpacer()
+      HStack(spacing: 0) {
+        Image("mi").renderingMode(.template).resizable().frame(width: 18, height: 20)
+          .foregroundStyle(Color.searchHeader)
+          .rotationEffect(.degrees(5))
+        3.HSpacer()
+        Image("fu").renderingMode(.template).resizable().scaledToFill().frame(width: 18, height: 22).rotationEffect(.degrees(2))
+          .foregroundStyle(Color.searchHeader)
+        Spacer()
+        Button {
+          focused = false
+          sideVM.sideMenuLeftPanel.toggle()
+        } label: {
+          Image(systemName: "line.3.horizontal")
+            .square(size: 20)
+            .foregroundStyle(Color.colorPrimary)
+            .buttonStyle(PrimaryButton())
+        }
+        5.HSpacer()
+      }.padding(.horizontal, 15)
+        .background(.white)
+      Color.white.frame(height: 10)
+      ZStack(alignment: .topLeading) {
         VStack(spacing: 0) {
-          searchBar
-          if viewModel.showHistoryBar {
-            HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
-              viewModel.updateHistoryBarVisible()
-            }) { l in
-              if l.extra == "false" {
-                viewModel.filters.parseFilters(l.text!)
-              } else {
-                viewModel.text = l.text!
+          VStack(spacing: 0) {
+            searchBar
+            if viewModel.showHistoryBar {
+              HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
+                viewModel.updateHistoryBarVisible()
+              }) { l in
+                if l.extra == "false" {
+                  viewModel.filters.parseFilters(l.text!)
+                } else {
+                  viewModel.text = l.text!
+                }
+                onSearch()
               }
-              onSearch()
+              8.VSpacer()
+            } else {
+              10.VSpacer()
             }
-            8.VSpacer()
+          }.padding(.horizontal, 35) .background(.white)
+          0.4.HDivder()
+          if viewModel.singleResult.isNotEmpty() {
+            resultView.background(.white)
           } else {
-            10.VSpacer()
+            defaultView
           }
-        }.padding(.horizontal, 35)
-      }.background(.white)
-      0.4.HDivder()
-      if viewModel.singleResult.isNotEmpty() {
-        resultView.background(.white)
-      } else {
-        defaultView
+        }
+        if showCharType {
+          otherwiseCharType
+            .offset(x: charTypePosition.minX, y: charTypePosition.height)
+        }
       }
-    }.background(Colors.surfaceVariant.swiftColor)
-      .onAppear {
-        UITextField.appearance().clearButtonMode = .whileEditing
+    }
+    .modifier(TapDismissModifier(show: $showCharType))
+    .modifier(DragDismissModifier(show: $showCharType))
+    .background(Colors.surfaceVariant.swiftColor)
+    .onAppear {
+      UITextField.appearance().clearButtonMode = .whileEditing
+#if DEBUG
+      Task {
+        globalTest()
       }
-
+#endif
+    }
+    
   }
 }
 
 #Preview {
   HomePage(viewModel: HomeViewModel())
-  .environmentObject(NavigationViewModel())
+    .environmentObject(NavigationViewModel())
 }
 
 
@@ -528,8 +578,8 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
   open override func viewDidLoad() {
     super.viewDidLoad()
     interactivePopGestureRecognizer?.delegate = self
-    }
+  }
   public func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
     viewControllers.count > 1
-    }
+  }
 }

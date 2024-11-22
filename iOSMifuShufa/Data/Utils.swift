@@ -92,16 +92,31 @@ class Utils {
   }
   
   public static func getLess(_ f1: CGFloat, _ f2: CGFloat) -> CGFloat {
-    return f1 < f2 ? f1 : f2
+    return min(f1, f2)
   }
   public static func getLess(_ f1: Int, _ f2: Int) -> Int  {
-    return f1 < f2 ? f1 : f2
+    return min(f1, f2)
   }
   public static func getMore(_ f1: CGFloat, _ f2: CGFloat) -> CGFloat  {
-    return f1 > f2 ? f1 : f2
+    return max(f1, f2)
   }
   public static func getMore(_ f1: Int, _ f2: Int)  -> Int {
-    return f1 > f2 ? f1 : f2
+    return max(f1, f2)
+  }
+  
+  static func gotoAppStore() {
+    let urlString = "itms-apps://itunes.apple.com/app/" + APP_ID
+    if let url = URL(string: urlString) {
+        //根据iOS系统版本，分别处理
+      if #available(iOS 10, *) {
+        UIApplication.shared.open(url, options: [:],
+                                  completionHandler: {
+          (success) in
+        })
+      } else {
+        UIApplication.shared.openURL(url)
+      }
+    }
   }
   
   public static let PHOTOVIEW_SCALE_MIN: CGFloat = 1.0

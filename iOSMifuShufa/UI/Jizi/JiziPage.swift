@@ -28,9 +28,26 @@ class JiziPageViewModel: AlertViewModel {
     if (!verifySearchText(text: text)) {
       return
     }
+    if !CurrentUser.isVip && text.chineseCount > ConstraintItem.JiziZiCount.topMostConstraint {
+      showConstraintVip(ConstraintItem.JiziZiCount.topMostConstraintMessage)
+      return
+    }
     self.buttonEnabled = false
     navi.gotoJizi(text) { [weak self] in
       self?.buttonEnabled = true
+    }
+  }
+  
+  func convert(_ mode: TranslateMode) {
+    NetworkHelper.convert(text: text, mode: mode) { result, success in
+      DispatchQueue.main.async {
+        if success {
+          self.text = result
+          self.showAlertDlg("已转换为：".orCht("已轉換為：") + result)
+        } else {
+          self.showAlertDlg("error_try_later".localized)
+        }
+      }
     }
   }
 }
@@ -41,6 +58,7 @@ struct JiziPage : View {
   @StateObject var historyVM = HistoryViewModel.shared
   @State var historyExpanded = [SearchLog: Bool]()
   @FocusState var focused: Bool
+  @State private var showDropdown = false
   @State private var editHeight: CGFloat = 120
   var text: String {
     viewModel.text
@@ -53,12 +71,64 @@ struct JiziPage : View {
       return "共\(count)个汉字".orCht("共\(count)個漢字")
     }
   }
+  
+  var dropdownView: some View {
+    VStack(spacing: 0) {
+      if text.chineseCount > 0 {
+        
+        Button {
+          viewModel.convert(.HansToHant)
+        } label: {
+          HStack {
+            Image("fan").renderingMode(.template).square(size: 20)
+            Text("轉為繁體").font(.callout)
+          }.foregroundStyle(Colors.iconColor(1))
+        }
+        Divider().padding(.vertical, 8)
+        Button {
+          viewModel.convert(.HansToHant)
+           
+        } label: {
+          HStack {
+            Image("jian").renderingMode(.template).square(size: 20)
+            Text("转为简体").font(.callout)
+          }.foregroundStyle(Colors.iconColor(0))
+        }
+        Divider().padding(.vertical, 8)
+      }
+      
+      NavigationLink {
+        JfConverterView()
+      } label: {
+        HStack {
+          Image("jf_converter").renderingMode(.template).square(size: 20)
+          Text("jf_convert".localized).font(.callout)
+        }.foregroundStyle(Colors.iconColor(2))
+      }
+    }.padding(.vertical, 12).padding(.horizontal, 10)
+      .background(.white)
+      .cornerRadius(5)
+      .shadow(radius: 2.5)
+      .frame(width: 120)
+  }
+
+  
   private let paddingHor: CGFloat = 15
   var body: some View {
     NavigationStack {
-      content
+      ZStack(alignment: .topTrailing) {
+        content
+        if showDropdown {
+          dropdownView
+            .offset(x: -10, y: 30)
+        }
+      }.background(.white)
+      .modifier(TapDismissModifier(show: $showDropdown))
+      .modifier(DragDismissModifier(show: $showDropdown))
         .navigationDestination(isPresented: $naviVM.gotoJiziView) {
-          JiziView(viewModel: naviVM.jiziVM!)
+          if naviVM.gotoJiziView {
+            JiziView(viewModel: naviVM.jiziVM!)
+          }
         }
     }
   }
@@ -162,7 +232,8 @@ struct JiziPage : View {
           .padding(.leading, 5)
         Spacer()
         Button {
-          
+          showDropdown = true
+          focused = false
         } label: {
           Image(systemName: "line.3.horizontal").square(size: 20)
             .foregroundStyle(Color.colorPrimary)
@@ -209,10 +280,11 @@ struct JiziPage : View {
             self.editHeight = editHeight == 120 ? 80 : 120
           }
         } label: {
-          Image(systemName: "chevron.up.2").square(size: 10).foregroundStyle(.gray)
+          Image("chevron.up.2").renderingMode(.template).square(size: 10).foregroundStyle(.gray)
             .rotationEffect(.degrees(editHeight == 120 ? 0 : 180))
         }.padding(.trailing, 5)
         Button {
+          focused = false
           viewModel.onSearch(navi: naviVM)
         } label: {
           HStack(spacing: 4) {
@@ -225,6 +297,7 @@ struct JiziPage : View {
       10.VSpacer()
       historyView
     }.navigationBarHidden(true)
+      .modifier(AlertViewModifier(viewModel: viewModel))
   }
 }
 

@@ -1,0 +1,49 @@
+<h3>【米芾书法字典】第三方SDK清单</h3>
+<br />
+<h6>修改时间：2024年7月10日</h6>
+<hr />
+<br />
+<h5>阿里云号码认证SDK</h5>
+<p>
+涉及个人信息：手机号，IP地址，设备制造商，设备型号，手机操作系统<br />
+使用目的：接入手机号登录<br />
+使用场景：在用户使用手机号登录时调用<br />
+收集方式：SDK收集<br />
+合作方主体：阿里巴巴云计算（北京）有限公司<br />
+合作方官网链接：https://www.aliyun.com/<br />
+合作方隐私链接：https://terms.aliyun.com/legal-agreement/terms/suit_bu1_ali_cloud/suit_bu1_ali_cloud202112211045_86198.html?spm=a2c4g.11186623.0.0.4da51f23VyVxwk
+</p>
+<br />
+<h5>Alipay（支付宝）SDK(仅Android)</h5>
+<p>
+涉及个人信息：设备标识符（Android如IMEI、MEID、IMSI、Android ID、Serial、ICCID、UTDID、OAID，iOS如IDFV、IDFA）、MAC地址、IP地址、WLAN接入点<br />
+使用目的：帮助用户在应用内使用支付宝<br />
+使用场景：在用户使用支付宝支付时使用<br />
+收集方式：SDK采集<br />
+合作方主体：支付宝（杭州）信息技术有限公司<br />
+合作方官网链接：https://render.alipay.com/p/f/fd-iwwyijeh/index.html<br />
+合作方隐私链接：https://opendocs.alipay.com/open/54/01g6qm (支付宝 App 支付客户端 SDK 隐私说明)
+</p>
+<br />
+<h5>Google认证SDK(仅Android)</h5>
+<p>
+涉及个人信息：Google帐号，IP地址，设备信息，操作系统<br />
+使用目的：用户使用Google帐号<br />
+使用场景：用户使用Google帐号登录<br />
+收集方式：SDK采集<br />
+合作方主体：Google<br />
+合作方官网链接：https://developers.google.com/<br />
+合作方隐私链接：https://developers.google.com/terms/api-services-user-data-policy
+</p>
+<br />
+<h5>穿山甲SDK</h5>
+<p>
+    涉及个人信息：IMEI、OAID、IMSI、MAC、应用列表、SD卡等<br />
+    使用目的：广告投放，显示开屏广告<br />
+    使用场景：APP启动时<br />
+    收集方式：SDK采集<br />
+    合作方主体：北京巨量引擎网络技术有限公司<br />
+    合作方官网链接：https://www.csjplatform.com<br />
+    合作方隐私链接：https://www.csjplatform.com/privacy/partner
+</p>
+<br />

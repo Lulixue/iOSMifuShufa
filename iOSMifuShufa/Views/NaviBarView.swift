@@ -16,6 +16,20 @@ import SwiftUI
   }
 }
 
+@ViewBuilder func NaviContents(title: Any, @ViewBuilder leading: @escaping () -> some View, @ViewBuilder trailing: @escaping () -> some View) -> some View {
+  ZStack {
+    HStack {
+      leading()
+      Spacer()
+    }
+    NaviTitle(text: title)
+    HStack {
+      Spacer()
+      trailing()
+    }
+  }
+}
+
 @ViewBuilder func NaviView(@ViewBuilder content: @escaping () -> some View) -> some View {
   HStack(spacing: 12) {
     content()

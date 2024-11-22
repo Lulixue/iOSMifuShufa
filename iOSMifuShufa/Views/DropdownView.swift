@@ -80,7 +80,11 @@ struct DropDownParam<T: Equatable> {
           totalHeight += fontSelectHeight
         }
         maxWidth = max(size.width, maxWidth)
-        totalHeight += size.height
+        if let images {
+          totalHeight += max(size.height, images[0].totalSize)
+        } else {
+          totalHeight += size.height
+        }
         resultTexts.append(t)
       }
     }

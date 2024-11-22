@@ -34,6 +34,23 @@ extension BeitieOrderType {
   private static let KEY_LIST_VIEW = "beitieListView"
   private static let KEY_ORGANIZE_STACK = "organizeStack"
   
+  static let azMap = {
+    var azMap = [Char : [Char]]()
+    let contents = ResourceHelper.readFileContents(fileURL: Bundle.main.url(forResource: "az", withExtension:"json")!)
+    do {
+      let collections = try JSONDecoder().decode([String: [String]].self, from: contents.utf8Data)
+      for key in collections.keys {
+        let az = key.first()
+        let items = collections[key].map { $0.map { item in
+          item.first()
+        } }
+        azMap[az] = items
+      }
+    } catch {
+      println("azMap \(error)")
+    }
+    return azMap
+  }()
   
   static var entries: List<BeitieOrderType> {
     allCases
@@ -90,6 +107,10 @@ class BeitieViewModel: AlertViewModel {
       BeitieOrderType.orderType = orderType
     }
   }
+  lazy var azOrderParam: DropDownParam<String> = {
+    let keys = BeitieDbHelper.shared.getOrderTypeWorks(.Az, true).keys.map { $0.toString() }
+    return DropDownParam(items: keys, texts: keys, colors: Colors.ICON_COLORS)
+  }()
   
   var SEARCH_RESULT: String { "匹配碑帖" }
   var BEITIE: String { "title_beitie".resString }

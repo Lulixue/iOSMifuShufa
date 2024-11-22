@@ -9,18 +9,33 @@ import Foundation
 import UIKit
 import SwiftUI
 
+class WebViewModel: BaseObservableObject {
+  let title: String
+  let url: URL
+  
+  init(title: String, url: String) {
+    self.title = title
+    self.url = url.url!
+  }
+  
+  init(article: Article) {
+    self.title = article.title
+    self.url = article.url.url!
+  }
+}
+
 struct WebSwiftView: View {
-  var title: String = ""
-  var url: URL = "https://apple.com".url!
+  @Environment(\.presentationMode) var presentationMode
+  @StateObject var viewModel: WebViewModel
   @StateObject var webViewStore = WebViewStore()
   var body: some View {
     VStack(spacing: 0) {
       NaviView {
         BackButtonView {
-          goBack()
+          presentationMode.wrappedValue.dismiss()
         }
         Spacer()
-        NaviTitle(text: webViewStore.title ?? title)
+        NaviTitle(text: webViewStore.title ?? viewModel.title)
         Spacer()
         Button(action: goBack) {
           Image(systemName: "arrow.left")
@@ -35,7 +50,7 @@ struct WebSwiftView: View {
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()
       WebView(webView: webViewStore.webView).onAppear {
-        self.webViewStore.webView.load(URLRequest(url: url))
+        self.webViewStore.webView.load(URLRequest(url: viewModel.url))
       }
     }.navigationBarHidden(true)
   }
@@ -45,10 +60,10 @@ struct WebSwiftView: View {
   }
   
   func goSafari() {
-    UIApplication.shared.open(url)
+    UIApplication.shared.open(viewModel.url)
   }
 }
 
 #Preview {
-  WebSwiftView()
+  WebSwiftView(viewModel: WebViewModel(title: "", url: "https://apple.com"))
 }

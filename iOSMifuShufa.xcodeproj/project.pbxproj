@@ -10,6 +10,10 @@
 		004809F617C0A8E8A30D316B /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BA4FA07507A87227ABBEAA /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework */; };
 		4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702BCB18E1C7F5C88C7C45FD /* Pods_iOSMifuShufa.framework */; };
 		CFC68FE027D9684B83888806 /* Pods_iOSMifuShufaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */; };
+		F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA552CEF147E00FF4F58 /* PrivacyView.swift */; };
+		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
+		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
+		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
 		F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = F96E60F92CD7B0D4007329DB /* resource.zip */; };
 		F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E60FE2CD85326007329DB /* BeitieViewModel.swift */; };
 		F96E61012CD8574D007329DB /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61002CD8574B007329DB /* CurrentUser.swift */; };
@@ -52,6 +56,10 @@
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
+		F9C3A6142CEDD37F0055ABA1 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6132CEDD37D0055ABA1 /* Images.swift */; };
+		F9C3A6162CEE02410055ABA1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6152CEE023F0055ABA1 /* LoginView.swift */; };
+		F9C3A6182CEE06410055ABA1 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6172CEE063F0055ABA1 /* UserView.swift */; };
+		F9C3A61A2CEE0A3B0055ABA1 /* VerifyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6192CEE0A390055ABA1 /* VerifyHelper.swift */; };
 		F9E124752CE35D1000BB8CD4 /* JiziView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124742CE35D0C00BB8CD4 /* JiziView.swift */; };
 		F9E1248B2CE36D9200BB8CD4 /* ScrollState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124812CE36D9200BB8CD4 /* ScrollState.swift */; };
 		F9E1248C2CE36D9200BB8CD4 /* ScrollListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E124792CE36D9200BB8CD4 /* ScrollListeners.swift */; };
@@ -140,6 +148,11 @@
 		A0F7AF12C000D41A8C64F793 /* Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C900F39D0CB81CE38DE2F377 /* Pods-iOSMifuShufaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufaTests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufaTests/Pods-iOSMifuShufaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSMifuShufaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F928FA542CEF143700FF4F58 /* iOSMifuShufa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSMifuShufa.entitlements; sourceTree = "<group>"; };
+		F928FA552CEF147E00FF4F58 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
+		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
+		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
 		F96E61002CD8574B007329DB /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -184,6 +197,10 @@
 		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		F9C3A6132CEDD37D0055ABA1 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		F9C3A6152CEE023F0055ABA1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		F9C3A6172CEE063F0055ABA1 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		F9C3A6192CEE0A390055ABA1 /* VerifyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyHelper.swift; sourceTree = "<group>"; };
 		F9E124742CE35D0C00BB8CD4 /* JiziView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziView.swift; sourceTree = "<group>"; };
 		F9E124762CE36D9200BB8CD4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F9E124772CE36D9200BB8CD4 /* PrefrenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefrenceKeys.swift; sourceTree = "<group>"; };
@@ -288,6 +305,7 @@
 		F96E614E2CD9C6C9007329DB /* Jizi */ = {
 			isa = PBXGroup;
 			children = (
+				F928FA5B2CEF448700FF4F58 /* JfConverter.swift */,
 				F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */,
 				F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */,
 				F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */,
@@ -300,6 +318,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9C3A6192CEE0A390055ABA1 /* VerifyHelper.swift */,
 				F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */,
 				F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */,
 				F9F97C822CDCF69D00096ED1 /* ConstraintHelper.swift */,
@@ -332,6 +351,7 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9C3A6132CEDD37D0055ABA1 /* Images.swift */,
 				F9FFC6BD2CE233D8008AB5EE /* AlbumPageViewController.swift */,
 				F9FFC6B72CE230CD008AB5EE /* AlbumImageViewController.swift */,
 				F9FFC6B82CE230CD008AB5EE /* AlbumImageViewController.xib */,
@@ -385,6 +405,7 @@
 		F98820462C3AC4500011DB04 /* iOSMifuShufa */ = {
 			isa = PBXGroup;
 			children = (
+				F928FA542CEF143700FF4F58 /* iOSMifuShufa.entitlements */,
 				F9E124AD2CE71B9F00BB8CD4 /* Info.plist */,
 				F9E1248A2CE36D9200BB8CD4 /* ScrollUI */,
 				F96E617B2CD9C6E0007329DB /* DebugResources */,
@@ -444,6 +465,8 @@
 		F9DA35332CD2578800A880BC /* AppResources */ = {
 			isa = PBXGroup;
 			children = (
+				F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */,
+				F928FA572CEF209400FF4F58 /* privacy.txt */,
 				F96E61042CD87C33007329DB /* az.json */,
 				F96E61062CD87C37007329DB /* chs_cht.json */,
 				F96E61082CD87C3E007329DB /* variants.json */,
@@ -553,6 +576,9 @@
 		F9E124A02CE43D1A00BB8CD4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				F928FA552CEF147E00FF4F58 /* PrivacyView.swift */,
+				F9C3A6172CEE063F0055ABA1 /* UserView.swift */,
+				F9C3A6152CEE023F0055ABA1 /* LoginView.swift */,
 				F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */,
 				F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */,
 				F9E124B62CE8AD5300BB8CD4 /* AboutView.swift */,
@@ -717,6 +743,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
+				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
 				F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */,
 				F9ECB02A2CD25CD90009C0DC /* strings.xml in Resources */,
@@ -725,6 +752,7 @@
 				F96E61052CD87C33007329DB /* az.json in Resources */,
 				F96E617C2CD9C6E0007329DB /* beitie.db in Resources */,
 				F96E617D2CD9C6E0007329DB /* chinese.db in Resources */,
+				F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */,
 				F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */,
 				F96E61092CD87C3E007329DB /* variants.json in Resources */,
 				F9ECB0662CD778280009C0DC /* resource_version.txt in Resources */,
@@ -900,6 +928,7 @@
 				F9E124752CE35D1000BB8CD4 /* JiziView.swift in Sources */,
 				F9ECB0262CD25CD00009C0DC /* HomePage.swift in Sources */,
 				F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */,
+				F9C3A6182CEE06410055ABA1 /* UserView.swift in Sources */,
 				F9ECB05E2CD3B7020009C0DC /* BeitieData.swift in Sources */,
 				F9F97C872CDDCE4F00096ED1 /* NavigationViewModel.swift in Sources */,
 				F9E124AF2CE723DC00BB8CD4 /* NetworkHelper.swift in Sources */,
@@ -917,8 +946,12 @@
 				F9E124912CE36D9200BB8CD4 /* ScrollViewStyle.swift in Sources */,
 				F9E124B32CE78B2300BB8CD4 /* WebView.swift in Sources */,
 				F9E124922CE36D9200BB8CD4 /* Extensions.swift in Sources */,
+				F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */,
 				F9E124932CE36D9200BB8CD4 /* PrefrenceKeys.swift in Sources */,
 				F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */,
+				F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */,
+				F9C3A61A2CEE0A3B0055ABA1 /* VerifyHelper.swift in Sources */,
+				F9C3A6162CEE02410055ABA1 /* LoginView.swift in Sources */,
 				F9E124952CE36D9200BB8CD4 /* ScrollContext.swift in Sources */,
 				F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */,
 				F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */,
@@ -960,6 +993,7 @@
 				F9F97C892CDDF28B00096ED1 /* NaviBarView.swift in Sources */,
 				F96E61722CD9C6DD007329DB /* SideMenuConfig.swift in Sources */,
 				F96E61732CD9C6DD007329DB /* SideMenuEnvironment.swift in Sources */,
+				F9C3A6142CEDD37F0055ABA1 /* Images.swift in Sources */,
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
 				F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */,
 				F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */,
@@ -1135,6 +1169,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
@@ -1170,6 +1205,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";

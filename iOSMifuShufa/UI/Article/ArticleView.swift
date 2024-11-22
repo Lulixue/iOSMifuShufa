@@ -32,10 +32,13 @@ struct ArticlePage : View {
               Button {
                 naviVM.gotoWeb(article)
                 viewModel.clicked.add(article.title)
+//                WebSwiftView(title: article.title, url: article.url.url!).onAppear {
+//                  viewModel.clicked.add(article.title)
+//                }
               } label: {
                 VStack {
                   Text(article.title)
-                    .font(.system(size: 18)).underline().foregroundStyle(clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor).padding(.horizontal, 3).padding(.vertical, 4)
+                    .font(.system(size: 18)).underline().foregroundStyle(clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor).padding(.horizontal, 3).padding(.vertical, 6)
                 }.background(.white)
               }.buttonStyle(BgClickableButton())
             }
@@ -47,6 +50,7 @@ struct ArticlePage : View {
       }
     }.padding(.horizontal, 10).padding(.top, 5).padding(.bottom, 10)
   }
+  
   var sideMenu: some View {
     VStack(alignment: .leading, spacing: 0) {
       ForEach(0..<sections.size, id: \.self) { i in
@@ -57,7 +61,7 @@ struct ArticlePage : View {
           }
         } label: {
           HStack {
-            Text(sections[i].menuSection).padding(.vertical, 6).padding(.leading, 10)
+            Text(sections[i].menuSection).font(.callout).padding(.vertical, 9).padding(.leading, 10)
             Spacer()
           }.background(.white)
         }.buttonStyle(BgClickableButton())
@@ -70,7 +74,18 @@ struct ArticlePage : View {
   }
   
   @StateObject var sideVM = SideMenuViewModel()
+  
   var body: some View {
+    ZStack {
+      content
+    }.navigationBarHidden(true)
+      .navigationDestination(isPresented: $naviVM.gotoWebView) {
+        if naviVM.gotoWebView {
+          WebSwiftView(viewModel: naviVM.webViewModel!)
+        }
+      }
+  }
+  var content: some View {
     VStack(spacing: 0) {
       let size = CUSTOM_NAVI_ICON_SIZE - 2
       NaviView {
@@ -98,12 +113,7 @@ struct ArticlePage : View {
           }
         }
       }, viewModel: sideVM, config: SideMenuConfig(menuBGColor: .clear, menuBGOpacity: 0.2, menuWidth: 150))
-    }.navigationBarHidden(true)
-      .navigationDestination(isPresented: $naviVM.gotoWebView) {
-        if let url = naviVM.webUrl {
-          WebSwiftView(title: "", url: url)
-        }
-      }
+    }
   }
 }
 

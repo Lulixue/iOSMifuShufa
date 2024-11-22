@@ -85,8 +85,8 @@ struct JiziView : View {
   @State private var workProxy: ScrollViewProxy? = nil
   @State private var showFonts = false
   @State private var showWorks = false
-  @State private var fontPosition = CGSize.zero
-  @State private var worksPosition = CGSize.zero
+  @State private var fontPosition = CGRect.zero
+  @State private var worksPosition = CGRect.zero
   @State private var showSettings = false
   
   private let scrollSettings = ScrollableBarSettings(
@@ -103,7 +103,7 @@ struct JiziView : View {
     HStack {
       Button {
         showWorks = true
-        printlnDbg("worksPosition \(worksPosition)")
+        debugPrint("worksPosition \(worksPosition)")
       } label: {
         HStack(spacing: 4) {
           Image(JiziOptionType.Work.icon).renderingMode(.template).square(size: 14)
@@ -112,11 +112,11 @@ struct JiziView : View {
           } else {
             Text(JiziOptionType.Work.chinese)
           }
-        }.foregroundStyle(Colors.iconColor(1))
+        }.foregroundStyle(showWorks ? .gray.opacity(0.7) : Colors.iconColor(1))
       }.background(PositionReaderView(binding: $worksPosition))
       Button {
         showFonts = true
-        printlnDbg("fontPosition \(fontPosition)")
+        debugPrint("fontPosition \(fontPosition)")
       } label: {
         HStack(spacing: 4) {
           Image(JiziOptionType.Font.icon).renderingMode(.template).square(size: 16)
@@ -125,7 +125,7 @@ struct JiziView : View {
           } else {
             Text(JiziOptionType.Font.chinese)
           }
-        }.foregroundStyle(Colors.iconColor(1))
+        }.foregroundStyle(showFonts ? .gray.opacity(0.7) : Colors.iconColor(1))
       }.background(PositionReaderView(binding: $fontPosition))
       Spacer()
       Button {
@@ -194,8 +194,8 @@ struct JiziView : View {
     }.ignoresSafeArea()
   }
   
-  func showPosition(_ pos: CGSize) -> CGSize {
-    CGSize(width: pos.width, height: pos.height - UIScreen.statusBarHeight + 3 - CUSTOM_NAVIGATION_HEIGHT)
+  func showPosition(_ pos: CGRect) -> CGSize {
+    CGSize(width: pos.minX, height: pos.maxY - UIScreen.statusBarHeight + 3 - CUSTOM_NAVIGATION_HEIGHT)
   }
   
   var body: some View {
@@ -286,10 +286,15 @@ struct JiziView : View {
             ForEach(0..<singles.size, id: \.self) { i in
               let single = singles[i]
               let selected = i == viewModel.singleIndex
+              let matchVip = single.work.matchVip
               HStack {
                 Button {
-                  singleIndex = i
-                  viewModel.selectSingle(i, single)
+                  if matchVip {
+                    singleIndex = i
+                    viewModel.selectSingle(i, single)
+                  } else {
+                    viewModel.showConstraintVip("当前单字不支持集字，请联系客服".orCht("當前單字不支持集字，請聯繫客服"))
+                  }
                 } label: {
                   WebImage(url: single.thumbnailUrl.url!) { img in
                     img.image?.resizable()
@@ -298,8 +303,8 @@ struct JiziView : View {
                       .clipShape(RoundedRectangle(cornerRadius: 2))
                       .padding(0.5)
                       .background {
-                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 2 : 0.5)
-                      }
+                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
+                      }.blur(radius: matchVip ? 0 : 1)
                   }.indicator(.activity)
                     .tint(.white)
                 }
@@ -320,6 +325,7 @@ struct JiziView : View {
         singleProxy?.scrollTo(newValue, anchor: .leading)
       }.background(Color.singlePreviewBackground)
         .frame(height: 80)
+        .modifier(AlertViewModifier(viewModel: viewModel))
     }
   }
 }

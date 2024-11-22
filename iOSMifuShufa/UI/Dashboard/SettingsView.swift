@@ -126,6 +126,7 @@ private struct BeitieSettingsView: View {
 
 private struct BeitieSingleSettingsView: View {
   @Environment(\.presentationMode) var presentationMode
+  @StateObject var viewModel = CurrentUser
   @State private var canJiziWorks = [BeitieWork: Bool]()
   @State private var canSearchWorks = [BeitieWork: Bool]()
   @State private var collapsed = [AnyHashable: Bool]()
@@ -159,8 +160,12 @@ private struct BeitieSingleSettingsView: View {
     Binding {
       self.canJiziWorks[work] ?? work.canJizi
     } set: {
-      self.canJiziWorks[work] = $0
-      work.canJizi = $0
+      if work.vip && !CurrentUser.isVip {
+        self.viewModel.showConstraintVip("当前碑帖不支持设置，请联系客服".orCht("當前碑帖不支持設置，請聯繫客服"))
+      } else {
+        self.canJiziWorks[work] = $0
+        work.canJizi = $0
+      }
     }
   }
   
@@ -168,6 +173,10 @@ private struct BeitieSingleSettingsView: View {
     Binding {
       self.canSearchWorks[work] ?? work.canSearch
     } set: {
+      if work.vip && !CurrentUser.isVip {
+        self.viewModel.showConstraintVip("当前碑帖不支持设置，请联系客服".orCht("當前碑帖不支持設置，請聯繫客服"))
+        return
+      }
       self.canSearchWorks[work] = $0
       work.canSearch = $0
     }
@@ -371,6 +380,11 @@ struct LanguageView: View {
         NaviTitle(text: "ui_language".localized)
         Spacer()
         Button {
+          if version != Settings.languageVersion {
+            Settings._languageVersion = version
+            presentationMode.wrappedValue.dismiss()
+            CurrentUser.language = Settings.languageVersion
+          }
         } label: {
           Text("保存").font(.footnote)
         }.buttonStyle(PrimaryButton(bgColor: Colors.colorAccent.swiftColor))
@@ -452,6 +466,7 @@ struct SettingItemView: View {
 
 struct SettingsView: View {
   @Environment(\.presentationMode) var presentationMode
+  @StateObject var viewModel = CurrentUser
   var body: some View {
     NavigationStack {
       contents
@@ -484,6 +499,7 @@ struct SettingsView: View {
           }
         }.background(.white)
       }.background(Colors.wx_background.swiftColor)
+        .id(viewModel.language)
     }.navigationBarHidden(true)
   }
 }

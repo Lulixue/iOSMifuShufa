@@ -97,6 +97,19 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
     var medium: CGFloat = 1.75
     var max: CGFloat = 3.0
     
+    func getScale(_ scale: ZoomScale) -> CGFloat {
+      switch scale {
+      case .auto:
+        auto
+      case .min:
+        min
+      case .medium:
+        medium
+      case .max:
+        max
+      }
+    }
+    
     func calculateAutoScale(ImageSize imgSize: CGSize, ParentViewSize parSize: CGSize, _ type: ImageType = .single) {
       let dHeight = imgSize.height
       let dWidth = imgSize.width
@@ -145,12 +158,12 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       }
       
       self.auto = destScale
-      self.min = minScale
-      self.max = maxScale
+      self.min = minScale // Swift.max(minScale, Self.ALBUM_MIN_SIZE_PERCENT)
+      self.max = maxScale // Swift.min(maxScale, Self.ALBUM_MAX_SIZE_PERCENT)
       self.medium = medium
       
-      printlnDbg("image Size: \(imgSize), parent Size: \(parSize)")
-      printlnDbg("min: \(self.min), max: \(self.max), medium: \(self.medium), auto: \(self.auto)")
+      debugPrint("image Size: \(imgSize), parent Size: \(parSize)")
+      debugPrint("min: \(self.min), max: \(self.max), medium: \(self.medium), auto: \(self.auto)")
     }
   }
   var imageDefaultScale = ImageScale()
@@ -168,7 +181,7 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       scrollToCenter()
     }
   }
-  var imageType: ImageType = .single
+  var imageType: ImageType = .image
   var imageScale: CGFloat = 1.0 {
     didSet {
       updateImageView()
@@ -225,14 +238,14 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
   }
   
   var sdDelegate: SDImageDelegate?
-  var tapDelegate: SinglePreviewDelegate?
+  var tapDelegate: SinglePreviewDelegate!
   var tapObj: Any?
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
   func setShowedImageUrl(_ url: String) {
     let singleImage = UIImageView()
-    let url = URL(string: url)!
+    let url = url.url!
     
     
     singleImage.sd_setImage(with: url, placeholderImage: nil, options: [.highPriority],
@@ -242,8 +255,7 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
           self.sdDelegate?.downloadProgress(downloaded, total)
         }
       }
-    },
-                            completed:  { (image, error, cacheType, url) in
+    }, completed:  { (image, error, cacheType, url) in
       if let image = singleImage.image {
         self.image = image
         self.setup()
@@ -296,13 +308,11 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
     let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
     doubleTapGesture.numberOfTapsRequired = 2
     addGestureRecognizer(doubleTapGesture)
-    
-    if imageType != .image {
-      let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
-      singleTapGesture.numberOfTapsRequired = 1
-      singleTapGesture.numberOfTouchesRequired = 1
-      addGestureRecognizer(singleTapGesture)
-    }
+   
+    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
+    singleTapGesture.numberOfTapsRequired = 1
+    singleTapGesture.numberOfTouchesRequired = 1
+    addGestureRecognizer(singleTapGesture)
   }
   
   open override func didMoveToSuperview() {
@@ -394,7 +404,6 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
       return
     }
     zoomScaleEnum = zoomScaleEnum.toNext()
-    
   }
   
   @objc private func handleSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -430,12 +439,12 @@ open class ZoomImageView : UIScrollView, UIScrollViewDelegate {
   @objc dynamic public func scrollViewDidZoom(_ scrollView: UIScrollView) {
     
     let diff = zoomScale - oldZoomScale
-    
-      //    print("zoomScale: \(oldZoomScale) -> \(zoomScale)")
-      //    print("imageScale: \(imageScale) + \(diff) ")
+
+//    debugPrint("zoomScale: \(oldZoomScale) -> \(zoomScale)")
+//    debugPrint("imageScale: \(imageScale) + \(diff) ")
     oldZoomScale = zoomScale
     let newImageScale = imageScale + diff
-    
+     
     if (newImageScale > imageDefaultScale.max) ||
         (newImageScale < imageDefaultScale.min) {
       return

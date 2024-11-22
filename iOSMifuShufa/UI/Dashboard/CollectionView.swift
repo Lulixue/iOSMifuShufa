@@ -232,16 +232,8 @@ struct CollectionView: View {
         content
       }
     }.navigationBarHidden(true)
-      .navigationDestination(isPresented: $naviVM.gotoSingleView) {
-        if naviVM.gotoSingleView {
-          SinglesView(viewModel: naviVM.singleViewModel!)
-        }
-      }
-      .navigationDestination(isPresented: $naviVM.gotoWorkView) {
-        if naviVM.gotoWorkView {
-          WorkView(viewModel: naviVM.workVM!)
-        }
-      }
+      .modifier(SingleDestinationModifier(naviVM: naviVM))
+      .modifier(WorkDestinationModifier(naviVM: naviVM))
   }
   
   var emptyView: some View {

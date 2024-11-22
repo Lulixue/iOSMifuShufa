@@ -110,7 +110,7 @@ struct DrawPanel : View {
         }
       }.gesture(DragGesture().onChanged({ value in
         let point = value.location
-        printlnDbg("loc: \(point)")
+        debugPrint("loc: \(point)")
         viewModel.current.add(point)
       }).onEnded({ _ in
         if viewModel.current.isNotEmpty() {

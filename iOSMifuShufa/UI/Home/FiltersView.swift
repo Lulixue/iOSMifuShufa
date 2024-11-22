@@ -104,9 +104,9 @@ struct PaddingValue {
     .padding(.top, paddingValues.top)
     .padding(.bottom, paddingValues.bottom)
     .onAppear {
-      printlnDbg("rowItemSize: \(rowItemSize)")
-      printlnDbg("rowCount: \(rowCount)")
-      printlnDbg("itemWidth: \(itemWidth)")
+      debugPrint("rowItemSize: \(rowItemSize)")
+      debugPrint("rowCount: \(rowCount)")
+      debugPrint("itemWidth: \(itemWidth)")
     }
 }
 @ViewBuilder func autoColumnGrid<T>(_ items: List<T>, space: CGFloat,
@@ -146,9 +146,9 @@ struct PaddingValue {
     .padding(.top, paddingValues.top)
     .padding(.bottom, paddingValues.bottom)
     .onAppear {
-      printlnDbg("rowItemSize: \(rowItemSize)")
-      printlnDbg("rowCount: \(rowCount)")
-      printlnDbg("itemWidth: \(itemWidth)")
+      debugPrint("rowItemSize: \(rowItemSize)")
+      debugPrint("rowCount: \(rowCount)")
+      debugPrint("itemWidth: \(itemWidth)")
     }
 }
 
@@ -377,7 +377,7 @@ struct FilterView: View {
           HStack(spacing: 4) {
             Image(systemName: "trash").square(size: 12)
             Text("reset".resString).font(.system(size: 14))
-          }.foregroundStyle(Color.red)
+          }.padding(.horizontal, 5).padding(.vertical, 5).background(.white).foregroundStyle(Color.red)
         }.buttonStyle(BgClickableButton())
       }.padding(.horizontal, 20)
       12.VSpacer()
@@ -396,13 +396,13 @@ struct FilterView: View {
 
 struct PositionPreferenceKey: PreferenceKey {
   
-  static var defaultValue = CGSize.zero
+  static var defaultValue = CGRect.zero
   
-  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+  static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
     value = nextValue()
   }
   
-  typealias Value = CGSize
+  typealias Value = CGRect
 }
 
 struct SizePreferenceKey: PreferenceKey {
@@ -448,20 +448,17 @@ struct WidthReaderView: View {
 }
 
 struct PositionReaderView: View {
-  @Binding var binding: CGSize
+  @Binding var binding: CGRect
   var body: some View {
     GeometryReader { geo in
       Color.clear
         .preference(key: PositionPreferenceKey.self, value: {
           let frame = geo.frame(in: .global)
-          return CGSize(width: frame.minX, height: frame.maxY)
+          return frame
         }())
     }
     .onPreferenceChange(PositionPreferenceKey.self) { h in
-      let size = binding
-      if (h.width != size.width || h.height != size.height) {
-        binding = h
-      }
+      binding = h
     }
   }
 }

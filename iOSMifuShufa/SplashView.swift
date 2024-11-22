@@ -162,7 +162,7 @@ class SplashViewModel: AlertViewModel {
   }
   
   func finishResource() {
-    printlnDbg("finishResource")
+    debugPrint("finishResource")
     resourceReady = true
     if (adReady) {
       gotoMain = true
@@ -170,7 +170,7 @@ class SplashViewModel: AlertViewModel {
   }
   
   func finishAd() {
-    printlnDbg("finishAd")
+    debugPrint("finishAd")
     adReady = true
     if (resourceReady) {
       gotoMain = true

@@ -68,16 +68,26 @@ class VerifyModel: Decodable {
   var VerifyResult: String = ""
 }
 
+extension String {
+  var decodedBase64: String {
+    if let decodedData = Data(base64Encoded: self) {
+      return String(data: decodedData, encoding: .utf8)!
+    } else {
+      return self
+    }
+  }
+}
+
 struct VerifyHelper {
   private static let signName = "立雪网络科技"
   private static let domain = "dypnsapi.aliyuncs.com"
   private static var accessKeyId = {
     let encoded = "TFRBSTV0UUJzdTNvUUQ2TFFzeFFGbUdp"
-    return encoded
+    return encoded.decodedBase64
   }()
   private static var accessKeySecret = {
     let encoded = "b0NuQkJCZGFvTEduaUs5dWJyUmlFYlVRSnNBM1ZC"
-    return encoded
+    return encoded.decodedBase64
   }()
   private static let encoding = "UTF-8"
   private static let iso8601DateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"

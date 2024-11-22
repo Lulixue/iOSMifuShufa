@@ -29,6 +29,7 @@ class AlbumImageViewController: UIViewController, SDImageDelegate {
   @IBOutlet weak var progressLabel: UILabel!
   private var parentSize: CGSize = .zero
   private var image: UIImage? = nil
+  var tapDelegate: SinglePreviewDelegate!
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -38,6 +39,7 @@ class AlbumImageViewController: UIViewController, SDImageDelegate {
   }
   override func viewWillAppear(_ animated: Bool) {
     albumImage.imageType = .image
+    albumImage.tapDelegate = tapDelegate
     albumImage.enableDoubleTap = true
       //        Utils.printViewSize(parent!.view)
     albumImage.parentSize = parentSize
@@ -48,7 +50,6 @@ class AlbumImageViewController: UIViewController, SDImageDelegate {
       albumImage.setup()
       albumImage.sdDelegate?.downloadComplete()
     }
-    albumImage.zoomMode = .fit
   }
   
   func initAlbumImage(_ item: BeitieImage, _ parentSize: CGSize) {

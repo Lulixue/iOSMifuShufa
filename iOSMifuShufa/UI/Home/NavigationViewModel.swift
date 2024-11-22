@@ -23,8 +23,7 @@ class NavigationViewModel : BaseObservableObject {
   @Published var puzzleVM: PuzzleViewModel!
   
   @Published var gotoWebView = false
-  @Published var webUrl: URL!
-  @Published var webTitle: String = ""
+  @Published var webViewModel: WebViewModel!
   
   func gotoPuzzle(_ items: [JiziItem]) {
     puzzleVM = PuzzleViewModel(items: items)
@@ -32,8 +31,7 @@ class NavigationViewModel : BaseObservableObject {
   }
   
   func gotoWeb(_ article: Article) {
-    webUrl = article.url.url!
-    webTitle = article.title
+    webViewModel = WebViewModel(article: article)
     gotoWebView = true
   }
   

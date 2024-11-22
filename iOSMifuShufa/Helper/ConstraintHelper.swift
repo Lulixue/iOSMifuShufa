@@ -40,14 +40,14 @@ enum ConstraintItem: String {
   
   var topMostConstraintMessage: String {
     switch self {
-    case .SearchZiCount: "非VIP会员仅支持\(topMostConstraint)个汉字同时搜索，是否开通VIP继续？"
-        .orCht("非VIP會員僅支持\(topMostConstraint)個漢字同時搜索，是否開通VIP繼續？")
-    case .JiziZiCount: "非VIP用户集字数超出范围(\(topMostConstraint)字)，是否开通VIP继续？"
-        .orCht("非VIP用戶集字數超出範圍(\(topMostConstraint)字)，是否開通VIP繼續？")
-    case .SearchFilterCount: "非VIP会员仅支持\(topMostConstraint)个过滤器，是否开通VIP继续？"
-        .orCht("非VIP會員僅支持\(topMostConstraint)個過濾器，是否開通VIP繼續？")
-    default: "VIP功能「\(chinese)」使用次数已超过非VIP单日上限，是否开通VIP继续？"
-        .orCht("VIP功能「\(chinese)」使用次數已超過非VIP單日上限，是否開通VIP繼續？")
+    case .SearchZiCount: "当前会员仅支持\(topMostConstraint)个汉字同时搜索，请联系客服"
+        .orCht("当前會員僅支持\(topMostConstraint)個漢字同時搜索，请联系客服")
+    case .JiziZiCount: "当前用户集字数超出范围(\(topMostConstraint)字)，请联系客服"
+        .orCht("当前用戶集字數超出範圍(\(topMostConstraint)字)，请联系客服")
+    case .SearchFilterCount: "当前会员仅支持\(topMostConstraint)个过滤器，请联系客服"
+        .orCht("当前會員僅支持\(topMostConstraint)個過濾器，请联系客服")
+    default: "功能「\(chinese)」使用次数已超过当前单日上限，请联系客服"
+        .orCht("功能「\(chinese)」使用次數已超過当前單日上限，请联系客服")
     }
   }
   
@@ -67,7 +67,6 @@ extension String {
 
 class ConstraintHelper {
   static let shared = ConstraintHelper()
-  static let shiciPreviewKey = "shiciPreviewConstraint"
   private static let PLAY_TEXT_SOUND_NON_VIP_USAGE_COUNT = 3
   private let DAY_FORMAT = {
     let dateFormatterGet = DateFormatter()
@@ -75,20 +74,20 @@ class ConstraintHelper {
     return dateFormatterGet
   }()
   
-  private var MAX_USAGE_COUNT = {
-    var this = HashMap<String, Int>()
-     
-    this[shiciPreviewKey] = 3
-     
-    return this
-  }()
+  private var MAX_USAGE_COUNT = Map<String, Int>()
   
   func getConstraint(_ key: String) -> Int? {
     return MAX_USAGE_COUNT[key]
   }
   
+  init() {
+    Task {
+      syncAzure()
+    }
+  }
+  
   func syncAzure() {
-    let url = STORAGE_URL + "/jiyun/config/constraint.json"
+    let url = STORAGE_URL + "/liren/\(STORAGE_DIR)/constraint.json"
     AF.request(url.urlEncoded!).responseDecodable(of: [String: Int].self) { response in
       switch response.result {
       case .success(let result):

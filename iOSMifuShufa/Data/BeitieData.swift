@@ -80,7 +80,7 @@ enum CalligraphyAuthenticity: String {
 }
 
 
-enum CalligraphyType: String {
+enum CalligraphyType: String, CaseIterable {
   case Unknown
   case Tie
   case Bei
@@ -425,12 +425,13 @@ extension BeitieWork {
   
   var canSearch: Boolean {
     get {
-      Settings.getBoolean(searchKey, true) && this.matchVip
+      if this.vip && !CurrentUser.isVip {
+        return true
+      } else {
+        return Settings.getBoolean(searchKey, true)
+      }
     }
     set {
-      if (this.matchVip) {
-        return
-      }
       Settings.putBoolean(searchKey, newValue)
       
     }
@@ -438,12 +439,13 @@ extension BeitieWork {
   
   var canJizi: Boolean {
     get {
-      Settings.getBoolean(jiziKey, true) && this.matchVip
+      if this.vip && !CurrentUser.isVip {
+        return true
+      } else {
+        return Settings.getBoolean(jiziKey, true)
+      }
     }
     set {
-      if (this.matchVip) {
-        return
-      }
       Settings.putBoolean(jiziKey, newValue)
     }
   }

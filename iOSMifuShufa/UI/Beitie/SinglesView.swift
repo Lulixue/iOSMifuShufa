@@ -15,6 +15,7 @@ class SingleViewModel: AlertViewModel {
   let singles: List<BeitieSingle>
   @Published var showDrawPanel = false
   @Published var currentIndex: Int = 0
+  var uiImage: UIImageView? = nil
   init(singles: List<BeitieSingle>, selected: Int = 0) {
     self.singles = singles
     self.currentIndex = selected
@@ -29,6 +30,21 @@ class SingleViewModel: AlertViewModel {
     if !showDrawPanel {
       drawViewModel.onReset()
     }
+  }
+  
+  func saveSingle(single: BeitieSingle) {
+    let uiImage = UIImageView(frame: .zero)
+    uiImage.sd_setImage(with: single.url.url!) { image, error, t, _ in
+      if let image {
+        self.imageSaver.writeToPhotoAlbum(image: image)
+      }
+      self.uiImage = nil
+    }
+    self.uiImage = uiImage
+  }
+  
+  private lazy var imageSaver = ImageSaver {
+    self.showAlertDlg("图片已保存".orCht("圖片已保存"))
   }
 }
 
@@ -95,9 +111,19 @@ struct SinglesView: View {
           .foregroundStyle(Color.colorPrimary)
       }
       Button {
-        naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
+        if currentSingle.work.matchVip {
+          naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
+        } else {
+          viewModel.showConstraintVip("当前操作不支持，请联系客服".orCht("當前操作不支持，請聯繫客服"))
+        }
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
+          .foregroundStyle(Color.colorPrimary)
+      }
+      Button {
+        viewModel.saveSingle(single: currentSingle)
+      } label: {
+        Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
       }
     }
@@ -111,6 +137,14 @@ struct SinglesView: View {
   }
   
   var body: some View {
+    ZStack {
+      content
+    }.navigationBarHidden(true)
+      .modifier(WorkDestinationModifier(naviVM: naviVM))
+      .modifier(AlertViewModifier(viewModel: viewModel))
+  }
+  
+  var content: some View {
     VStack(spacing: 0) {
       naviView
       Divider()
@@ -119,15 +153,13 @@ struct SinglesView: View {
           ForEach(0..<singles.size, id: \.self) { i in
             let single = singles[i]
             ZStack(alignment: .bottom) {
+              Image("background").resizable().scaledToFill()
               SinglePreviewItem(single: single)
               Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
                 .padding(.bottom, 14)
             }.id(i)
           }
         }.tabViewStyle(.page(indexDisplayMode: .never))
-          .background {
-            Image("background").resizable().scaledToFill()
-          }
         if viewModel.showDrawPanel {
           DrawPanel().environmentObject(viewModel.drawViewModel)
         }
@@ -186,7 +218,7 @@ struct SinglesView: View {
                       .clipShape(RoundedRectangle(cornerRadius: 2))
                       .padding(0.5)
                       .background {
-                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 3 : 0.5)
+                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
                       }.padding(.horizontal, 5)
                   }
                   .onSuccess(perform: { _, _, _ in
@@ -197,20 +229,19 @@ struct SinglesView: View {
                     }
                   })
                   .indicator(.activity).tint(.white)
+                  .onAppear {
+                    if !scrollFixed {
+                      DispatchQueue.main.async {
+                        syncScroll(pageIndex)
+                      }
+                    }
+                  }
                 }
               }.id(i)
             }
           }.padding(.top, 10).padding(.bottom, Device.hasTopNotch ? 0 : 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
             .onAppear {
               scrollProxy = proxy
-              if viewModel.currentIndex > 0 {
-                Task {
-                  sleep(1)
-                  DispatchQueue.main.async {
-                    proxy.scrollTo(max(self.viewModel.currentIndex-1, 0), anchor: .leading)
-                  }
-                }
-              }
             }
         }
       }
@@ -235,10 +266,40 @@ struct SinglesView: View {
             syncScroll(newValue)
           }
         }
-    }.navigationBarHidden(true)
-      .navigationDestination(isPresented: $naviVM.gotoWorkView) {
+    }
+  }
+}
+
+struct WorkDestinationModifier: ViewModifier {
+  @StateObject var naviVM: NavigationViewModel
+  func body(content: Content) -> some View {
+    content.navigationDestination(isPresented: $naviVM.gotoWorkView) {
+      if naviVM.gotoWorkView {
         WorkView(viewModel: naviVM.workVM!)
       }
+    }
+  }
+}
+
+struct SingleDestinationModifier: ViewModifier {
+  @StateObject var naviVM: NavigationViewModel
+  func body(content: Content) -> some View {
+    content.navigationDestination(isPresented: $naviVM.gotoSingleView) {
+      if naviVM.gotoSingleView {
+        SinglesView(viewModel: naviVM.singleViewModel!)
+      }
+    }
+  }
+}
+
+struct WorkIntroDestinationModifier: ViewModifier {
+  @StateObject var naviVM: NavigationViewModel
+  func body(content: Content) -> some View {
+    content.navigationDestination(isPresented: $naviVM.gotoWorkIntroView) {
+      if naviVM.gotoWorkIntroView {
+        WorkIntroView(viewModel: naviVM.introWorkVM!)
+      }
+    }
   }
 }
 

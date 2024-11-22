@@ -22,7 +22,7 @@
     <string name="text_is_empty">文本不能为空</string>
     <string name="app_resource_fail">资源文件解析失败！</string>
     <string name="no_available_chinese">有效汉字为空！</string>
-    <string name="Mifu_dict">颜真卿书法字典</string>
+    <string name="Mifu_dict">米芾书法字典</string>
     <string name="vip_service">VIP会员服务</string>
     <string name="general_settings">"通用设置"</string>
     <string name="check_update">"检查更新"</string>
@@ -119,7 +119,7 @@
     <string name="username_equal">用户名没有变化！</string>
     <string name="login_code_free_in_3_days">三天内免验证码登录</string>
     <string name="login_without_verify">免验证码登录</string>
-    <string name="third_party_sdk">【颜真卿书法字典】第三方SDK清单</string>
+    <string name="third_party_sdk">【米芾书法字典】第三方SDK清单</string>
     <string name="privacy">隐私政策</string>
     <string name="request_code_first">请先请求验证码</string>
     <string name="logining">登录中…</string>

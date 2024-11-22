@@ -104,7 +104,8 @@ class FilterViewModel: AlertViewModel {
   }
   
   func toggleFilter(filter: String, type: SearchFilterType) {
-    if !CurrentUser.isVip && hasFilter && !containsFilter(filter: filter, type: type) {
+    if !CurrentUser.isVip && filterCount == ConstraintItem.SearchFilterCount.topMostConstraint &&
+        !containsFilter(filter: filter, type: type) {
       showConstraintVip(ConstraintItem.SearchFilterCount.topMostConstraintMessage)
       return
     }

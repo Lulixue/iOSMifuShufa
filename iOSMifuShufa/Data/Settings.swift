@@ -72,7 +72,6 @@ extension MMKV {
 
 
 class Settings {
-  static let shared = Settings()
   
   private static let KEY_RESOURCE_MD5 = "resourceMd5"
   private static let KEY_LANGUAGE = "language"
@@ -140,14 +139,15 @@ class Settings {
   static var _languageVersion: ChineseVersion {
     get {
       let value = mmkv.string(forKey: KEY_LANGUAGE, defaultValue: ChineseVersion.Unspecified.rawValue)!
-      return ChineseVersion(rawValue: value) ?? ChineseVersion.Unspecified
+      return ChineseVersion(rawValue: value) ?? ChineseVersion.Simplified
     }
     set {
       mmkv.set(newValue.rawValue, forKey: KEY_LANGUAGE)
+      syncLocale()
     }
   }
   
-  static var languageVersion: ChineseVersion = ChineseVersion.Traditional
+  static var languageVersion: ChineseVersion = _languageVersion
   
   static var langChs: Bool {
     languageVersion == ChineseVersion.Simplified
@@ -162,7 +162,37 @@ class Settings {
     }
   }
   
-  static func initSettings() {
+  struct User {
+    private static let PHONE_AGREED = "lastPhoneLoginAgreed"
+    private static let CODE_FREE = "lastThreeDayFree"
+    private static let PHONE_NUMBER = "lastPhoneNumber"
+    static var phoneAgree: Bool {
+      get {
+        return mmkv.getBoolean(PHONE_AGREED, false)
+      }
+      set {
+        mmkv.putBoolean(PHONE_AGREED, newValue)
+      }
+    }
+    static var codeFree: Bool {
+      get {
+        return mmkv.getBoolean(CODE_FREE, true)
+      }
+      set {
+        mmkv.putBoolean(CODE_FREE, newValue)
+      }
+    }
+    static var phoneNumber: String {
+      get {
+        return mmkv.getString(PHONE_NUMBER, "")
+      }
+      set {
+        mmkv.putString(PHONE_NUMBER, newValue)
+      }
+    }
+  }
+  
+  static func syncLocale() {
     let locale = Locale.current.identifier.lowercased()
     let option = _languageVersion
     var chtLang = "zh-hant-tw"
@@ -227,6 +257,5 @@ class Settings {
         putString(KEY_LAST_JIZI_AUTHOR, newValue)
       }
     }
-    
   }
 }

@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "outline_collections_black_24.png",
+      "filename" : "image (1).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "image (1)_副本2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "image (1)_副本.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

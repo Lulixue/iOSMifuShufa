@@ -41,7 +41,7 @@ struct WrappedZoomImageView: UIViewControllerRepresentable {
   }
   
   func updateUIViewController(_ uiViewController: AlbumPageViewController, context: Context) {
-    printlnDbg("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
+    debugPrint("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
     if uiViewController.currentIndex != pageIndex {
       uiViewController.scrollToPage(page: pageIndex)
     }
@@ -57,10 +57,11 @@ public struct BeitieGallerView: View {
   let parentSize: CGSize
   @Binding var pageIndex: Int
   @Binding var galleryScroll: Bool
+  let tapDelegate: SinglePreviewDelegate
   
   public var body: some View {
-    WrapperImagePagesView(images: images, parentSize: parentSize, pageIndex: $pageIndex, galleryScroll: $galleryScroll)
-      .frame(width: parentSize.width, height: parentSize.height)
+    WrapperImagePagesView(images: images, parentSize: parentSize, pageIndex: $pageIndex,
+                          galleryScroll: $galleryScroll, tapDelegate: tapDelegate)
   }
 }
 extension UIViewController {
@@ -85,10 +86,12 @@ struct WrapperImagePagesView: UIViewControllerRepresentable {
   let parentSize: CGSize
   @Binding var pageIndex: Int
   @Binding var galleryScroll: Bool
+  let tapDelegate: SinglePreviewDelegate
   
   func makeUIViewController(context: Context) -> AlbumPageViewController {
     let page = AlbumPageViewController()
     page.parentSize = parentSize
+    page.tapDelegate = tapDelegate
     page.initPages(items: images, initPage: pageIndex)
     page.scrollToPage(page: pageIndex)
     page.afterScroll = { index in
@@ -101,7 +104,7 @@ struct WrapperImagePagesView: UIViewControllerRepresentable {
   }
   
   func updateUIViewController(_ uiViewController: AlbumPageViewController, context: Context) {
-    printlnDbg("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
+    debugPrint("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
     if uiViewController.currentIndex != pageIndex {
       uiViewController.scrollToPage(page: pageIndex)
     }

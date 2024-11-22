@@ -228,11 +228,11 @@ struct WorkItem: View {
   init(works: List<BeitieWork>) {
     self.works = Array(works)
     let first = works.first { $0.hasSingle() } ?? works.first()
-    self.coverUrl = URL(string: first.cover)!
+    self.coverUrl = first.cover.url!
   }
   
   private func onClick() {
-    printlnDbg("onClick")
+    debugPrint("onClick")
     if works.size == 1 {
       naviVM.gotoWork(work: works.first())
     } else {
@@ -377,6 +377,7 @@ struct BeitiePage: View {
   @StateObject var viewModel: BeitieViewModel = BeitieViewModel()
   private let btnColor = Color.colorPrimary
   @State var showOrderDropdown = false
+  @State var showAzDropdown = false
   @EnvironmentObject var navigationVM: NavigationViewModel
    
   private let gridItemLayout = {
@@ -400,6 +401,7 @@ struct BeitiePage: View {
     }
   }
   @State var scrollProxy: ScrollViewProxy? = nil
+  @State var orderPosition: CGRect = .zero
   
   var body: some View {
     ZStack(alignment: .topTrailing) {
@@ -421,11 +423,11 @@ struct BeitiePage: View {
             Spacer()
             if viewModel.orderType == .Az {
               Button {
-                
+                showAzDropdown = true
               } label: {
                 Image("order_pinyin").renderingMode(.template).square(size: 20)
                   .foregroundStyle(btnColor)
-              }
+              }.background(PositionReaderView(binding: $orderPosition))
             }
             
             Button {
@@ -448,6 +450,8 @@ struct BeitiePage: View {
           ScrollView {
             ScrollViewReader { proxy in
               workList
+                .modifier(DragDismissModifier(show: $showAzDropdown))
+                .modifier(DragDismissModifier(show: $showOrderDropdown))
                 .onAppear {
                   scrollProxy = proxy
                 }
@@ -472,9 +476,16 @@ struct BeitiePage: View {
         })
         .offset(x: -10, y: 36)
       }
-    }.simultaneousGesture(TapGesture().onEnded({ _ in
-        showOrderDropdown = false
-      }), isEnabled: showOrderDropdown)
+      if showAzDropdown {
+        DropDownOptionsView(param: viewModel.azOrderParam, selected: nil, selectedDecoration: [], onClickItem: { t in
+          let index = viewModel.azOrderParam.items.indexOf(t)
+          scrollProxy?.scrollTo(index, anchor: .top)
+          showAzDropdown = false
+        })
+        .offset(x: -60, y: 36)
+      }
+    }.modifier(TapDismissModifier(show: $showAzDropdown))
+      .modifier(TapDismissModifier(show: $showOrderDropdown))
     .gesture(TapGesture().onEnded({ _ in
       viewModel.hideVersionWorks()
     }), isEnabled: viewModel.showVersionWorks)
@@ -500,7 +511,7 @@ struct BeitiePage: View {
   }
   
   private func resetScroll() {
-    printlnDbg("resetScroll")
+    debugPrint("resetScroll")
     Task {
       try? await Task.sleep(nanoseconds: 300_000_000)
       DispatchQueue.main.async {

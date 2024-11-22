@@ -249,7 +249,9 @@ class ImageSaver: NSObject {
   }
   
   @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-    onComplete()
+    DispatchQueue.main.async {
+      self.onComplete()
+    }
   }
 }
 
@@ -341,7 +343,7 @@ class PuzzleViewModel: AlertViewModel {
   
   func syncPuzzles() {
     Task {
-      printlnDbg("chars: \(self.charPerColumnRow), inset: \(self.insetGap), single: \(self.singleGap), bgClor: \(self.bgColor)")
+      debugPrint("chars: \(self.charPerColumnRow), inset: \(self.insetGap), single: \(self.singleGap), bgClor: \(self.bgColor)")
       let imgs = (0..<images.size).map { images[$0]! }
       var puzzleImages = [PuzzleType: UIImage]()
       puzzleTypes.forEach { type in

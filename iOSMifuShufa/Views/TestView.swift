@@ -179,3 +179,8 @@ struct Page3View: View {
 #Preview {
   TestContentView()
 }
+
+func globalTest() {
+  let image = UIImage(named: "background")
+  image?.addWaterMark("app_name".resString)
+}

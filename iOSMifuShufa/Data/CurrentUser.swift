@@ -174,13 +174,13 @@ private var NO_USER_NAME: String {
 
 func convertServerTime(_ time: String) -> String {
   var replaced: String = time.replacing("T", with: " ")
-  if let pos = replaced.index(of: ".") {
+  if let pos = replaced.firstIndex(of: ".") {
     replaced = String(replaced[replaced.startIndex..<pos])
   }
   return replaced
 }
 
-class UserViewModel: BaseObservableObject {
+class UserViewModel: AlertViewModel {
   
   static let STATUS_FONT = UIFont.systemFont(ofSize: 19)
   static let NEED_LOGIN: AttributedString = {
@@ -188,7 +188,7 @@ class UserViewModel: BaseObservableObject {
     let html = txt.toHtmlString(font: STATUS_FONT)!
     return try! AttributedString(html, including: \.uiKit)
   }()
-  
+  @Published var language = Settings.languageVersion
   @Published var poemUser: PoemUser? = nil
   
   @Published var userName: String = NO_USER_NAME
@@ -234,26 +234,24 @@ class UserViewModel: BaseObservableObject {
     }
   }
   
-  func login(_ id: String) {
-//    NetworkHelper.syncUser(id: id) { user in
-//      if user == nil && self.loginCounter > 0 {
-//        self.loginCounter -= 1
-//        self.login(id)
-//      } else if let user = user {
-//        let id = DEVICE_ID
-//        let devices = user.LogInDevices
-//        if devices != nil && !devices!.contains(id) {
-//          self.logout()
-//          DispatchQueue.main.async {
-//            if let controller = UIApplication.shared.topController {
-//              UIHelper.showMessageDialog(parent: controller, title: "account_login_else".resString, message: nil)
-//            }
-//          }
-//        } else {
-//          self.updateUser(user)
-//        }
-//      }
-//    }
+  func login(_ id: String, onLogout: @escaping () -> Void = {}) {
+    NetworkHelper.syncUser(id: id) { user in
+      if user == nil && self.loginCounter > 0 {
+        self.loginCounter -= 1
+        self.login(id)
+      } else if let user = user {
+        let id = DEVICE_ID
+        let devices = user.LogInDevices
+        DispatchQueue.main.async {
+          if devices != nil && !devices!.contains(id) {
+              self.logout()
+              onLogout()
+          } else {
+            self.updateUser(user)
+          }
+        }
+      }
+    }
   }
   
   func updateUser(_ user: PoemUser?) {
@@ -341,13 +339,14 @@ class UserViewModel: BaseObservableObject {
   
   
   func updateUserName(_ newName: String, onResult: @escaping (Bool) -> Void) {
-//    NetworkHelper.changeUserName(newName) { user in
-//      if user != nil {
-//        self.updateUser(user)
-//      }
-//      onResult(user?.Username == newName)
-//    }
+    NetworkHelper.changeUserName(newName) { user in
+      if user != nil {
+        self.updateUser(user)
+      }
+      onResult(user?.Username == newName)
+    }
   }
+  
   
   var loginCanIgnoreCode: Boolean {
     let sdf = Utils.loginFormater

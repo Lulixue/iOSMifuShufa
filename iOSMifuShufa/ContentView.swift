@@ -25,18 +25,24 @@ struct ContentView: View {
       
       BeitiePage()
         .tabItem {
-          Label("title_beitie".localized, systemImage: selection == 1 ? "photo.on.rectangle.angled.fill" : "photo")
-            .environment(\.symbolVariants, .none)
+          if selection == 1 {
+            
+            if #available(iOS 18, *) {
+              Image(systemName: "photo.on.rectangle.angled.fill").environment(\.symbolVariants, .none)
+            } else {
+              Image(systemName: "photo.fill.on.rectangle.fill").environment(\.symbolVariants, .none)
+            }
+          } else {
+            Image("image_filter").renderingMode(.template)
+          }
+          Text("title_beitie".localized)
         }.tag(1)
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
       
       JiziPage()
         .tabItem {
-//          Image(selection == 2 ? "vector_combine_fill" : "vector_combine").renderingMode(.template).resizable().scaledToFill()
-//            .rotationEffect(.degrees(90))
-//          Text("title_jizi".localized)
-          Label("title_jizi".localized, systemImage: selection == 2 ? "square.fill.on.square.fill" : "plus.square.on.square")
+          Label("title_jizi".localized, systemImage: selection == 2 ? "plus.square.fill.on.square.fill" : "plus.square.on.square")
             .environment(\.symbolVariants, .none)
         }.tag(2)
         .toolbarBackground(.visible, for: .tabBar)
@@ -61,26 +67,35 @@ struct ContentView: View {
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
       
-    }.navigationDestination(isPresented: $navigationVM.gotoWorkView) {
-      WorkView(viewModel: navigationVM.workVM!)
-    }
-    .navigationDestination(isPresented: $navigationVM.gotoWorkIntroView) {
-      WorkIntroView(viewModel: navigationVM.introWorkVM!)
-    }.navigationDestination(isPresented: $navigationVM.gotoSingleView) {
-      SinglesView(viewModel: navigationVM.singleViewModel!)
-    }.environmentObject(navigationVM)
+    }.modifier(WorkDestinationModifier(naviVM: navigationVM))
+      .modifier(WorkIntroDestinationModifier(naviVM: navigationVM))
+      .modifier(SingleDestinationModifier(naviVM: navigationVM)).environmentObject(navigationVM)
   }
   
   var body: some View {
     NavigationStack {
         tabView
         .navigationBarHidden(true)
+        .onAppear {
+          if Settings.config == nil {
+            _ = ConstraintHelper.shared
+            Task {
+              NetworkHelper.syncConfig { it in
+                DispatchQueue.main.async {
+                  if it.hasUpdate() {
+                    it.showUpdateDialog(homeViewModel)
+                  }
+                }
+              }
+            }
+          }
+        }
     }
   }
 }
 
 #Preview {
-    ContentView()
+  ContentView()
 }
 
 struct TabBarAccessor: UIViewControllerRepresentable {
