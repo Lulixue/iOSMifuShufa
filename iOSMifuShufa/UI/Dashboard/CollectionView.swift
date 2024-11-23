@@ -221,7 +221,7 @@ struct CollectionView: View {
           presentationMode.wrappedValue.dismiss()
         }
         Spacer()
-        Text("collection".localized)
+        NaviTitle(text: "collection".localized)
         Spacer()
         CUSTOM_NAVI_BACK_SIZE.HSpacer()
       }.background(Colors.surfaceContainer.swiftColor)

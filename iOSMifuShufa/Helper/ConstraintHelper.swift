@@ -40,12 +40,12 @@ enum ConstraintItem: String {
   
   var topMostConstraintMessage: String {
     switch self {
-    case .SearchZiCount: "当前会员仅支持\(topMostConstraint)个汉字同时搜索，请联系客服"
-        .orCht("当前會員僅支持\(topMostConstraint)個漢字同時搜索，请联系客服")
+    case .SearchZiCount: "当前仅支持\(topMostConstraint)个汉字同时搜索，请联系客服"
+        .orCht("当前僅支持\(topMostConstraint)個漢字同時搜索，请联系客服")
     case .JiziZiCount: "当前用户集字数超出范围(\(topMostConstraint)字)，请联系客服"
         .orCht("当前用戶集字數超出範圍(\(topMostConstraint)字)，请联系客服")
-    case .SearchFilterCount: "当前会员仅支持\(topMostConstraint)个过滤器，请联系客服"
-        .orCht("当前會員僅支持\(topMostConstraint)個過濾器，请联系客服")
+    case .SearchFilterCount: "当前仅支持\(topMostConstraint)个过滤器，请联系客服"
+        .orCht("当前僅支持\(topMostConstraint)個過濾器，请联系客服")
     default: "功能「\(chinese)」使用次数已超过当前单日上限，请联系客服"
         .orCht("功能「\(chinese)」使用次數已超過当前單日上限，请联系客服")
     }

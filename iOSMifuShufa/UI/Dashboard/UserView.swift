@@ -58,17 +58,17 @@ struct UserView: View {
   var body: some View {
     VStack(spacing: 0) {
       NaviView {
-        BackButtonView {
-          onDismiss()
-        }
-        Spacer()
-        NaviTitle(text: "my_center".resString)
-        Spacer()
-        Button {
-          onDeleteAccount()
-        } label: {
-          Text("delete_account".localized).font(.callout)
-            .foregroundStyle(.red)
+        NaviContents(title: "my_center".resString) {
+          BackButtonView {
+            onDismiss()
+          }
+        } trailing: {
+          Button {
+            onDeleteAccount()
+          } label: {
+            Text("delete_account".localized).font(.system(size: 14))
+              .foregroundStyle(.red)
+          }
         }
       }
       Divider()

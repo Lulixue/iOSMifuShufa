@@ -39,7 +39,7 @@ import SwiftUI
 
 @ViewBuilder func NaviTitle(text: Any) -> some View {
   if let title = text as? String {
-    Text(title).font(.body).bold().foregroundStyle(.colorPrimary)
+    Text(title).font(.system(size: 18)).bold().foregroundStyle(.colorPrimary)
   } else {
     Text(text as! AttributedString).foregroundStyle(.colorPrimary)
   }
