@@ -42,8 +42,6 @@
 		F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61692CD9C6DD007329DB /* DropdownView.swift */; };
 		F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */; };
 		F96E61782CD9C6DD007329DB /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616B2CD9C6DD007329DB /* Loading.swift */; };
-		F96E617C2CD9C6E0007329DB /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F96E61792CD9C6E0007329DB /* beitie.db */; };
-		F96E617D2CD9C6E0007329DB /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F96E617A2CD9C6E0007329DB /* chinese.db */; };
 		F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */; };
 		F988204A2C3AC4500011DB04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820492C3AC4500011DB04 /* ContentView.swift */; };
 		F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F988204B2C3AC4510011DB04 /* Assets.xcassets */; };
@@ -180,8 +178,6 @@
 		F96E61692CD9C6DD007329DB /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
 		F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBarView.swift; sourceTree = "<group>"; };
 		F96E616B2CD9C6DD007329DB /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
-		F96E61792CD9C6E0007329DB /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
-		F96E617A2CD9C6E0007329DB /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F98820442C3AC4500011DB04 /* iOSMifuShufa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSMifuShufa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaApp.swift; sourceTree = "<group>"; };
 		F98820492C3AC4500011DB04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -374,8 +370,6 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F96E61792CD9C6E0007329DB /* beitie.db */,
-				F96E617A2CD9C6E0007329DB /* chinese.db */,
 			);
 			path = DebugResources;
 			sourceTree = "<group>";
@@ -750,8 +744,6 @@
 				F9FFC6B92CE230CD008AB5EE /* AlbumImageViewController.xib in Resources */,
 				F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */,
 				F96E61052CD87C33007329DB /* az.json in Resources */,
-				F96E617C2CD9C6E0007329DB /* beitie.db in Resources */,
-				F96E617D2CD9C6E0007329DB /* chinese.db in Resources */,
 				F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */,
 				F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */,
 				F96E61092CD87C3E007329DB /* variants.json in Resources */,

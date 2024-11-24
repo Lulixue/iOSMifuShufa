@@ -6,6 +6,27 @@
 //
 
 import SwiftUI
+import Foundation
+import Network
+
+class NetworkMonitor: BaseObservableObject {
+  private let networkMonitor = NWPathMonitor()
+  private let workerQueue = DispatchQueue(label: "Monitor")
+  var isConnected = false
+  
+  override init() {
+    super.init()
+    networkMonitor.pathUpdateHandler = { path in
+      self.isConnected = path.status == .satisfied
+      Task {
+        await MainActor.run {
+          self.objectWillChange.send()
+        }
+      }
+    }
+    networkMonitor.start(queue: workerQueue)
+  }
+}
 
 @main
 struct iOSMifuShufaApp: App {
@@ -17,7 +38,7 @@ struct iOSMifuShufaApp: App {
   
   var body: some Scene {
     WindowGroup {
-      SplashView()
+      SplashView().environmentObject(NetworkMonitor())
     }
   }
 }

@@ -151,6 +151,7 @@ struct HomePage: View {
     viewModel.onSearch(text)
   }
   
+  @EnvironmentObject var networkVM: NetworkMonitor
   @ViewBuilder func todayWork(_ work: BeitieWork) -> some View {
     TodayCardView(title: "今日法帖") {
       self.navVM.gotoWork(work: work)
@@ -463,11 +464,13 @@ struct HomePage: View {
   var defaultView: some View {
     ScrollView {
       VStack(spacing: 12) {
-        if let single = viewModel.todaySingle {
-          todaySingle(single)
-        }
-        if let work = viewModel.todayWork {
-          todayWork(work)
+        if networkVM.isConnected {
+          if let single = viewModel.todaySingle {
+            todaySingle(single)
+          }
+          if let work = viewModel.todayWork {
+            todayWork(work)
+          }
         }
         Spacer()
       }.padding(.horizontal, 12).padding(.vertical, 12)

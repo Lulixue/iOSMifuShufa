@@ -113,6 +113,8 @@ struct ArticlePage : View {
           }
         }
       }, viewModel: sideVM, config: SideMenuConfig(menuBGColor: .clear, menuBGOpacity: 0.2, menuWidth: 150))
+    }.onAppear {
+      viewModel.fetchArticles()
     }
   }
 }
