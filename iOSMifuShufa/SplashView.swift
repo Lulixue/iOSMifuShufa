@@ -19,8 +19,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .red
-    setupBUAdSDK()
+    self.setupBUAdSDK()
   }
   
   private var splashAd: BUSplashAd! = nil
@@ -60,7 +59,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   
   func splashAdLoadFail(_ splashAd: BUSplashAd, error: BUAdError?) {
     print("error: \(String(describing: error?.description))")
-    finishAd()
+    self.finishAd()
   }
   
   func showAd(_ splashAd: BUSplashAd) {
@@ -150,7 +149,7 @@ struct AdView: UIViewControllerRepresentable {
 class SplashViewModel: AlertViewModel {
   @Published var progress = 0.1
   @Published var status = "loading_data".localized
-  @Published var showAd = false
+  @Published var showAd = Settings.showAdiOS
   @Published var adReady = false
   @Published var resourceReady = false
   @Published var gotoMain = false
@@ -184,7 +183,9 @@ class SplashViewModel: AlertViewModel {
       return
     }
     let _ = Settings.mmkv
-    finishAd()
+    if !showAd || CurrentUser.isVip {
+      finishAd()
+    }
     Task {
       if ResourceHelper.hasResourceUpdate() {
         DispatchQueue.main.async {
@@ -210,10 +211,12 @@ struct SplashView: View {
   @Environment(\.presentationMode) var presentationMode
   
   func onFinishAd() {
-    withAnimation {
-      viewModel.showAd = false
+    DispatchQueue.main.async {
+      withAnimation {
+        viewModel.showAd = false
+      }
+      viewModel.finishAd()
     }
-    viewModel.finishAd()
   }
   var splashView: some View {
     ZStack {
@@ -233,7 +236,7 @@ struct SplashView: View {
         (UIScreen.currentHeight*0.1).VSpacer()
       }.frame(width: 200)
       
-      if viewModel.showAd {
+      if !CurrentUser.isVip && viewModel.showAd {
         AdView(finishAd: onFinishAd)
       }
     }.ignoresSafeArea()

@@ -191,15 +191,28 @@ class UserViewModel: AlertViewModel {
   @Published var language = Settings.languageVersion
   @Published var poemUser: PoemUser? = nil
   
-  @Published var userName: String = NO_USER_NAME
+  @Published var userName: String = NO_USER_NAME {
+    didSet {
+      self.nameItem.stringValue = userName
+    }
+  }
   @Published var userType: String = ""
-  @Published var userLogin: Bool = false
+  @Published var userLogin: Bool = false {
+    didSet {
+      self.loginItem.boolValue = userLogin
+    }
+  }
   @Published var userVipStatus: String = ""
   @Published var updateStatus: String = ""
-  @Published var userId: String = ""
-  @Published var isVip = false {
+  @Published var userId: String = "" {
     didSet {
-      Settings.isVip = isVip
+      self.idItem.stringValue = userId
+    }
+  }
+  
+  @Published var isVip = UserItem.isVip.boolValue {
+    didSet {
+      self.isVipItem.boolValue = isVip
     }
   }
   
@@ -314,7 +327,6 @@ class UserViewModel: AlertViewModel {
     } else {
       phoneNumberItem.stringValue = ""
     }
-    sync()
     loginTimeItem.stringValue = Utils.currentTime()
   }
   
@@ -326,13 +338,6 @@ class UserViewModel: AlertViewModel {
     userName = NO_USER_NAME
     userId = ""
     userVipStatus = PoemUser.DEFAULT_VIP_STATUS
-    sync()
-  }
-  
-  func sync() {
-    idItem.stringValue = userId
-    isVipItem.boolValue = isVip
-    loginItem.boolValue = userLogin
   }
   
   static let shared = UserViewModel()

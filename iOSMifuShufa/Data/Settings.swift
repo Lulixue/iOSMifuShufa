@@ -106,14 +106,6 @@ class Settings {
     }
     return value
   }
-  static var isVip: Bool {
-    get {
-      mmkv.getBoolean(KEY_IS_VIP, false)
-    }
-    set {
-      mmkv.putBoolean(KEY_IS_VIP, newValue)
-    }
-  }
   
   static var showAdiOS: Bool {
     get {

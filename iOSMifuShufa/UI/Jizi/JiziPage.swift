@@ -280,7 +280,7 @@ struct JiziPage : View {
             self.editHeight = editHeight == 120 ? 80 : 120
           }
         } label: {
-          Image("chevron.up.2").renderingMode(.template).square(size: 10).foregroundStyle(.gray)
+          Image("chevron.up.2").renderingMode(.template).square(size: 10).foregroundStyle(.darkSlateGray)
             .rotationEffect(.degrees(editHeight == 120 ? 0 : 180))
         }.padding(.trailing, 5)
         Button {
