@@ -183,9 +183,13 @@ class SplashViewModel: AlertViewModel {
       return
     }
     let _ = Settings.mmkv
+    #if DEBUG
+    finishAd()
+    #else
     if !showAd || CurrentUser.isVip {
       finishAd()
     }
+    #endif
     Task {
       if ResourceHelper.hasResourceUpdate() {
         DispatchQueue.main.async {

@@ -10,8 +10,9 @@
 		004809F617C0A8E8A30D316B /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BA4FA07507A87227ABBEAA /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework */; };
 		4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702BCB18E1C7F5C88C7C45FD /* Pods_iOSMifuShufa.framework */; };
 		CFC68FE027D9684B83888806 /* Pods_iOSMifuShufaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */; };
-		F9232C6B2CF31F5300A15ADF /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9232C692CF31F5300A15ADF /* beitie.db */; };
-		F9232C6C2CF31F5300A15ADF /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F9232C6A2CF31F5300A15ADF /* chinese.db */; };
+		F9031D2A2CF341AF008BE91F /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F9031D292CF341AF008BE91F /* chinese.db */; };
+		F9031D2B2CF341AF008BE91F /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9031D282CF341AF008BE91F /* beitie.db */; };
+		F9232C6E2CF331BF00A15ADF /* JiziPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9232C6D2CF331BF00A15ADF /* JiziPage.swift */; };
 		F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA552CEF147E00FF4F58 /* PrivacyView.swift */; };
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
@@ -24,7 +25,6 @@
 		F96E61072CD87C37007329DB /* chs_cht.json in Resources */ = {isa = PBXBuildFile; fileRef = F96E61062CD87C37007329DB /* chs_cht.json */; };
 		F96E61092CD87C3E007329DB /* variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F96E61082CD87C3E007329DB /* variants.json */; };
 		F96E61252CD91511007329DB /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = F96E61242CD91511007329DB /* Collections */; };
-		F96E614F2CD9C6C9007329DB /* JiziPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E614D2CD9C6C9007329DB /* JiziPage.swift */; };
 		F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */; };
 		F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */; };
 		F96E615A2CD9C6D1007329DB /* KotlinBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61522CD9C6D1007329DB /* KotlinBridge.swift */; };
@@ -148,8 +148,9 @@
 		A0F7AF12C000D41A8C64F793 /* Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C900F39D0CB81CE38DE2F377 /* Pods-iOSMifuShufaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufaTests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufaTests/Pods-iOSMifuShufaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSMifuShufaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9232C692CF31F5300A15ADF /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
-		F9232C6A2CF31F5300A15ADF /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
+		F9031D282CF341AF008BE91F /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
+		F9031D292CF341AF008BE91F /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
+		F9232C6D2CF331BF00A15ADF /* JiziPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziPage.swift; sourceTree = "<group>"; };
 		F928FA542CEF143700FF4F58 /* iOSMifuShufa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSMifuShufa.entitlements; sourceTree = "<group>"; };
 		F928FA552CEF147E00FF4F58 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		F96E61042CD87C33007329DB /* az.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = az.json; sourceTree = "<group>"; };
 		F96E61062CD87C37007329DB /* chs_cht.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = chs_cht.json; sourceTree = "<group>"; };
 		F96E61082CD87C3E007329DB /* variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = variants.json; sourceTree = "<group>"; };
-		F96E614D2CD9C6C9007329DB /* JiziPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziPage.swift; sourceTree = "<group>"; };
 		F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeHelper.swift; sourceTree = "<group>"; };
 		F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieDbHelper.swift; sourceTree = "<group>"; };
 		F96E61522CD9C6D1007329DB /* KotlinBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinBridge.swift; sourceTree = "<group>"; };
@@ -305,12 +305,12 @@
 		F96E614E2CD9C6C9007329DB /* Jizi */ = {
 			isa = PBXGroup;
 			children = (
+				F9232C6D2CF331BF00A15ADF /* JiziPage.swift */,
 				F928FA5B2CEF448700FF4F58 /* JfConverter.swift */,
 				F9E124A92CE5BCA500BB8CD4 /* PuzzleLayout.swift */,
 				F9E124A72CE58CBD00BB8CD4 /* PuzzleView.swift */,
 				F9E124A32CE447E300BB8CD4 /* JiziViewModel.swift */,
 				F9E124742CE35D0C00BB8CD4 /* JiziView.swift */,
-				F96E614D2CD9C6C9007329DB /* JiziPage.swift */,
 			);
 			path = Jizi;
 			sourceTree = "<group>";
@@ -374,8 +374,8 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F9232C692CF31F5300A15ADF /* beitie.db */,
-				F9232C6A2CF31F5300A15ADF /* chinese.db */,
+				F9031D282CF341AF008BE91F /* beitie.db */,
+				F9031D292CF341AF008BE91F /* chinese.db */,
 			);
 			path = DebugResources;
 			sourceTree = "<group>";
@@ -743,10 +743,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
+				F9031D2A2CF341AF008BE91F /* chinese.db in Resources */,
+				F9031D2B2CF341AF008BE91F /* beitie.db in Resources */,
 				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
-				F9232C6B2CF31F5300A15ADF /* beitie.db in Resources */,
-				F9232C6C2CF31F5300A15ADF /* chinese.db in Resources */,
 				F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */,
 				F9ECB02A2CD25CD90009C0DC /* strings.xml in Resources */,
 				F9FFC6B92CE230CD008AB5EE /* AlbumImageViewController.xib in Resources */,
@@ -975,10 +975,10 @@
 				F96E615D2CD9C6D1007329DB /* ViewHelper.swift in Sources */,
 				F9E124B72CE8AD5500BB8CD4 /* AboutView.swift in Sources */,
 				F96E615E2CD9C6D1007329DB /* ViewModel.swift in Sources */,
-				F96E614F2CD9C6C9007329DB /* JiziPage.swift in Sources */,
 				F9F97C812CDCD6A700096ED1 /* DrawPanel.swift in Sources */,
 				F988204A2C3AC4500011DB04 /* ContentView.swift in Sources */,
 				F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */,
+				F9232C6E2CF331BF00A15ADF /* JiziPage.swift in Sources */,
 				F9ECB02E2CD25F1C0009C0DC /* Chinese.swift in Sources */,
 				F96E616D2CD9C6DD007329DB /* CenterView.swift in Sources */,
 				F9F97C712CDA424400096ED1 /* ChineseConverter.swift in Sources */,

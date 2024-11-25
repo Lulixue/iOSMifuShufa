@@ -44,9 +44,9 @@ struct TestView: View {
       ZStack(alignment: .topTrailing) {
         VStack {
           Button {
-            alert.showFullAlert("hello", "this is the message", okTitle: "ok", okRole: .destructive) {
+            alert.showFullAlert("hello", "this is the message", okTitle: "ok", okRole: .destructive, cancel:  {
               println("ok")
-            }
+            })
           } label: {
             Image("background")
               .resizable()
@@ -181,6 +181,6 @@ struct Page3View: View {
 }
 
 func globalTest() {
-  let image = UIImage(named: "background")
-  image?.addWaterMark("app_name".resString)
+//  let image = UIImage(named: "background")
+//  image?.addWaterMark("app_name".resString)
 }

@@ -19,6 +19,7 @@ target 'iOSMifuShufa' do
   pod 'DeviceKit'
   pod 'SwiftUIIntrospect'
   pod 'SDWebImageSwiftUI'
+#  pod 'OpenCV', '~> 4.0.0'
   
   target 'iOSMifuShufaTests' do
     inherit! :search_paths
