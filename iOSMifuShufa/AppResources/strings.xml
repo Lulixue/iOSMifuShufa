@@ -103,7 +103,7 @@
     <string name="verify_code">驗證碼</string>
     <string name="phone_num">手機號</string>
     <string name="get_verify_code">獲取驗證碼</string>
-    <string name="input_phone_number"><font size="16">請輸入手機號</font></string>
+    <string name="input_phone_number"><font size="16">請輸入手機號，无須+86前綴</font></string>
     <string name="requesting_sms_code">正在請求驗證碼</string>
     <string name="input_verify_code"><font size="16">請輸入驗證碼</font></string>
     <string name="agree_privacy">同意《用戶隱私協議》</string>

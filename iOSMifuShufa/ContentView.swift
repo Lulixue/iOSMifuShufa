@@ -99,7 +99,7 @@ struct ContentView: View {
 }
 
 #Preview {
-  ContentView()
+    ContentView().environmentObject(NetworkMonitor())
 }
 
 struct TabBarAccessor: UIViewControllerRepresentable {
