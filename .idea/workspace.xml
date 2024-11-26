@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加登录和隐私政策">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/Assets.xcassets/sample.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/Assets.xcassets/sample.imageset/sample.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/Views/OpenCVTestView.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/Podfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/xcshareddata/xcschemes/iOSMifuShufa.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/xcshareddata/xcschemes/iOSMifuShufa.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/ContentView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/ContentView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/UserView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/UserView.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

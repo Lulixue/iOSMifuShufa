@@ -16,7 +16,8 @@ struct ContentView: View {
   
   var tabView: some View {
     TabView(selection: $selection) {
-      HomePage(viewModel: homeViewModel)
+//      HomePage(viewModel: homeViewModel)
+      OpenCVTestView()
         .tabItem {
           Label("title_home".localized, systemImage: "magnifyingglass")
         }.tag(0)

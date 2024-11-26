@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserView: View {
   @StateObject var viewModel = CurrentUser
+  @StateObject var alertViewModel = AlertViewModel()
   @Environment(\.presentationMode) var presentationMode
   @State private var editName = false
   @State var editText = ""
@@ -35,10 +36,10 @@ struct UserView: View {
   
   func onDeleteAccount() {
     if CurrentUser.isVip {
-      viewModel.showAlertDlg("account_vip_no_delete".resString)
+      alertViewModel.showAlertDlg("account_vip_no_delete".resString)
       return
     }
-    viewModel.showFullAlert("warn".localized,
+    alertViewModel.showFullAlert("warn".localized,
                             "delete_account_confirm".resString,
                             okTitle: "confirm".resString, okRole: .destructive,
                             ok: {
@@ -47,6 +48,7 @@ struct UserView: View {
           if value {
             viewModel.logout()
             viewModel.showAlertDlg("account_deleted".resString)
+            onDismiss()
           } else {
             viewModel.showAlertDlg("error_try_later".resString)
           }
@@ -148,6 +150,7 @@ struct UserView: View {
           onDismiss()
         }
       }
+      .modifier(AlertViewModifier(viewModel: alertViewModel))
   }
 }
 
