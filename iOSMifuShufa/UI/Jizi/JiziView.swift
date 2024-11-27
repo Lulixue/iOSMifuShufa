@@ -47,6 +47,7 @@ struct JiziView : View {
       return nil
     }
   }
+  
   var candidatePanel: some View {
     ScrollView {
       autoColumnLazyGrid(items, space: 6, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 2, paddingValues: PaddingValue(horizontal: 10, vertical: 10)) { size, i, item in
@@ -58,19 +59,28 @@ struct JiziView : View {
           viewModel.selectChar(i)
         } label: {
           VStack(spacing: 0) {
-            WebImage(url: item.charUrl!) { img in
-              img.image?.resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: size-16)
-            }
-            .onSuccess(perform: { _, _, _ in
-              viewModel.loaded(index: i)
-            })
-            .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
-            .frame(height: size-16)
-            .id(single?.id ?? i)
+            ZStack {
+              WebImage(url: item.charUrl!) { img in
+                img.image?.resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(height: size-16)
+                  .onAppear(perform: {
+                    viewModel.loaded(index: i)
+                  })
+              }
+              .onSuccess(perform: { _, _, _ in
+                viewModel.loaded(index: i)
+              })
+              .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
+              .id(single?.id ?? i)
+              if viewModel.jiziImageLoaded[i] != true {
+                ProgressView().squareFrame(20)
+                  .tint(.colorPrimary)
+              }
+            }.frame(height: size-16)
             Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout).padding(.top, 5).padding(.bottom, 2)
               .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
+            
           }.padding(.top, 5).padding(.bottom, 3).padding(.horizontal, itemPaddingHor).frame(width: size).frame(height: size+20)
             .background(selected ? .gray.opacity(0.4) : .white).clipShape(RoundedRectangle(cornerRadius: 4))
         }.buttonStyle(BgClickableButton())
@@ -318,14 +328,20 @@ struct JiziView : View {
       }.onChange(of: viewModel.singleIndex) { newValue in
         if singleIndex != newValue {
           self.singleIndex = newValue
-          self.singleProxy?.scrollTo(newValue, anchor: .leading)
+          scrollToIndex(newValue)
         }
       }
       .onChange(of: viewModel.singleStartIndex) { newValue in
-        singleProxy?.scrollTo(newValue, anchor: .leading)
+        scrollToIndex(newValue)
       }.background(Color.singlePreviewBackground)
         .frame(height: 80)
         .modifier(AlertViewModifier(viewModel: viewModel))
+    }
+  }
+  
+  private func scrollToIndex(_ index: Int) {
+    DispatchQueue.main.async {
+      singleProxy?.scrollTo(index, anchor: .leading)
     }
   }
 }
@@ -333,7 +349,7 @@ struct JiziView : View {
 
 #Preview {
   JiziView(viewModel: {
-    let text = "寒雨连江夜入吴"
+    let text = "可她分明在世上，更在我心尖"
     let items = JiziViewModel.search(text: text)
     let vm = JiziViewModel(text: text, items: items)
     return vm

@@ -56,6 +56,7 @@
 		F988205E2C3AC4520011DB04 /* iOSMifuShufaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988205D2C3AC4520011DB04 /* iOSMifuShufaTests.swift */; };
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
+		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -198,6 +199,7 @@
 		F98820632C3AC4520011DB04 /* iOSMifuShufaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSMifuShufaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDbHelper.swift; sourceTree = "<group>"; };
 		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */,
 				F9C3A6192CEE0A390055ABA1 /* VerifyHelper.swift */,
 				F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */,
 				F9F97C9A2CDF468A00096ED1 /* ImageManager.swift */,
@@ -1005,6 +1008,7 @@
 				F96E61742CD9C6DD007329DB /* Buttons.swift in Sources */,
 				F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */,
 				F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */,
+				F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */,
 				F96E61752CD9C6DD007329DB /* Colors.swift in Sources */,
 				F9236D962CF613AC00245F08 /* AnalyzeView.swift in Sources */,
 				F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */,
@@ -1192,9 +1196,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1229,9 +1234,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

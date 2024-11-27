@@ -204,7 +204,6 @@ class BeitieWork: Decodable, Equatable, Hashable {
   var ceYear: Int = 0
   var shuType: ShuType? = nil
   
-
   enum CodingKeys: CodingKey {
     case id
     case name

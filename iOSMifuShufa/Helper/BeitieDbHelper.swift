@@ -456,7 +456,7 @@ class BeitieDbHelper {
 //         "or radical like :cLike " +
 //         "or components like :cLike " +
 //         "or mainComponents like :cLike limit :lmt")
-  private func getSinglesByComponent(char: Char, lmt: Int = 10000) -> List<BeitieSingle> {
+  func getSinglesByComponent(char: Char, lmt: Int = 10000) -> List<BeitieSingle> {
     var result = [BeitieSingle]()
     do {
       let cLike = "%\(char)%"

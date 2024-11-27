@@ -414,8 +414,8 @@
             filePath = "iOSMifuShufa/UI/Home/FiltersView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "contentView"
             landmarkType = "24">
          </BreakpointContent>
@@ -624,7 +624,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "441"
             endingLineNumber = "441"
-            landmarkName = "previewResult"
+            landmarkName = "resultView"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1278,8 +1278,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "previewBottom"
             landmarkType = "24">
          </BreakpointContent>
@@ -1294,8 +1294,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1310,8 +1310,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "482"
-            endingLineNumber = "482"
+            startingLineNumber = "505"
+            endingLineNumber = "505"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1326,8 +1326,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "syncScroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1342,8 +1342,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "506"
+            endingLineNumber = "506"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1936,7 +1936,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "594"
             endingLineNumber = "594"
-            landmarkName = "previewResult"
+            landmarkName = "centerView"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1998,8 +1998,8 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -2046,9 +2046,9 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "261"
-            endingLineNumber = "261"
-            landmarkName = "syncWithPuzzleItem(_:)"
+            startingLineNumber = "296"
+            endingLineNumber = "296"
+            landmarkName = "syncWithPreferences(_:_:work:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2062,24 +2062,8 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "syncWithPreferences(_:_:work:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "98D47152-EBC6-43F0-A946-8E77032C0495"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "syncWithPreferences(_:_:work:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2094,24 +2078,8 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
-            landmarkName = "syncWithPreferences(_:_:work:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C4C1E72A-54D3-40E4-A8FF-5D836A300F54"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "syncWithPreferences(_:_:work:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2158,9 +2126,9 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "generateCharBitmap(_:)"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "init(char:ziResult:componentCandidates:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2302,8 +2270,8 @@
             filePath = "iOSMifuShufa/UI/Beitie/WorkView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "onImageTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3166,8 +3134,8 @@
             filePath = "iOSMifuShufa/UI/Jizi/JiziView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "singleCandidates(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3502,8 +3470,8 @@
             filePath = "iOSMifuShufa/UI/Dashboard/UserView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -4225,6 +4193,134 @@
             startingLineNumber = "313"
             endingLineNumber = "313"
             landmarkName = "reset()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AB608760-171D-45A6-AF0B-AE14D46C0CDD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
+            landmarkName = "search(text:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "45C4E287-0C8F-426B-A6BA-4856C9C24BEB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "556"
+            endingLineNumber = "556"
+            landmarkName = "search(text:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A7E760B6-094D-4191-87B8-D87FB0F02504"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "setJiziComponentCandidates()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D81EFBFF-03E3-42C9-BEBE-C2314A24636A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "setJiziComponentCandidates()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "44DAC8C0-C7D6-4617-BE38-2C7ED08B6940"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "JiziItem"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5B18D60-1BF4-4284-8FE1-FD09B78A6CF3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "getWorkStartIndex(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0B55E39A-FC4F-4D3F-A2F6-044F2D9F93C9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "initResultWorkIndex()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A83A0A4-869F-4157-9BAF-19EDE56ADFFA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOSMifuShufa/UI/Jizi/JiziViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "getWorkStartIndex(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

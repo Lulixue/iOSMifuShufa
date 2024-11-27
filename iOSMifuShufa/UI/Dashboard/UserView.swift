@@ -129,6 +129,20 @@ struct UserView: View {
               }
             }
           }.padding(.horizontal, 15).padding(.vertical, 12)
+          if CurrentUser.isVip {
+            Divider().padding(.leading, 15)
+            HStack {
+              Image("vip").renderingMode(.template).resizable().scaledToFit().padding(.all, 2).frame(width: 20, height: 20)
+              HStack(alignment: .firstTextBaseline) {
+                Text(CurrentUser.userVipStatus)
+                
+                if let time = CurrentUser.expiredTime {
+                  Text(time).font(.footnote).foregroundStyle(.darkBlue)
+                }
+              }
+              Spacer()
+            }.padding(.horizontal, 15).padding(.vertical, 12)
+          }
           Divider()
         }
       }

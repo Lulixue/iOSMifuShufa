@@ -79,24 +79,28 @@ struct PaddingValue {
   let rowCount = items.size / rowItemSize + ((items.size % rowItemSize > 0) ? 1 : 0)
   LazyVStack(spacing: 0) {
     ForEach(0..<rowCount, id: \.self) { row in
-      HStack(spacing: 0) {
-        let start = rowItemSize * row
-        let end = min(rowItemSize * (row + 1), items.size)
-        ForEach(start..<end, id: \.self) { i in
-          let item = items[i]
-          space.HSpacer()
-          HStack(spacing: 0) {
-            itemView(itemWidth, i, item)
-          }.frame(minWidth: itemWidth)
-        }
-        if end - start < rowItemSize {
-          Spacer()
-        } else {
-          space.HSpacer()
+      Section {
+        HStack(spacing: 0) {
+          let start = rowItemSize * row
+          let end = min(rowItemSize * (row + 1), items.size)
+          ForEach(start..<end, id: \.self) { i in
+            let item = items[i]
+            space.HSpacer()
+            HStack(spacing: 0) {
+              itemView(itemWidth, i, item)
+            }.frame(minWidth: itemWidth)
+          }
+          if end - start < rowItemSize {
+            Spacer()
+          } else {
+            space.HSpacer()
+          }
         }
       }
       if row != rowCount - 1 {
-        rowSpace.VSpacer()
+        Section {
+          rowSpace.VSpacer()
+        }
       }
     }
   }.padding(.leading, paddingValues.leading)

@@ -127,7 +127,7 @@ class WorkViewModel: AlertViewModel {
   init(work: BeitieWork, pageIndex: Int = 0) {
     self.images = BeitieDbHelper.shared.getWorkImages(work.id)
     self.work = work
-    self.pageIndex = pageIndex
+    self.pageIndex = pageIndex != 0 ? pageIndex : work.lastIndex.coerced(0, images.size-1)
     self.menuItems = images.size == 1 ? WorkSettingsItem.allCases.filter { $0 != .Thumnail } : WorkSettingsItem.allCases
     super.init()
     drawVM.onCloseDraw = { [weak self] in
@@ -210,6 +210,29 @@ struct TappableSlider: View {
           self.value.wrappedValue = newValue
         })
     }
+  }
+}
+
+extension BeitieWork {
+  
+  var lastIndexKey: String {
+    "\(id)LastIndex"
+  }
+  
+  var lastIndex: Int {
+    get {
+      Settings.getInt(lastIndexKey, 0)
+    }
+    set {
+      Settings.putInt(lastIndexKey, newValue)
+    }
+  }
+
+}
+
+extension Int {
+  func coerced(_ min: Int, _ max: Int) -> Int {
+    return Swift.min(Swift.max(min, self), max)
   }
 }
 
@@ -499,6 +522,9 @@ struct WorkView: View, SinglePreviewDelegate {
       }.modifier(SingleDestinationModifier(naviVM: naviVM))
       .modifier(WorkIntroDestinationModifier(naviVM: naviVM))
         .ignoresSafeArea(edges: showBars ? [] : [.top, .bottom])
+        .onDisappear {
+          work.lastIndex = tabIndex
+        }
   }
   
   private let scrollBarHeight: CGFloat = 44

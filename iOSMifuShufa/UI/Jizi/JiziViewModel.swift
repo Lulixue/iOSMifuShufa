@@ -140,7 +140,7 @@ class JiziItem: BaseObservableObject {
   var presetSelected: BeitieSingle? = nil
   @Published var works: List<AnyHashable>? = nil
   @Published var results: List<BeitieSingle>? = nil
-  @Published var resultWorkIndex = [Int: Int]()
+  @Published var resultWorkIndex = [(Int, Int)]()
   @Published var selected: BeitieSingle? = nil
   @Published var candidates: OrderedDictionary<AnyHashable, List<BeitieSingle>>? = nil
   
@@ -154,7 +154,11 @@ class JiziItem: BaseObservableObject {
   }
   
   func getWorkIndex(_ singleIndex: Int) -> Int {
-    resultWorkIndex[singleIndex] ?? 0
+    if singleIndex < resultWorkIndex.count {
+      resultWorkIndex[singleIndex].1
+    } else {
+      0
+    }
   }
   
   func getSelectedIndex() -> Int {
@@ -255,10 +259,23 @@ class JiziItem: BaseObservableObject {
       orderedResult.addAll(list)
     }
     results = orderedResult
+    initResultWorkIndex()
   }
   
   func syncWithPuzzleItem(_ puzzle: PuzzleItem) {
     presetSelected = allResult.first(where: { $0.id == puzzle.id })
+  }
+  
+  private func initResultWorkIndex() {
+    resultWorkIndex.clear()
+    guard let ordered = candidates else { return }
+    let elements = ordered.elements
+    for i in 0..<elements.count {
+      let items = elements[i].value
+      for _ in 0..<items.size {
+        resultWorkIndex.add((resultWorkIndex.size, i))
+      }
+    }
   }
   
   func syncWithPreferences(_ font: CalligraphyFont?,
@@ -287,14 +304,7 @@ class JiziItem: BaseObservableObject {
       }
       results = orderedResult
       candidates = ordered
-      resultWorkIndex.clear()
-      let elements = ordered.elements
-      for i in 0..<elements.count {
-        let items = elements[i].value
-        for _ in 0..<items.size {
-          resultWorkIndex[resultWorkIndex.size] = i
-        }
-      }
+      initResultWorkIndex()
     } else {
       if (componentCandidates?.isNotEmpty() == true) {
         setJiziComponentCandidates()
@@ -535,11 +545,29 @@ class JiziViewModel: AlertViewModel {
         if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
           return JiziItem(char: it, ziResult: result)
         } else {
-          return JiziItem(char: it, ziResult: result, componentCandidates: nil)
+          let cht = ChineseConverter.getCht(it)
+          var allComponents = "\(it)\(cht)"
+          for i in Array.arrayOf(cht, it).distinct() {
+            allComponents += ChineseDbHelper.dao.getChineseChar(i.utf8Code)?.mainComponents ?? ""
+          }
+          var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
+          for c in allComponents.toCharList.distinct() {
+            let singles = BeitieDbHelper.shared.getSinglesByComponent(char: c, lmt: 50).matchJizi()
+            if (singles.isNotEmpty()) {
+              map["部件「\(c)」"] = singles.sortedBy { s in orderWorks[s.workId] ?? 0 }
+            }
+          }
+          return JiziItem(char: it, ziResult: result, componentCandidates: map.isEmpty ? nil : map)
         }
       }()
       newItems.add(jiziItem)
     }
     return newItems
+  }
+}
+
+extension String {
+  var sqlLike: String {
+    "%\(this)%"
   }
 }
