@@ -9,12 +9,6 @@ import SwiftUI
 import DeviceKit
 import SDWebImageSwiftUI
 
-extension CGFloat {
-  func calculateRowSize(maxWidth: CGFloat) {
-    
-  }
-}
-
 extension View {
   @ViewBuilder func listItemBox() -> some View {
     self.font(.system(size: 10))
@@ -53,6 +47,7 @@ struct SearchBar: View {
       }
       .padding(.horizontal, 5).padding(.vertical, 5).background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 3))
+      
       Button {
         onSearch()
       } label: {
@@ -75,7 +70,7 @@ struct VersionWorkView: View {
           Text(works.first().name).underline()
           Text(" (\(works.size))").font(.footnote)
         }.foregroundStyle(Color.darkSlateBlue)
-        20.VSpacer()
+        12.VSpacer()
         ScrollView {
           LazyVStack(spacing: 0) {
             ForEach(0..<works.size, id: \.self) { i in
@@ -416,6 +411,7 @@ struct BeitiePage: View {
             }
             Button {
               viewModel.organizeStack.toggle()
+              viewModel.showToast(viewModel.organizeStack ? "版本合一" : "版本分散")
             } label: {
               Image(viewModel.organizeStack ? "stack" : "single").renderingMode(.template).square(size: 20)
                 .foregroundStyle(btnColor)
@@ -483,6 +479,12 @@ struct BeitiePage: View {
           showAzDropdown = false
         })
         .offset(x: -60, y: 36)
+      }
+      if viewModel.showToast {
+        ZStack {
+          Color.clear
+          ToastView(title: viewModel.toastTitle)
+        }
       }
     }.modifier(TapDismissModifier(show: $showAzDropdown))
       .modifier(TapDismissModifier(show: $showOrderDropdown))
