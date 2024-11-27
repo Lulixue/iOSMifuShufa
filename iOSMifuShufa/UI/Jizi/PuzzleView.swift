@@ -294,10 +294,6 @@ class PuzzleViewModel: AlertViewModel {
   @Published var puzzleTypes: [PuzzleType] = [.SingleRow, .SingleColumn, .Multi]
   @Published var counter = 0
   
-  private lazy var imageSaver = ImageSaver {
-    self.showAlertDlg("图片已保存".orCht("圖片已保存"))
-  }
-  
   let jiziItems: [JiziItem]
   private let imageViews: [UIImageView]
   @Published var images: [Int: UIImage] = [:]

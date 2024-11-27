@@ -122,9 +122,6 @@ class WorkViewModel: AlertViewModel {
     showDrawPanel.toggle()
   }
   
-  private lazy var imageSaver = ImageSaver {
-    self.showAlertDlg("图片已保存".orCht("圖片已保存"))
-  }
   private let menuItems: [WorkSettingsItem]
   
   init(work: BeitieWork, pageIndex: Int = 0) {

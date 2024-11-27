@@ -38,6 +38,10 @@ class AlertViewModel: BaseObservableObject {
   @Published var fullAlertOk: () -> Void = {}
   @Published var fullAlertCancle: () -> Void = {}
   
+  lazy var imageSaver = ImageSaver { [weak self] in
+    self?.showAlertDlg("图片已保存".orCht("圖片已保存"))
+  }
+  
   func showFullAlert(_ title: String, _ msg: String? = nil,
                      okTitle: String = "好",
                      okRole: ButtonRole = .cancel,

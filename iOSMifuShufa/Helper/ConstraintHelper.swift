@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Alamofire
 
-enum ConstraintItem: String {
+enum ConstraintItem: String, CaseIterable {
   case SearchFilterCount
   case SearchZiCount
   case JiziZiCount
@@ -51,6 +51,17 @@ enum ConstraintItem: String {
     }
   }
   
+  func toString() -> String {
+    rawValue
+  }
+  
+  func readUsageMaxCount() -> Bool  {
+    ConstraintHelper.shared.reachedMaxUsageCount(toString())
+  }
+  func increaseUsage() {
+    ConstraintHelper.shared.increaseUsageCount(toString())
+  }
+
 }
 
 extension String {
@@ -74,7 +85,14 @@ class ConstraintHelper {
     return dateFormatterGet
   }()
   
-  private var MAX_USAGE_COUNT = Map<String, Int>()
+  private lazy var MAX_USAGE_COUNT: Map<String, Int> = {
+    var this = Map<String, Int>()
+    
+    ConstraintItem.allCases.forEach { it in
+        this[it.toString()] = it.defCount
+    }
+    return this
+  }()
   
   func getConstraint(_ key: String) -> Int? {
     return MAX_USAGE_COUNT[key]
@@ -120,7 +138,7 @@ class ConstraintHelper {
   
   
   private func getTodayUsageCount(_ key: String) -> Int {
-    let value = Settings.mmkv.getString(key, "")
+    let value = Settings.getString(key, "")
     if (value.isEmpty()) {
       return 0
     }
@@ -137,7 +155,7 @@ class ConstraintHelper {
       return
     }
     let count = getTodayUsageCount(key)
-    Settings.mmkv.putString(key, getTodayUsage(count+1))
+    Settings.putString(key, getTodayUsage(count+1))
   }
   
   func reachedMaxUsageCount(_ key: String) -> Boolean {

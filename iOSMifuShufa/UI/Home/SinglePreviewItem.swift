@@ -8,6 +8,33 @@ import SwiftUI
 import SDWebImageSwiftUI
 import DeviceKit
 
+struct ImageZoomableView: View {
+  let image: UIImage
+  @State private var currentZoom = 0.0
+  @State private var totalZoom = Device.current.isPad ? 0.5 : 0.95
+  private let maxZoom = 5.0
+  private let minZoom = 0.3
+  
+  var body: some View {
+      ZStack {
+        ScrollView {
+          
+        }
+        Image(uiImage: image).resizable()
+        .scaledToFit()
+        .frame(minHeight: 20)
+        .clipShape(RoundedRectangle(cornerRadius: 2))
+        .scaleEffect(currentZoom + totalZoom)
+        .gesture(MagnificationGesture().onChanged({ offset in
+          debugPrint("offset \(offset)")
+          currentZoom = offset - 1
+        }).onEnded({ offset in
+          totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
+          currentZoom = 0
+        })).padding(10)
+      }
+  }
+}
 
 struct SinglePreviewItem: View {
   let single: BeitieSingle
@@ -55,4 +82,8 @@ struct SinglePreviewItem: View {
 
 #Preview {
   SinglePreviewItem(single: BeitieDbHelper.shared.getSingles("人").first())
+}
+
+#Preview {
+  ImageZoomableView(image: UIImage(named: "sample")!)
 }

@@ -11,13 +11,13 @@
 		4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702BCB18E1C7F5C88C7C45FD /* Pods_iOSMifuShufa.framework */; };
 		CFC68FE027D9684B83888806 /* Pods_iOSMifuShufaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */; };
 		F9232C6E2CF331BF00A15ADF /* JiziPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9232C6D2CF331BF00A15ADF /* JiziPage.swift */; };
+		F9236D962CF613AC00245F08 /* AnalyzeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9236D952CF613AC00245F08 /* AnalyzeView.swift */; };
 		F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA552CEF147E00FF4F58 /* PrivacyView.swift */; };
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
 		F95C68A42CF57D5F00292A34 /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A32CF57D5F00292A34 /* chinese.db */; };
 		F95C68A52CF57D5F00292A34 /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A22CF57D5F00292A34 /* beitie.db */; };
-		F95C68A72CF57D6900292A34 /* OpenCVTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95C68A62CF57D6900292A34 /* OpenCVTestView.swift */; };
 		F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68A92CF58A5B00292A34 /* OpenCV */; };
 		F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68AB2CF58BA500292A34 /* OpenCV */; };
 		F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = F96E60F92CD7B0D4007329DB /* resource.zip */; };
@@ -152,6 +152,7 @@
 		C900F39D0CB81CE38DE2F377 /* Pods-iOSMifuShufaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufaTests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufaTests/Pods-iOSMifuShufaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSMifuShufaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9232C6D2CF331BF00A15ADF /* JiziPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziPage.swift; sourceTree = "<group>"; };
+		F9236D952CF613AC00245F08 /* AnalyzeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeView.swift; sourceTree = "<group>"; };
 		F928FA542CEF143700FF4F58 /* iOSMifuShufa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSMifuShufa.entitlements; sourceTree = "<group>"; };
 		F928FA552CEF147E00FF4F58 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
@@ -159,7 +160,6 @@
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
 		F95C68A22CF57D5F00292A34 /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
 		F95C68A32CF57D5F00292A34 /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
-		F95C68A62CF57D6900292A34 /* OpenCVTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCVTestView.swift; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
 		F96E61002CD8574B007329DB /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -357,7 +357,6 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F95C68A62CF57D6900292A34 /* OpenCVTestView.swift */,
 				F9C3A6132CEDD37D0055ABA1 /* Images.swift */,
 				F9FFC6BD2CE233D8008AB5EE /* AlbumPageViewController.swift */,
 				F9FFC6B72CE230CD008AB5EE /* AlbumImageViewController.swift */,
@@ -598,6 +597,7 @@
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
 			isa = PBXGroup;
 			children = (
+				F9236D952CF613AC00245F08 /* AnalyzeView.swift */,
 				F9FFC6BF2CE31969008AB5EE /* WorkIntroView.swift */,
 				F9F97C8A2CDE54CF00096ED1 /* ImagePreviewItem.swift */,
 				F9F97C842CDDB96900096ED1 /* SinglesView.swift */,
@@ -930,7 +930,6 @@
 				F9ECB0252CD25CD00009C0DC /* BeitiePage.swift in Sources */,
 				F9ECB0302CD2669F0009C0DC /* Config.swift in Sources */,
 				F96E61032CD858C9007329DB /* Utils.swift in Sources */,
-				F95C68A72CF57D6900292A34 /* OpenCVTestView.swift in Sources */,
 				F96E61012CD8574D007329DB /* CurrentUser.swift in Sources */,
 				F9FFC6BE2CE233D8008AB5EE /* AlbumPageViewController.swift in Sources */,
 				F9E345FB2CDA27D800E65B2B /* WorkView.swift in Sources */,
@@ -1007,6 +1006,7 @@
 				F9E124A82CE58CC000BB8CD4 /* PuzzleView.swift in Sources */,
 				F9F97C832CDCF6A200096ED1 /* ConstraintHelper.swift in Sources */,
 				F96E61752CD9C6DD007329DB /* Colors.swift in Sources */,
+				F9236D962CF613AC00245F08 /* AnalyzeView.swift in Sources */,
 				F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */,
 				F9F97C772CDB164D00096ED1 /* TestView.swift in Sources */,
 				F9FFC6C02CE31970008AB5EE /* WorkIntroView.swift in Sources */,

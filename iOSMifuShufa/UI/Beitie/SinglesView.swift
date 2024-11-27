@@ -44,10 +44,6 @@ class SingleViewModel: AlertViewModel {
     }
     self.uiImage = uiImage
   }
-  
-  private lazy var imageSaver = ImageSaver {
-    self.showAlertDlg("图片已保存".orCht("圖片已保存"))
-  }
 }
 
 struct ToastView: View {
@@ -215,10 +211,18 @@ struct SinglesView: View {
           Text(single.structure ?? UNKNOWN).padding(.leading, 5)
         }
         Spacer()
+        NavigationLink {
+          AnalyzeView(viewModel: AnalyzeViewModel(single))
+        } label: {
+          Image("analyze").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
+        }
+        
+        0.5.VDivideer(color: .gray).frame(height: 15)
+          .padding(.horizontal, 10)
         Button {
           viewModel.toggleDrawPanel()
         } label: {
-          Image("handwriting").square(size: 16)
+          Image("handwriting").square(size: 16).foregroundStyle(.blue)
         }
       }.padding(.horizontal, 10).padding(.vertical, 8).background(.white)
       Divider()
