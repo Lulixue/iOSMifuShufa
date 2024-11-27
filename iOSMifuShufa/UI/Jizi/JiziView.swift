@@ -316,9 +316,20 @@ struct JiziView : View {
                       .background {
                         RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
                       }.blur(radius: matchVip ? 0 : 1)
-                  }.indicator(.activity)
+                  }
+                  .onSuccess(perform: { _, _, _ in
+                    if shouldAutoScroll {
+                      scrollToIndex(lastScrollDestination)
+                    }
+                  })
+                  .indicator(.activity)
                     .tint(.white)
                     .frame(minWidth: 40, minHeight: 40)
+                    .onAppear {
+                      if shouldAutoScroll {
+                        scrollToIndex(lastScrollDestination)
+                      }
+                    }
                 }
               }.id(i).padding(.horizontal, 5)
             }
@@ -327,22 +338,40 @@ struct JiziView : View {
               singleProxy = proxy
             }.id(currentItem.char)
         }.padding(.top, 9).padding(.bottom, Device.hasTopNotch ? 0 : 9).padding(.horizontal, 5)
-      }.onChange(of: viewModel.singleIndex) { newValue in
+      }
+      .scrollViewStyle(.defaultStyle($candidateScrollState))
+      .onChange(of: viewModel.singleIndex) { newValue in
         if singleIndex != newValue {
           self.singleIndex = newValue
+          autoScroll = true
           scrollToIndex(newValue)
         }
       }
       .onChange(of: viewModel.singleStartIndex) { newValue in
+        autoScroll = true
         scrollToIndex(newValue)
       }.background(Color.singlePreviewBackground)
         .frame(height: 80)
         .modifier(AlertViewModifier(viewModel: viewModel))
+        .onChange(of: candidateScrollState.isDragging) { newValue in
+          if newValue {
+            autoScroll = false
+          }
+        }
     }
   }
   
+  var shouldAutoScroll: Bool {
+    autoScroll && (lastScrollDestination == viewModel.singleStartIndex || lastScrollDestination == viewModel.singleIndex)
+  }
+  
+  @State private var autoScroll = false
+  @ScrollState private var candidateScrollState
+  
+  @State private var lastScrollDestination = -1
   private func scrollToIndex(_ index: Int) {
     DispatchQueue.main.async {
+      self.lastScrollDestination = index
       singleProxy?.scrollTo(index, anchor: .leading)
     }
   }
@@ -351,7 +380,7 @@ struct JiziView : View {
 
 #Preview {
   JiziView(viewModel: {
-    let text = "可她分明在世上，更在我心尖"
+    let text = "可你分明在世上，更在我心尖"
     let items = JiziViewModel.search(text: text)
     let vm = JiziViewModel(text: text, items: items)
     return vm

@@ -193,16 +193,32 @@ struct PuzzleSettingsView: View {
       $viewModel.singleGap
     }
   }
- 
+  
+  var modeBinding: Binding<Bool> {
+    Binding {
+      self.viewModel.jinMode && CurrentUser.isVip
+    } set: { newValue in
+      if !CurrentUser.isVip {
+        self.viewModel.showConstraintVip("当前不支持现代排版，请联系客服".orCht("當前不支持現代排版，請聯繫客服"))
+        return
+      }
+      self.viewModel.jinMode = newValue
+    }
+  }
+  
+  var modernLayout: String {
+    "现代排版".orCht("現代排版")
+  }
+  
   var body: some View {
     VStack {
       HStack(spacing: 0) {
         Text("排版").font(.callout)
           .foregroundStyle(Colors.iconColor(0))
         15.HSpacer()
-        Picker("", selection: $viewModel.jinMode) {
+        Picker("", selection: modeBinding) {
           Text("古代排版").tag(false)
-          Text("现代排版".orCht("現代排版")).tag(true)
+          Text(modernLayout).tag(true)
         }.pickerStyle(.segmented)
       }
       Divider()
@@ -256,7 +272,7 @@ class ImageSaver: NSObject {
 }
 
 class PuzzleViewModel: AlertViewModel {
-  @Published var jinMode = PuzzleSettingsItem.JinMode.boolValue {
+  @Published var jinMode = PuzzleSettingsItem.JinMode.boolValue && CurrentUser.isVip {
     didSet {
       var mode = PuzzleSettingsItem.JinMode
       mode.value = jinMode
