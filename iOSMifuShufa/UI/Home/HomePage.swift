@@ -85,6 +85,19 @@ struct DeviceRotationViewModifier: ViewModifier {
   }
 }
 
+struct MiGridModifier: ViewModifier {
+  @StateObject var viewModel = MiGridViewModel.shared
+  var onChange: () -> Void = {}
+  func body(content: Content) -> some View {
+    content.onChange(of: viewModel.centroidMi) { newValue in
+      onChange()
+    }
+    .onChange(of: viewModel.singleType) { newValue in
+      onChange()
+    }
+  }
+}
+
 struct HomePage: View {
   @StateObject var viewModel: HomeViewModel
   @StateObject var sideVM = SideMenuViewModel()
@@ -311,15 +324,23 @@ struct HomePage: View {
         ForEach(0..<singles.count, id: \.self) { i in
           let single = singles[i]
           ZStack(alignment: .top) {
-            MiGridZoomableImageView(viewModel: MiGridZoomableViewModel(single: single, grid: miViewModel.singleType, centroid: miViewModel.centroidMi)) {
-              hidePreview()
-            } onClick: {
-              navVM.gotoSingles(singles: singles, index: i)
-            }.rotationEffect(.degrees(rotation))
+            if let vm = viewModel.singleViewModels[single] {
+              MiGridZoomableImageView(viewModel: vm) {
+                hidePreview()
+              } onClick: {
+                navVM.gotoSingles(singles: singles, index: i)
+              }.rotationEffect(.degrees(rotation))
+            }
           }.tag(i)
         }
       }.tabViewStyle(.page(indexDisplayMode: .never))
         .id(miViewModel.viewId)
+        .onChange(of: viewModel.selectedSingleIndex, perform: { newValue in
+          let single = singles[newValue]
+          if miViewModel.isVipFeature && single.work.notMatchVip {
+            viewModel.showToast("碑帖「\(single.work.chineseFolder())」不支持当前米字格".orCht("碑帖「\(single.work.chineseFolder())」不支持當前米字格"))
+          }
+        })
       
       VStack {
         let attr = {
@@ -368,19 +389,31 @@ struct HomePage: View {
                 Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
               }
             }.padding(.top, 12).padding(.horizontal, 10)
+              .background(HeightReaderView(binding: $headerHeight))
             if showMiGrids {
               SingleMiGridView(miViewModel: miViewModel)
             }
             Spacer()
           }
         }
-        if viewModel.showDrawPanel {
-          DrawPanel().environmentObject(viewModel.drawViewModel)
+      }
+      if viewModel.showDrawPanel {
+        DrawPanel().environmentObject(viewModel.drawViewModel).zIndex(10).padding(.top, headerHeight)
+      }
+      if viewModel.showToast {
+        VStack {
+          Spacer()
+          ToastView(title: viewModel.toastTitle)
+          Spacer()
         }
       }
     }.background(previewColor)
+      .modifier(MiGridModifier(){
+        viewModel.syncViewModels()
+      })
   }
   
+  @State private var headerHeight: CGFloat = 0
   private let orderSpacing: CGFloat = 14
   private let orderBarHeight: CGFloat = 40
   private let clickedColor: Color = .gray
@@ -488,6 +521,8 @@ struct HomePage: View {
         showMiGrids = false
         viewModel.showDrawPanel = false
       }
+    }.onChange(of: viewModel.showDrawPanel) { newValue in
+      viewModel.showToast(newValue ? "handwriting_on".resString : "handwriting_off".resString)
     }
   }
   

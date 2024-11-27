@@ -284,6 +284,10 @@ class MiGridViewModel: AlertViewModel {
     singleType.rawValue + centroidMi.description
   }
   
+  var isVipFeature: Bool {
+    singleType.isVipProperty() || centroidMi
+  }
+  
   var centroidBinding: Binding<Bool> {
     Binding {
       self.centroidMi

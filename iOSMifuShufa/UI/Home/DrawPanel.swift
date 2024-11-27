@@ -93,7 +93,7 @@ struct DrawPanel : View {
       ZStack(alignment: .topLeading) {
         ScrollView {
           
-        }
+        }.background(.black.opacity(0.05))
         if viewModel.lines.isNotEmpty() || current.isNotEmpty() {
           Canvas { ctx, size in
             for line in viewModel.lines {

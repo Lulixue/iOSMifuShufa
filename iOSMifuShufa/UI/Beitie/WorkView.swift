@@ -236,6 +236,33 @@ extension Int {
   }
 }
 
+
+struct ToastView: View {
+  let title: String
+  var body: some View {
+    HStack {
+      Text(title)
+        .foregroundStyle(.white)
+        .padding(.horizontal, 30)
+        .padding(.vertical, 12)
+    }.background(Color.darkSlateGray)
+      .clipShape(RoundedRectangle(cornerRadius: 25))
+  }
+}
+
+struct ToastModifier: ViewModifier {
+  @StateObject var viewModel: AlertViewModel
+  func body(content: Content) -> some View {
+    if viewModel.showToast {
+      content.toast(isPresented: $viewModel.showToast, dismissAfter: 1) {
+        ToastView(title: viewModel.toastTitle)
+      }
+    } else {
+      content
+    }
+  }
+}
+
 struct WorkView: View, SinglePreviewDelegate {
   func onImageTapped(_ item: Any?) {
     if viewModel.enterFullscreen {
@@ -410,15 +437,6 @@ struct WorkView: View, SinglePreviewDelegate {
             .foregroundStyle(.white)
         }.background(.black.opacity(0.55))
       }
-      if viewModel.showToast {
-        ZStack {
-          VStack {
-            Spacer()
-            ToastView(title: viewModel.toastTitle)
-            Spacer()
-          }
-        }
-      }
       if viewModel.showDrawPanel {
         DrawPanel().environmentObject(viewModel.drawVM)
       }
@@ -471,6 +489,13 @@ struct WorkView: View, SinglePreviewDelegate {
         }
       }.modifier(DragDismissModifier(show: $viewModel.showOverflowMenu))
         .modifier(TapDismissModifier(show: $viewModel.showOverflowMenu))
+      
+      if viewModel.showToast {
+        ZStack {
+          Color.clear
+          ToastView(title: viewModel.toastTitle)
+        }
+      }
       if viewModel.showOverflowMenu {
         DropDownOptionsView(param: viewModel.dropdownParam!) { item in
           switch item {

@@ -277,9 +277,13 @@ class BeitieWork: Decodable, Equatable, Hashable {
   }
 }
 
-class BeitieSingle: Decodable, Equatable {
+class BeitieSingle: Decodable, Equatable, Hashable {
   static func == (lhs: BeitieSingle, rhs: BeitieSingle) -> Bool {
     lhs.id == rhs.id
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
   }
   
   var id: Int = 0

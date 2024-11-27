@@ -241,6 +241,7 @@ class HomeViewModel : AlertViewModel {
   @Published var orderTypeParam: DropDownParam<SearchResultOrder>!
   @Published var fastDirectParam: DropDownParam<Int>!
   @Published var fontParam: DropDownParam<CalligraphyFont?>!
+  @Published var singleViewModels = [BeitieSingle: MiGridZoomableViewModel]()
   
   var resultId: String {
     "\(order)\(String(describing: preferredFont))"
@@ -483,10 +484,20 @@ class HomeViewModel : AlertViewModel {
     }
   }
   
+  func syncViewModels() {
+    let collection = selectedSingleCollection
+    var vms = [BeitieSingle: MiGridZoomableViewModel]()
+    collection.forEach { single in
+      vms[single] = single.miGridViewModel
+    }
+    self.singleViewModels = vms
+  }
+  
   func onClickSinglePreview(_ index: Int, collection: Array<BeitieSingle>) {
     selectedSingleIndex = index
     selectedSingleCollection = collection
     showPreview = true
+    syncViewModels()
   }
   
   private func initToday() {
@@ -555,13 +566,13 @@ class HomeViewModel : AlertViewModel {
 extension Array where Element == BeitieSingle {
   
   func matchSearch() -> List<BeitieSingle> {
-    let ok = filter { it in it.brokenLevel < 4 }
+    let ok = filter { it in it.brokenLevel < 4 && !it.`repeat` }
     let filtered = ok.filter { it in BeitieDbHelper.shared.searchWorks.contains(it.workId) }
     return filtered
   }
   
   func matchJizi() -> List<BeitieSingle> {
-    let filtered = filter { it in it.brokenLevel < 3 }.filter { it in BeitieDbHelper.shared.jiziWorks.contains(it.workId) }
+    let filtered = filter { it in it.brokenLevel < 3 && !it.`repeat` }.filter { it in BeitieDbHelper.shared.jiziWorks.contains(it.workId) }
     return filtered
   }
 }

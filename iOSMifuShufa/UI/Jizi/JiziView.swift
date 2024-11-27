@@ -78,7 +78,8 @@ struct JiziView : View {
                   .tint(.colorPrimary)
               }
             }.frame(height: size-16)
-            Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout).padding(.top, 5).padding(.bottom, 2)
+            Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout)
+              .underline(item.jiziUseComponents).padding(.top, 5).padding(.bottom, 2)
               .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
             
           }.padding(.top, 5).padding(.bottom, 3).padding(.horizontal, itemPaddingHor).frame(width: size).frame(height: size+20)
@@ -317,6 +318,7 @@ struct JiziView : View {
                       }.blur(radius: matchVip ? 0 : 1)
                   }.indicator(.activity)
                     .tint(.white)
+                    .frame(minWidth: 40, minHeight: 40)
                 }
               }.id(i).padding(.horizontal, 5)
             }

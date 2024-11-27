@@ -17,7 +17,6 @@ struct ContentView: View {
   var tabView: some View {
     TabView(selection: $selection) {
       HomePage(viewModel: homeViewModel)
-//      AnalyzeView(viewModel: AnalyzeViewModel(UIImage(named: "sample")!))
         .tabItem {
           Label("title_home".localized, systemImage: "magnifyingglass")
         }.tag(0)

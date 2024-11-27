@@ -436,6 +436,21 @@ struct SizeReaderView: View {
   }
 }
 
+struct HeightReaderView: View {
+  @Binding var binding: CGFloat
+  var body: some View {
+    GeometryReader { geo in
+      Color.clear
+        .preference(key: HeightPreferenceKey.self, value: max(geo.frame(in: .local).size.height, 0))
+    }
+    .onPreferenceChange(HeightPreferenceKey.self) { h in
+      if binding == 0 {
+        binding = h
+      }
+    }
+  }
+}
+
 struct WidthReaderView: View {
   @Binding var binding: CGFloat
   var body: some View {

@@ -1,5 +1,5 @@
 {
-  "originHash" : "bcc3d76cbcad608183d5311124ca623fbeb9c32b6536a0487cc1112d3e94bfcb",
+  "originHash" : "5d2653c9c44519a53ed5dc6b5ca750a3f36783501146398daebb7ed2fc02c1ca",
   "pins" : [
     {
       "identity" : "opencv-spm",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "671108c96644956dddcd89dd59c203dcdb36cec7",
         "version" : "1.1.4"
+      }
+    },
+    {
+      "identity" : "toastui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/quanshousio/ToastUI",
+      "state" : {
+        "revision" : "146e2f52c132f681fbf798c8c9f0eb52f021f346",
+        "version" : "4.0.0"
       }
     }
   ],

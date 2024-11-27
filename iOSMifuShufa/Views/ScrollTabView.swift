@@ -17,6 +17,15 @@ extension HorizontalAlignment {
   static let underlineLeading = HorizontalAlignment(UnderlineLeading.self)
 }
 
+struct HeightPreferenceKey: PreferenceKey {
+  static var defaultValue = CGFloat(0)
+  
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = nextValue()
+  }
+  
+  typealias Value = CGFloat
+}
 struct WidthPreferenceKey: PreferenceKey {
   static var defaultValue = CGFloat(0)
   

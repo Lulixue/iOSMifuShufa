@@ -9,6 +9,16 @@ import SwiftUI
 import Foundation
 import SDWebImageSwiftUI
 import DeviceKit
+import ToastUI
+
+extension BeitieSingle {
+  var miGridViewModel: MiGridZoomableViewModel {
+    let grid = MiGridViewModel.shared.singleType
+    let centroid = MiGridViewModel.shared.centroidMi
+    let matchVip = self.work.matchVip
+    return MiGridZoomableViewModel(single: self, grid: matchVip ? grid : .Original, centroid: matchVip && centroid)
+  }
+}
 
 class SingleViewModel: AlertViewModel {
   @Published var drawViewModel = DrawViewModel()
@@ -16,6 +26,7 @@ class SingleViewModel: AlertViewModel {
   @Published var showDrawPanel = false
   @Published var currentIndex: Int = 0
   @Published var orientation = UIDeviceOrientation.unknown
+  @Published var singleViewModels = [BeitieSingle: MiGridZoomableViewModel]()
   var uiImage: UIImageView? = nil
   init(singles: List<BeitieSingle>, selected: Int = 0) {
     self.singles = singles
@@ -23,6 +34,17 @@ class SingleViewModel: AlertViewModel {
     super.init()
     drawViewModel.onCloseDraw = { [weak self] in
       self?.showDrawPanel = false
+    }
+    syncViewModels()
+  }
+
+  func syncViewModels() {
+    var map = [BeitieSingle: MiGridZoomableViewModel]()
+    singles.forEach { single in
+      map[single] = single.miGridViewModel
+    }
+    DispatchQueue.main.async {
+      self.singleViewModels = map
     }
   }
   
@@ -45,24 +67,7 @@ class SingleViewModel: AlertViewModel {
     self.uiImage = uiImage
   }
 }
-
-struct ToastView: View {
-  let title: String
-  var body: some View {
-    HStack {
-      Text(title)
-        .foregroundStyle(.white)
-        .padding(.horizontal, 30)
-        .padding(.vertical, 12)
-    }.background(Color.darkSlateGray)
-      .clipShape(RoundedRectangle(cornerRadius: 25))
-  }
-}
-
-#Preview("toast") {
-  ToastView(title: "hello")
-}
-
+ 
 struct SingleMiGridView: View {
   @ObservedObject var miViewModel = MiGridViewModel.shared
   
@@ -163,7 +168,9 @@ struct SinglesView: View {
           .foregroundStyle(Color.colorPrimary)
       }
       Button {
-        viewModel.saveSingle(single: currentSingle)
+        if let image = viewModel.singleViewModels[currentSingle]?.image {
+          viewModel.imageSaver.writeToPhotoAlbum(image: image)
+        }
       } label: {
         Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
@@ -181,9 +188,15 @@ struct SinglesView: View {
   var body: some View {
     ZStack {
       content
+      if viewModel.showToast {
+        ToastView(title: viewModel.toastTitle)
+      }
     }.navigationBarHidden(true)
       .modifier(WorkDestinationModifier(naviVM: naviVM))
       .modifier(AlertViewModifier(viewModel: viewModel))
+      .onDisappear {
+        miViewModel.reset()
+      }
   }
   
   var rotation: Double {
@@ -214,21 +227,26 @@ struct SinglesView: View {
             let single = singles[i]
             ZStack(alignment: .bottom) {
               Image("background").resizable().scaledToFill()
-              MiGridZoomableImageView(viewModel: MiGridZoomableViewModel(single: single, grid: miViewModel.singleType, centroid: miViewModel.centroidMi))
-                .padding(40)
-                .rotationEffect(.degrees(rotation))
+              if let vm = viewModel.singleViewModels[single] {
+                MiGridZoomableImageView(viewModel: vm)
+                  .padding(40)
+                  .rotationEffect(.degrees(rotation))
+              } else {
+                Spacer()
+              }
               Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
                 .padding(.bottom, 14)
-            }.id(i)
+            }.tag(i)
           }
         }.tabViewStyle(.page(indexDisplayMode: .never))
           .id(miViewModel.singleType.toString() + miViewModel.centroidMi.description.toString())
         if viewModel.showDrawPanel {
           DrawPanel().environmentObject(viewModel.drawViewModel)
         }
-        if viewModel.showToast {
-          ToastView(title: viewModel.toastTitle)
-        }
+      }.onChange(of: miViewModel.singleType) { newValue in
+        viewModel.syncViewModels()
+      }.onChange(of: miViewModel.centroidMi) { newValue in
+        viewModel.syncViewModels()
       }
       Divider()
       if showMiGrid {
@@ -321,7 +339,7 @@ struct SinglesView: View {
                     }
                   }
                 }
-              }.id(i)
+              }.tag(i)
             }
           }.padding(.top, 10).padding(.bottom, Device.hasTopNotch ? 0 : 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
             .onAppear {
@@ -355,9 +373,8 @@ struct SinglesView: View {
           } else {
             viewModel.orientation = .unknown
           }
-        })).onDisappear {
-          miViewModel.reset()
-        }
+        }))
+        
     }
   }
 }

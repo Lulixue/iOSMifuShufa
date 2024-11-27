@@ -74,11 +74,11 @@ class AlertViewModel: BaseObservableObject {
     showAlertDlg(title)
   }
   
-  func showToast(_ title: String) {
+  func showToast(_ title: String, delaySec: Double = 1) {
     toastTitle = title
     showToast = true
     Task {
-      try? await Task.sleep(nanoseconds: 2_000_000_000)
+      try? await Task.sleep(nanoseconds: UInt64(delaySec * 1_000_000_000))
       DispatchQueue.main.async {
         self.showToast = false
       }

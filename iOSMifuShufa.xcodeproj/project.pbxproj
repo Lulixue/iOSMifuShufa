@@ -57,6 +57,7 @@
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
 		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
+		F9988AF32CF727D70038D32D /* ToastUI in Frameworks */ = {isa = PBXBuildFile; productRef = F9988AF22CF727D70038D32D /* ToastUI */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -277,6 +278,7 @@
 				F96E61252CD91511007329DB /* Collections in Frameworks */,
 				F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */,
 				4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */,
+				F9988AF32CF727D70038D32D /* ToastUI in Frameworks */,
 				F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -736,6 +738,7 @@
 			packageReferences = (
 				F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F95C68A82CF58A5B00292A34 /* XCRemoteSwiftPackageReference "opencv-spm" */,
+				F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */,
 			);
 			productRefGroup = F98820452C3AC4500011DB04 /* Products */;
 			projectDirPath = "";
@@ -1196,10 +1199,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = light;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1234,10 +1236,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = light;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1386,6 +1387,14 @@
 				minimumVersion = 1.1.4;
 			};
 		};
+		F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quanshousio/ToastUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1402,6 +1411,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
+		};
+		F9988AF22CF727D70038D32D /* ToastUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */;
+			productName = ToastUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
