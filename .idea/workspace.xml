@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加登录和隐私政策">
-      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/AnalyzeView.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/ContentView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/ContentView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Helper/AnalyzeHelper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/AnalyzeHelper.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Helper/ViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/ViewModel.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/SinglesView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/SinglesView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/SinglePreviewItem.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/SinglePreviewItem.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/PuzzleView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/PuzzleView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Views/OpenCVTestView.swift" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

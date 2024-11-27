@@ -139,6 +139,10 @@ class BeitieDbHelper {
     syncWorkRanges()
   }
   
+  static func getWorkByFolder(_ folder: String) -> BeitieWork? {
+    shared.works.first { $0.folder == folder }
+  }
+  
   func getTodaySingles(_ id: Int) -> List<Int> {
     var result = [Int]()
     do {

@@ -6,6 +6,7 @@
 //
 import Foundation
 import UIKit
+import SwiftUI
 
 struct FilterRange {
   let min: Int
@@ -233,6 +234,85 @@ enum SingleAnalyzeType: String, CaseIterable, FilterProperty {
   func toString() -> String {
     rawValue
   }
+  
+  func demoBitmap(_ bitmap: Bitmap) -> Bitmap {
+    switch self {
+    case .Original:
+      return bitmap
+    case .BorderPlus, .ProfilePlus:
+      return ImageAnalyze(rawValue: self.toString())!.doAnalysis(org: bitmap, folder: "方圆庵记")
+    default:
+      do {
+        let type = MiGridType(rawValue: self.toString())!
+        return ImageProcessor.addMiGridSolid(bitmap, type: type)
+      }
+    }
+  }
+  
+  func applyAnalyze(_ bitmap: Bitmap, _ single: BeitieSingle) -> Bitmap {
+    switch self {
+    case .Original: return bitmap
+    case .GridMiCircle, .GridMi, .Grid16GoneGe, .Grid36GoneGe, .Grid9GongGe:
+      do {
+        let miGridType = MiGridType(rawValue: self.toString())!
+        return ImageProcessor.addSingleMiGrid(single: single, bitmap: bitmap, miGrid: miGridType)
+      }
+    default:
+      do {
+        let analyze = ImageAnalyze(rawValue: toString())!
+        return analyze.doAnalysis(org: bitmap, folder: single.work.folder)
+      }
+    }
+  }
+}
+
+class MiGridViewModel: AlertViewModel {
+  static let shared = MiGridViewModel()
+  @Published var singleType = SingleAnalyzeType.Original {
+    didSet {
+      if singleType.isVipProperty() && !centroidMi {
+        ConstraintItem.CentroidMiCount.increaseUsage()
+      }
+    }
+  }
+  @Published var centroidMi = AnalyzeHelper.shared.singleCentroidMi {
+    didSet {
+      AnalyzeHelper.shared.singleCentroidMi = centroidMi
+    }
+  }
+  var viewId: String {
+    singleType.rawValue + centroidMi.description
+  }
+  
+  var centroidBinding: Binding<Bool> {
+    Binding {
+      self.centroidMi
+    } set: { newValue in
+      if newValue && ConstraintItem.CentroidMiCount.readUsageMaxCount() {
+        self.centroidMi = false
+        self.showConstraintVip(ConstraintItem.CentroidMiCount.topMostConstraintMessage)
+        return
+      }
+      ConstraintItem.CentroidMiCount.increaseUsage()
+      self.centroidMi = newValue
+    }
+  }
+  
+  lazy var demoImages = {
+    var this = [SingleAnalyzeType: UIImage]()
+    let zi = UIImage(named: "zi")!
+    SingleAnalyzeType.allCases.forEach { type in
+      this[type] = type.demoBitmap(zi)
+    }
+    return this
+  }()
+  
+  func reset() {
+    if (centroidMi && !CurrentUser.isVip) {
+      centroidMi = false
+      singleType = .Original
+    }
+  }
 }
 
 class AnalyzeHelper {
@@ -281,24 +361,11 @@ class AnalyzeHelper {
   }
   
   static func getMiGridColor(bitmap: Bitmap, folder: String) -> UIColor {
-//    ImageAnalyze.MiGridPlus.baseOps.forEach {
-//      if (it.key == folder) {
-//        if (it.value.isNotEmpty()) {
-//          val op = it.value[0]
-//          val filtered = (if (op.param == null) op.imageFilter()?.addFilter(bitmap) else
-//            op.imageFilter()?.addFilter(bitmap, op.param)) ?: return@forEach
-//          return OpenCvImage.getOppositeMeanColor(filtered)
-//        }
-//        return@forEach
-//      }
-//    }
-//    return BeitieDbHelper.getWorkByFolder(folder)?.miGridColor() ?: Color.BLACK
-    return UIColor.black
+    return BeitieDbHelper.getWorkByFolder(folder)?.miGridColor() ?? UIColor.black
   }
   
-  func getCentroidMiGrid(org: Bitmap, folder: String) -> (CGPoint?, CGFloat) {
-    let result = ImageAnalyze.CentroidMiGridPlus.doAnalysis(org: org, folder: folder)
-    return OpenCvImage.getBitmapCentroidRadius(result)
+  static func getCentroidMiGrid(org: Bitmap, folder: String) -> (CGPoint?, CGFloat) {
+    return OpenCvImage.getBitmapCentroidRadius(org)
   }
 }
 

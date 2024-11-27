@@ -228,7 +228,6 @@ struct HomePage: View {
     Section {
       
       if !collapseBinding.wrappedValue {
-        
         let showSubtitle = singles.hasAny { it in order.getSingleSubtitle(it)?.isNotEmpty() == true }
         autoColumnGrid(singles, space: 12, parentWidth: UIScreen.currentWidth, maxItemWidth: 70, rowSpace: 12, paddingValues: PaddingValue(vertical: 10)) { width, i, single in
           Button {
@@ -301,7 +300,9 @@ struct HomePage: View {
       0
     }
   }
+  @StateObject var miViewModel = MiGridViewModel.shared
   
+  @State private var showMiGrids = false
   var previewResult: some View {
     ZStack(alignment: .top) {
       let singles = viewModel.selectedSingleCollection
@@ -310,7 +311,7 @@ struct HomePage: View {
         ForEach(0..<singles.count, id: \.self) { i in
           let single = singles[i]
           ZStack(alignment: .top) {
-            SinglePreviewItem(single: single) {
+            MiGridZoomableImageView(viewModel: MiGridZoomableViewModel(single: single, grid: miViewModel.singleType, centroid: miViewModel.centroidMi)) {
               hidePreview()
             } onClick: {
               navVM.gotoSingles(singles: singles, index: i)
@@ -318,6 +319,7 @@ struct HomePage: View {
           }.tag(i)
         }
       }.tabViewStyle(.page(indexDisplayMode: .never))
+        .id(miViewModel.viewId)
       
       VStack {
         let attr = {
@@ -331,29 +333,46 @@ struct HomePage: View {
       }.padding(.bottom, 8)
       VStack {
         ZStack {
-          HStack {
-            Spacer()
-            Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
-              .font(.body)
-              .foregroundStyle(.white).padding(.vertical, 12)
+          VStack(spacing: 10) {
+            HStack(spacing: 0) {
+              NavigationLink {
+                AnalyzeView(viewModel: AnalyzeViewModel(selectedSingle))
+              } label: {
+                Image("analyze").renderingMode(.template).square(size: 28).foregroundStyle(.white)
+              }
+              0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 12)
+              Button {
+                withAnimation(.linear(duration: 0.2)) {
+                  showMiGrids.toggle()
+                }
+              } label: {
+                Image("mi_mi").renderingMode(.template).square(size: 26).foregroundStyle(.white)
+              }
+              Spacer()
+              Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
+                .font(.body)
+                .foregroundStyle(.white).padding(.vertical, 8)
+              Spacer()
+              Button {
+                viewModel.showDrawPanel.toggle()
+                if !viewModel.showDrawPanel {
+                  viewModel.drawViewModel.onClose()
+                }
+              } label: {
+                Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
+              }
+              0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 14)
+              Button {
+                hidePreview()
+              } label: {
+                Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
+              }
+            }.padding(.top, 12).padding(.horizontal, 10)
+            if showMiGrids {
+              SingleMiGridView(miViewModel: miViewModel)
+            }
             Spacer()
           }
-          HStack(spacing: 12) {
-            Button {
-              viewModel.showDrawPanel.toggle()
-              if !viewModel.showDrawPanel {
-                viewModel.drawViewModel.onClose()
-              }
-            } label: {
-              Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
-            }
-            Spacer()
-            Button {
-              hidePreview()
-            } label: {
-              Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
-            }
-          }.padding(.vertical, 12).padding(.horizontal, 10)
         }
         if viewModel.showDrawPanel {
           DrawPanel().environmentObject(viewModel.drawViewModel)
@@ -459,6 +478,17 @@ struct HomePage: View {
     }.simultaneousGesture(TapGesture().onEnded({ _ in
       viewModel.hideDropdown()
     }), isEnabled: viewModel.hasDropdown())
+    .onChange(of: showMiGrids) { newValue in
+      if !newValue {
+        miViewModel.reset()
+      }
+    }
+    .onChange(of: viewModel.showPreview) { newValue in
+      if !newValue {
+        showMiGrids = false
+        viewModel.showDrawPanel = false
+      }
+    }
   }
   
   var defaultView: some View {
@@ -611,6 +641,7 @@ struct HomePage: View {
 #Preview {
   HomePage(viewModel: HomeViewModel())
     .environmentObject(NavigationViewModel())
+    .environmentObject(NetworkMonitor())
 }
 
 

@@ -23,6 +23,10 @@ extension FilterProperty {
   var reachMax: Bool {
     isVipProperty() && !CurrentUser.isVip && ConstraintItem.CentroidAnalyze.readUsageMaxCount()
   }
+  
+  var reachCountMax: Bool {
+    isVipProperty() && !CurrentUser.isVip && ConstraintItem.CentroidMiCount.readUsageMaxCount()
+  }
 }
 
 class ImageProcessor {
@@ -35,7 +39,7 @@ class ImageProcessor {
     //图形重绘
     bitmap.draw(in: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
     //水印文字属性
-    let att = [NSAttributedString.Key.foregroundColor: UIColor.yellow, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.backgroundColor: UIColor.clear]
+    let att = [NSAttributedString.Key.foregroundColor: UIColor.yellow, NSAttributedString.Key.font: UIFont.systemFont(ofSize: max(20, size.height/50)), NSAttributedString.Key.backgroundColor: UIColor.clear]
     //水印文字大小
     let text = NSString(string: ratio)
     let s = text.size(withAttributes: att)
@@ -43,7 +47,9 @@ class ImageProcessor {
     let extraHeight: CGFloat = 6
     //绘制文字
     
-    let rect = CGRect.init(x: size.width/2-s.width/2-extraWidth/2, y: rightBottom.y.int.toCGFloat() + extraHeight/2 + s.height/2, width: s.width+extraWidth, height: s.height+extraHeight)
+    let bottom = min(rightBottom.y.int.toCGFloat() + extraHeight/2 + s.height/2, size.height-5)
+    
+    let rect = CGRect.init(x: size.width/2-s.width/2-extraWidth/2, y: bottom, width: s.width+extraWidth, height: s.height+extraHeight)
     
     context.setFillColor(bgColor.cgColor)
     context.fill(rect)
@@ -65,23 +71,17 @@ class ImageProcessor {
     return width
   }
   
-//  static func addSingleMiGrid(single: BeitieSingle, bitmap: Bitmap, miGrid: MiGridType, showCentroid: Boolean = AnalyzeHelper.centroidMiState) -> Bitmap {
-//      let folder = single.work.folder
-//    var centroid = CGPoint()
-//    var radius: CGFloat? = nil
-//    var color: UIColor = AnalyzeHelper.getMiGridColor(bitmap, folder)
-//      if (showCentroid) {
-//          radius = AnalyzeHelper.getCentroidMiGrid(bitmap, folder, centroid!)
-//          if (radius == -1) {
-//              centroid = nil
-//          }
-//      } else {
-//          centroid = nil
-//      }
-//      return addMiGrid(bitmap, type = miGrid,
-//          color = color, centroid = centroid, centerRadius = radius)
-//  }
-//  
+  static func addSingleMiGrid(single: BeitieSingle, bitmap: Bitmap, miGrid: MiGridType, showCentroid: Boolean = AnalyzeHelper.shared.singleCentroidMi) -> Bitmap {
+      let folder = single.work.folder
+    var centroid: CGPoint? = nil
+    var radius: CGFloat? = nil
+    let color: UIColor = AnalyzeHelper.getMiGridColor(bitmap: bitmap, folder: folder)
+    if (showCentroid) {
+      (centroid, radius) = AnalyzeHelper.getCentroidMiGrid(org: bitmap, folder: folder)
+    }
+    return addMiGrid(bitmap: bitmap, color: color, centroid: centroid, centerRadius: radius, type: miGrid)
+  }
+  
   static func addMiGrid(bitmap: Bitmap, color: UIColor = UIColor.black, centroid: CGPoint? = nil,
                         centerRadius: CGFloat? = nil, width: CGFloat? = nil,
                         type: MiGridType = MiGridType.GridMiCircle) -> Bitmap {
@@ -134,7 +134,7 @@ class ImageProcessor {
   }
   
   
-  static func addMiGridSolid(_ bitmap: Bitmap, type: MiGridType, strokeWidth: CGFloat = 0.5) -> Bitmap {
+  static func addMiGridSolid(_ bitmap: Bitmap, type: MiGridType, strokeWidth: CGFloat = 2) -> Bitmap {
     let size = bitmap.size
     UIGraphicsBeginImageContextWithOptions(size, true, 0)
     let bgColor = UIColor.white
@@ -150,10 +150,10 @@ class ImageProcessor {
     context.setLineDash(phase: 1.0, lengths: [5])
     // 绘制米字
     let path = getMiGridPath(miRect: miRect, type: type)
+    
     context.addPath(path.cgPath)
-    
     context.drawPath(using: .stroke)
-    
+  
     let image = UIGraphicsGetImageFromCurrentImageContext()
     //关闭上下文
     UIGraphicsEndImageContext()
@@ -198,7 +198,14 @@ class ImageProcessor {
       path.lineTo(miRect.left, miRect.bottom)
       if (type != MiGridType.GridMi) {
         path.closeSubpath()
+//        var circlePath = Path()
         path.addCircle(centerX, centerY, radius)
+//        var totalPath = Path()
+//        totalPath.addPath(path)
+//        totalPath.addPath(circlePath)
+//        path.closeSubpath()
+//        path.addPath(circlePath)
+//        return path
       }
     }
     case MiGridType.Grid36GoneGe: drawGrid(6)
@@ -483,7 +490,7 @@ class OpenCvImage {
       let cx = (moments.m10 / moments.m00)
       let cy = (moments.m01 / moments.m00)
       
-      return (CGPoint(x: cx, y: cy), CGFloat(min(min(rows-cx, cx), min(cols-cy, cy))))
+      return (CGPoint(x: cx, y: cy), abs(CGFloat(min(min(rows-cx, cx), min(cols-cy, cy)))))
     }
     return (nil, CGFloat(-1))
   }
@@ -521,6 +528,7 @@ class OpenCvImage {
     let mean = Core.mean(src: src)
     let (b, g, r, a) = mean.val.fourDoubles
     
+    debugPrint("convexHullBitmap \(src.channels())")
     let cannyOutput = Mat.zeros(src.rows(), cols: src.cols(), type: CvType.CV_8UC1)
     if ((a+b+g+r) > 10.0) {
       let original = bitmapToMat(bmp)
@@ -773,7 +781,7 @@ class AnalyzeViewModel: AlertViewModel {
   @Published var history = Stack<UIImage>()
   @Published var originalImage: UIImage? = nil
   @Published var showImage: UIImage? = nil
-  @Published var tabIndex = 1
+  @Published var tabIndex = 0
   @Published var filterImages = [ImageFilter: UIImage]()
   @Published var analyzeImages = [ImageAnalyze: UIImage]()
   @Published var selectedFilter: ImageFilter = .Original

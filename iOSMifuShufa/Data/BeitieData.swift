@@ -473,7 +473,7 @@ extension BeitieWork {
   
   func chineseVersion() -> String? { version?.orChtNullable(versionCht) }
   
-  func miGridColor() -> Color { (type == CalligraphyType.Tie) ? Color.black : Color.white }
+  func miGridColor() -> UIColor { (type == CalligraphyType.Tie) ? UIColor.black : UIColor.white }
       
   
 }
