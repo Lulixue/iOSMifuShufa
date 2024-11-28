@@ -223,7 +223,7 @@ class NetworkHelper {
    @Field("region") region: ConvertRegion): ResponseBody*/
   static func convert(input: String, mode: TranslateMode,
                       variant: ConvertRegion, region: ConvertRegion, onResult: @escaping (String, Bool) -> Void) {
-    let SUBMIT_URL = OYX_WEB_URL + "Opencc/Convert"
+    let SUBMIT_URL = AZURE_WEB_URL + "Opencc/Convert"
     let paramaters = [
       "input": input,
       "mode": mode,

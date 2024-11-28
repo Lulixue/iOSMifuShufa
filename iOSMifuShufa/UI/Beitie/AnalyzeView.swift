@@ -71,7 +71,7 @@ class ImageProcessor {
     return width
   }
   
-  static func addSingleMiGrid(single: BeitieSingle, bitmap: Bitmap, miGrid: MiGridType, showCentroid: Boolean = AnalyzeHelper.shared.singleCentroidMi) -> Bitmap {
+  static func addSingleMiGrid(single: BeitieSingle, bitmap: Bitmap, miGrid: MiGridType, showCentroid: Boolean = AnalyzeHelper.singleCentroidMi) -> Bitmap {
       let folder = single.work.folder
     var centroid: CGPoint? = nil
     var radius: CGFloat? = nil

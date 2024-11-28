@@ -9,7 +9,6 @@ import SwiftUI
 import Foundation
 import SDWebImageSwiftUI
 import DeviceKit
-import ToastUI
 
 extension BeitieSingle {
   var miGridViewModel: MiGridZoomableViewModel {
@@ -372,7 +371,7 @@ struct SinglesView: View {
             syncScroll(newValue)
           }
         }.modifier(DeviceRotationViewModifier(action: { orientation in
-          if !Device.current.isPad && AnalyzeHelper.shared.singleRotate {
+          if !Device.current.isPad && AnalyzeHelper.singleRotate {
             viewModel.orientation = orientation
           } else {
             viewModel.orientation = .unknown

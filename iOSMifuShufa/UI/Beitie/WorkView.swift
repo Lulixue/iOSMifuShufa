@@ -250,19 +250,6 @@ struct ToastView: View {
   }
 }
 
-struct ToastModifier: ViewModifier {
-  @StateObject var viewModel: AlertViewModel
-  func body(content: Content) -> some View {
-    if viewModel.showToast {
-      content.toast(isPresented: $viewModel.showToast, dismissAfter: 1) {
-        ToastView(title: viewModel.toastTitle)
-      }
-    } else {
-      content
-    }
-  }
-}
-
 struct WorkView: View, SinglePreviewDelegate {
   func onImageTapped(_ item: Any?) {
     if viewModel.enterFullscreen {

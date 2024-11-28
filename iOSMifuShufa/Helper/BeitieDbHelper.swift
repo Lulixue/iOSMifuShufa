@@ -639,7 +639,7 @@ extension BeitieSingle {
   var thumbnailUrl: String {
     let prefix = "images/\(work.folder)"
     let url = url.replacing(prefix, with: "\(prefix)/.thumbnail")
-    return if (AnalyzeHelper.shared.singleOriginal) {
+    return if (AnalyzeHelper.singleOriginal) {
       url.orgPath
     } else {
       url
@@ -647,7 +647,7 @@ extension BeitieSingle {
   }
   
   var url: String {
-    return work.urlPrefix + "/" + ((AnalyzeHelper.shared.singleOriginal) ? path.orgPath : path )
+    return work.urlPrefix + "/" + ((AnalyzeHelper.singleOriginal) ? path.orgPath : path )
   }
 
 }

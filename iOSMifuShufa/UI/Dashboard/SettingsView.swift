@@ -66,9 +66,9 @@ enum SettingRow: CaseIterable {
 private struct BeitieSettingsView: View {
   @Environment(\.presentationMode) var presentationMode
   
-  @State private var singleOriginal = AnalyzeHelper.shared.singleOriginal {
+  @State private var singleOriginal = AnalyzeHelper.singleOriginal {
     didSet {
-      AnalyzeHelper.shared.singleOriginal = singleOriginal
+      AnalyzeHelper.singleOriginal = singleOriginal
     }
   }
   
@@ -507,15 +507,15 @@ struct SettingsView: View {
 struct RotationSettingsView: View {
   @Environment(\.presentationMode) var presentationMode
   
-  @State private var singleRotation = AnalyzeHelper.shared.singleRotate {
+  @State private var singleRotation = AnalyzeHelper.singleRotate {
     didSet {
-      AnalyzeHelper.shared.singleRotate = singleRotation
+      AnalyzeHelper.singleRotate = singleRotation
     }
   }
   
-  @State private var homeRotation = AnalyzeHelper.shared.homeRotate {
+  @State private var homeRotation = AnalyzeHelper.homeRotate {
     didSet {
-      AnalyzeHelper.shared.homeRotate = homeRotation
+      AnalyzeHelper.homeRotate = homeRotation
     }
   }
   

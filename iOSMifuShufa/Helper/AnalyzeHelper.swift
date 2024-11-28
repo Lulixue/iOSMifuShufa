@@ -275,9 +275,9 @@ class MiGridViewModel: AlertViewModel {
       }
     }
   }
-  @Published var centroidMi = AnalyzeHelper.shared.singleCentroidMi {
+  @Published var centroidMi = AnalyzeHelper.singleCentroidMi {
     didSet {
-      AnalyzeHelper.shared.singleCentroidMi = centroidMi
+      AnalyzeHelper.singleCentroidMi = centroidMi
     }
   }
   var viewId: String {
@@ -320,47 +320,38 @@ class MiGridViewModel: AlertViewModel {
 }
 
 class AnalyzeHelper {
-  static let shared = AnalyzeHelper()
   
+  private static let CENTROID_MI = "singleCentroidMi"
+  private static let SINGLE_ANALYZE_KEY = "singleAnalyzeKey"
+  private static let HOME_ROTATE = "homeRotate"
+  private static let SINGLE_ROTATE = "singleRotate"
+  private static let SINGLE_ORIGINAL = "singleOriginal"
+  private static let IMAGE_SCALE = "imageScale"
   
-  private let CENTROID_MI = "singleCentroidMi"
-  private let SINGLE_ANALYZE_KEY = "singleAnalyzeKey"
-  private let HOME_ROTATE = "homeRotate"
-  private let SINGLE_ROTATE = "singleRotate"
-  private let SINGLE_ORIGINAL = "singleOriginal"
-  private let IMAGE_SCALE = "imageScale"
-  
-  var singleCentroidMi: Boolean {
-    get {
-      Settings.getBoolean(CENTROID_MI, false)
-    }
-    set {
-      Settings.putBoolean(CENTROID_MI, newValue)
+  static var singleCentroidMi = Settings.getBoolean(CENTROID_MI, false) {
+    didSet {
+      Settings.putBoolean(CENTROID_MI, singleCentroidMi)
     }
   }
-  var singleAnalyzeType: SingleAnalyzeType {
-    get { SingleAnalyzeType(rawValue: Settings.getString(SINGLE_ANALYZE_KEY, SingleAnalyzeType.Original.toString()))! }
-    set {
-      Settings.putString(SINGLE_ANALYZE_KEY, newValue.toString())
+  static var singleAnalyzeType: SingleAnalyzeType = SingleAnalyzeType(rawValue: Settings.getString(SINGLE_ANALYZE_KEY, SingleAnalyzeType.Original.toString()))! {
+    didSet {
+      Settings.putString(SINGLE_ANALYZE_KEY, singleAnalyzeType.toString())
     }
   }
-  var singleRotate: Boolean {
-    get { Settings.getBoolean(SINGLE_ROTATE, true) }
-    set {
-      Settings.putBoolean(SINGLE_ROTATE, newValue)
+  static var singleRotate: Boolean = Settings.getBoolean(SINGLE_ROTATE, true) {
+    didSet {
+      Settings.putBoolean(SINGLE_ROTATE, singleRotate)
     }
   }
   
-  var homeRotate: Boolean {
-    get { Settings.getBoolean(HOME_ROTATE, true) }
-    set {
-      Settings.putBoolean(HOME_ROTATE, newValue)
+  static var homeRotate: Boolean = Settings.getBoolean(HOME_ROTATE, true) {
+    didSet {
+      Settings.putBoolean(HOME_ROTATE, homeRotate)
     }
   }
-  var singleOriginal: Bool {
-    get { Settings.getBoolean(SINGLE_ORIGINAL, false) }
-    set {
-      Settings.putBoolean(SINGLE_ANALYZE_KEY, newValue)
+  static var singleOriginal: Bool = Settings.getBoolean(SINGLE_ORIGINAL, false) {
+    didSet {
+      Settings.putBoolean(SINGLE_ANALYZE_KEY, singleOriginal)
     }
   }
   

@@ -655,7 +655,7 @@ struct HomePage: View {
     .modifier(DragDismissModifier(show: $showCharType))
     .background(Colors.surfaceVariant.swiftColor)
     .modifier(DeviceRotationViewModifier(action: { orientation in
-      if !Device.current.isPad && AnalyzeHelper.shared.homeRotate {
+      if !Device.current.isPad && AnalyzeHelper.homeRotate {
         viewModel.orientation = orientation
       } else {
         viewModel.orientation = .unknown
