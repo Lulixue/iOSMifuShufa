@@ -8,6 +8,7 @@
 import SwiftUI
 import DeviceKit
 import SDWebImageSwiftUI
+import Combine
 
 extension View {
   @ViewBuilder func listItemBox() -> some View {
@@ -210,21 +211,36 @@ struct WorkListItem: View {
   }
 }
 
+class WorkItemViewModel: BaseObservableObject {
+  @Published var image: UIImage? = nil
+  @Published var loading: Bool = true
+  private var uiImageView: UIImageView!
+  let works: [BeitieWork]
+  init(works: List<BeitieWork>) {
+    self.works = works
+    uiImageView = UIImageView(frame: .zero)
+    super.init()
+    let first = works.first { $0.hasSingle() } ?? works.first()
+    let url = first.cover.url!
+    self.uiImageView.sd_setImage(with: url) { img, _, _, _ in
+      DispatchQueue.main.async {
+        self.image = img
+        self.loading = false
+      }
+    }
+  }
+}
+
 struct WorkItem: View {
   static let itemWidth: CGFloat = 110
   static let itemHeight: CGFloat = 100
-  let works: List<BeitieWork>
+  var works: List<BeitieWork> {
+    itemViewModel.works
+  }
   @EnvironmentObject var viewModel: BeitieViewModel
   @EnvironmentObject var naviVM: NavigationViewModel
-  @State var coverUrl: URL
-  @State var image: UIImage? = nil
-  @State var loading: Bool = true
-  
-  init(works: List<BeitieWork>) {
-    self.works = Array(works)
-    let first = works.first { $0.hasSingle() } ?? works.first()
-    self.coverUrl = first.cover.url!
-  }
+  @StateObject var itemViewModel: WorkItemViewModel
+   
   
   private func onClick() {
     debugPrint("onClick")
@@ -241,19 +257,30 @@ struct WorkItem: View {
     } label: {
       let first = works.first()
       VStack(spacing: 2) {
-        WebImage(url: coverUrl) { img in
-          img.image?.resizable()
+        if let image = itemViewModel.image {
+          Image(uiImage: image).resizable()
             .aspectRatio(contentMode: .fill)
+            .frame(width: Self.itemWidth-10)
+            .frame(height: Self.itemHeight-30)
+            .clipShape(RoundedRectangle(cornerRadius: 2))
+        } else {
+          ProgressView().squareFrame(30)
+            .progressViewStyle(.circular)
+            .tint(.colorPrimary)
         }
-        .onSuccess(perform: { image, data, cacheType in
-          DispatchQueue.main.async {
-            self.loading = false
-          }
-        })
-        .indicator(.activity).frame(width: Self.itemWidth-10, alignment: loading ? .center : .topTrailing)
-        .frame(minHeight: Self.itemHeight-30)
-        .clipShape(RoundedRectangle(cornerRadius: 2))
-        
+//        WebImage(url: coverUrl) { img in
+//          img.image?.resizable()
+//            .aspectRatio(contentMode: .fill)
+//        }
+//        .onSuccess(perform: { image, data, cacheType in
+//          DispatchQueue.main.async {
+//            self.loading = false
+//          }
+//        })
+//        .indicator(.activity).frame(width: Self.itemWidth-10, alignment: loading ? .center : .topTrailing)
+//        .frame(minHeight: Self.itemHeight-30)
+//        .clipShape(RoundedRectangle(cornerRadius: 2))
+//        
         HStack(alignment: .firstTextBaseline, spacing: 1) {
           Text(first.chineseName()).font(.footnote)
             .lineLimit(1).foregroundStyle(Colors.darkSlateGray.swiftColor)
@@ -295,6 +322,7 @@ struct CategoryItem: View {
   let rowSize: Int
   @EnvironmentObject var viewModel: BeitieViewModel
   @EnvironmentObject var naviVM: NavigationViewModel
+  let itemViewModels: [Int: WorkItemViewModel]
   
   init(key: AnyHashable, works: List<List<BeitieWork>>) {
     self.key = key
@@ -309,6 +337,12 @@ struct CategoryItem: View {
     self.rowSize = Int(rowItemSize)
     self.itemSpacing = spacing
     self.rowCount = works.size / rowSize + ((works.size % rowSize > 0) ? 1 : 0)
+    
+    var models = [Int: WorkItemViewModel]()
+    for i in 0..<works.size {
+      models[i] = WorkItemViewModel(works: works[i])
+    }
+    self.itemViewModels = models
   }
   
   var body: some View {
@@ -329,8 +363,8 @@ struct CategoryItem: View {
                 let start = i * rowSize
                 let end = min((i+1) * rowSize, works.size+1)
                 ForEach(start..<end, id:\.self) { j in
-                  if j < works.size {
-                    WorkItem(works: works[j])
+                  if j < works.size, let vm = itemViewModels[j] {
+                    WorkItem(itemViewModel: vm)
                       .id("\(key)\(j)")
                   } else {
                     Spacer()

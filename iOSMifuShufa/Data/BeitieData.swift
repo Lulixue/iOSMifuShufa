@@ -520,7 +520,8 @@ extension BeitieWork {
   
   func workNameAttrStr(_ font: Font = .body, smallerFont: Font = .footnote, curves: Bool = true) -> AttributedString {
     var name = AttributedString(!curves ? chineseName() : "《\(chineseName())》")
-    var version = AttributedString(chineseVersion() ?? "")
+    let v = chineseVersion() ?? ""
+    var version = AttributedString(v.isNotEmpty() ? " \(v)" : v)
     name.font = font
     version.font = smallerFont
     return name + version
