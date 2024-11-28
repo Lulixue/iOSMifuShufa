@@ -316,11 +316,12 @@ struct WorkView: View, SinglePreviewDelegate {
               } label: {
                 WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
                   img.image?.resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 80).clipShape(RoundedRectangle(cornerRadius: 2))
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 80, maxHeight: 60)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
                     .padding(0.5)
                     .background {
-                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 1)
+                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .gray, lineWidth: selected ? 4 : 1)
                     }
                 }.onSuccess(perform: { _, _, _ in
                   if galleryScroll {
@@ -328,7 +329,7 @@ struct WorkView: View, SinglePreviewDelegate {
                       syncScroll(tabIndex)
                     }
                   }
-                }).onAppear {
+                }).frame(height: 60).onAppear {
                   if galleryScroll {
                     DispatchQueue.main.async {
                       syncScroll(tabIndex)
@@ -537,11 +538,16 @@ struct WorkView: View, SinglePreviewDelegate {
         .onDisappear {
           work.lastIndex = tabIndex
         }
+        .onAppear {
+          if tabIndex != viewModel.pageIndex {
+            tabIndex = viewModel.pageIndex
+          }
+        }
   }
   
   private let scrollBarHeight: CGFloat = 44
 }
 
 #Preview {
-  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[97], pageIndex: 0))
+  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[1], pageIndex: 0))
 }

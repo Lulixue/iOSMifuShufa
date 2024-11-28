@@ -26,7 +26,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   
   func addSplashAD() {
     let frame = UIScreen.main.bounds
-    let splashAd = BUSplashAd.init(slotID: "890222718", adSize: frame.size)
+    let splashAd = BUSplashAd.init(slotID: CSJ_AD_ID, adSize: frame.size)
     splashAd.supportCardView = true
     splashAd.supportZoomOutView = true
     splashAd.delegate = self
@@ -40,7 +40,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   func setupBUAdSDK() {
     let configuration = BUAdSDKConfiguration.init()
     
-    configuration.appID = "5624945"
+    configuration.appID = CSJ_SPLASH_AD_ID
     BUAdSDKManager.start( asyncCompletionHandler: { success, error in
       if (success) {
         DispatchQueue.main.async {
@@ -183,9 +183,13 @@ class SplashViewModel: AlertViewModel {
       return
     }
     let _ = Settings.mmkv
+    #if DEBUG
+    finishAd()
+    #else
     if !showAd || CurrentUser.isVip {
       finishAd()
     }
+    #endif
     Task {
       if ResourceHelper.hasResourceUpdate() {
         DispatchQueue.main.async {
@@ -222,9 +226,7 @@ struct SplashView: View {
     ZStack {
       Color.background
       VStack {
-        Image("tizi")
-          .resizable()
-          .scaledToFit()
+        SplashHeaderView()
         ProgressView(value: viewModel.progress)
         Text(viewModel.status)
           .foregroundStyle(Color.searchHeader)

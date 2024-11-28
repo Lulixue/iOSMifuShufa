@@ -157,14 +157,15 @@ struct WorkListItem: View {
       HStack(spacing: 6) {
         let first = works.first()
         VStack(alignment: .leading, spacing: 6) {
-          HStack(alignment: .firstTextBaseline, spacing: 1) {
+          let color = first.btType.nameColor(baseColor: Color.darkSlateGray)
+          HStack(alignment: .firstTextBaseline, spacing: 2) {
             Text(first.chineseName())
-              .foregroundStyle(Color.darkSlateGray)
+              .foregroundStyle(color)
             if viewModel.organizeStack && works.size > 1 {
-              Text("(\(works.size))").font(.footnote).foregroundStyle(Color.darkSlateGray)
+              Text("(\(works.size))").font(.footnote).foregroundStyle(color)
             } else if first.chineseVersion()?.isNotEmpty() == true {
               Text(first.chineseVersion()!).font(.footnote)
-                .foregroundStyle(Color.darkSlateBlue)
+                .foregroundStyle(Colors.purple.swiftColor)
             }
             if works.count(where: { $0.vip }) == works.size {
               Image("vip_border").renderingMode(.template).square(size: 14)
@@ -268,15 +269,16 @@ struct WorkItem: View {
             .progressViewStyle(.circular)
             .tint(.colorPrimary)
         }
+        let color = first.btType.nameColor(baseColor: Color.darkSlateGray)
         HStack(alignment: .firstTextBaseline, spacing: 1) {
           Text(first.chineseName()).font(.footnote)
-            .lineLimit(1).foregroundStyle(Colors.darkSlateGray.swiftColor)
+            .lineLimit(1).foregroundStyle(color)
           if viewModel.organizeStack && works.size > 1 {
             Text("(\(works.size))").font(.system(size: 10))
-              .lineLimit(1).foregroundStyle(Colors.darkSlateGray.swiftColor)
+              .lineLimit(1).foregroundStyle(color)
           } else if first.chineseVersion()?.isNotEmpty() == true {
             Text(first.chineseVersion()!).font(.system(size: 10))
-              .lineLimit(1).foregroundStyle(Colors.souyun.swiftColor)
+              .lineLimit(1).foregroundStyle(Colors.purple.swiftColor)
           }
         }.padding(.top, 2)
       }.padding(.horizontal, 5)
@@ -327,7 +329,7 @@ struct CategoryItem: View {
     
     var models = [Int: WorkItemViewModel]()
     for i in 0..<works.size {
-      models[i] = WorkItemViewModel(works: works[i])
+      models[i] = WorkItemViewModel(works: works[i].sortedByDescending(mapper: { $0.hasSingle() }))
     }
     self.itemViewModels = models
   }
@@ -338,7 +340,7 @@ struct CategoryItem: View {
         VStack(spacing: 0) {
           if viewModel.listView {
             ForEach(0..<works.size, id: \.self) { i in
-              WorkListItem(works: works[i])
+              WorkListItem(works: works[i].sortedByDescending(mapper: { $0.hasSingle() }))
               if i != works.lastIndex {
                 Divider.overlayColor(.gray.opacity(0.4)).padding(.leading, 10)
               }

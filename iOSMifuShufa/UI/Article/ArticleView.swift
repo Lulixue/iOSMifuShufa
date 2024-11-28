@@ -29,18 +29,19 @@ struct ArticlePage : View {
             ForEach(0..<s.articles.count, id: \.self) { j in
               let article = s.articles[j]
               let clicked = viewModel.clicked.contains(article.title)
+              let isLink = article.url.isNotEmpty()
               Button {
                 naviVM.gotoWeb(article)
                 viewModel.clicked.add(article.title)
-//                WebSwiftView(title: article.title, url: article.url.url!).onAppear {
-//                  viewModel.clicked.add(article.title)
-//                }
               } label: {
                 VStack {
+                  let linkColor = clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor
+                  let color: Color = isLink ? linkColor : .gray
                   Text(article.title)
-                    .font(.system(size: 18)).underline().foregroundStyle(clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor).padding(.horizontal, 3).padding(.vertical, 6)
+                    .font(.system(size: 18)).underline(isLink).foregroundStyle(color).padding(.horizontal, 3).padding(.vertical, 6)
                 }.background(.white)
               }.buttonStyle(BgClickableButton())
+                .disabled(!isLink)
             }
           }
         } header: {

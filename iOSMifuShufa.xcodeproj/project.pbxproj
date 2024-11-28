@@ -10,6 +10,7 @@
 		004809F617C0A8E8A30D316B /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BA4FA07507A87227ABBEAA /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework */; };
 		4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702BCB18E1C7F5C88C7C45FD /* Pods_iOSMifuShufa.framework */; };
 		CFC68FE027D9684B83888806 /* Pods_iOSMifuShufaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */; };
+		F902752C2CF8A2FB00AE5D8A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F902752B2CF8A2F900AE5D8A /* CustomViews.swift */; };
 		F9232C6E2CF331BF00A15ADF /* JiziPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9232C6D2CF331BF00A15ADF /* JiziPage.swift */; };
 		F9236D962CF613AC00245F08 /* AnalyzeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9236D952CF613AC00245F08 /* AnalyzeView.swift */; };
 		F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA552CEF147E00FF4F58 /* PrivacyView.swift */; };
@@ -154,6 +155,7 @@
 		A0F7AF12C000D41A8C64F793 /* Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C900F39D0CB81CE38DE2F377 /* Pods-iOSMifuShufaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufaTests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufaTests/Pods-iOSMifuShufaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSMifuShufaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F902752B2CF8A2F900AE5D8A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		F9232C6D2CF331BF00A15ADF /* JiziPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziPage.swift; sourceTree = "<group>"; };
 		F9236D952CF613AC00245F08 /* AnalyzeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeView.swift; sourceTree = "<group>"; };
 		F928FA542CEF143700FF4F58 /* iOSMifuShufa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSMifuShufa.entitlements; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 		F96E616C2CD9C6DD007329DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F902752B2CF8A2F900AE5D8A /* CustomViews.swift */,
 				F9C3A6132CEDD37D0055ABA1 /* Images.swift */,
 				F9FFC6BD2CE233D8008AB5EE /* AlbumPageViewController.swift */,
 				F9FFC6B72CE230CD008AB5EE /* AlbumImageViewController.swift */,
@@ -1006,6 +1009,7 @@
 				F96E61702CD9C6DD007329DB /* RightMenuPanel.swift in Sources */,
 				F9FFC6BA2CE230CD008AB5EE /* AlbumImageViewController.swift in Sources */,
 				F96E61712CD9C6DD007329DB /* SideMenu.swift in Sources */,
+				F902752C2CF8A2FB00AE5D8A /* CustomViews.swift in Sources */,
 				F9F97C7B2CDB26A700096ED1 /* ScrollTabView.swift in Sources */,
 				F9E124A42CE447E600BB8CD4 /* JiziViewModel.swift in Sources */,
 				F9F97C892CDDF28B00096ED1 /* NaviBarView.swift in Sources */,

@@ -222,17 +222,17 @@ private struct BeitieSingleSettingsView: View {
   var contents: some View {
     VStack(spacing: 0) {
       NaviView {
-        BackButtonView {
-          presentationMode.wrappedValue.dismiss()
-        }
-        Spacer()
-        NaviTitle(text: "单字范围设置".orCht("單字範圍設置"))
-        Spacer()
-        Button {
-          showOverflow = true
-        } label: {
-          Image(systemName: "ellipsis.circle").square(size: CUSTOM_NAVI_BACK_SIZE)
-            .foregroundStyle(Color.colorPrimary)
+        NaviContents(title: "单字范围设置".orCht("單字範圍設置")) {
+          BackButtonView {
+            presentationMode.wrappedValue.dismiss()
+          }
+        } trailing: {
+          Button {
+            showOverflow = true
+          } label: {
+            Image(systemName: "ellipsis.circle").square(size: CUSTOM_NAVI_ICON_SIZE)
+              .foregroundStyle(Color.colorPrimary)
+          }
         }
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()

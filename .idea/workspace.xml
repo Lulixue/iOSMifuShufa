@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加PDF">
-      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Article/PdfView.swift" afterDir="false" />
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="优化显示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Article/ArticleView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Article/ArticleView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/NavigationViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/NavigationViewModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/BeitiePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/BeitiePage.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/SettingsView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/SettingsView.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +153,47 @@
       <option name="project" value="LOCAL" />
       <updated>1732767902437</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="添加PDF">
+      <option name="closed" value="true" />
+      <created>1732772745650</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732772745650</updated>
+    </task>
+    <task id="LOCAL-00014" summary="添加PDF">
+      <option name="closed" value="true" />
+      <created>1732773789030</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1732773789030</updated>
+    </task>
+    <task id="LOCAL-00015" summary="显示生图">
+      <option name="closed" value="true" />
+      <created>1732792288592</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1732792288592</updated>
+    </task>
+    <task id="LOCAL-00016" summary="显示生图">
+      <option name="closed" value="true" />
+      <created>1732792415499</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732792415499</updated>
+    </task>
+    <task id="LOCAL-00017" summary="抽出共同的部分">
+      <option name="closed" value="true" />
+      <created>1732803830661</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1732803830661</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,6 +213,10 @@
     <MESSAGE value="添加登录和隐私政策" />
     <MESSAGE value="解决碑帖页点击错误的问题" />
     <MESSAGE value="优化显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化显示" />
+    <MESSAGE value="添加PDF" />
+    <MESSAGE value="显示生图" />
+    <MESSAGE value="自己" />
+    <MESSAGE value="抽出共同的部分" />
+    <option name="LAST_COMMIT_MESSAGE" value="抽出共同的部分" />
   </component>
 </project>
