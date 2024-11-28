@@ -268,19 +268,6 @@ struct WorkItem: View {
             .progressViewStyle(.circular)
             .tint(.colorPrimary)
         }
-//        WebImage(url: coverUrl) { img in
-//          img.image?.resizable()
-//            .aspectRatio(contentMode: .fill)
-//        }
-//        .onSuccess(perform: { image, data, cacheType in
-//          DispatchQueue.main.async {
-//            self.loading = false
-//          }
-//        })
-//        .indicator(.activity).frame(width: Self.itemWidth-10, alignment: loading ? .center : .topTrailing)
-//        .frame(minHeight: Self.itemHeight-30)
-//        .clipShape(RoundedRectangle(cornerRadius: 2))
-//        
         HStack(alignment: .firstTextBaseline, spacing: 1) {
           Text(first.chineseName()).font(.footnote)
             .lineLimit(1).foregroundStyle(Colors.darkSlateGray.swiftColor)
@@ -291,7 +278,7 @@ struct WorkItem: View {
             Text(first.chineseVersion()!).font(.system(size: 10))
               .lineLimit(1).foregroundStyle(Colors.souyun.swiftColor)
           }
-        }
+        }.padding(.top, 2)
       }.padding(.horizontal, 5)
         .padding(.top, 5).padding(.bottom, 3).frame(width: Self.itemWidth, height: Self.itemHeight)
         .overlay(content: {

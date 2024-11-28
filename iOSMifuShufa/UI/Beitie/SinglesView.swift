@@ -81,7 +81,11 @@ struct SingleMiGridView: View {
           Toggle(isOn: miViewModel.centroidBinding) {
           }.scaleEffect(CGSize(width: 0.7, height: 0.7))
             .colorScheme(.dark)
-        }.padding(.horizontal, 5).padding(.vertical, 5).background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 5))
+        }.padding(.horizontal, 6).padding(.vertical, 4)
+          .padding(1)
+          .background{
+            RoundedRectangle(cornerRadius: 5).stroke(.white, lineWidth: 1)
+          }.background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 5))
         10.HSpacer()
         ForEach(SingleAnalyzeType.allCases, id: \.self) { t in
           let selected = t == miViewModel.singleType
