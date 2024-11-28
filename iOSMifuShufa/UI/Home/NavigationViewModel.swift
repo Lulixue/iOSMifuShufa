@@ -25,14 +25,22 @@ class NavigationViewModel : BaseObservableObject {
   @Published var gotoWebView = false
   @Published var webViewModel: WebViewModel!
   
+  @Published var gotoPdfView = false
+  @Published var pdfViewModel: PdfViewModel!
+  
   func gotoPuzzle(_ items: [JiziItem]) {
     puzzleVM = PuzzleViewModel(items: items)
     gotoPuzzleView = true
   }
   
   func gotoWeb(_ article: Article) {
-    webViewModel = WebViewModel(article: article)
-    gotoWebView = true
+    if article.url.contains(".pdf") {
+      pdfViewModel = PdfViewModel(article: article)
+      gotoPdfView = true
+    } else {
+      webViewModel = WebViewModel(article: article)
+      gotoWebView = true
+    }
   }
   
   func gotoCollectionSingles(_ collections: [CollectionItem], _ selected: Int) {

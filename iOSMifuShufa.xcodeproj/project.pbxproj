@@ -16,6 +16,7 @@
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
+		F93375B42CF83AC00052C26F /* PdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93375B32CF83AC00052C26F /* PdfView.swift */; };
 		F95C68A42CF57D5F00292A34 /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A32CF57D5F00292A34 /* chinese.db */; };
 		F95C68A52CF57D5F00292A34 /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A22CF57D5F00292A34 /* beitie.db */; };
 		F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68A92CF58A5B00292A34 /* OpenCV */; };
@@ -160,6 +161,7 @@
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
+		F93375B32CF83AC00052C26F /* PdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfView.swift; sourceTree = "<group>"; };
 		F95C68A22CF57D5F00292A34 /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
 		F95C68A32CF57D5F00292A34 /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 		F9E1249E2CE43D1700BB8CD4 /* Article */ = {
 			isa = PBXGroup;
 			children = (
+				F93375B32CF83AC00052C26F /* PdfView.swift */,
 				F9E124B42CE78C0300BB8CD4 /* WebViewStore.swift */,
 				F9E124B22CE78B2200BB8CD4 /* WebView.swift */,
 				F9E124B02CE7247100BB8CD4 /* ArticleViewModel.swift */,
@@ -962,6 +965,7 @@
 				F9E124922CE36D9200BB8CD4 /* Extensions.swift in Sources */,
 				F928FA562CEF148100FF4F58 /* PrivacyView.swift in Sources */,
 				F9E124932CE36D9200BB8CD4 /* PrefrenceKeys.swift in Sources */,
+				F93375B42CF83AC00052C26F /* PdfView.swift in Sources */,
 				F9E124942CE36D9200BB8CD4 /* CarouselView.swift in Sources */,
 				F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */,
 				F9C3A61A2CEE0A3B0055ABA1 /* VerifyHelper.swift in Sources */,

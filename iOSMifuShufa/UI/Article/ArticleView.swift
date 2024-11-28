@@ -84,6 +84,11 @@ struct ArticlePage : View {
           WebSwiftView(viewModel: naviVM.webViewModel!)
         }
       }
+      .navigationDestination(isPresented: $naviVM.gotoPdfView) {
+        if naviVM.gotoPdfView {
+          PdfView(viewModel: naviVM.pdfViewModel!)
+        }
+      }
   }
   var content: some View {
     VStack(spacing: 0) {

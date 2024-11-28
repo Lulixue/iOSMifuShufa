@@ -111,7 +111,7 @@ struct ImageZoomableView: View {
 }
 
 struct SinglePreviewItem: View {
-  let single: BeitieSingle
+  let url: String
   var onTouchOutside: () -> Void = {}
   var onClick: () -> Void = {}
   @State private var loading = false
@@ -127,7 +127,7 @@ struct SinglePreviewItem: View {
       }.onTapGesture {
         onTouchOutside()
       }
-      WebImage(url: single.url.url!) { img in
+      WebImage(url: url.url!) { img in
         img.image?.resizable()
           .scaledToFit()
           .frame(minHeight: 20)
@@ -160,7 +160,7 @@ struct SinglePreviewItem: View {
 }
 
 #Preview {
-  SinglePreviewItem(single: BeitieDbHelper.shared.getSingles("人").first())
+  SinglePreviewItem(url: BeitieDbHelper.shared.getSingles("人").first().url)
 }
 
 #Preview {
