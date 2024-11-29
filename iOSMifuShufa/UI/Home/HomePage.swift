@@ -1,9 +1,9 @@
-  //
-  //  Home.swift
-  //  iOSMifuShufa
-  //
-  //  Created by lulixue on 2024/10/30.
-  //
+//
+//  Home.swift
+//  iOSMifuShufa
+//
+//  Created by lulixue on 2024/10/30.
+//
 
 import SwiftUI
 import DeviceKit
@@ -154,7 +154,7 @@ struct HomePage: View {
             Text("search".resString).font(font)
           }
         }.buttonStyle(PrimaryButton(bgColor: .blue)).padding(.trailing, 5)
-      }.clipShape(RoundedRectangle(cornerRadius: radius)).padding(0.6).background(RoundedRectangle(cornerRadius: radius, style: .circular).stroke(Color.gray, lineWidth: 0.6)).frame(height: searchBarHeight)
+      }.clipShape(RoundedRectangle(cornerRadius: radius)).background(RoundedRectangle(cornerRadius: radius).fill(.white).shadow(radius: focused ? 1.5 : 0 )).padding(0.6).background(RoundedRectangle(cornerRadius: radius, style: .circular).stroke(Color.gray, lineWidth: 0.6)).frame(height: searchBarHeight)
     }
   }
   

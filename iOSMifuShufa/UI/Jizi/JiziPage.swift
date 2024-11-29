@@ -267,6 +267,7 @@ struct JiziPage : View {
       }
       .frame(height: editHeight)
       .clipShape(RoundedRectangle(cornerRadius: 10))
+      .background(RoundedRectangle(cornerRadius: 10).fill(.white).shadow(radius: focused ? 2 : 0))
       .background {
         RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1)
       }

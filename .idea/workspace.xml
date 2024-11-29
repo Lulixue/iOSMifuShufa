@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="优化图片加载和显示">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="聚焦时高亮编辑框">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +208,47 @@
       <option name="project" value="LOCAL" />
       <updated>1732851892463</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="优化图片加载和显示">
+      <option name="closed" value="true" />
+      <created>1732852254598</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1732852254598</updated>
+    </task>
+    <task id="LOCAL-00021" summary="修复AdID">
+      <option name="closed" value="true" />
+      <created>1732867881583</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1732867881583</updated>
+    </task>
+    <task id="LOCAL-00022" summary="优化首页">
+      <option name="closed" value="true" />
+      <created>1732868905563</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1732868905563</updated>
+    </task>
+    <task id="LOCAL-00023" summary="优化首页">
+      <option name="closed" value="true" />
+      <created>1732870046408</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1732870046408</updated>
+    </task>
+    <task id="LOCAL-00024" summary="聚焦时高亮编辑框">
+      <option name="closed" value="true" />
+      <created>1732874610357</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1732874610357</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,6 +273,9 @@
     <MESSAGE value="自己" />
     <MESSAGE value="抽出共同的部分" />
     <MESSAGE value="优化图片加载和显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化图片加载和显示" />
+    <MESSAGE value="修复AdID" />
+    <MESSAGE value="优化首页" />
+    <MESSAGE value="聚焦时高亮编辑框" />
+    <option name="LAST_COMMIT_MESSAGE" value="聚焦时高亮编辑框" />
   </component>
 </project>
