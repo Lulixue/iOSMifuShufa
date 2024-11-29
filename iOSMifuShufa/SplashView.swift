@@ -26,7 +26,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   
   func addSplashAD() {
     let frame = UIScreen.main.bounds
-    let splashAd = BUSplashAd.init(slotID: CSJ_AD_ID, adSize: frame.size)
+    let splashAd = BUSplashAd.init(slotID: CSJ_SPLASH_AD_ID, adSize: frame.size)
     splashAd.supportCardView = true
     splashAd.supportZoomOutView = true
     splashAd.delegate = self
@@ -40,7 +40,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   func setupBUAdSDK() {
     let configuration = BUAdSDKConfiguration.init()
     
-    configuration.appID = CSJ_SPLASH_AD_ID
+    configuration.appID = CSJ_AD_ID
     BUAdSDKManager.start( asyncCompletionHandler: { success, error in
       if (success) {
         DispatchQueue.main.async {
