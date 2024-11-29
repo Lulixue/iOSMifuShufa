@@ -22,7 +22,11 @@ import SwiftUI
       leading()
       Spacer()
     }
-    NaviTitle(text: title)
+    HStack {
+      Spacer()
+      NaviTitle(text: title)
+      Spacer()
+    }
     HStack {
       Spacer()
       trailing()

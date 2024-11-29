@@ -139,7 +139,7 @@ struct HomePage: View {
           viewModel.focused = focused
           viewModel.updateHistoryBarVisible()
         })
-        .font(font)
+        .font(.callout)
         .focused($focused)
         .textFieldStyle(.plain)
         .submitLabel(.search)
@@ -618,6 +618,7 @@ struct HomePage: View {
           VStack(spacing: 0) {
             searchBar
             if viewModel.showHistoryBar {
+              2.VSpacer()
               HistoryBarView(page: .Search, showDeleteAlert: $viewModel.showDeleteAlert, onClearLogs: {
                 viewModel.updateHistoryBarVisible()
               }) { l in
