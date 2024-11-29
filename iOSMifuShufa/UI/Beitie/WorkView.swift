@@ -115,11 +115,32 @@ class WorkViewModel: AlertViewModel {
   
   @Published var showOverflowMenu = false
   @Published var dropdownParam: DropDownParam<WorkSettingsItem>!
+  @Published var thumbnailImages = [BeitieImage: UIImage]()
+  @Published var thumbnailImageViews = [BeitieImage: UIImageView]()
   
   func toggleDrawPanel() {
     drawVM.onReset()
     showToast(showDrawPanel ? "handwriting_off".localized : "handwriting_on".localized)
     showDrawPanel.toggle()
+  }
+  
+  
+  func loadThumbnailImage(image: BeitieImage) {
+    if thumbnailImageViews[image] != nil {
+      return
+    }
+    let imgView = UIImageView(frame: .zero)
+    thumbnailImageViews[image] = imgView
+    debugPrint("download thumbnail \(image.fileName)")
+    Task {
+      await imgView.sd_setImage(with: image.url(.JpgCompressedThumbnail).url!) { img, _, _, _ in
+        if let img {
+          DispatchQueue.main.async {
+            self.thumbnailImages[image] = img
+          }
+        }
+      }
+    }
   }
   
   private let menuItems: [WorkSettingsItem]
@@ -314,27 +335,32 @@ struct WorkView: View, SinglePreviewDelegate {
                 galleryScroll = false
                 viewModel.pageIndex = i
               } label: {
-                WebImage(url: image.url(.JpgCompressedThumbnail).url!) { img in
-                  img.image?.resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 80, maxHeight: 60)
+                if let image = viewModel.thumbnailImages[image] {
+                  Image(uiImage: image).resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: 40)
+                    .frame(height: 59)
                     .clipShape(RoundedRectangle(cornerRadius: 2))
                     .padding(0.5)
                     .background {
-                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .gray, lineWidth: selected ? 4 : 1)
+                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .gray, lineWidth: selected ? 4 : 0.5)
+                    }.onAppear {
+                      if galleryScroll {
+                        DispatchQueue.main.async {
+                          syncScroll(tabIndex)
+                        }
+                      }
                     }
-                }.onSuccess(perform: { _, _, _ in
-                  if galleryScroll {
-                    DispatchQueue.main.async {
-                      syncScroll(tabIndex)
+                } else {
+                    HStack {
+                      Color.darkSlateGray
                     }
-                  }
-                }).frame(height: 60).onAppear {
-                  if galleryScroll {
-                    DispatchQueue.main.async {
-                      syncScroll(tabIndex)
-                    }
-                  }
+                    .clipShape(RoundedRectangle(cornerRadius: 5)).padding(0.5).background{
+                      RoundedRectangle(cornerRadius: 5).stroke(.white, lineWidth: 0.5)
+                    }.frame(width: 25, height: 60)
+                      .onAppear {
+                        viewModel.loadThumbnailImage(image: image)
+                      }
                 }
               }
               if selected {
@@ -549,5 +575,5 @@ struct WorkView: View, SinglePreviewDelegate {
 }
 
 #Preview {
-  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[1], pageIndex: 0))
+  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[97], pageIndex: 0))
 }

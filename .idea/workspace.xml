@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="优化显示">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="优化图片加载和显示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/BeitiePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/BeitiePage.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/WorkView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/SettingsView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/SettingsView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +192,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732803830661</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="抽出共同的部分">
+      <option name="closed" value="true" />
+      <created>1732846361452</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1732846361452</updated>
+    </task>
+    <task id="LOCAL-00019" summary="优化图片加载和显示">
+      <option name="closed" value="true" />
+      <created>1732851892463</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1732851892463</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,6 +232,7 @@
     <MESSAGE value="显示生图" />
     <MESSAGE value="自己" />
     <MESSAGE value="抽出共同的部分" />
-    <option name="LAST_COMMIT_MESSAGE" value="抽出共同的部分" />
+    <MESSAGE value="优化图片加载和显示" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化图片加载和显示" />
   </component>
 </project>

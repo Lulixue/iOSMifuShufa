@@ -26,6 +26,8 @@ class SingleViewModel: AlertViewModel {
   @Published var currentIndex: Int = 0
   @Published var orientation = UIDeviceOrientation.unknown
   @Published var singleViewModels = [BeitieSingle: MiGridZoomableViewModel]()
+  @Published var singleThumbnailImages = [BeitieSingle: UIImage]()
+  private var singleThumbnailViews = [BeitieSingle: UIImageView]()
   var uiImage: UIImageView? = nil
   init(singles: List<BeitieSingle>, selected: Int = 0) {
     self.singles = singles
@@ -36,6 +38,25 @@ class SingleViewModel: AlertViewModel {
     }
     syncViewModels()
   }
+  
+  func loadThumbnailImage(single: BeitieSingle) {
+    if singleThumbnailViews[single] != nil {
+      return
+    }
+    let imgView = UIImageView(frame: .zero)
+    singleThumbnailViews[single] = imgView
+    debugPrint("download thumbnail \(single.fileName)")
+    Task {
+      await imgView.sd_setImage(with: single.thumbnailUrl.url!) { img, _, _, _ in
+        if let img {
+          DispatchQueue.main.async {
+            self.singleThumbnailImages[single] = img
+          }
+        }
+      }
+    }
+  }
+  
 
   func syncViewModels() {
     var map = [BeitieSingle: MiGridZoomableViewModel]()
@@ -310,37 +331,37 @@ struct SinglesView: View {
           LazyHStack(spacing: 0) {
             ForEach(0..<singles.size, id: \.self) { i in
               let single = singles[i]
-              let selected = i == viewModel.currentIndex
-              HStack{
-                Button {
-                  scrollFixed = true
-                  viewModel.currentIndex = i
-                } label: {
-                  WebImage(url: single.thumbnailUrl.url!) { img in
-                    img.image?.resizable()
-                      .aspectRatio(contentMode: .fit)
-                      .frame(minWidth: 20, minHeight: bottomBarHeight - 20)
-                      .clipShape(RoundedRectangle(cornerRadius: 2))
-                      .padding(0.5)
-                      .background {
-                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
-                      }.padding(.horizontal, 5)
-                  }
-                  .onSuccess(perform: { _, _, _ in
-                    if !scrollFixed {
-                      DispatchQueue.main.async {
-                        syncScroll(pageIndex)
-                      }
+              Button {
+                scrollFixed = true
+                viewModel.currentIndex = i
+              } label: {
+                if let thumbnail = viewModel.singleThumbnailImages[single] {
+                  let selected = i == viewModel.currentIndex
+                  Image(uiImage: thumbnail).resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(minWidth: 20, minHeight: bottomBarHeight - 20)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                    .padding(0.5)
+                    .background {
+                      RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
+                    }.padding(.horizontal, 5)
+                    .onAppear {
+                        if !scrollFixed {
+                          DispatchQueue.main.async {
+                            syncScroll(pageIndex)
+                          }
+                        }
                     }
-                  })
-                  .indicator(.activity).tint(.white)
-                  .onAppear {
-                    if !scrollFixed {
-                      DispatchQueue.main.async {
-                        syncScroll(pageIndex)
-                      }
-                    }
+                } else {
+                  HStack {
+                    Color.darkSlateGray
                   }
+                  .clipShape(RoundedRectangle(cornerRadius: 5)).padding(0.5).background{
+                    RoundedRectangle(cornerRadius: 5).stroke(.white, lineWidth: 0.5)
+                  }.frame(width: 30, height: bottomBarHeight - 20)
+                    .onAppear {
+                      viewModel.loadThumbnailImage(single: single)
+                    }.padding(.horizontal, 5)
                 }
               }.tag(i)
             }

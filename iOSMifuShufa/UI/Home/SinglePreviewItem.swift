@@ -20,12 +20,15 @@ class MiGridZoomableViewModel: BaseObservableObject {
     self.grid = grid
     self.centroid = centroid
     super.init()
-    loadImage()
   }
   
-  private func loadImage() {
+  func loadImage() {
+    if self.imageView != nil {
+      return
+    }
     let imgView = UIImageView(frame: .zero)
-    self.imageView = imgView 
+    self.imageView = imgView
+    debugPrint("download single \(single.fileName)")
     Task {
       await imgView.sd_setImage(with: single.url.url!) { img, _, _, _ in
         if let img {
@@ -76,6 +79,9 @@ struct MiGridZoomableImageView: View {
         } else {
           ProgressView().progressViewStyle(.circular)
             .squareFrame(40).tint(.white)
+            .onAppear {
+              viewModel.loadImage()
+            }
         }
       }
   }
