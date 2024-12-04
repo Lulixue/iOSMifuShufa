@@ -70,7 +70,7 @@ struct WorkIntroView: View {
                     RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
                   })
               }
-            }
+            }.buttonStyle(.plain)
             Spacer()
           }.padding(.top, 20).padding(.horizontal, 20)
           ItemView(title: "名称".orCht("名稱"), value: work.chineseName())

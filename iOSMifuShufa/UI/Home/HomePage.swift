@@ -124,7 +124,7 @@ struct HomePage: View {
                 .rotationEffect(.degrees(showCharType ? 180: 0))
             }.padding(.horizontal, 3).foregroundStyle(Color.gray)
               .font(.callout)
-          }
+          }.buttonStyle(.plain)
           8.HSpacer()
         }.frame(height: searchBarHeight).background(Color.background)
           .background(PositionReaderView(binding: $charTypePosition))
@@ -268,7 +268,7 @@ struct HomePage: View {
                 .font(.footnote)
                 .foregroundStyle(single.work.btType.nameColor(baseColor: Color.defaultText))
             }.frame(width: width)
-          }
+          }.buttonStyle(.plain)
         }
       }
     } header: {
@@ -360,7 +360,7 @@ struct HomePage: View {
                 AnalyzeView(viewModel: AnalyzeViewModel(selectedSingle))
               } label: {
                 Image("analyze").renderingMode(.template).square(size: 28).foregroundStyle(.white)
-              }
+              }.buttonStyle(.plain)
               0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 12)
               Button {
                 withAnimation(.linear(duration: 0.2)) {
@@ -368,7 +368,7 @@ struct HomePage: View {
                 }
               } label: {
                 Image("mi_mi").renderingMode(.template).square(size: 26).foregroundStyle(.white)
-              }
+              }.buttonStyle(.plain)
               Spacer()
               Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
                 .font(.body)
@@ -381,13 +381,13 @@ struct HomePage: View {
                 }
               } label: {
                 Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
-              }
+              }.buttonStyle(.plain)
               0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 14)
               Button {
                 hidePreview()
               } label: {
                 Image(systemName: "xmark.circle").square(size: 22).foregroundStyle(.white)
-              }
+              }.buttonStyle(.plain)
             }.padding(.top, 12).padding(.horizontal, 10)
               .background(HeightReaderView(binding: $headerHeight))
             if showMiGrids {
@@ -430,7 +430,7 @@ struct HomePage: View {
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize)
                 .rotationEffect(.degrees(viewModel.showOrder ? 180 : 0))
             }.foregroundStyle(viewModel.showOrder ? clickedColor : Colors.colorPrimary.swiftColor)
-          }.background(WidthReaderView(binding: $viewModel.orderWidth))
+          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.orderWidth))
           Button {
             viewModel.showFastRedirect = true
           } label: {
@@ -439,7 +439,7 @@ struct HomePage: View {
               Text(fastResultKey).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFastRedirect ? 180 : 0))
             }.foregroundStyle(viewModel.showFastRedirect ? clickedColor : Colors.colorPrimary.swiftColor)
-          }.background(WidthReaderView(binding: $viewModel.fastRedirectWidth))
+          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.fastRedirectWidth))
           
           Button {
             viewModel.showFont = true
@@ -448,7 +448,7 @@ struct HomePage: View {
               Text(viewModel.currentFontResultKey()).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFont ? 180 : 0))
             }.foregroundStyle(viewModel.showFont ? clickedColor : Colors.colorPrimary.swiftColor)
-          }
+          }.buttonStyle(.plain)
           Spacer()
           Button {
             viewModel.toggleCollapseAll()
@@ -607,8 +607,7 @@ struct HomePage: View {
           Image(systemName: "line.3.horizontal")
             .square(size: 20)
             .foregroundStyle(Color.colorPrimary)
-            .buttonStyle(PrimaryButton())
-        }
+        }.buttonStyle(.plain)
         5.HSpacer()
       }.padding(.horizontal, 15)
         .background(.white)

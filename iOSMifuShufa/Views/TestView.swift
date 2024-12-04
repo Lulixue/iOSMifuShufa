@@ -60,7 +60,7 @@ struct TestView: View {
                 totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
                 currentZoom = 0
               }))
-          }
+          }.buttonStyle(.plain)
         }.padding(10)
       }.alert(alert.fullAlertTitle, isPresented: $alert.showFullAlert) {
         Button(alert.fullAlertOkTitle, role: alert.okButtonRole) {

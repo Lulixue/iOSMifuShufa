@@ -92,7 +92,7 @@ private struct BeitieSettingsView: View {
             }) {
               SettingItemView(icon: "", title: "单字范围".orCht("單字範圍"))
                 .padding(.leading, 5)
-            }
+            }.buttonStyle(.plain)
             Divider().padding(.leading, 15)
             Button {
               singleOriginal.toggle()
@@ -232,7 +232,7 @@ private struct BeitieSingleSettingsView: View {
           } label: {
             Image(systemName: "ellipsis.circle").square(size: CUSTOM_NAVI_ICON_SIZE)
               .foregroundStyle(Color.colorPrimary)
-          }
+          }.buttonStyle(.plain)
         }
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()

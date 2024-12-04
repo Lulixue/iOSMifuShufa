@@ -41,12 +41,12 @@ struct WebSwiftView: View {
           Image(systemName: "arrow.left")
             .square(size: 20)
             .foregroundStyle(webViewStore.canGoBack ? Color.colorPrimary : .gray)
-        }.disabled(!webViewStore.canGoBack)
+        }.disabled(!webViewStore.canGoBack).buttonStyle(.plain)
         Button(action: goSafari) {
           Image(systemName: "safari")
             .square(size: 20)
             .foregroundStyle(Color.colorPrimary)
-        }
+        }.buttonStyle(.plain)
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()
       WebView(webView: webViewStore.webView).onAppear {

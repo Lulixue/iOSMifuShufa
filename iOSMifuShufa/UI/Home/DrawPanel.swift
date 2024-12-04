@@ -124,13 +124,13 @@ struct DrawPanel : View {
           viewModel.onReset()
         } label: {
           Image(systemName: "trash").foregroundStyle(.white)
-        }
+        }.buttonStyle(.plain)
         Button {
           viewModel.onUndo()
         } label: {
           Image(systemName: "arrow.uturn.left").foregroundStyle(
             viewModel.canUndo ? .white : .gray)
-        }.disabled(!viewModel.canUndo)
+        }.disabled(!viewModel.canUndo).buttonStyle(.plain)
         divider
         if Device.current.isPad {
           15.HSpacer()
@@ -150,7 +150,7 @@ struct DrawPanel : View {
                 Color.white.opacity(viewModel.drawIndex == i ? 0.8 : 1).frame(width: size, height: size)
                   .clipShape(Circle())
               }.squareFrame(18)
-            }
+            }.buttonStyle(.plain)
           }
         }
         divider
@@ -168,7 +168,7 @@ struct DrawPanel : View {
                     .foregroundStyle(DrawViewModel.DRAW_BG_COLORS[i])
                 }
               }.squareFrame(20).background(Circle().fill(DrawViewModel.DRAW_COLORS[i]))
-            }
+            }.buttonStyle(.plain)
           }
         }
         if (Device.current.isPad) {
@@ -180,7 +180,7 @@ struct DrawPanel : View {
           viewModel.onClose()
         } label: {
           Image(systemName: "xmark.circle").square(size: 18).foregroundStyle(.white)
-        }
+        }.buttonStyle(.plain)
         if !Device.current.isPad {
           Spacer()
         }

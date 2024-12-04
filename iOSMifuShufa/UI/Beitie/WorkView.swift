@@ -362,7 +362,7 @@ struct WorkView: View, SinglePreviewDelegate {
                         viewModel.loadThumbnailImage(image: image)
                       }
                 }
-              }
+              }.buttonStyle(.plain)
               if selected {
                 Text((i+1).toString()).font(.footnote).bold().foregroundStyle(.white).padding(6).background(Circle().fill(.red))
               }
@@ -416,7 +416,7 @@ struct WorkView: View, SinglePreviewDelegate {
         } label: {
           Image("singles").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE-1)
             .foregroundStyle(Color.colorPrimary)
-        }
+        }.buttonStyle(.plain)
       }
       let collected = collectVM.itemCollected(currentImage)
       Button {
@@ -426,13 +426,13 @@ struct WorkView: View, SinglePreviewDelegate {
       }  label: {
         Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
           .foregroundStyle(Color.colorPrimary)
-      }
+      }.buttonStyle(.plain)
       Button {
         viewModel.showOverflowMenu.toggle()
       } label: {
         Image(systemName: "ellipsis.circle").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE-2)
           .foregroundStyle(Color.colorPrimary)
-      }.background(PositionReaderView(binding: $menuPosition))
+      }.buttonStyle(.plain).background(PositionReaderView(binding: $menuPosition))
     }
   }
   var imageGallery: some View {
@@ -470,7 +470,7 @@ struct WorkView: View, SinglePreviewDelegate {
               Image(systemName: "triangle.fill").square(size: 7)
                 .rotationEffect(.degrees(showImageText ? 0 : 180))
             }.foregroundStyle(hasImageText ? Color.colorPrimary : .gray)
-          }.disabled(!hasImageText)
+          }.disabled(!hasImageText).buttonStyle(.plain)
           ZStack {
             Slider(value: $sliderProgress, in: 1...(CGFloat(viewModel.images.size))) .rotationEffect(.degrees(180))
           }

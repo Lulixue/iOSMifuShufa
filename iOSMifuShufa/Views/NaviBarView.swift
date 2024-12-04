@@ -13,7 +13,7 @@ import SwiftUI
   } label: {
     Image(systemName: "chevron.left").square(size: CUSTOM_NAVI_BACK_SIZE)
       .foregroundStyle(Color.colorPrimary)
-  }
+  }.buttonStyle(.plain)
 }
 
 @ViewBuilder func NaviContents(title: Any, @ViewBuilder leading: @escaping () -> some View, @ViewBuilder trailing: @escaping () -> some View) -> some View {

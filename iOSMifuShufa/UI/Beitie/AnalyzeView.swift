@@ -987,14 +987,14 @@ struct AnalyzeView: View {
       } label: {
         Image(systemName: "arrow.backward").square(size: CUSTOM_NAVI_ICON_SIZE-2)
           .foregroundStyle(canUndo ? .colorPrimary : .gray.opacity(0.75))
-      }.disabled(!canUndo)
+      }.buttonStyle(.plain).disabled(!canUndo)
       
       Button {
         showMenu = true
       } label: {
         Image(systemName: "ellipsis.circle").square(size: CUSTOM_NAVI_ICON_SIZE-2)
           .foregroundStyle(.colorPrimary)
-      }.padding(.leading, 5)
+      }.padding(.leading, 5).buttonStyle(.plain)
     }
   }
   private let viewPadding: CGFloat = 15
@@ -1030,7 +1030,7 @@ struct AnalyzeView: View {
                 .background(color)
                 .clipShape(CustomRoundedCorners(radius: 3, corners: [.topRight, .bottomRight]))
             }
-          }.padding(.horizontal, 6)
+          }.padding(.horizontal, 6).buttonStyle(.plain)
         }
       }
       5.HSpacer()
@@ -1070,7 +1070,7 @@ struct AnalyzeView: View {
                 .background(color)
                 .clipShape(CustomRoundedCorners(radius: 3, corners: [.topRight, .bottomRight]))
             }
-          }.padding(.horizontal, 5)
+          }.padding(.horizontal, 5).buttonStyle(.plain)
         }
       }
       5.HSpacer()
@@ -1107,7 +1107,7 @@ struct AnalyzeView: View {
           Image(systemName: "checkmark").square(size: 18)
             .fontWeight(.regular)
             .foregroundStyle(.colorPrimary)
-        }.padding(.leading, 10)
+        }.padding(.leading, 10).buttonStyle(.plain)
       }.padding(.horizontal, 15).frame(minHeight: 40)
       Divider()
       VStack {
@@ -1134,7 +1134,7 @@ struct AnalyzeView: View {
             Text("分析").font(selected ? .title3 : .body).foregroundStyle(color).bold()
             Spacer()
           }.background(.white)
-        }
+        }.buttonStyle(.plain)
         Button {
           viewModel.tabIndex = 1
         } label: {
@@ -1147,7 +1147,7 @@ struct AnalyzeView: View {
             Text("滤镜".orCht("濾鏡")).font(selected ? .title3 : .body).foregroundStyle(color).bold()
             Spacer()
           }.background(.white)
-        }
+        }.buttonStyle(.plain)
       }.padding(.vertical, 10)
         .onChange(of: tabIndex) { newValue in
           viewModel.syncImage()

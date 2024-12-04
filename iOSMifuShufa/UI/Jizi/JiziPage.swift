@@ -83,7 +83,7 @@ struct JiziPage : View {
             Image("fan").renderingMode(.template).square(size: 20)
             Text("轉為繁體").font(.callout)
           }.foregroundStyle(Colors.iconColor(1))
-        }
+        }.buttonStyle(.plain)
         Divider().padding(.vertical, 8)
         Button {
           viewModel.convert(.HansToHant)
@@ -93,7 +93,7 @@ struct JiziPage : View {
             Image("jian").renderingMode(.template).square(size: 20)
             Text("转为简体").font(.callout)
           }.foregroundStyle(Colors.iconColor(0))
-        }
+        }.buttonStyle(.plain)
         Divider().padding(.vertical, 8)
       }
       
@@ -104,7 +104,7 @@ struct JiziPage : View {
           Image("jf_converter").renderingMode(.template).square(size: 20)
           Text("jf_convert".localized).font(.callout)
         }.foregroundStyle(Colors.iconColor(2))
-      }
+      }.buttonStyle(.plain)
     }.padding(.vertical, 12).padding(.horizontal, 10)
       .background(.white)
       .cornerRadius(5)
@@ -148,7 +148,7 @@ struct JiziPage : View {
             Image(systemName: "chevron.right").square(size: 10)
               .foregroundStyle(.colorPrimary)
           }.padding(.vertical, 8).padding(.horizontal, 10).background(Colors.surfaceContainer.swiftColor)
-        }
+        }.buttonStyle(.plain)
         if !historyCollapsed {
           ScrollView {
             LazyVStack(spacing: 0) {
@@ -180,7 +180,7 @@ struct JiziPage : View {
                       } label: {
                         Image(systemName: "arrowtriangle.right.circle.fill").square(size: 20).foregroundStyle(.darkSlateGray)
                           .rotationEffect(.degrees(binding.wrappedValue ? 90 : 0))
-                      }
+                      }.buttonStyle(.plain)
                     }
                     if binding.wrappedValue {
                       if let items {
@@ -237,7 +237,7 @@ struct JiziPage : View {
         } label: {
           Image(systemName: "line.3.horizontal").square(size: 20)
             .foregroundStyle(Color.colorPrimary)
-        }
+        }.buttonStyle(.plain)
       }.padding(.horizontal, paddingHor)
       10.VSpacer()
       ZStack(alignment: .top) {
@@ -261,8 +261,8 @@ struct JiziPage : View {
             } label: {
               Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(.gray)
-            }
-          }.padding(.trailing, 8)
+            }.buttonStyle(.plain)
+          }.padding(.trailing, 8).buttonStyle(.plain)
         }
       }
       .frame(height: editHeight)
@@ -283,7 +283,7 @@ struct JiziPage : View {
         } label: {
           Image("chevron.up.2").renderingMode(.template).square(size: 10).foregroundStyle(.darkSlateGray)
             .rotationEffect(.degrees(editHeight == 120 ? 0 : 180))
-        }.padding(.trailing, 5)
+        }.padding(.trailing, 5).buttonStyle(.plain)
         Button {
           focused = false
           viewModel.onSearch(navi: naviVM)

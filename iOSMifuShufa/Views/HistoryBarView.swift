@@ -174,7 +174,7 @@ struct HistoryBarView: View {
                   .foregroundColor(Colors.darkSlateGray.swiftColor)
                   .padding(.horizontal, 3)
                   .padding(.vertical, 2)
-              }
+              }.buttonStyle(.plain)
               .background(
                 GeometryReader { p in
                   Color.clear
@@ -205,7 +205,7 @@ struct HistoryBarView: View {
           .scaledToFit()
           .foregroundColor(Colors.searchHeader.swiftColor)
           .frame(width: iconSize, height: iconSize)
-      }
+      }.buttonStyle(.plain)
       .padding(.leading, 5)
       .alert(isPresented: $showDeleteAlert) {
         getClearAlert()

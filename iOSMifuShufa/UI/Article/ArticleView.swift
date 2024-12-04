@@ -105,7 +105,7 @@ struct ArticlePage : View {
           Image(systemName: "line.3.horizontal")
             .square(size: size)
             .foregroundStyle(.colorPrimary)
-        }
+        }.buttonStyle(.plain)
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()
       

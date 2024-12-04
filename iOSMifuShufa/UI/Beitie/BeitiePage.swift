@@ -35,7 +35,7 @@ struct SearchBar: View {
       } label: {
         Image(systemName: "xmark").square(size: 11).foregroundStyle(.white)
           .padding(.horizontal, 3)
-      }.frame(height: viewModel.searchBarHeight)
+      }.frame(height: viewModel.searchBarHeight).buttonStyle(.plain)
       TextField("search_beitie_hint".localized, text: $viewModel.searchText,
                 onEditingChanged: { focused in
       })
@@ -53,7 +53,7 @@ struct SearchBar: View {
         onSearch()
       } label: {
         Text("search".localized).foregroundStyle(.white)
-      }
+      }.buttonStyle(.plain)
       
     }.padding(.horizontal, 10).background(Color.searchHeader).frame(height: viewModel.searchBarHeight)
   }
@@ -431,14 +431,14 @@ struct BeitiePage: View {
             } label: {
               Image(systemName: "magnifyingglass")
                 .foregroundStyle(btnColor)
-            }
+            }.buttonStyle(.plain)
             Button {
               viewModel.organizeStack.toggle()
               viewModel.showToast(viewModel.organizeStack ? "版本合一" : "版本分散")
             } label: {
               Image(viewModel.organizeStack ? "stack" : "single").renderingMode(.template).square(size: 20)
                 .foregroundStyle(btnColor)
-            }
+            }.buttonStyle(.plain)
             Spacer()
             if viewModel.orderType == .Az {
               Button {
@@ -454,13 +454,13 @@ struct BeitiePage: View {
             } label: {
               Image(viewModel.listView ? "list" : "previews").renderingMode(.template).square(size: 20)
                 .foregroundStyle(btnColor)
-            }
+            }.buttonStyle(.plain)
             Button {
               showOrderDropdown.toggle()
             } label: {
               Image("sort").renderingMode(.template).square(size: 20)
                 .foregroundStyle(btnColor)
-            }
+            }.buttonStyle(.plain)
           }.padding(.horizontal, 12)
           NaviTitle(text: "title_beitie".localized)
         }.frame(height: CUSTOM_NAVIGATION_HEIGHT).background(Colors.surfaceVariant.swiftColor)

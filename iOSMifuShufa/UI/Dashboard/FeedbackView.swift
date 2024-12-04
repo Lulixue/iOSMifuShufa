@@ -144,7 +144,7 @@ struct FeedbackView: View {
               } label: {
                 Image(systemName: "xmark.circle.fill")
                   .foregroundStyle(.gray)
-              }
+              }.buttonStyle(.plain)
             }.padding(.trailing, 8)
           }
         }

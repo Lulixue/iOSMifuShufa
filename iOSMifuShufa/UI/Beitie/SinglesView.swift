@@ -124,7 +124,7 @@ struct SingleMiGridView: View {
                 .background(selected ? .red : .white)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
                 .padding(.trailing, 10)
-            }
+            }.buttonStyle(.plain)
           }
         }
         10.HSpacer()
@@ -180,7 +180,7 @@ struct SinglesView: View {
       } label: {
         Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
           .foregroundStyle(Color.colorPrimary)
-      }
+      }.buttonStyle(.plain)
       Button {
         if currentSingle.work.matchVip {
           naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
@@ -190,7 +190,7 @@ struct SinglesView: View {
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
-      }
+      }.buttonStyle(.plain)
       Button {
         if let image = viewModel.singleViewModels[currentSingle]?.image {
           viewModel.imageSaver.writeToPhotoAlbum(image: image)
@@ -198,7 +198,7 @@ struct SinglesView: View {
       } label: {
         Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
-      }
+      }.buttonStyle(.plain)
     }
   }
   @State private var scrollFixed = false
@@ -305,7 +305,7 @@ struct SinglesView: View {
           AnalyzeView(viewModel: AnalyzeViewModel(single))
         } label: {
           Image("analyze").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
-        }
+        }.buttonStyle(.plain)
         
         0.5.VDivideer(color: .gray).frame(height: 15)
           .padding(.horizontal, 10)
@@ -316,14 +316,14 @@ struct SinglesView: View {
           }
         } label: {
           Image("mi_mi").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
-        }
+        }.buttonStyle(.plain)
         0.5.VDivideer(color: .gray).frame(height: 15)
           .padding(.horizontal, 10)
         Button {
           viewModel.toggleDrawPanel()
         } label: {
           Image("handwriting").square(size: 16).foregroundStyle(.blue)
-        }
+        }.buttonStyle(.plain)
       }.padding(.horizontal, 10).padding(.vertical, 8).background(.white)
       Divider()
       ScrollView([.horizontal]) {
@@ -363,7 +363,7 @@ struct SinglesView: View {
                       viewModel.loadThumbnailImage(single: single)
                     }.padding(.horizontal, 5)
                 }
-              }.tag(i)
+              }.buttonStyle(.plain).tag(i)
             }
           }.padding(.top, 10).padding(.bottom, Device.hasTopNotch ? 0 : 10).padding(.horizontal, 15).frame(height: bottomBarHeight)
             .onAppear {

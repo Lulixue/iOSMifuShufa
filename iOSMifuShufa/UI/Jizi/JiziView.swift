@@ -124,7 +124,7 @@ struct JiziView : View {
             Text(JiziOptionType.Work.chinese)
           }
         }.foregroundStyle(showWorks ? .gray.opacity(0.7) : Colors.iconColor(1))
-      }.background(PositionReaderView(binding: $worksPosition))
+      }.buttonStyle(.plain).background(PositionReaderView(binding: $worksPosition))
       Button {
         showFonts = true
         debugPrint("fontPosition \(fontPosition)")
@@ -137,7 +137,7 @@ struct JiziView : View {
             Text(JiziOptionType.Font.chinese)
           }
         }.foregroundStyle(showFonts ? .gray.opacity(0.7) : Colors.iconColor(1))
-      }.background(PositionReaderView(binding: $fontPosition))
+      }.buttonStyle(.plain).background(PositionReaderView(binding: $fontPosition))
       Spacer()
       Button {
         naviVM.gotoPuzzle(viewModel.jiziItems)
@@ -164,7 +164,7 @@ struct JiziView : View {
       } label: {
         Image("switches").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE-2)
           .foregroundStyle(Color.colorPrimary)
-      }
+      }.buttonStyle(.plain)
     }.background(Colors.surfaceVariant.swiftColor)
   }
   
@@ -330,7 +330,7 @@ struct JiziView : View {
                         scrollToIndex(lastScrollDestination)
                       }
                     }
-                }
+                }.buttonStyle(.plain)
               }.id(i).padding(.horizontal, 5)
             }
           }.background(Color.singlePreviewBackground)

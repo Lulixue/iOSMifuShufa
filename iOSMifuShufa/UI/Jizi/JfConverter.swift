@@ -79,7 +79,7 @@ struct JfConverterView: View {
               Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(.gray)
             }
-          }.padding(.trailing, 8)
+          }.padding(.trailing, 8).buttonStyle(.plain)
         }
       }
       .frame(height: 120)

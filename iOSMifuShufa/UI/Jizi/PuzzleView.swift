@@ -427,12 +427,12 @@ struct PuzzleView: View {
           showSettings.toggle()
         } label: {
           Image(systemName: "ellipsis.circle").square(size: CUSTOM_NAVI_ICON_SIZE-2).foregroundStyle(Color.colorPrimary)
-        }
+        }.buttonStyle(.plain)
         Button {
           viewModel.saveImage(selection)
         } label: {
           Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE).foregroundStyle(Color.colorPrimary)
-        }
+        }.buttonStyle(.plain)
       }.background(Colors.background.swiftColor)
       Divider()
       ZStack(alignment: .top) {

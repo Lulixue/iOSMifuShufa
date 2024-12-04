@@ -70,7 +70,7 @@ struct UserView: View {
           } label: {
             Text("delete_account".localized).font(.system(size: 14))
               .foregroundStyle(.red)
-          }
+          }.buttonStyle(.plain)
         }
       }
       Divider()
@@ -126,7 +126,7 @@ struct UserView: View {
               } label: {
                 Image(systemName: "square.and.pencil").resizable().scaledToFit()
                   .foregroundColor(Colors.darkSlateGray.swiftColor).frame(width: 18, height: 18)
-              }
+              }.buttonStyle(.plain)
             }
           }.padding(.horizontal, 15).padding(.vertical, 12)
           if CurrentUser.isVip {

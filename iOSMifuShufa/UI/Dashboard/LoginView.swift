@@ -270,7 +270,7 @@ struct LoginView: View {
                 viewModel.sendVerfiyCode()
               } label: {
                 Text(viewModel.verifyButtonText)
-              }.disabled(!viewModel.canSendVerifyCode)
+              }.disabled(!viewModel.canSendVerifyCode).buttonStyle(.plain)
             }.padding(.vertical, 5)
               .onReceive(viewModel.timer) { _ in
                 if viewModel.countDown > 0 {
