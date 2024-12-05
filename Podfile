@@ -12,8 +12,8 @@ target 'iOSMifuShufa' do
   pod 'MMKV', '1.3.4'
   pod 'Alamofire', '~> 5.4'
   pod 'SQLite.swift', '~> 0.12.0'
-  pod 'Ads-CN','6.1.1.0'
-#  pod 'Ads-CN-Beta'
+#  pod 'Ads-CN','6.1.1.0'
+  pod 'Ads-CN-Beta', '6.6.0.3'
   pod 'LzmaSDK-ObjC', :inhibit_warnings => true
   pod 'MijickPopupView'
   pod 'Zip', '~> 2.1'

@@ -1,7 +1,7 @@
 PODS:
-  - Ads-CN (6.1.1.0):
-    - Ads-CN/BUAdSDK (= 6.1.1.0)
-  - Ads-CN/BUAdSDK (6.1.1.0)
+  - Ads-CN-Beta (6.6.0.3):
+    - Ads-CN-Beta/BUAdSDK (= 6.6.0.3)
+  - Ads-CN-Beta/BUAdSDK (6.6.0.3)
   - Alamofire (5.9.1)
   - DeviceKit (5.2.3)
   - LzmaSDK-ObjC (2.1.1)
@@ -22,7 +22,7 @@ PODS:
   - Zip (2.1.2)
 
 DEPENDENCIES:
-  - Ads-CN (= 6.1.1.0)
+  - Ads-CN-Beta (= 6.6.0.3)
   - Alamofire (~> 5.4)
   - DeviceKit
   - LzmaSDK-ObjC
@@ -37,7 +37,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Ads-CN
+    - Ads-CN-Beta
     - Alamofire
     - DeviceKit
     - LzmaSDK-ObjC
@@ -52,7 +52,7 @@ SPEC REPOS:
     - Zip
 
 SPEC CHECKSUMS:
-  Ads-CN: 2a056c03dffbfcc51c13a237bc8c877cbf2ba8f1
+  Ads-CN-Beta: 8f68df556a281facfab6716223ea51a84a5e24b9
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
   LzmaSDK-ObjC: 6c68c37743a658fc9a4c7b70f7d6045b587aa42b
@@ -66,6 +66,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 04f9f45391fa30c16ac95b04557c3c0636d3ff77
+PODFILE CHECKSUM: e6bc60ad1f9d074729e968980f89505e15131ac3
 
 COCOAPODS: 1.15.2
