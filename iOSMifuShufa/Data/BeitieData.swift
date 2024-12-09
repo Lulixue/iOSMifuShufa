@@ -476,7 +476,7 @@ extension BeitieWork {
   
   func chineseVersion() -> String? { version?.orChtNullable(versionCht) }
   
-  func miGridColor() -> UIColor { (type == CalligraphyType.Tie) ? UIColor.black : UIColor.white }
+  func miGridColor() -> UIColor { (type == CalligraphyType.Tie) ? UIColor.black : UIColor.lightGray }
       
   
 }
@@ -492,12 +492,8 @@ extension BeitieSingle {
   var showChars: String {
     let wc = writtenChar
     let chs = ChineseConverter.getChs(wc)
-    let cht = ChineseConverter.getCht(wc)
     if (!Settings.langChs) {
-      if (cht == wc) {
-        return wc.toString()
-      }
-      return "\(wc)(\(cht))"
+      return wc.toString()
     } else {
       if (chs == wc) {
         return wc.toString()

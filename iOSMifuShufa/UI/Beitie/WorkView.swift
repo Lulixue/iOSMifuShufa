@@ -264,8 +264,8 @@ struct ToastView: View {
     HStack {
       Text(title)
         .foregroundStyle(.white)
-        .padding(.horizontal, 30)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 25)
+        .padding(.vertical, 16)
     }.background(Color.darkSlateGray)
       .clipShape(RoundedRectangle(cornerRadius: 25))
   }
@@ -567,6 +567,7 @@ struct WorkView: View, SinglePreviewDelegate {
         .onAppear {
           if tabIndex != viewModel.pageIndex {
             tabIndex = viewModel.pageIndex
+            sliderProgress = (tabIndex + 1).toCGFloat()
           }
         }
   }
@@ -575,5 +576,5 @@ struct WorkView: View, SinglePreviewDelegate {
 }
 
 #Preview {
-  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[97], pageIndex: 0))
+  WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[0], pageIndex: 0))
 }

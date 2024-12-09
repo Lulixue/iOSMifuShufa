@@ -12,12 +12,12 @@ import Combine
 
 extension View {
   @ViewBuilder func listItemBox() -> some View {
-    self.font(.system(size: 10))
+    self.font(.system(size: 10.5))
     .padding(.horizontal, 4)
     .padding(.vertical, 3)
     .fontWeight(.regular)
     .background(Colors.surfaceContainer.swiftColor)
-    .clipShape(RoundedRectangle(cornerRadius: 2))
+    .clipShape(RoundedRectangle(cornerRadius: 4))
   }
 }
 
@@ -159,7 +159,7 @@ struct WorkListItem: View {
         VStack(alignment: .leading, spacing: 6) {
           let color = first.btType.nameColor(baseColor: Color.darkSlateGray)
           HStack(alignment: .firstTextBaseline, spacing: 2) {
-            Text(first.chineseName())
+            Text(first.chineseName()).font(.system(size: 19))
               .foregroundStyle(color)
             if viewModel.organizeStack && works.size > 1 {
               Text("(\(works.size))").font(.footnote).foregroundStyle(color)
@@ -205,7 +205,7 @@ struct WorkListItem: View {
           }
         }.buttonStyle(PrimaryButton(bgColor: .blue, horPadding: 6, verPadding: 4))
           .padding(.leading, 3)
-      }.padding(.vertical, 7)
+      }.padding(.vertical, 10)
         .padding(.horizontal, 13)
         .background(.white)
     }.buttonStyle(BgClickableButton())
@@ -271,7 +271,7 @@ struct WorkItem: View {
         }
         let color = first.btType.nameColor(baseColor: Color.darkSlateGray)
         HStack(alignment: .firstTextBaseline, spacing: 1) {
-          Text(first.chineseName()).font(.footnote)
+          Text(first.chineseName()).font(.system(size: 14))
             .lineLimit(1).foregroundStyle(color)
           if viewModel.organizeStack && works.size > 1 {
             Text("(\(works.size))").font(.system(size: 10))
@@ -282,7 +282,7 @@ struct WorkItem: View {
           }
         }.padding(.top, 2)
       }.padding(.horizontal, 5)
-        .padding(.top, 5).padding(.bottom, 3).frame(width: Self.itemWidth, height: Self.itemHeight)
+        .padding(.top, 5).padding(.bottom, 5).frame(width: Self.itemWidth, height: Self.itemHeight)
         .overlay(content: {
           RoundedRectangle(cornerRadius: 5)
             .stroke(.gray, lineWidth: 0.5)

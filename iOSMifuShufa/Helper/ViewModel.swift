@@ -108,9 +108,13 @@ class AlertViewModel: BaseObservableObject {
     }, cancelTitle: "取消")
   }
   
+  open var textEmpty: String {
+    "search_text_is_empty".resString
+  }
+  
   func verifySearchText(text: String) -> Boolean {
     if text.isEmpty() {
-      showAlertDlg("search_text_is_empty".resString)
+      showAlertDlg(textEmpty)
       return false
     }
     if !text.containsChineseChar {

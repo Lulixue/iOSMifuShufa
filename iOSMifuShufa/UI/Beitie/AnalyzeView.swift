@@ -47,9 +47,10 @@ class ImageProcessor {
     let extraHeight: CGFloat = 6
     //绘制文字
     
-    let bottom = min(rightBottom.y.int.toCGFloat() + extraHeight/2 + s.height/2, size.height-5)
+    let bottom = min(rightBottom.y.int.toCGFloat() + extraHeight/2 + s.height/2, size.height-5-s.height)
     
     let rect = CGRect.init(x: size.width/2-s.width/2-extraWidth/2, y: bottom, width: s.width+extraWidth, height: s.height+extraHeight)
+    
     
     context.setFillColor(bgColor.cgColor)
     context.fill(rect)
@@ -97,7 +98,7 @@ class ImageProcessor {
     let rc = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     bitmap.draw(in: rc)
     let strokeWidth = penWidth
-    context.setLineDash(phase: 1, lengths: [5])
+    context.setLineDash(phase: 2, lengths: [4, 5, 6])
     context.setLineCap(.round)
     context.setLineJoin(.round)
     context.setStrokeColor(color.cgColor)
@@ -117,15 +118,18 @@ class ImageProcessor {
       let bottom = fixXYMinus(centerY + radius)
       let borderRect = CGRect(x: left.toInt(), y: top.toInt(), width: right.toInt()-left.toInt(), height: bottom.toInt() - top.toInt())
       miRect = borderRect
-      context.stroke(borderRect)
+//      context.stroke(borderRect)
     } else {
       context.stroke(miRect)
     }
     
     let path = getMiGridPath(miRect: miRect, type: type)
     
-    context.addPath(path.cgPath)
-    context.drawPath(using: .stroke)
+    for p in path {
+      context.addPath(p.cgPath)
+      context.drawPath(using: .stroke)
+      context.closePath()
+    }
     
     let image = UIGraphicsGetImageFromCurrentImageContext()
     //关闭上下文
@@ -151,8 +155,11 @@ class ImageProcessor {
     // 绘制米字
     let path = getMiGridPath(miRect: miRect, type: type)
     
-    context.addPath(path.cgPath)
-    context.drawPath(using: .stroke)
+    for p in path {
+      context.addPath(p.cgPath)
+      context.drawPath(using: .stroke)
+      context.closePath()
+    }
   
     let image = UIGraphicsGetImageFromCurrentImageContext()
     //关闭上下文
@@ -168,7 +175,7 @@ class ImageProcessor {
     return value
   }
   
-  private static func getMiGridPath(miRect: CGRect, type: MiGridType) -> Path {
+  private static func getMiGridPath(miRect: CGRect, type: MiGridType) -> [Path] {
     var path = Path()
     let centerX = fixXY(miRect.centerX())
     let centerY = fixXY(miRect.centerY())
@@ -197,15 +204,9 @@ class ImageProcessor {
       path.moveTo(miRect.right, miRect.top)
       path.lineTo(miRect.left, miRect.bottom)
       if (type != MiGridType.GridMi) {
-        path.closeSubpath()
-//        var circlePath = Path()
-        path.addCircle(centerX, centerY, radius)
-//        var totalPath = Path()
-//        totalPath.addPath(path)
-//        totalPath.addPath(circlePath)
-//        path.closeSubpath()
-//        path.addPath(circlePath)
-//        return path
+        var circlePath = Path()
+        circlePath.addCircle(centerX, centerY, radius)
+        return [path, circlePath]
       }
     }
     case MiGridType.Grid36GoneGe: drawGrid(6)
@@ -213,7 +214,7 @@ class ImageProcessor {
     case MiGridType.Grid9GongGe: drawGrid(3)
     case MiGridType.GridNone: do {}
     }
-    return path
+    return [path]
   }
 }
 

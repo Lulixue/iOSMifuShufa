@@ -24,6 +24,11 @@ class JiziPageViewModel: AlertViewModel {
     text = "寒雨连江夜入吴，平明送客楚山孤"
 #endif
   }
+  
+  override var textEmpty: String {
+    "集字文本不能为空".orCht("集字文本不能為空")
+  }
+  
   func onSearch(navi: NavigationViewModel) {
     if (!verifySearchText(text: text)) {
       return
