@@ -545,7 +545,12 @@ class HomeViewModel : AlertViewModel {
   }
   
   func updateHistoryBarVisible() {
-    showHistoryBar = focused && logs.isNotEmpty()
+    let newValue = focused && logs.isNotEmpty()
+    if newValue != showHistoryBar {
+      withAnimation(.easeIn(duration: 0.15)) {
+        showHistoryBar = newValue
+      }
+    }
   }
   
   func hideDropdown() {

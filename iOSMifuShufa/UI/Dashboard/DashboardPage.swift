@@ -26,7 +26,7 @@ enum DashboardRow: String, CaseIterable, Identifiable {
     switch self {
     case .update: return [-2, -2]
     case .feedback: return [1, 1]
-    case .settings: return [2, 2]
+    case .settings: return [1, 1]
     case .collection: return [-2.5, -2.5]
     case .rate: return [1, 1]
     case .sync: return [1, 1]
@@ -78,7 +78,7 @@ struct DashboardItemView: View {
   @ViewBuilder var content: some View {
     let verticalPadding: CGFloat = row == .vip ? 18 : 15
     let extraSize = row.extraSize
-    let baseSize: CGFloat = 20
+    let baseSize: CGFloat = 19
     HStack(alignment: .center, spacing: 0) {
       ZStack(alignment: .center) {
         row.image
