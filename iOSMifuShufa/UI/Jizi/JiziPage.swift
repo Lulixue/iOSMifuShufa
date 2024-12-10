@@ -252,7 +252,7 @@ struct JiziPage : View {
         }
         TextField("jizi_hint".localized, text: $viewModel.text,
                   axis: .vertical)
-        .font(.body)
+        .font(.system(size: 17))
         .focused($focused)
         .foregroundStyle(Color.colorPrimary)
         .multilineTextAlignment(.leading)
@@ -266,9 +266,10 @@ struct JiziPage : View {
               viewModel.text = ""
             } label: {
               Image(systemName: "xmark.circle.fill")
+                .square(size: 20)
                 .foregroundStyle(.gray)
-            }.buttonStyle(.plain)
-          }.padding(.trailing, 8).buttonStyle(.plain)
+            }.padding(4).buttonStyle(.plain)
+          }.padding(.trailing, 4).buttonStyle(.plain)
         }
       }
       .frame(height: editHeight)

@@ -53,6 +53,7 @@ struct WebSwiftView: View {
         self.webViewStore.webView.load(URLRequest(url: viewModel.url))
       }
     }.navigationBarHidden(true)
+      .ignoresSafeArea(edges: [.bottom])
   }
   
   func goBack() {
