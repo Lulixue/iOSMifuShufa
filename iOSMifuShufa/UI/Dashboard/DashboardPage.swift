@@ -25,7 +25,7 @@ enum DashboardRow: String, CaseIterable, Identifiable {
   var extraSize: [CGFloat] {
     switch self {
     case .update: return [-2, -2]
-    case .feedback: return [-1, -1]
+    case .feedback: return [1, 1]
     case .settings: return [2, 2]
     case .collection: return [-2.5, -2.5]
     case .rate: return [1, 1]
@@ -64,6 +64,8 @@ extension DashboardRow {
 
 private let ITEM_BG_COLOR = Color.white
 private let BASE_NAVIGATION_BAR_COLOR = UIColor.systemGray4.swiftColor
+let DASH_FONT: Font = .system(size: 18.5)
+let SETTINGS_FONT: Font = .system(size: 17.5)
 
 struct DashboardDivider: View {
   var body: some View {
@@ -76,6 +78,7 @@ struct DashboardItemView: View {
   @ViewBuilder var content: some View {
     let verticalPadding: CGFloat = row == .vip ? 18 : 15
     let extraSize = row.extraSize
+    let baseSize: CGFloat = 20
     HStack(alignment: .center, spacing: 0) {
       ZStack(alignment: .center) {
         row.image
@@ -83,11 +86,11 @@ struct DashboardItemView: View {
           .resizable()
           .scaledToFill()
           .foregroundColor(Colors.darkSlateGray.swiftColor)
-          .frame(width: 18+extraSize[0], height: 18+extraSize[1])
+          .frame(width: baseSize+extraSize[0], height: baseSize+extraSize[1])
       }.frame(width: 24, height: 24)
       Spacer.width(10)
       Text(row.rawValue.interfaceStr)
-        .font(.system(size: 18))
+        .font(DASH_FONT)
         .foregroundColor(Color.darkSlateGray)
       Spacer()
       Text(row.subText).font(.callout)

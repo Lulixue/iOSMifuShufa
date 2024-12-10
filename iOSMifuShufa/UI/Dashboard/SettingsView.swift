@@ -98,7 +98,8 @@ private struct BeitieSettingsView: View {
               singleOriginal.toggle()
             } label: {
               HStack {
-                Text("使用单字原图".orCht("使用單字原圖")).foregroundStyle(Color.darkSlateGray)
+                Text("使用单字原图".orCht("使用單字原圖"))
+                  .font(SETTINGS_FONT).foregroundStyle(Color.darkSlateGray)
                 Spacer()
                 Toggle(isOn: $singleOriginal) {
                   
@@ -255,7 +256,7 @@ private struct BeitieSingleSettingsView: View {
                       VStack(alignment: .leading, spacing: 6) {
                         HStack(alignment: .firstTextBaseline, spacing: 1) {
                           Text(first.chineseName())
-                            .foregroundStyle(Color.darkSlateGray)
+                            .foregroundStyle(Color.darkSlateGray).font(SETTINGS_FONT)
                           if first.chineseVersion()?.isNotEmpty() == true {
                             Text(first.chineseVersion()!).font(.footnote)
                               .foregroundStyle(Color.darkSlateBlue)
@@ -373,21 +374,22 @@ struct LanguageView: View {
   var body: some View {
     VStack(spacing: 0) {
       NaviView {
-        BackButtonView {
-          presentationMode.wrappedValue.dismiss()
-        }
-        Spacer()
-        NaviTitle(text: "ui_language".localized)
-        Spacer()
-        Button {
-          if version != Settings.languageVersion {
-            Settings._languageVersion = version
+        NaviContents(title: "ui_language".localized) {
+          BackButtonView {
             presentationMode.wrappedValue.dismiss()
-            CurrentUser.language = Settings.languageVersion
           }
-        } label: {
-          Text("保存").font(.footnote)
-        }.buttonStyle(PrimaryButton(bgColor: Colors.colorAccent.swiftColor))
+        } trailing: {
+          Button {
+            if version != Settings.languageVersion {
+              Settings._languageVersion = version
+              presentationMode.wrappedValue.dismiss()
+              CurrentUser.language = Settings.languageVersion
+            }
+          } label: {
+            Text("保存").font(.system(size: 13))
+          }.buttonStyle(PrimaryButton(bgColor: Colors.colorAccent.swiftColor,
+                                      horPadding: 6, verPadding: 4))
+        }
       }
       Divider()
       ScrollView {
@@ -399,7 +401,7 @@ struct LanguageView: View {
               version = c
             } label: {
               HStack {
-                Text(c.name)
+                Text(c.name).font(SETTINGS_FONT)
                 Spacer()
                 if c == version {
                   Image(systemName: "checkmark")
@@ -452,6 +454,7 @@ struct SettingItemView: View {
         }.frame(width: 24, height: 24)
       }
       Text(title).foregroundStyle(Color.darkSlateGray)
+        .font(SETTINGS_FONT)
       Spacer()
       if value.isNotEmpty() {
         Text(value).font(.footnote).foregroundStyle(.gray)
@@ -476,13 +479,12 @@ struct SettingsView: View {
   var contents: some View {
     VStack(spacing: 0) {
       NaviView {
-        BackButtonView {
-          presentationMode.wrappedValue.dismiss()
+        NaviContents(title: "settings".localized) {
+          BackButtonView {
+            presentationMode.wrappedValue.dismiss()
+          }
+        } trailing: {
         }
-        Spacer()
-        NaviTitle(text: "settings".localized)
-        Spacer()
-        CUSTOM_NAVI_BACK_SIZE.HSpacer()
       }
       Divider()
       ScrollView {
@@ -539,6 +541,7 @@ struct RotationSettingsView: View {
             } label: {
               HStack {
                 Text("首页单字旋转".orCht("首頁單字旋轉")).foregroundStyle(Color.darkSlateGray)
+                  .font(SETTINGS_FONT)
                 Spacer()
                 Toggle(isOn: $homeRotation) {
                   
@@ -551,7 +554,8 @@ struct RotationSettingsView: View {
               singleRotation.toggle()
             } label: {
               HStack {
-                Text("单字页面旋转".orCht("單字頁面旋轉")).foregroundStyle(Color.darkSlateGray)
+                Text("单字页面旋转".orCht("單字頁面旋轉"))
+                  .font(SETTINGS_FONT).foregroundStyle(Color.darkSlateGray)
                 Spacer()
                 Toggle(isOn: $singleRotation) {
                   
@@ -623,7 +627,7 @@ struct JiziSettingsView: View {
               jiziCandidate.toggle()
             } label: {
               HStack {
-                Text("jizi_candidate".localized).foregroundStyle(Color.darkSlateGray)
+                Text("jizi_candidate".localized).font(SETTINGS_FONT).foregroundStyle(Color.darkSlateGray)
                 Spacer()
                 Toggle(isOn: $jiziCandidate) {
                   

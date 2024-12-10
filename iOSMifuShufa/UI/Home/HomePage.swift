@@ -361,7 +361,7 @@ struct HomePage: View {
               } label: {
                 Image("analyze").renderingMode(.template).square(size: 28).foregroundStyle(.white)
               }.buttonStyle(.plain)
-              0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 12)
+              0.5.VDivideer(color: .gray).frame(height: 16).padding(.horizontal, 12)
               Button {
                 withAnimation(.linear(duration: 0.2)) {
                   showMiGrids.toggle()
@@ -382,7 +382,7 @@ struct HomePage: View {
               } label: {
                 Image("handwriting").renderingMode(.template).square(size: 22).foregroundStyle(.white)
               }.buttonStyle(.plain)
-              0.5.VDivideer(color: .white).frame(height: 16).padding(.horizontal, 14)
+              0.5.VDivideer(color: .gray).frame(height: 16).padding(.horizontal, 14)
               Button {
                 hidePreview()
               } label: {

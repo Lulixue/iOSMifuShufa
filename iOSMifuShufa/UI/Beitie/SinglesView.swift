@@ -208,6 +208,10 @@ struct SinglesView: View {
     let pageTo = index == singles.lastIndex ? index : (index - 1)
     self.scrollProxy?.scrollTo(max(pageTo, 0), anchor: .leading)
   }
+  var vDivider: some View {
+    0.5.VDivideer(color: .pullerBar).frame(height: 15)
+      .padding(.horizontal, 10)
+  }
   
   var body: some View {
     ZStack {
@@ -306,10 +310,7 @@ struct SinglesView: View {
         } label: {
           Image("analyze").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
         }.buttonStyle(.plain)
-        
-        0.5.VDivideer(color: .gray).frame(height: 15)
-          .padding(.horizontal, 10)
-        
+        vDivider
         Button {
           withAnimation(.linear(duration: 0.2)) {
             showMiGrid.toggle()
@@ -317,8 +318,7 @@ struct SinglesView: View {
         } label: {
           Image("mi_mi").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
         }.buttonStyle(.plain)
-        0.5.VDivideer(color: .gray).frame(height: 15)
-          .padding(.horizontal, 10)
+        vDivider
         Button {
           viewModel.toggleDrawPanel()
         } label: {
