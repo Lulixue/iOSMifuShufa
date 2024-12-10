@@ -610,6 +610,7 @@ struct HomePage: View {
         }.buttonStyle(.plain)
         5.HSpacer()
       }.padding(.horizontal, 15)
+        .padding(.top, UIDevice.current.hasNotch ? 0 : 6)
         .background(.white)
       Color.white.frame(height: 10)
       ZStack(alignment: .topLeading) {
@@ -683,5 +684,16 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
   }
   public func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
     viewControllers.count > 1
+  }
+}
+
+extension UIDevice {
+  var hasNotch: Bool {
+    let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    if keyWindow?.safeAreaInsets.bottom ?? 0 > 0 {
+      return true
+    } else {
+      return false
+    }
   }
 }

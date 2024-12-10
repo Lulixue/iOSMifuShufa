@@ -244,6 +244,7 @@ struct JiziPage : View {
             .foregroundStyle(Color.colorPrimary)
         }.buttonStyle(.plain)
       }.padding(.horizontal, paddingHor)
+        .padding(.top, UIDevice.current.hasNotch ? 0 : 6)
       10.VSpacer()
       ZStack(alignment: .top) {
         Color.white.onTapGesture {
