@@ -113,7 +113,7 @@ struct JiziPage : View {
     }.padding(.vertical, 12).padding(.horizontal, 10)
       .background(.white)
       .cornerRadius(5)
-      .shadow(radius: 2.5)
+      .shadow(radius: 1.5)
       .frame(width: 120)
   }
 
@@ -149,12 +149,12 @@ struct JiziPage : View {
           }
         } label: {
           HStack(spacing: 2) {
-            Text("history".localized).font(.system(size: 16)).foregroundStyle(.colorPrimary)
+            Text("history".localized).font(.system(size: 17)).foregroundStyle(.colorPrimary)
             Text("(\(logs.size))").font(.system(size: 13)).foregroundStyle(.colorPrimary)
             Spacer()
             Image(systemName: "chevron.right").square(size: 10)
               .foregroundStyle(.colorPrimary).rotationEffect(.degrees(historyCollapsed ? 0 : 90))
-          }.padding(.vertical, 10).padding(.horizontal, 10).background(Colors.surfaceContainer.swiftColor)
+          }.padding(.vertical, 10.5).padding(.horizontal, 10).background(Colors.surfaceContainer.swiftColor)
         }.buttonStyle(.plain)
         if !historyCollapsed {
           ScrollView {
@@ -236,7 +236,7 @@ struct JiziPage : View {
   var content: some View {
     VStack(spacing: 0) {
       HStack(spacing: 0) {
-        Text("title_jizi".localized).font(.system(size: 24)).foregroundStyle(Color.colorPrimary).bold()
+        Text("title_jizi".localized).font(.system(size: 23)).foregroundStyle(Color.colorPrimary).bold()
         Image("jizi").renderingMode(.template).square(size: 14)
           .padding(.leading, 5)
         Spacer()

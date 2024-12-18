@@ -368,12 +368,14 @@ struct CategoryItem: View {
     } header: {
       VStack(spacing: 0) {
         Button {
-          collapse.toggle()
+          withAnimation(.easeInOut(duration: 0.2)) {
+            collapse.toggle()
+          }
         } label: {
           HStack(alignment: .firstTextBaseline, spacing: 0) {
             Text(keyToString(key: key)).frame(alignment: .leading)
               .foregroundColor(Colors.searchHeader.swiftColor)
-              .font(.system(size: 15))
+              .font(.system(size: 16))
             Text("(\(works.size))").font(.footnote).foregroundColor(Colors.searchHeader.swiftColor)
             Spacer()
             Image(systemName: "chevron.down")
@@ -381,7 +383,7 @@ struct CategoryItem: View {
               .rotationEffect(.degrees(collapse ? -90 : 0))
           }.padding(.leading, 10)
             .padding(.trailing, 10)
-            .padding(.vertical, 8).background(Colors.surfaceVariant.swiftColor)
+            .padding(.vertical, 9).background(Colors.surfaceVariant.swiftColor)
         }.buttonStyle(BgClickableButton())
       }
     } footer: {
@@ -470,6 +472,7 @@ struct BeitiePage: View {
           ScrollView {
             ScrollViewReader { proxy in
               workList
+                .id("\(viewModel.orderType)")
                 .modifier(DragDismissModifier(show: $showAzDropdown))
                 .modifier(DragDismissModifier(show: $showOrderDropdown))
                 .onAppear {

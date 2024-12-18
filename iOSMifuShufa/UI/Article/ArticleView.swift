@@ -38,18 +38,18 @@ struct ArticlePage : View {
                   let linkColor = clicked ? Color.darkSlateBlue : UIColor.blue.swiftColor
                   let color: Color = isLink ? linkColor : .gray
                   Text(article.title)
-                    .font(.system(size: 18)).underline(isLink).foregroundStyle(color).padding(.horizontal, 3).padding(.vertical, 6)
+                    .font(.system(size: 18)).underline(isLink).foregroundStyle(color).padding(.horizontal, 3).padding(.vertical, 5.5).kerning(0.1)
                 }.background(.white)
               }.buttonStyle(BgClickableButton())
                 .disabled(!isLink)
             }
           }
         } header: {
-          Text(s.htmlSection).padding(.top, 10)
-            .padding(.bottom, 2)
+          Text(s.htmlSection).bold().padding(.top, 10)
+            .padding(.bottom, 2).padding(.leading, 2)
         }.tag(i)
       }
-    }.padding(.horizontal, 10).padding(.top, 5).padding(.bottom, 10)
+    }.padding(.horizontal, 10).padding(.top, 3).padding(.bottom, 10)
   }
   
   var sideMenu: some View {
@@ -62,7 +62,7 @@ struct ArticlePage : View {
           }
         } label: {
           HStack {
-            Text(sections[i].menuSection).font(.callout).padding(.vertical, 9).padding(.leading, 10)
+            Text(sections[i].menuSection).font(.body).bold().padding(.vertical, 9).padding(.leading, 10)
             Spacer()
           }.background(.white)
         }.buttonStyle(BgClickableButton())

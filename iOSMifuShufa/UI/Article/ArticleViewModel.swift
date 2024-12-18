@@ -24,7 +24,7 @@ class ArticleSection: Decodable {
     self.section = try container.decode(String.self, forKey: .section)
     self.articles = try container.decode([Article].self, forKey: .articles)
     
-    let html = section.toHtmlString(font: .preferredFont(forTextStyle: .title3), textColor: Colors.defaultText.hexString)
+    let html = section.toHtmlString(font: .systemFont(ofSize: 17), textColor: Colors.defaultText.hexString)
     htmlSection = html!.swiftuiAttrString
     menuSection = section.toHtmlString(font: .preferredFont(forTextStyle: .callout), textColor: Colors.colorPrimary.hexString)!.swiftuiAttrString
   }
