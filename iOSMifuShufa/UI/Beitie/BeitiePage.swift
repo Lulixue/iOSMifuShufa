@@ -244,7 +244,7 @@ struct WorkItem: View {
    
   
   private func onClick() {
-    debugPrint("onClick")
+    debugPrint("onClick \(works.first().chineseName())")
     if works.size == 1 {
       naviVM.gotoWork(work: works.first())
     } else {
@@ -263,7 +263,8 @@ struct WorkItem: View {
             .aspectRatio(contentMode: .fill)
             .frame(width: Self.itemWidth-10)
             .frame(height: Self.itemHeight-30)
-            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .contentShape(RoundedRectangle(cornerRadius: 2))
+            .clipped()
         } else {
           ProgressView().squareFrame(30)
             .progressViewStyle(.circular)

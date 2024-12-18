@@ -127,7 +127,7 @@ struct FeedbackView: View {
           Color.white.onTapGesture {
             feedbackFocused = true
           }
-          TextField("jizi_hint".localized, text: $viewModel.text,
+          TextField("feedback_hint".localized, text: $viewModel.text,
                     axis: .vertical)
           .font(.body)
           .focused($feedbackFocused)

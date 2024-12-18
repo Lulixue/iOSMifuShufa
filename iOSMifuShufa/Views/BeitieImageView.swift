@@ -41,7 +41,7 @@ struct WrappedZoomImageView: UIViewControllerRepresentable {
   }
   
   func updateUIViewController(_ uiViewController: AlbumPageViewController, context: Context) {
-    debugPrint("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
+//    debugPrint("updateUIViewController \(uiViewController.currentIndex) : \(pageIndex)")
     if uiViewController.currentIndex != pageIndex {
       uiViewController.scrollToPage(page: pageIndex)
     }

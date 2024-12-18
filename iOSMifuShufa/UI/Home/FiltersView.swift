@@ -48,6 +48,7 @@ extension EnvironmentValues {
   }
 }
 
+let itemFontSize: Font = .system(size: 18)
 
 struct PaddingValue {
   let top: CGFloat
@@ -173,6 +174,7 @@ struct RadicalView: View {
               ZStack(alignment: .topTrailing) {
                 Text(item)
                   .bold()
+                  .font(itemFontSize)
                   .lineLimit(1)
                   .foregroundStyle(Color.colorPrimary)
                   .frame(height: size, alignment: .center)
@@ -252,11 +254,11 @@ struct StructureList: View {
           }
           Toggle(isOn: binding) {
             HStack {
-              Text(st).font(.callout).foregroundColor(Colors.darkSlateGray.swiftColor)
+              Text(st).font(itemFontSize).foregroundColor(Colors.darkSlateGray.swiftColor)
               Spacer()
               Text(elem.key).font(.callout).foregroundColor(.gray)
             }.padding(.trailing, 10).padding(.vertical, 2)
-          }.toggleStyle(CheckboxStyle(iconSize: 18))
+          }.toggleStyle(CheckboxStyle(iconSize: 16))
             .padding(.leading, 10)
           if i != count - 1 {
             Divider().padding(.leading, 10)
@@ -303,11 +305,11 @@ struct StrokeList: View {
         Toggle(isOn: binding) {
           HStack {
             let text = Settings.langChs ? value[0] : value[0].toChtStroke()
-            Text(text).font(.callout).foregroundColor(Colors.darkSlateGray.swiftColor)
+            Text(text).font(itemFontSize).foregroundColor(Colors.darkSlateGray.swiftColor)
             Spacer()
             Text("例字：\(value[3])").font(.footnote).foregroundColor(.gray)
           }.padding(.trailing, 10).padding(.vertical, 2)
-        }.toggleStyle(CheckboxStyle(iconSize: 18))
+        }.toggleStyle(CheckboxStyle(iconSize: 16))
           .padding(.leading, 10)
         if i != count - 1 {
           Divider().padding(.leading, 10)
@@ -322,7 +324,7 @@ struct StrokeList: View {
         let selected = i == selectedIndex
         VStack(spacing: 2) {
           Text(item.0.last().toString()).foregroundStyle(selected ? .blue: Color.defaultText)
-            .font(.system(size: 14))
+            .font(.system(size: 17))
 //          Text("(\(item.1))").foregroundStyle(selected ? .blue: Colors.defaultText.swiftColor)
 //            .font(.system(size: 10))
         }.padding(.horizontal, 5)
@@ -347,6 +349,7 @@ struct FilterView: View {
     VStack(spacing: 0) {
       HStack(spacing: 0) {
         Text("filter".localized).font(.title3)
+          .bold()
         Image("filter").renderingMode(.template).square(size: 16)
           .padding(.leading, 3)
         Spacer()
@@ -371,9 +374,9 @@ struct FilterView: View {
             Text(attr).tag(t)
           }
         } label: {
-          
         }.pickerStyle(.segmented)
           .frame(maxWidth: 250)
+          
         20.HSpacer()
         Button {
           viewModel.resetAll()

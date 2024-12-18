@@ -180,6 +180,36 @@ struct Page3View: View {
   TestContentView()
 }
 
+
+struct TestImage: View {
+  let size: CGFloat = 200
+  var body: some View {
+    ZStack {
+      Color.gray
+      
+      Image("background")
+        .resizable()
+        .scaledToFill()
+        .frame(width: size)
+        .frame(height: size)
+        .clipped()
+          
+      Button {
+        
+      } label: {
+        VStack {
+        }.squareFrame(size).background {
+          RoundedRectangle(cornerRadius: 5).stroke(.white, lineWidth: 1)
+        }
+      }
+    }
+  }
+}
+
+#Preview("TestImage") {
+  TestImage()
+}
+
 func globalTest() {
 //  let image = UIImage(named: "background")
 //  image?.addWaterMark("app_name".resString)
