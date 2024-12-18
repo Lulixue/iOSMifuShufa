@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="聚焦时高亮编辑框">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="显示优化r">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/xcshareddata/xcschemes/iOSMifuShufa.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/xcshareddata/xcschemes/iOSMifuShufa.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/BeitieDbHelper.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +29,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Lulixue&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Lulixue/iOSMifuShufa.git&quot;,
+    &quot;accountId&quot;: &quot;420c4b6a-877d-471f-be3e-d09cb6fb77b0&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -34,20 +49,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lulixue/Projects/iOSMifuShufa",
-    "vcs.patch.to.clipboard": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/lulixue/Projects/iOSMifuShufa&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vcs.patch.to.clipboard&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SwiftWorkspaceSettings">
+    <option name="detectedToolchain" value="true" />
+    <option name="toolchainPathValue" value="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="" />
@@ -248,7 +269,71 @@
       <option name="project" value="LOCAL" />
       <updated>1732874610357</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="聚焦时高亮编辑框">
+      <option name="closed" value="true" />
+      <created>1732881950755</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1732881950755</updated>
+    </task>
+    <task id="LOCAL-00026" summary="兼容按钮形状">
+      <option name="closed" value="true" />
+      <created>1733278468210</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1733278468210</updated>
+    </task>
+    <task id="LOCAL-00027" summary="更新AD版本">
+      <option name="closed" value="true" />
+      <created>1733392416649</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1733392416649</updated>
+    </task>
+    <task id="LOCAL-00028" summary="修复米字格显示">
+      <option name="closed" value="true" />
+      <created>1733721446037</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1733721446037</updated>
+    </task>
+    <task id="LOCAL-00029" summary="优化显示">
+      <option name="closed" value="true" />
+      <created>1733823160113</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1733823160113</updated>
+    </task>
+    <task id="LOCAL-00030" summary="添加旧设备间隙">
+      <option name="closed" value="true" />
+      <created>1733824083179</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1733824083179</updated>
+    </task>
+    <task id="LOCAL-00031" summary="优化">
+      <option name="closed" value="true" />
+      <created>1733826421497</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1733826421497</updated>
+    </task>
+    <task id="LOCAL-00032" summary="显示优化r">
+      <option name="closed" value="true" />
+      <created>1733827882403</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1733827882403</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,7 +352,6 @@
     <MESSAGE value="添加更多的碑帖排序" />
     <MESSAGE value="添加登录和隐私政策" />
     <MESSAGE value="解决碑帖页点击错误的问题" />
-    <MESSAGE value="优化显示" />
     <MESSAGE value="添加PDF" />
     <MESSAGE value="显示生图" />
     <MESSAGE value="自己" />
@@ -276,6 +360,13 @@
     <MESSAGE value="修复AdID" />
     <MESSAGE value="优化首页" />
     <MESSAGE value="聚焦时高亮编辑框" />
-    <option name="LAST_COMMIT_MESSAGE" value="聚焦时高亮编辑框" />
+    <MESSAGE value="兼容按钮形状" />
+    <MESSAGE value="更新AD版本" />
+    <MESSAGE value="修复米字格显示" />
+    <MESSAGE value="优化显示" />
+    <MESSAGE value="添加旧设备间隙" />
+    <MESSAGE value="优化" />
+    <MESSAGE value="显示优化r" />
+    <option name="LAST_COMMIT_MESSAGE" value="显示优化r" />
   </component>
 </project>

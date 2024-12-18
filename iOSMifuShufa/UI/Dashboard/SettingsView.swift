@@ -63,6 +63,8 @@ enum SettingRow: CaseIterable {
   
 }
 
+let ITEM_VPADDING: CGFloat = 13
+
 private struct BeitieSettingsView: View {
   @Environment(\.presentationMode) var presentationMode
   
@@ -93,7 +95,7 @@ private struct BeitieSettingsView: View {
               SettingItemView(icon: "", title: "单字范围".orCht("單字範圍"))
                 .padding(.leading, 5)
             }.buttonStyle(.plain)
-            Divider().padding(.leading, 15)
+            SettingDivider(leading: 15)
             Button {
               singleOriginal.toggle()
             } label: {
@@ -104,7 +106,7 @@ private struct BeitieSettingsView: View {
                 Toggle(isOn: $singleOriginal) {
                   
                 }
-              }.padding(.vertical, 8).padding(.horizontal, 15)
+              }.padding(.vertical, ITEM_VPADDING).padding(.horizontal, 15)
                 .background(.white)
             }.buttonStyle(BgClickableButton())
           }.background(.white)
@@ -194,7 +196,7 @@ private struct BeitieSingleSettingsView: View {
           HStack(spacing: 4) {
             Image(systemName: "arrow.clockwise").square(size: 12)
             Text("reset_default".resString).font(.system(size: 15))
-          }.padding(.horizontal, 10).padding(.vertical, 7).background(.white).clipShape(RoundedRectangle(cornerRadius: 5))
+          }.padding(.horizontal, 10).padding(.vertical, ITEM_VPADDING).background(.white).clipShape(RoundedRectangle(cornerRadius: 5))
             .background {
               RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 0.5)
             }.foregroundStyle(.blue)
@@ -284,7 +286,7 @@ private struct BeitieSingleSettingsView: View {
                       }
                     }.padding(.horizontal, 10).padding(.vertical, 6)
                     if j != works.lastIndex {
-                      Divider().padding(.leading, 10)
+                      SettingDivider(leading: 10)
                     }
                   }
                 }.padding(.vertical, 6)
@@ -411,7 +413,7 @@ struct LanguageView: View {
                 .background(.white)
             }.buttonStyle(BgClickableButton())
             if c != cases.last {
-              Divider().padding(.leading, 15)
+              SettingDivider(leading: 15)
             }
           }
         }.background(.white)
@@ -459,11 +461,18 @@ struct SettingItemView: View {
       if value.isNotEmpty() {
         Text(value).font(.footnote).foregroundStyle(.gray)
       }
-      Image(systemName: "chevron.right")
+      Image(systemName: "chevron.right").square(size: 12)
         .foregroundStyle(.gray)
-    }.padding(.vertical, 13).padding(.leading, 10)
+    }.padding(.vertical, ITEM_VPADDING).padding(.leading, 10)
       .padding(.trailing, 15)
       .background(.white)
+  }
+}
+
+struct SettingDivider: View {
+  var leading: CGFloat = 40
+  var body: some View {
+      Divider.overlayColor(Colors.lightSlateGray.swiftColor.opacity(0.3)).padding(.leading, leading)
   }
 }
 
@@ -496,7 +505,7 @@ struct SettingsView: View {
               SettingItemView(icon: c.icon, title: c.chinese, color: Colors.iconColor(i))
             }.buttonStyle(BgClickableButton())
             if i != cases.lastIndex {
-              Divider().padding(.leading, 15)
+              SettingDivider()
             }
           }
         }.background(.white)
@@ -546,10 +555,10 @@ struct RotationSettingsView: View {
                 Toggle(isOn: $homeRotation) {
                   
                 }
-              }.padding(.vertical, 8).padding(.horizontal, 15)
+              }.padding(.vertical, 12).padding(.horizontal, 15)
                 .background(.white)
             }.buttonStyle(BgClickableButton())
-            Divider().padding(.leading, 15)
+            SettingDivider(leading: 15)
             Button {
               singleRotation.toggle()
             } label: {
@@ -560,10 +569,10 @@ struct RotationSettingsView: View {
                 Toggle(isOn: $singleRotation) {
                   
                 }
-              }.padding(.vertical, 8).padding(.horizontal, 15)
+              }.padding(.vertical, ITEM_VPADDING).padding(.horizontal, 15)
                 .background(.white)
             }.buttonStyle(BgClickableButton())
-          }
+          }.background(.white)
           HStack {
             let chs = "当手机旋转时，如果方向没有锁定，开启则单字跟随旋转。"
             let cht = "當手機旋轉時，如果方向沒有鎖定，開啓則單字跟隨旋轉。"
@@ -632,7 +641,7 @@ struct JiziSettingsView: View {
                 Toggle(isOn: $jiziCandidate) {
                   
                 }
-              }.padding(.vertical, 8).padding(.horizontal, 15)
+              }.padding(.vertical, ITEM_VPADDING).padding(.horizontal, 15)
                 .background(.white)
             }.buttonStyle(BgClickableButton())
           }.background(.white)

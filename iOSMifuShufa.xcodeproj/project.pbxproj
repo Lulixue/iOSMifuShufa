@@ -10,6 +10,8 @@
 		004809F617C0A8E8A30D316B /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BA4FA07507A87227ABBEAA /* Pods_iOSMifuShufa_iOSMifuShufaUITests.framework */; };
 		4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702BCB18E1C7F5C88C7C45FD /* Pods_iOSMifuShufa.framework */; };
 		CFC68FE027D9684B83888806 /* Pods_iOSMifuShufaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */; };
+		F900B9422D09456C00E83EEF /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F900B9412D09456C00E83EEF /* chinese.db */; };
+		F900B9432D09456C00E83EEF /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F900B9402D09456C00E83EEF /* beitie.db */; };
 		F902752C2CF8A2FB00AE5D8A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F902752B2CF8A2F900AE5D8A /* CustomViews.swift */; };
 		F9232C6E2CF331BF00A15ADF /* JiziPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9232C6D2CF331BF00A15ADF /* JiziPage.swift */; };
 		F9236D962CF613AC00245F08 /* AnalyzeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9236D952CF613AC00245F08 /* AnalyzeView.swift */; };
@@ -18,8 +20,6 @@
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
 		F93375B42CF83AC00052C26F /* PdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93375B32CF83AC00052C26F /* PdfView.swift */; };
-		F95C68A42CF57D5F00292A34 /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A32CF57D5F00292A34 /* chinese.db */; };
-		F95C68A52CF57D5F00292A34 /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F95C68A22CF57D5F00292A34 /* beitie.db */; };
 		F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68A92CF58A5B00292A34 /* OpenCV */; };
 		F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68AB2CF58BA500292A34 /* OpenCV */; };
 		F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = F96E60F92CD7B0D4007329DB /* resource.zip */; };
@@ -59,7 +59,6 @@
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
 		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
-		F9988AF32CF727D70038D32D /* ToastUI in Frameworks */ = {isa = PBXBuildFile; productRef = F9988AF22CF727D70038D32D /* ToastUI */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -155,6 +154,8 @@
 		A0F7AF12C000D41A8C64F793 /* Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C900F39D0CB81CE38DE2F377 /* Pods-iOSMifuShufaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSMifuShufaTests.release.xcconfig"; path = "Target Support Files/Pods-iOSMifuShufaTests/Pods-iOSMifuShufaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F86F755D0108D2D24AD45272 /* Pods_iOSMifuShufaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSMifuShufaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F900B9402D09456C00E83EEF /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
+		F900B9412D09456C00E83EEF /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F902752B2CF8A2F900AE5D8A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		F9232C6D2CF331BF00A15ADF /* JiziPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziPage.swift; sourceTree = "<group>"; };
 		F9236D952CF613AC00245F08 /* AnalyzeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeView.swift; sourceTree = "<group>"; };
@@ -164,8 +165,6 @@
 		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
 		F93375B32CF83AC00052C26F /* PdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfView.swift; sourceTree = "<group>"; };
-		F95C68A22CF57D5F00292A34 /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
-		F95C68A32CF57D5F00292A34 /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
 		F96E61002CD8574B007329DB /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -282,7 +281,6 @@
 				F96E61252CD91511007329DB /* Collections in Frameworks */,
 				F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */,
 				4E9A57E418DB7EE8979E742B /* Pods_iOSMifuShufa.framework in Frameworks */,
-				F9988AF32CF727D70038D32D /* ToastUI in Frameworks */,
 				F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,8 +388,8 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F95C68A22CF57D5F00292A34 /* beitie.db */,
-				F95C68A32CF57D5F00292A34 /* chinese.db */,
+				F900B9402D09456C00E83EEF /* beitie.db */,
+				F900B9412D09456C00E83EEF /* chinese.db */,
 			);
 			path = DebugResources;
 			sourceTree = "<group>";
@@ -744,7 +742,6 @@
 			packageReferences = (
 				F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F95C68A82CF58A5B00292A34 /* XCRemoteSwiftPackageReference "opencv-spm" */,
-				F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */,
 			);
 			productRefGroup = F98820452C3AC4500011DB04 /* Products */;
 			projectDirPath = "";
@@ -763,8 +760,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
-				F95C68A42CF57D5F00292A34 /* chinese.db in Resources */,
-				F95C68A52CF57D5F00292A34 /* beitie.db in Resources */,
+				F900B9422D09456C00E83EEF /* chinese.db in Resources */,
+				F900B9432D09456C00E83EEF /* beitie.db in Resources */,
 				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
 				F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */,
@@ -1195,7 +1192,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1203,6 +1200,7 @@
 				INFOPLIST_FILE = iOSMifuShufa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "米芾书法字典";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Never Used";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1215,7 +1213,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1232,7 +1230,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1240,6 +1238,7 @@
 				INFOPLIST_FILE = iOSMifuShufa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "米芾书法字典";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Never Used";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1252,7 +1251,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1395,14 +1394,6 @@
 				minimumVersion = 1.1.4;
 			};
 		};
-		F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/quanshousio/ToastUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1419,11 +1410,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F96E61232CD91511007329DB /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
-		};
-		F9988AF22CF727D70038D32D /* ToastUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F9988AF12CF727D70038D32D /* XCRemoteSwiftPackageReference "ToastUI" */;
-			productName = ToastUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
