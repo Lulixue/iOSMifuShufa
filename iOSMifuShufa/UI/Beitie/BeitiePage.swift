@@ -159,7 +159,7 @@ struct WorkListItem: View {
         VStack(alignment: .leading, spacing: 6) {
           let color = first.btType.nameColor(baseColor: Color.darkSlateGray)
           HStack(alignment: .firstTextBaseline, spacing: 2) {
-            Text(first.chineseName()).font(.system(size: 19))
+            Text(first.chineseName()).font(.system(size: 17.5))
               .foregroundStyle(color)
             if viewModel.organizeStack && works.size > 1 {
               Text("(\(works.size))").font(.footnote).foregroundStyle(color)

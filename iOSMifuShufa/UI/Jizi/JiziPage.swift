@@ -144,15 +144,17 @@ struct JiziPage : View {
     return VStack(spacing: 0) {
       if logs.isNotEmpty() {
         Button {
-          historyCollapsed.toggle()
+          withAnimation(.easeIn(duration: 0.2)) {
+            historyCollapsed.toggle()
+          }
         } label: {
-          HStack(spacing: 0) {
-            Text("history".localized).font(.callout).foregroundStyle(.colorPrimary)
-            Text("(\(logs.size))").font(.footnote).foregroundStyle(.colorPrimary)
+          HStack(spacing: 2) {
+            Text("history".localized).font(.system(size: 16)).foregroundStyle(.colorPrimary)
+            Text("(\(logs.size))").font(.system(size: 13)).foregroundStyle(.colorPrimary)
             Spacer()
             Image(systemName: "chevron.right").square(size: 10)
-              .foregroundStyle(.colorPrimary)
-          }.padding(.vertical, 8).padding(.horizontal, 10).background(Colors.surfaceContainer.swiftColor)
+              .foregroundStyle(.colorPrimary).rotationEffect(.degrees(historyCollapsed ? 0 : 90))
+          }.padding(.vertical, 10).padding(.horizontal, 10).background(Colors.surfaceContainer.swiftColor)
         }.buttonStyle(.plain)
         if !historyCollapsed {
           ScrollView {
@@ -181,7 +183,9 @@ struct JiziPage : View {
                       }
                       Spacer()
                       Button {
-                        binding.wrappedValue.toggle()
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                          binding.wrappedValue.toggle()
+                        }
                       } label: {
                         Image(systemName: "arrowtriangle.right.circle.fill").square(size: 20).foregroundStyle(.darkSlateGray)
                           .rotationEffect(.degrees(binding.wrappedValue ? 90 : 0))
