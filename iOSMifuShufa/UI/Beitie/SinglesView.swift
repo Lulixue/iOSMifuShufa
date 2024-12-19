@@ -119,10 +119,12 @@ struct SingleMiGridView: View {
             } label: {
               Image(uiImage: image).renderingMode(.original)
                 .resizable().scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 5))
+                .contentShape(RoundedRectangle(cornerRadius: 5))
+                .clipped()
                 .padding(selected ? 2.5 : 1)
                 .background(selected ? .red : .white)
-                .clipShape(RoundedRectangle(cornerRadius: 5))
+                .contentShape(RoundedRectangle(cornerRadius: 5))
+                .clipped()
                 .padding(.trailing, 10)
             }.buttonStyle(.plain)
           }
@@ -340,7 +342,8 @@ struct SinglesView: View {
                   Image(uiImage: thumbnail).resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(minWidth: 20, minHeight: bottomBarHeight - 20)
-                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                    .contentShape(RoundedRectangle(cornerRadius: 2))
+                    .clipped()
                     .padding(0.5)
                     .background {
                       RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)

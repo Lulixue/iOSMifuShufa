@@ -64,7 +64,7 @@ struct MiGridZoomableImageView: View {
           Image(uiImage: image).renderingMode(.original).resizable()
             .scaledToFit()
             .frame(minHeight: 20)
-            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .viewShape(RoundedRectangle(cornerRadius: 2))
             .scaleEffect(currentZoom + totalZoom)
             .gesture(MagnificationGesture().onChanged({ offset in
               debugPrint("offset \(offset)")
@@ -103,7 +103,7 @@ struct ImageZoomableView: View {
         Image(uiImage: image).resizable()
         .scaledToFit()
         .frame(minHeight: 20)
-        .clipShape(RoundedRectangle(cornerRadius: 2))
+        .viewShape(RoundedRectangle(cornerRadius: 2))
         .scaleEffect(currentZoom + totalZoom)
         .gesture(MagnificationGesture().onChanged({ offset in
           debugPrint("offset \(offset)")
@@ -137,6 +137,7 @@ struct SinglePreviewItem: View {
         img.image?.resizable()
           .scaledToFit()
           .frame(minHeight: 20)
+          .viewShape(RoundedRectangle(cornerRadius: 2))
           .onTapGesture {
             onClick()
           }
@@ -147,7 +148,6 @@ struct SinglePreviewItem: View {
         }
       })
       .indicator(.activity).tint(.white).frame(alignment: loading ? .center : .topTrailing)
-      .clipShape(RoundedRectangle(cornerRadius: 2))
       .scaleEffect(currentZoom + totalZoom)
       .gesture(MagnificationGesture().onChanged({ offset in
         debugPrint("offset \(offset)")

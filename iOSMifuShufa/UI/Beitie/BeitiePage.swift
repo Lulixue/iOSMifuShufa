@@ -19,6 +19,11 @@ extension View {
     .background(Colors.surfaceContainer.swiftColor)
     .clipShape(RoundedRectangle(cornerRadius: 4))
   }
+  
+  @ViewBuilder func viewShape<S>(_ shape: S) -> some View where S : Shape {
+    contentShape(shape)
+      .clipped()
+  }
 }
 
 struct SearchBar: View {

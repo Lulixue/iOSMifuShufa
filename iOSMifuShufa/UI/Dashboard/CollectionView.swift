@@ -197,7 +197,7 @@ struct CollectionView: View {
                   WebImage(url: url) { img in
                     img.image?.resizable()
                       .aspectRatio(contentMode: .fit)
-                      .clipShape(RoundedRectangle(cornerRadius: 2)).padding(3).overlay {
+                      .contentShape(RoundedRectangle(cornerRadius: 2)).clipped().padding(3).overlay {
                         RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
                       }
                   }

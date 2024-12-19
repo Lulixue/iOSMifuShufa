@@ -1018,7 +1018,8 @@ struct AnalyzeView: View {
             HStack(alignment: .top, spacing: 0) {
               HStack(spacing: 0) {
                 Image(uiImage: image).resizable().scaledToFit()
-                  .clipShape(RoundedRectangle(cornerRadius: 3))
+                  .contentShape(RoundedRectangle(cornerRadius: 3))
+                  .clipped()
               }.padding(4).background(color)
                 .clipShape(CustomRoundedCorners(radius: 3, corners: [.topLeft, .bottomLeft, .bottomRight]))
               Text(type.chinese.verticalChars)
@@ -1057,7 +1058,8 @@ struct AnalyzeView: View {
             HStack(alignment: .top, spacing: 0) {
               HStack(spacing :0) {
                 Image(uiImage: image).resizable().scaledToFit()
-                  .clipShape(RoundedRectangle(cornerRadius: 3))
+                  .contentShape(RoundedRectangle(cornerRadius: 3))
+                  .clipped()
                 
               }.padding(4).background(color)
                 .clipShape(CustomRoundedCorners(radius: 3, corners: [.topLeft, .bottomLeft, .bottomRight]))

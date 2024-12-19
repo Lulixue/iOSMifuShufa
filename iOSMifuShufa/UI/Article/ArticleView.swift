@@ -91,21 +91,23 @@ struct ArticlePage : View {
         }
       }
   }
+  
   var content: some View {
     VStack(spacing: 0) {
       let size = CUSTOM_NAVI_ICON_SIZE - 2
       NaviView {
-        size.HSpacer()
-        Spacer()
-        NaviTitle(text: "title_article".localized)
-        Spacer()
-        Button {
-          sideVM.sideMenuRightPanel.toggle()
-        } label: {
-          Image(systemName: "line.3.horizontal")
-            .square(size: size)
-            .foregroundStyle(.colorPrimary)
-        }.buttonStyle(.plain)
+        NaviContents(title: "title_article".localized) {
+          
+        } trailing: {
+           Button {
+             sideVM.sideMenuRightPanel.toggle()
+           } label: {
+             Image(systemName: "line.3.horizontal")
+               .square(size: size)
+               .foregroundStyle(.colorPrimary)
+           }.buttonStyle(.plain).padding(.trailing, 5)
+        }
+ 
       }.background(Colors.surfaceVariant.swiftColor)
       Divider()
       

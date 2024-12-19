@@ -35,6 +35,8 @@ struct ImagePreviewItem: View {
         img.image?.resizable()
           .scaledToFit()
           .frame(minHeight: 20)
+          .contentShape(RoundedRectangle(cornerRadius: 2))
+          .clipped()
           .onTapGesture {
             onClick()
           }
@@ -45,7 +47,6 @@ struct ImagePreviewItem: View {
         }
       })
       .indicator(.activity).frame(alignment: loading ? .center : .topTrailing)
-      .clipShape(RoundedRectangle(cornerRadius: 2))
       .scaleEffect(currentZoom + totalZoom)
       .gesture(MagnificationGesture().onChanged({ offset in
         currentZoom = offset - 1

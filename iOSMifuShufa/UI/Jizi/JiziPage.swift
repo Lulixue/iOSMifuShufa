@@ -203,7 +203,8 @@ struct JiziPage : View {
                                   img.image?.resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(minWidth: 20)
-                                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                                    .contentShape(RoundedRectangle(cornerRadius: 2))
+                                    .clipped()
                                 }.indicator(.activity)
                                   .tint(.white).padding(.trailing, 3)
                               }

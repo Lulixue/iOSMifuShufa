@@ -176,7 +176,7 @@ struct HomePage: View {
             img.image?.resizable()
               .scaledToFit()
               .frame(height: 90)
-              .clipShape(RoundedRectangle(cornerRadius: 5))
+              .viewShape(RoundedRectangle(cornerRadius: 5))
               .padding(3)
               .background(content: {
                 RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
@@ -214,7 +214,7 @@ struct HomePage: View {
             img.image?.resizable()
               .scaledToFit()
               .frame(height: 60)
-              .clipShape(RoundedRectangle(cornerRadius: 5))
+              .viewShape(RoundedRectangle(cornerRadius: 5))
               .padding(3)
               .background(content: {
                 RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
@@ -258,7 +258,7 @@ struct HomePage: View {
                 img.image?.resizable()
                   .aspectRatio(contentMode: .fit)
                   .frame(width: width - 2 * padding)
-                  .clipShape(RoundedRectangle(cornerRadius: 2))
+                  .viewShape(RoundedRectangle(cornerRadius: 2))
               }.padding(padding).overlay {
                 RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
               }

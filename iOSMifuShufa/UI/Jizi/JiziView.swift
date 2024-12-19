@@ -64,6 +64,8 @@ struct JiziView : View {
                 img.image?.resizable()
                   .aspectRatio(contentMode: .fit)
                   .frame(height: size-16)
+                  .contentShape(RoundedRectangle(cornerRadius: 2))
+                  .clipped()
                   .onAppear(perform: {
                     viewModel.loaded(index: i)
                   })
@@ -71,7 +73,7 @@ struct JiziView : View {
               .onSuccess(perform: { _, _, _ in
                 viewModel.loaded(index: i)
               })
-              .indicator(.activity).tint(Color.colorPrimary).clipShape(RoundedRectangle(cornerRadius: 2))
+              .indicator(.activity).tint(Color.colorPrimary)
               .id(single?.id ?? i)
               if viewModel.jiziImageLoaded[i] != true {
                 ProgressView().squareFrame(20)
@@ -311,7 +313,8 @@ struct JiziView : View {
                     img.image?.resizable()
                       .aspectRatio(contentMode: .fit)
                       .frame(minWidth: 40, minHeight: 40)
-                      .clipShape(RoundedRectangle(cornerRadius: 2))
+                      .contentShape(RoundedRectangle(cornerRadius: 2))
+                      .clipped()
                       .padding(0.5)
                       .background {
                         RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)

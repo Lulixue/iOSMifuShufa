@@ -340,7 +340,8 @@ struct WorkView: View, SinglePreviewDelegate {
                     .scaledToFill()
                     .frame(maxWidth: 40)
                     .frame(height: 59)
-                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                    .contentShape(RoundedRectangle(cornerRadius: 2))
+                    .clipped()
                     .padding(0.5)
                     .background {
                       RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .gray, lineWidth: selected ? 4 : 0.5)

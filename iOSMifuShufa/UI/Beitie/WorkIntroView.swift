@@ -64,7 +64,8 @@ struct WorkIntroView: View {
                 img.image?.resizable()
                   .scaledToFit()
                   .frame(height: 100)
-                  .clipShape(RoundedRectangle(cornerRadius: 5))
+                  .contentShape(RoundedRectangle(cornerRadius: 5))
+                  .clipped()
                   .padding(3)
                   .background(content: {
                     RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
