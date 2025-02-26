@@ -385,14 +385,8 @@ class HomeViewModel : AlertViewModel {
                                  fromRawResearch: Boolean = true) {
     let font = preferredFont
     resetOrderKeys()
-    let orderType = order
-    var orderWorks = HashMap<Int, Int>()
-    
-    BeitieDbHelper.shared.getOrderTypeWorks(BeitieOrderType.orderType, false).elements.forEach { it in
-      for work in it.value.map({ w in w.first() }) {
-        orderWorks[work.id] = orderWorks.size
-      }
-    }
+    let orderType = (searchCharType == .Component && order == .Default) ? SearchResultOrder.Char : order
+    let orderWorks = BeitieDbHelper.shared.orderedWork
     var orderResult = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
     let map = orderType.mapToOrderResult(result, fromRawResearch: fromRawResearch)
     map.elements.forEach { it in
@@ -630,5 +624,21 @@ extension Range where Element == Int {
       array.add(i)
     }
     return array
+  }
+}
+
+
+extension BeitieDbHelper {
+  var orderedWork: HashMap<Int, Int> {
+    var orderWorks = HashMap<Int, Int>()
+    
+    getOrderTypeWorks(BeitieOrderType.orderType, BeitieOrderType.organizeStack).elements.forEach { it in
+      for works in it.value {
+        for work in works {
+          orderWorks[work.id] = orderWorks.size
+        }
+      }
+    }
+    return orderWorks
   }
 }

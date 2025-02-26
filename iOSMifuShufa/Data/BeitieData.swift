@@ -491,16 +491,18 @@ extension BeitieSingle {
   
   var showChars: String {
     let wc = writtenChar
+    let stdCht = ChineseConverter.getStdCht(wc)
     let chs = ChineseConverter.getChs(wc)
+    let wcStr =  (stdCht != wc && chs.contains(stdCht)) ? "\(wc)[\(stdCht)]" : wc.toString()
     if (!Settings.langChs) {
       return wc.toString()
     } else {
-      if (chs == wc) {
+      if wcStr.contains(chs) {
         return wc.toString()
       }
       return "\(wc)(\(chs))"
-    }
-  }
+    }  }
+  
   var image: BeitieImage? {
     BeitieDbHelper.shared.getImageById(imageId)
   }
@@ -611,5 +613,25 @@ class Calligrapher: Decodable {
     self.avatarUrl = try container.decodeIfPresent(String.self, forKey: .avatarUrl)
     self.az = try container.decode(String.self, forKey: .az)
     self.famous = try container.decode(Boolean.self, forKey: .famous)
+  }
+}
+
+
+extension BeitieDbHelper {
+  func searchComponent(_ char: Char) -> List<BeitieSingle> {
+    let componentResult = getSinglesByComponent(char: char)
+
+    if (Settings.languageVersion == ChineseVersion.Simplified) {
+       if let cht = ChineseConverter.getNotPartCht(char) {
+         var result = ArrayList<BeitieSingle>()
+         result.addAll(componentResult)
+         for c in cht {
+           let chtResult = getSinglesByComponent(char: c)
+           result.addAll(chtResult)
+         }
+         return result
+       }
+     }
+     return componentResult
   }
 }

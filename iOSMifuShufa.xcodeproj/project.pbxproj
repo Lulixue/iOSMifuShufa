@@ -17,6 +17,7 @@
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
+		F931CE732D6EC2B90040F8AB /* Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE722D6EC2B60040F8AB /* Characters.swift */; };
 		F93375B42CF83AC00052C26F /* PdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93375B32CF83AC00052C26F /* PdfView.swift */; };
 		F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68A92CF58A5B00292A34 /* OpenCV */; };
 		F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68AB2CF58BA500292A34 /* OpenCV */; };
@@ -162,6 +163,7 @@
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
+		F931CE722D6EC2B60040F8AB /* Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters.swift; sourceTree = "<group>"; };
 		F93375B32CF83AC00052C26F /* PdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfView.swift; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 		F9ECB0222CD25CD00009C0DC /* Beitie */ = {
 			isa = PBXGroup;
 			children = (
+				F931CE722D6EC2B60040F8AB /* Characters.swift */,
 				F9236D952CF613AC00245F08 /* AnalyzeView.swift */,
 				F9FFC6BF2CE31969008AB5EE /* WorkIntroView.swift */,
 				F9F97C8A2CDE54CF00096ED1 /* ImagePreviewItem.swift */,
@@ -977,6 +980,7 @@
 				F9E124982CE36D9200BB8CD4 /* ScrollViewStyleModifier.swift in Sources */,
 				F9F97C9D2CE0ED9300096ED1 /* BeitieImageView.swift in Sources */,
 				F9F97C7F2CDC90AF00096ED1 /* SinglePreviewItem.swift in Sources */,
+				F931CE732D6EC2B90040F8AB /* Characters.swift in Sources */,
 				F9E124B12CE7247600BB8CD4 /* ArticleViewModel.swift in Sources */,
 				F9F97C792CDB1E2500096ED1 /* FIlterViewModel.swift in Sources */,
 				F9ECB06C2CD780BF0009C0DC /* SplashView.swift in Sources */,

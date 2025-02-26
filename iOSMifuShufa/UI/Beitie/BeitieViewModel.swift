@@ -87,7 +87,7 @@ extension BeitieOrderType {
 
 
 class BeitieViewModel: AlertViewModel {
-  let searchBarHeight: CGFloat = 40
+  let searchBarHeight: CGFloat = 43
   @Published var showVersionWorks = false
   @Published var searchText = ""
   @Published var showSearchBar = false
@@ -107,6 +107,9 @@ class BeitieViewModel: AlertViewModel {
       BeitieOrderType.orderType = orderType
     }
   }
+  
+  @Published var searchResult = OrderedDictionary<String, Any>()
+  @Published var showSearchResult = false
   lazy var azOrderParam: DropDownParam<String> = {
     let keys = BeitieDbHelper.shared.getOrderTypeWorks(.Az, true).keys.map { $0.toString() }
     return DropDownParam(items: keys, texts: keys, colors: Colors.ICON_COLORS)
@@ -126,28 +129,49 @@ class BeitieViewModel: AlertViewModel {
     doSearch(text)
   }
   
-  
-  
   func doSearch(_ text: String) {
     Task {
-      var result = BeitieDbHelper.BeitieDictionary()
-      BeitieDbHelper.shared.getDefaultTypeWorks().forEach { (k, v) in
-        var items = [[BeitieWork]]()
-        v.forEach { works in
-          let result = works.filter { $0.matchKeyword(keyword: text) }
-          if result.isNotEmpty() {
-            items.add(result)
-          }
-        }
-        if (items.isNotEmpty()) {
-          result[k] = items
+      var allResult = OrderedDictionary<String, Any>()
+      var items = List<List<BeitieWork>>()
+      let map = BeitieDbHelper.shared.getDefaultTypeWorks(organizeStack)
+      map.forEach { (k, v) in
+        let r = v.map { works in works.filter { $0.matchKeyword(keyword: text) } }.filter { $0.isNotEmpty() }
+        if r.isNotEmpty() {
+          items.addAll(r)
         }
       }
+      
+      if (items.isNotEmpty()) {
+        var matchResult = BeitieDbHelper.BeitieDictionary()
+        matchResult[BEITIE] = items
+        allResult[BEITIE] = matchResult
+      }
+      
+      let images = BeitieDbHelper.shared.getMatchKeywordImages(text.sqlLike)
+      if (images.isNotEmpty()) {
+          let works = images.map { it in it.work }.distinct()
+          var orderWorks = List<BeitieWork>()
+          map.values.forEach { it in
+            for w in it {
+              for sw in w {
+                if works.containsItem(sw) {
+                  orderWorks.add(sw)
+                }
+              }
+            }
+          }
+          allResult[BEITIE_IMG] = orderWorks.map { it in
+            BeitieImageMatch(work: it, images: images.filter { img in img.workId == it.id }.sortedBy { img in img.index }, keyword: text)
+          }
+        }
+      
       DispatchQueue.main.async {
-        if !result.isEmpty {
-          self.showMap = result
+        if !allResult.isEmpty {
+          self.showSearchResult = true
+          self.searchResult = allResult
         } else {
-          self.showAlertDlg("no_result".resString)
+          self.showSearchResult = false
+          self.showAlertDlg("no_results".resString)
         }
       }
     }
@@ -182,5 +206,148 @@ class BeitieViewModel: AlertViewModel {
   override init() {
     super.init()
 //    updateVersionWorks(works: showMap.elements.first!.value.first())
+  }
+}
+
+
+struct BeitieImageMatch {
+  let work: BeitieWork
+  let images: List<BeitieImage>
+  let keyword: String
+  let htmls: List<AttributedString>
+  
+  init(work: BeitieWork, images: List<BeitieImage>, keyword: String) {
+    self.work = work
+    self.images = images
+    self.keyword = keyword
+    self.htmls = images.map { BeitieImageMatch.imageShowText($0, keyword).toHtmlString(font: .preferredFont(forTextStyle: .body))!.swiftUIAttrString }
+  }
+  
+  static func imageShowText(_ image: BeitieImage, _ keyword: String) -> String {
+    for s in List.arrayOf(image.chineseText() ?? "", image.text, image.textCht).filter({ $0 != nil }) {
+      if (s!.contains(keyword)) {
+        return s!.trim().splitMatchedPart(keyword)
+      }
+    }
+    return ""
+  }
+}
+
+
+extension String {
+  
+  func substring(_ start: Int, _ end: Int) throws -> String {
+    var result = ""
+    for i in start..<end {
+      result.append(this[i].toString())
+    }
+    return result
+  }
+  
+  subscript(_ index: Int) -> Character {
+    let subIndex = self.index(self.startIndex, offsetBy: index)
+    return self[subIndex]
+  }
+  
+  func ellipseEnd(_ maxLength: Int, _ count: Int = 100000) -> String {
+    if (self.length < maxLength) {
+      return this
+    } else {
+      var sb = ""
+      sb = sb + (try! substring(0, maxLength))
+      for i in maxLength..<this.length {
+        let char = this[i]
+        sb.append(char)
+        if (sb.length > count) {
+          break
+        }
+        if (SHICI_END_SEPARATORS.contains(char)) {
+          break
+        }
+      }
+      sb = sb + "..."
+      return sb.toString()
+    }
+  }
+  
+  func splitMatchedPart(_ keyword: String) ->String {
+    guard let matchIndex = self.index(of: keyword) else { return self }
+    let index = self.distance(from: self.startIndex, to: matchIndex)
+    var separatorCount = 0
+    var start = 0
+    for i in (0...index).reversed() {
+      let char = self[i]
+      if (!char.charIsChinesChar()) {
+        separatorCount += 1
+        if (separatorCount == 2 || END_SEPARATORS.contains(char)) {
+          start = i+1
+          break
+        }
+      }
+    }
+    for i in start..<index {
+      if (self[i].charIsChinesChar()) {
+        start = i
+        break
+      }
+    }
+    
+    var end = index + keyword.length
+    separatorCount = 0
+    var previous: Character = "一"
+    for i in (index+keyword.length)..<this.length {
+      let char = this[i]
+      if (char.isLineSeparator() && !previous.isLineSeparator()) {
+        separatorCount += 1
+        if (separatorCount == 2 || SHICI_END_SEPARATORS.contains(char)) {
+          end = i
+          break
+        }
+      }
+      previous = char
+    }
+    do {
+      var ret = try this.substring(start, end + 1)
+      
+      if !SHICI_END_SEPARATORS.contains(ret.last()) {
+        ret = ret.dropLast(1) + "..."
+      }
+      return ret.addMatchIndicator(keyword)
+    } catch {
+      return ""
+    }
+  }
+  
+  func replace(_ oldChar: String, _ newChar: String) -> String {
+    return self.replacingOccurrences(of: oldChar, with: newChar, options: .literal, range: nil)
+  }
+  
+  func addMatchIndicator(_ keyword: String?) -> String {
+    if let keyword = keyword {
+      if (self.contains(keyword)) {
+        return self.replace(keyword, "<font color='#FF0000'>\(keyword)</font>")
+      }
+    }
+    return self
+  }
+  
+  func substring(_ start: Int) throws -> String {
+    var result = ""
+    for i in start..<self.length {
+      result.append(this[i].toString())
+    }
+    return result
+  }
+  
+  func index<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
+    range(of: string, options: options)?.lowerBound
+  }
+}
+
+extension Char {
+  
+  private static let LINE_SEPARATORS = [DOUHAO, DOUHAO_BAN, FENHAO, FENHAO_BAN, JUHAO, JUHAO_BAN, WENHAO, WENHAO_BAN, TANHAO, TANHAO_BAN]
+  func isLineSeparator() -> Boolean {
+    return Self.LINE_SEPARATORS.contains(self)
   }
 }

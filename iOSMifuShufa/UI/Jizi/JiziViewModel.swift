@@ -531,12 +531,7 @@ class JiziViewModel: AlertViewModel {
     let chars = text.filter { it in it.charIsChinesChar() }.toCharList
     var newItems = [JiziItem]()
     
-    var orderWorks = HashMap<Int, Int>()
-    BeitieDbHelper.shared.getOrderTypeWorks(BeitieOrderType.orderType, false).elements.forEach { it in
-      for work in it.value.map({ w in w.first() }) {
-        orderWorks[work.id] = orderWorks.size
-      }
-    }
+    let orderWorks = BeitieDbHelper.shared.orderedWork
     chars.forEach { it in
       let result = BeitieDbHelper.shared.search(it).matchJizi()
         .sortedBy { s in orderWorks[s.workId]! }

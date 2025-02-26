@@ -163,6 +163,17 @@ class BeitieDbHelper {
     guard let row = try? db.prepare(imageTable.filter(idExp == id)).first else { return nil }
     return try? BeitieImage(from: row.decoder())
   }
+  
+  func getMatchKeywordImages(_ keyword: String) -> List<BeitieImage> {
+    let textEpr = Expression<String>("text")
+    let textChtEpr = Expression<String>("textCht")
+    do {
+      guard let rows = try? db.prepare(imageTable.filter(textEpr.like(keyword) || textChtEpr.like(keyword))) else { return [] }
+      return try rows.map { try BeitieImage(from: $0.decoder()) }
+    } catch {
+      return []
+    }
+  }
 
   func getSingleById(_ id: Int) -> BeitieSingle? {
     guard let row = try? db.prepare(singleTable.filter(idExp == id)).first else { return nil }
@@ -477,10 +488,6 @@ class BeitieDbHelper {
     return result
   }
 
-  
-  func searchComponent(_ char: Char) -> List<BeitieSingle> {
-    getSinglesByComponent(char: char)
-  }
   
 //  @Query("select * from BeitieSingle where strokes like '%' || :stroke || '%'")
   func getSinglesByStroke(_ stroke: String) -> List<BeitieSingle> {

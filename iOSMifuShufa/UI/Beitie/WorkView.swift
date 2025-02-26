@@ -460,7 +460,7 @@ struct WorkView: View, SinglePreviewDelegate {
   }
   
   var scrollBar: some View {
-    ScrollView(showsIndicators: false) {
+    HStack {
       VStack(alignment: .center) {
         HStack(spacing: 12) {
           Button {

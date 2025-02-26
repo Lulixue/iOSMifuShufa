@@ -71,10 +71,14 @@ class ChineseConverter {
   }()
   
   private static let chtChsMap = {
-    var map = HashMap<Char, Char>()
+    var map = HashMap<Char, String>()
     chsChtMap.forEach { (k, v) in
       v.forEach { c in
-        map[c] = k
+        if map.containsKey(c) {
+          map[c] = map[c]! + "/" + k.toString()
+        } else {
+          map[c] = k.toString()
+        }
       }
     }
     return map
@@ -120,9 +124,24 @@ class ChineseConverter {
     return char
   }
   
-  static func getChs(_ char: Char) -> Char {
+  private static var variantStdMap: HashMap<Char, Char> = {
+    var variantsMap = HashMap<Char, Char>()
+    for (k, v) in variants {
+      v.forEach { it in
+        variantsMap[it] = k
+      }
+    }
+    return variantsMap
+  }()
+  
+  static func getStdCht(_ char: Char) -> Char {
+    variantStdMap[char] ?? char
+  }
+
+  
+  static func getChs(_ char: Char) -> String {
     if (chsChtMap.containsKey(char)) {
-      return char
+      return char.toString()
     }
     
     if (chtChsMap.containsKey(char)) {
@@ -136,15 +155,91 @@ class ChineseConverter {
         }
       }
     }
-    return char
+    return char.toString()
   }
   
+  
+  private static func getAllChtChars(_ char: Char) -> String {
+    if chtChsMap.containsKey(char) {
+      return char.toString()
+    }
+    if chsChtMap.containsKey(char) {
+      let chts = chsChtMap[char]!
+      var sb = StringBuilder()
+      for c in chts {
+        sb.append(c)
+        if standardVariantsMap.containsKey(c) {
+          sb.append(standardVariantsMap[c]!.toCharString())
+        }
+      }
+      return sb.toString()
+    }
+    for (t, u) in standardVariantsMap {
+      if u.containsItem(char) {
+        return t.toString()
+      }
+    }
+    return char.toString()
+  }
+
+  
+  static func getNotPartCht(_ char: Char) -> String? {
+    let cht = getAllChtChars(char)
+    if (cht == char.toString()) {
+      return nil
+    }
+    var result = StringBuilder()
+    for c in cht {
+      if let it = ChineseDbHelper.dao.getChineseChar(c.utf8Code) {
+        if (it.mainComponents?.contains(char.toString()) != true) {
+          result.append(c)
+        }
+      }
+    }
+    return result.toString()
+  }
+  
+  static func getPrintChars(_ char: Char, _ chsFirst: Boolean) -> List<Char> {
+    return (chsFirst) ? getAllCandidateChars(char) : getPrintChtChars(char)
+  }
+
+  static func getPrintChtChars(_ char: Char) -> List<Char> {
+    var result = List<Char>()
+    if chsChtMap.containsKey(char) {
+      let chts = chsChtMap[char]!
+      result.addAll(chts.toList())
+      for c in chts {
+        if let it = variants[c] {
+          result.addAll(it.toList())
+        }
+      }
+    }
+    for (t, u) in standardVariantsMap {
+      if u.containsItem(char) {
+        result.add(t)
+        break
+      }
+    }
+    result.add(char)
+    return result
+  }
+
   static func getAllCandidateChars(_ char: Char) -> List<Char> {
+    if (char == "间" || char == "間") {
+      return Array.listOf("间", "間", "閒")
+    } else if (char == "闲" || char == "閑") {
+      return Array.listOf("闲", "閒", "閑")
+    }
+    
     var chars = Array<Char>()
     chars.add(char)
     
-    chtChsMap[char]?.also { it in
-      chars.addDistinct(it)
+    if let it = chtChsMap[char] {
+      for c in it {
+        if c.charIsChinesChar() {
+          chars.addDistinct(c)
+        }
+      }
     }
     chsChtMap[char]?.forEach { it in
       chars.addDistinct(it)
@@ -155,5 +250,15 @@ class ChineseConverter {
       }
     }
     return chars
+  }
+}
+
+extension Set where Element == Char {
+  func toCharString() -> String {
+    var sb = StringBuilder()
+    for c in self {
+      sb.append(c)
+    }
+    return sb.toString()
   }
 }

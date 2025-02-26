@@ -44,7 +44,7 @@ struct SearchBar: View {
       TextField("search_beitie_hint".localized, text: $viewModel.searchText,
                 onEditingChanged: { focused in
       })
-      .font(.footnote)
+      .font(.callout)
       .focused($focused)
       .textFieldStyle(.plain)
       .submitLabel(.search)
@@ -399,6 +399,85 @@ struct CategoryItem: View {
   }
 }
 
+
+struct BeitieImageResultView : View {
+  let match: BeitieImageMatch
+  
+  @EnvironmentObject var viewModel: BeitieViewModel
+  @EnvironmentObject var naviVM: NavigationViewModel
+  
+  @State var collapse = false
+  let itemViewModel: WorkItemViewModel
+  
+  init(_ match: BeitieImageMatch) {
+    self.match = match
+    self.itemViewModel = WorkItemViewModel(works: [match.work])
+  }
+  
+  var images: List<BeitieImage> {
+    match.images
+  }
+  
+  var body: some View {
+    Section {
+      if !collapse {
+        VStack(spacing: 0) {
+          ForEach(0..<images.size, id: \.self) { i in
+            let img = images[i]
+            let html = match.htmls[i]
+            Button {
+              naviVM.gotoWork(work: match.work, index: img.index-1)
+            } label: {
+              HStack {
+                10.HSpacer()
+                WebImage(url: img.url(.JpgCompressedThumbnail).url!) { img in
+                    img.image?.resizable()
+                      .aspectRatio(contentMode: .fill)
+                  }.frame(width: 40,alignment: .topTrailing)
+                    .frame(height: 50)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                Text(html).font(.body).multilineTextAlignment(.leading)
+                  .lineLimit(100)
+                Spacer()
+              }.padding(.vertical, 8)
+                .background(.white)
+            }.buttonStyle(BgClickableButton())
+            if i != images.lastIndex {
+              Divider.overlayColor(.gray.opacity(0.4)).padding(.leading, 10)
+            }
+          }
+        }.padding(.vertical, 6)
+      }
+    } header: {
+      VStack(spacing: 0) {
+        Button {
+          withAnimation(.easeInOut(duration: 0.2)) {
+            collapse.toggle()
+          }
+        } label: {
+          HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Text(keyToString(key: match.work.chineseName())).frame(alignment: .leading)
+              .foregroundColor(Colors.searchHeader.swiftColor)
+              .font(.system(size: 16))
+            Text("(\(match.images.size))").font(.footnote).foregroundColor(Colors.searchHeader.swiftColor)
+            Spacer()
+            Image(systemName: "chevron.down")
+              .square(size: 10).foregroundStyle(UIColor.lightGray.swiftColor)
+              .rotationEffect(.degrees(collapse ? -90 : 0))
+          }.padding(.leading, 10)
+            .padding(.trailing, 10)
+            .padding(.vertical, 9).background(Colors.surfaceVariant.swiftColor)
+        }.buttonStyle(BgClickableButton())
+      }
+    } footer: {
+      if collapse {
+        Divider.overlayColor(Color.gray.opacity(0.25))
+      }
+    }
+  }
+}
+
+
 struct BeitiePage: View {
   @StateObject var viewModel: BeitieViewModel = BeitieViewModel()
   private let btnColor = Color.colorPrimary
@@ -413,21 +492,44 @@ struct BeitiePage: View {
     }
   }()
   
+  @ViewBuilder
+  func workListView(_ showMap: BeitieDbHelper.BeitieDictionary) -> some View {
+    let keys = showMap.keys.map({ $0 })
+    ForEach(0..<keys.size, id: \.self) { i in
+      let key = keys[i]
+      let works = showMap[key]!
+      CategoryItem(key: key, works: works)
+        .id(i)
+    }
+  }
+  
   var workList: some View {
     LazyVStack(alignment: .center, spacing: 0, pinnedViews: [.sectionHeaders]) {
-      let showMap = viewModel.showMap
-      let keys = showMap.keys.map({ $0 })
+      workListView(viewModel.showMap)
+      Spacer()
+    }
+  }
+  
+  @State var scrollProxy: ScrollViewProxy? = nil
+  @State var orderPosition: CGRect = .zero
+  
+  var resultList: some View {
+    LazyVStack(alignment: .center, spacing: 0, pinnedViews: [.sectionHeaders]) {
+      let keys = viewModel.searchResult.keys.map { $0 }
       ForEach(0..<keys.size, id: \.self) { i in
         let key = keys[i]
-        let works = showMap[key]!
-        CategoryItem(key: key, works: works)
-          .id(i)
+        if key == viewModel.BEITIE {
+          workListView(viewModel.searchResult[key] as! BeitieDbHelper.BeitieDictionary)
+        } else {
+          let matches = viewModel.searchResult[key] as! List<BeitieImageMatch>
+          ForEach(0..<matches.size, id: \.self) { j in
+            BeitieImageResultView(matches[j])
+          }
+        }
       }
       Spacer()
     }
   }
-  @State var scrollProxy: ScrollViewProxy? = nil
-  @State var orderPosition: CGRect = .zero
   
   var body: some View {
     ZStack(alignment: .topTrailing) {
@@ -474,18 +576,20 @@ struct BeitiePage: View {
         }.frame(height: CUSTOM_NAVIGATION_HEIGHT).background(Colors.surfaceVariant.swiftColor)
         Divider()
         ZStack(alignment: .top) {
-          ScrollView {
-            ScrollViewReader { proxy in
-              workList
-                .id("\(viewModel.orderType)")
-                .modifier(DragDismissModifier(show: $showAzDropdown))
-                .modifier(DragDismissModifier(show: $showOrderDropdown))
-                .onAppear {
-                  scrollProxy = proxy
-                }
-            }
-          }.blur(radius: viewModel.showVersionWorks ? 5 : 0)
-            .padding(.top, viewModel.showSearchBar ? viewModel.searchBarHeight : 0)
+          if !viewModel.showSearchResult {
+            ScrollView {
+              ScrollViewReader { proxy in
+                workList
+                  .id("\(viewModel.orderType)")
+                  .modifier(DragDismissModifier(show: $showAzDropdown))
+                  .modifier(DragDismissModifier(show: $showOrderDropdown))
+                  .onAppear {
+                    scrollProxy = proxy
+                  }
+              }
+            }.blur(radius: viewModel.showVersionWorks ? 5 : 0)
+              .padding(.top, viewModel.showSearchBar ? viewModel.searchBarHeight : 0)
+          }
           if viewModel.showVersionWorks {
             ZStack(alignment: .center) {
               Color.black.opacity(0.8)
@@ -493,7 +597,13 @@ struct BeitiePage: View {
             }
           }
           if viewModel.showSearchBar {
-            SearchBar()
+            VStack(spacing: 0) {
+              SearchBar()
+              if viewModel.showSearchResult {
+                resultList
+              }
+              Spacer()
+            }
           }
         }
       }.background(Color.white)
@@ -520,6 +630,7 @@ struct BeitiePage: View {
       }
     }.modifier(TapDismissModifier(show: $showAzDropdown))
       .modifier(TapDismissModifier(show: $showOrderDropdown))
+      .modifier(AlertViewModifier(viewModel: viewModel))
     .gesture(TapGesture().onEnded({ _ in
       viewModel.hideVersionWorks()
     }), isEnabled: viewModel.showVersionWorks)
@@ -538,7 +649,7 @@ struct BeitiePage: View {
     }
     .onChange(of: viewModel.showSearchBar) { _ in
       if !viewModel.showSearchBar {
-        viewModel.syncShowMap()
+        viewModel.showSearchResult = false
       }
       resetScroll()
     }
