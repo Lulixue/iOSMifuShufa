@@ -201,7 +201,67 @@ class NetworkHelper {
         }
       }
   }
-   
+  
+  static func purchaseVip(_ id: String, _ name: String, onResult: @escaping (PoemUser?) -> Void) {
+    let url = AZURE_WEB_URL + "LirenAPI/PurchaseVipPackageManual"
+    let parameters: [String: Any] = [
+      "userId": id,
+      "name": name,
+      "transactionKey": "N3QRThrgr07b5TPAB8eNiTnBjgxx3Dpv"
+    ]
+    AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+      .responseDecodable(of: PoemUser.self) { response in
+        switch response.result {
+          case .success(let user):
+            onResult(user)
+          case .failure(let error):
+            print(error)
+            onResult(nil)
+        }
+      }
+  }
+  
+  
+  static func loginPoemTmp(_ deviceId: String, onResult: @escaping (PoemUser?) -> Void) {
+    let url = AZURE_WEB_URL + "LirenAPI/UserLoginLiren"
+    let tmpId = KeychainItem.currentTmpUserIdentifier
+    let id = tmpId.isEmpty ? Settings.deviceId : tmpId
+    let response = "{\"id\": \"\(id)\"}"
+    let parameters: [String: Any] = [
+      "response": response,
+      "ip": "",
+      "source": "Tmp",
+      "deviceId": deviceId
+    ]
+    
+    AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+      .responseDecodable(of: PoemUser.self) { response in
+        switch response.result {
+          case .success(let user):
+            onResult(user)
+          case .failure(let error):
+            print(error)
+            onResult(nil)
+        }
+      }
+  }
+  
+  static func getVipPackages(_ onResult: @escaping ([VipPackage]?) -> Void) {
+    let VIP_PKG_URL = STORAGE_URL + "/liren/\(STORAGE_DIR)/vip_packages_ios.json"
+    let url = VIP_PKG_URL.urlEncoded!
+    
+    URLCache.shared.removeAllCachedResponses()
+    AF.request(url, method: .get).responseDecodable(of: [VipPackage].self) { response in
+      switch response.result {
+        case .success(let pkgs):
+          onResult(pkgs)
+        case .failure(let error):
+          print(error)
+          onResult(nil)
+      }
+    }
+  }
+  
   static func syncConfig(after: @escaping (AzureConfig) -> Void) {
     let CONFIG_URL = STORAGE_URL + "/liren/\(STORAGE_DIR)/config.json"
     URLCache.shared.removeAllCachedResponses()

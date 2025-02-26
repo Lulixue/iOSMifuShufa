@@ -1161,24 +1161,28 @@ struct AnalyzeView: View {
   @State private var showMenu = false
   
   var body: some View {
-    VStack(spacing: 0) {
-      ZStack(alignment: .topTrailing) {
-        VStack(spacing: 0) {
-          naviBar
-          Divider()
-          content
-          bottomView
+    NavigationStack {
+      VStack(spacing: 0) {
+        ZStack(alignment: .topTrailing) {
+          VStack(spacing: 0) {
+            naviBar
+            Divider()
+            content
+            bottomView
+          }
+          if showMenu {
+            DropDownOptionsView(param: viewModel.param) { op in
+              viewModel.onMenuItem(op)
+            }.offset(x: -10, y: (CUSTOM_NAVIGATION_HEIGHT + CUSTOM_NAVI_ICON_SIZE) / 2 + 5)
+          }
         }
-        if showMenu {
-          DropDownOptionsView(param: viewModel.param) { op in
-            viewModel.onMenuItem(op)
-          }.offset(x: -10, y: (CUSTOM_NAVIGATION_HEIGHT + CUSTOM_NAVI_ICON_SIZE) / 2 + 5)
-        }
-      }
-    }.navigationBarHidden(true)
-      .modifier(TapDismissModifier(show: $showMenu))
-      .modifier(DragDismissModifier(show: $showMenu))
-      .modifier(AlertViewModifier(viewModel: viewModel))
+      }.navigationBarHidden(true)
+        .modifier(TapDismissModifier(show: $showMenu))
+        .modifier(DragDismissModifier(show: $showMenu))
+        .modifier(AlertViewModifier(viewModel: viewModel))
+    }.navigationDestination(isPresented: $viewModel.gotoVip) {
+      VipPackagesView()
+    }
   }
 }
 

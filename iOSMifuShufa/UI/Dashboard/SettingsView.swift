@@ -164,7 +164,7 @@ private struct BeitieSingleSettingsView: View {
       self.canJiziWorks[work] ?? work.canJizi
     } set: {
       if work.vip && !CurrentUser.isVip {
-        self.viewModel.showConstraintVip("当前碑帖不支持设置，请联系客服".orCht("當前碑帖不支持設置，請聯繫客服"))
+        self.viewModel.showConstraintVip("当前碑帖不支持设置，是否开通VIP继续？".orCht("當前碑帖不支持設置，是否開通VIP繼續？"))
       } else {
         self.canJiziWorks[work] = $0
         work.canJizi = $0
@@ -177,7 +177,7 @@ private struct BeitieSingleSettingsView: View {
       self.canSearchWorks[work] ?? work.canSearch
     } set: {
       if work.vip && !CurrentUser.isVip {
-        self.viewModel.showConstraintVip("当前碑帖不支持设置，请联系客服".orCht("當前碑帖不支持設置，請聯繫客服"))
+        self.viewModel.showConstraintVip("当前碑帖不支持设置，是否开通VIP继续？".orCht("當前碑帖不支持設置，是否開通VIP繼續？"))
         return
       }
       self.canSearchWorks[work] = $0

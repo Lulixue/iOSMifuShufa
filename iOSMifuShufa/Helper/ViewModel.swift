@@ -38,6 +38,8 @@ class AlertViewModel: BaseObservableObject {
   @Published var fullAlertOk: () -> Void = {}
   @Published var fullAlertCancle: () -> Void = {}
   
+  @Published var gotoVip = false
+  
   lazy var imageSaver = ImageSaver { [weak self] in
     self?.showAlertDlg("图片已保存".orCht("圖片已保存"))
   }
@@ -86,12 +88,8 @@ class AlertViewModel: BaseObservableObject {
   }
   
   func showConstraintVip(_ text: String) {
-    showFullAlert("功能不可用", text, okTitle: "联系客服".orCht("聯繫客服"), okRole: .destructive, ok: {
-      DispatchQueue.main.async {
-        UIPasteboard.general.string = "sf_lulixue"
-        self.nextTitle = "客服微信号(sf_lulixue)已拷贝到剪贴板".orCht("客服微信號(sf_lulixue)已拷貝到剪貼板")
-        self.nextAlert = true
-      }
+    showFullAlert("功能不可用", text, okTitle: "开通VIP".orCht("開通VIP"), okRole: .destructive, ok: {
+      self.gotoVip = true
     }, cancelTitle: "取消")
   }
   

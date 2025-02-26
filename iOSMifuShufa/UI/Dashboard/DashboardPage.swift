@@ -50,16 +50,6 @@ extension DashboardRow {
     }
   }
   
-  var subText: String {
-    switch (self) {
-    case .vip:
-      return CurrentUser.userVipStatus
-    case .update:
-      return CurrentUser.updateStatus
-    default:
-      return ""
-    }
-  }
 }
 
 private let ITEM_BG_COLOR = Color.white
@@ -72,11 +62,19 @@ struct DashboardDivider: View {
     Divider().overlay(UIColor.systemGray5.swiftColor)
   }
 }
-
-struct DashboardItemView: View {
-  let row: DashboardRow
-  @ViewBuilder var content: some View {
-    let verticalPadding: CGFloat = row == .vip ? 18 : 15
+ 
+struct DashboardPage : View {
+  let middleItems: [DashboardRow] = [.about, .rate, .update, .feedback]
+  var body: some View {
+    NavigationStack {
+      contents
+    }
+  }
+  @StateObject var viewModel: UserViewModel = CurrentUser
+  
+  @ViewBuilder
+  func DashboardItemView(row: DashboardRow, subText: @escaping () -> String = { "" }) -> some View {
+    let verticalPadding: CGFloat = row == .vip ? 15 : 15
     let extraSize = row.extraSize
     let baseSize: CGFloat = 19
     HStack(alignment: .center, spacing: 0) {
@@ -93,7 +91,7 @@ struct DashboardItemView: View {
         .font(DASH_FONT)
         .foregroundColor(Color.darkSlateGray)
       Spacer()
-      Text(row.subText).font(.callout)
+      Text(subText()).font(.callout)
         .foregroundColor(Color.gray)
       Spacer().frame(width: 12)
       Image(systemName: "chevron.right")
@@ -103,20 +101,6 @@ struct DashboardItemView: View {
         .frame(width: 7)
     }.padding(EdgeInsets(top: verticalPadding, leading: 12, bottom: verticalPadding, trailing: 16)).background(ITEM_BG_COLOR)
   }
-  
-  var body: some View {
-    content
-  }
-}
-
-struct DashboardPage : View {
-  let middleItems: [DashboardRow] = [.about, .rate, .update, .feedback]
-  var body: some View {
-    NavigationStack {
-      contents
-    }
-  }
-  @StateObject var viewModel: UserViewModel = CurrentUser
   
   var itemDivider: some View {
     
@@ -152,7 +136,7 @@ struct DashboardPage : View {
         .frame(width: 8)
     }.padding(EdgeInsets(top: 16, leading: 12, bottom: 16, trailing: 16)).background(ITEM_BG_COLOR)
   }
-  
+   
   @State private var clickedRow: DashboardRow? = nil
   var contents: some View {
     VStack(spacing: 0) {
@@ -178,7 +162,14 @@ struct DashboardPage : View {
                 userItemView
               }.buttonStyle(BgClickableButton())
             }
-            
+            DashboardDivider()
+            NavigationLink {
+              VipPackagesView()
+            } label: {
+              DashboardItemView(row: .vip) {
+                CurrentUser.userVipStatus
+              }
+            }
           }
           15.VSpacer()
           Group {
@@ -208,7 +199,9 @@ struct DashboardPage : View {
             Button {
               viewModel.checkUpdate()
             } label: {
-              DashboardItemView(row: .update)
+              DashboardItemView(row: .update) {
+                CurrentUser.updateStatus
+              }
             }.buttonStyle(BgClickableButton())
             Divider().padding(.leading, 46)
             NavigationLink {

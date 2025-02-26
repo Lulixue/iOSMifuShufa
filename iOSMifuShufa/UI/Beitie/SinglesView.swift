@@ -187,7 +187,7 @@ struct SinglesView: View {
         if currentSingle.work.matchVip {
           naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
         } else {
-          viewModel.showConstraintVip("当前操作不支持，请联系客服".orCht("當前操作不支持，請聯繫客服"))
+          viewModel.showConstraintVip("当前操作不支持，是否开通VIP继续？".orCht("當前操作不支持，是否開通VIP繼續？"))
         }
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
@@ -216,17 +216,21 @@ struct SinglesView: View {
   }
   
   var body: some View {
-    ZStack {
-      content
-      if viewModel.showToast {
-        ToastView(title: viewModel.toastTitle)
-      }
-    }.navigationBarHidden(true)
-      .modifier(WorkDestinationModifier(naviVM: naviVM))
-      .modifier(AlertViewModifier(viewModel: viewModel))
-      .onDisappear {
-        miViewModel.reset()
-      }
+    NavigationStack {
+      ZStack {
+        content
+        if viewModel.showToast {
+          ToastView(title: viewModel.toastTitle)
+        }
+      }.navigationBarHidden(true)
+        .modifier(WorkDestinationModifier(naviVM: naviVM))
+        .modifier(AlertViewModifier(viewModel: viewModel))
+        .onDisappear {
+          miViewModel.reset()
+        }
+    }.navigationDestination(isPresented: $viewModel.gotoVip) {
+      VipPackagesView()
+    }
   }
   
   var rotation: Double {

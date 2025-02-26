@@ -47,6 +47,15 @@ struct TodayCardView<Content: View>: View {
   }
 }
 
+struct VipViewModifier: ViewModifier {
+  @StateObject var viewModel: AlertViewModel
+  func body(content: Content) -> some View {
+    content.navigationDestination(isPresented: $viewModel.gotoVip) {
+      VipPackagesView()
+    }
+  }
+}
+
 struct AlertViewModifier: ViewModifier {
   @StateObject var viewModel: AlertViewModel
   func body(content: Content) -> some View {
@@ -555,20 +564,22 @@ struct HomePage: View {
   }
   
   var body: some View {
-    SideMenu(leftMenu: sideMenu, centerView: {
-      centerView
-        .modifier(AlertViewModifier(viewModel: viewModel.filterViewModel))
-        .modifier(AlertViewModifier(viewModel: viewModel))
-        .background(TabBarAccessor { tabBar in
-          debugPrint(">> TabBar height: \(tabBar.bounds.height)")
-          tabBarHeight = tabBar.bounds.height
-          if #available(iOS 18.0, *) {
-            if Device.current.isPad {
-              tabBarHeight = 0
+    NavigationStack {
+      SideMenu(leftMenu: sideMenu, centerView: {
+        centerView
+          .modifier(AlertViewModifier(viewModel: viewModel.filterViewModel))
+          .modifier(AlertViewModifier(viewModel: viewModel))
+          .background(TabBarAccessor { tabBar in
+            debugPrint(">> TabBar height: \(tabBar.bounds.height)")
+            tabBarHeight = tabBar.bounds.height
+            if #available(iOS 18.0, *) {
+              if Device.current.isPad {
+                tabBarHeight = 0
+              }
             }
-          }
-        })
-    }, viewModel: sideVM)
+          })
+      }, viewModel: sideVM)
+    }.modifier(VipViewModifier(viewModel: viewModel))
   }
   
   var otherwiseCharType: some View {

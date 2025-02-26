@@ -135,7 +135,7 @@ struct JiziPage : View {
             JiziView(viewModel: naviVM.jiziVM!)
           }
         }
-    }
+    }.modifier(VipViewModifier(viewModel: viewModel))
   }
   @State private var historyCollapsed = false
   

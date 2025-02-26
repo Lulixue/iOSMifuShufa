@@ -404,8 +404,8 @@ struct WorkView: View, SinglePreviewDelegate {
         Button {
           if work.notMatchVip {
             viewModel.showConstraintVip(
-              "当前操作不支持，请联系客服"
-                .orCht("當前操作不支持，請聯繫客服"))
+              "当前操作不支持，是否开通VIP继续？"
+                .orCht("當前操作不支持，是否開通VIP繼續？"))
           } else {
             Task {
               let singles = BeitieDbHelper.shared.getSinglesByImageId(currentImage.id)
@@ -487,6 +487,11 @@ struct WorkView: View, SinglePreviewDelegate {
   }
   
   var body: some View {
+    NavigationStack {
+      content
+    }.modifier(VipViewModifier(viewModel: viewModel))
+  }
+  var content: some View {
     ZStack(alignment: .topTrailing) {
       VStack(spacing: 0) {
         if showBars {
@@ -517,8 +522,8 @@ struct WorkView: View, SinglePreviewDelegate {
           case .Save:
             if work.notMatchVip {
               viewModel.showConstraintVip(
-                "当前碑帖不支持下载，请联系客服"
-                  .orCht("當前碑帖不支持下載，請聯繫客服"))
+                "当前碑帖不支持下载，是否开通VIP继续？"
+                  .orCht("當前碑帖不支持下載，是否開通VIP繼續？"))
             } else {
               viewModel.saveImage(image: currentImage)
             }

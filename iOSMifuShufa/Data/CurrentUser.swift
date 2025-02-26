@@ -125,6 +125,21 @@ enum LoginSource: String {
   }
 }
 
+extension String {
+  var capitalFirst: String {
+    var sb = ""
+    for i in 0..<this.length {
+      if (i == 0) {
+        sb.append(this[i].uppercased())
+      } else {
+        sb.append(this[i])
+      }
+    }
+    return sb
+  }
+}
+
+
 enum UserItem: String {
   case login, loginTime, name, id, phoneNumber, loginSource, vipExpired, isVip
   
@@ -151,7 +166,7 @@ enum UserItem: String {
   }
   
   static var source: LoginSource {
-    LoginSource(rawValue: loginSource.stringValue) ?? .Unknown
+    LoginSource(rawValue: UserItem.loginSource.stringValue.capitalFirst) ?? .Unknown
   }
   
   static var hasUser: Boolean {
@@ -180,6 +195,12 @@ func convertServerTime(_ time: String) -> String {
   return replaced
 }
 
+struct HtmlBundle {
+  let html: NSMutableAttributedString
+  let size: CGSize
+  var clickedHtml: NSMutableAttributedString? = nil
+}
+
 class UserViewModel: AlertViewModel {
   
   static let STATUS_FONT = UIFont.systemFont(ofSize: 19)
@@ -188,6 +209,14 @@ class UserViewModel: AlertViewModel {
     let html = txt.toHtmlString(font: STATUS_FONT)!
     return try! AttributedString(html, including: \.uiKit)
   }()
+  
+  static let KEFU_HTML: HtmlBundle = {
+    let text = "客服微信: sf_lulixue &nbsp;| &nbsp;\("phone".resString): 13612977027"
+    let html = text.toHtmlString(font: UIFont.systemFont(ofSize: 15))!
+    let size = html.calculateUITextViewSize(fixedWidth: 10000, maxLines: 1)
+    return HtmlBundle(html: html, size: size)
+  }()
+  
   @Published var language = Settings.languageVersion
   @Published var poemUser: PoemUser? = nil
   
@@ -244,6 +273,7 @@ class UserViewModel: AlertViewModel {
         }
       }
       let _ = Self.NEED_LOGIN
+      let _ = Self.KEFU_HTML
     }
   }
   

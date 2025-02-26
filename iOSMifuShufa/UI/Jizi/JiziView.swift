@@ -212,6 +212,12 @@ struct JiziView : View {
   }
   
   var body: some View {
+    NavigationStack {
+      content
+    }.modifier(VipViewModifier(viewModel: viewModel))
+  }
+  
+  var content: some View {
     VStack(spacing: 0) {
       naviBar
       Divider()
@@ -306,7 +312,7 @@ struct JiziView : View {
                     singleIndex = i
                     viewModel.selectSingle(i, single)
                   } else {
-                    viewModel.showConstraintVip("当前单字不支持集字，请联系客服".orCht("當前單字不支持集字，請聯繫客服"))
+                    viewModel.showConstraintVip("当前单字不支持集字，是否开通VIP继续？".orCht("當前單字不支持集字，是否開通VIP繼續？"))
                   }
                 } label: {
                   WebImage(url: single.thumbnailUrl.url!) { img in

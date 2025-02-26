@@ -199,7 +199,7 @@ struct PuzzleSettingsView: View {
       self.viewModel.jinMode && CurrentUser.isVip
     } set: { newValue in
       if !CurrentUser.isVip {
-        self.viewModel.showConstraintVip("当前不支持现代排版，请联系客服".orCht("當前不支持現代排版，請聯繫客服"))
+        self.viewModel.showConstraintVip("当前不支持现代排版，是否开通VIP继续？".orCht("當前不支持現代排版，是否開通VIP繼續？"))
         return
       }
       self.viewModel.jinMode = newValue
@@ -415,6 +415,11 @@ struct PuzzleView: View {
   }
   
   var body: some View {
+    NavigationStack {
+      content
+    }.modifier(VipViewModifier(viewModel: viewModel))
+  }
+  var content: some View {
     VStack(spacing: 0) {
       NaviView {
         BackButtonView {
