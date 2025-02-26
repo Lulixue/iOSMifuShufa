@@ -486,7 +486,7 @@ extension BeitieSingle {
     chars.first()
   }
   var work: BeitieWork {
-    BeitieDbHelper.shared.getWorkById(workId)!
+    BeitieDbHelper.shared.getWorkById(workId) ?? PreviewHelper.defaultWork
   }
   
   var showChars: String {
@@ -541,7 +541,7 @@ enum ImageLoadType {
 
 extension BeitieImage {
   var work: BeitieWork {
-    BeitieDbHelper.shared.getWorkById(self.workId)!
+    BeitieDbHelper.shared.getWorkById(self.workId) ?? PreviewHelper.defaultWork
   }
 }
 

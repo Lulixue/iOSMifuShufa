@@ -128,7 +128,7 @@ struct PuzzleItem: Codable {
 
 extension Char {
   var jiziCharUrl: URL? {
-    JiziItem.getCharUrl(self)
+    self.printCharUrl
   }
 }
 
@@ -170,31 +170,17 @@ class JiziItem: BaseObservableObject {
   }
   
   var charUrl: URL? {
-    selected?.url.url ?? char.jiziCharUrl
-  }
-  
-  static private let charDir: URL? = {
-    let fileManager = FileManager.default
-    guard let directory = try? fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) as NSURL else {
-      return nil
-    }
-    let dataDirUrl = directory.appendingPathComponent("chars")
-    if !fileManager.fileExists(atPath: (dataDirUrl!.path)) {
-      do {
-        try fileManager.createDirectory(at: dataDirUrl!, withIntermediateDirectories: true, attributes: nil)
-      } catch {
+    if let selected {
+      if selected.isPrintChar {
+        return selected.printChar.printCharUrl
+      } else {
+        return selected.url.url
       }
-    }
-    return dataDirUrl
-  }()
-  
-  static func getCharUrl(_ char: Char) -> URL? {
-    if let url = charDir?.appendingPathComponent("\(char).png"), url.exists() {
-      return url
     } else {
-      return nil
+      return char.jiziCharUrl
     }
   }
+  
   
   static func getCharImage(_ char: Char) -> UIImage {
     
@@ -202,12 +188,12 @@ class JiziItem: BaseObservableObject {
     let renderer = UIGraphicsImageRenderer(size: size)
     let newImage = renderer.image { ctx in
       let context = UIGraphicsGetCurrentContext()!
-      context.setFillColor(UIColor.black.cgColor)
+      context.setFillColor(Colors.bitmapBg.cgColor)
       context.fill(CGRect(origin: .zero, size: size))
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = .center
       
-      let attrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 50),
+      let attrs = [NSAttributedString.Key.font: UIFont.getPrintFont(50 + BeitieDbHelper.shared.PRINT_CHAR_OFFSET)!,
                    NSAttributedString.Key.paragraphStyle: paragraphStyle,
                    NSAttributedString.Key.foregroundColor: UIColor.white]
       
@@ -219,7 +205,7 @@ class JiziItem: BaseObservableObject {
   }
   
   static func generateCharBitmap(_ char: Char) {
-    let url = charDir!.appendingPathComponent("\(char).png")
+    let url = char.printCharUrl
     if url.exists() {
       return
     }
@@ -538,7 +524,12 @@ class JiziViewModel: AlertViewModel {
       
       let jiziItem = {
         if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
-          return JiziItem(char: it, ziResult: result)
+          var all = ArrayList<BeitieSingle>()
+          if (result.count(where: { $0.work.matchVip }) < 1) {
+            all.addAll(ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() }))
+          }
+          all.addAll(result)
+          return JiziItem(char: it, ziResult: all)
         } else {
           let cht = ChineseConverter.getCht(it)
           var allComponents = "\(it)\(cht)"
@@ -546,6 +537,7 @@ class JiziViewModel: AlertViewModel {
             allComponents += ChineseDbHelper.dao.getChineseChar(i.utf8Code)?.mainComponents ?? ""
           }
           var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
+          map[PreviewHelper.defaultWork.chineseName()] = ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() })
           for c in allComponents.toCharList.distinct() {
             let singles = BeitieDbHelper.shared.getSinglesByComponent(char: c).matchJizi()
             if (singles.isNotEmpty()) {
@@ -615,4 +607,72 @@ extension Array {
     
     return sampleElements
   }
+}
+
+
+extension Char {
+  
+  static private let charDir: URL? = {
+    let fileManager = FileManager.default
+    guard let directory = try? fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) as NSURL else {
+      return nil
+    }
+    let dataDirUrl = directory.appendingPathComponent("chars")
+    if !fileManager.fileExists(atPath: (dataDirUrl!.path)) {
+      do {
+        try fileManager.createDirectory(at: dataDirUrl!, withIntermediateDirectories: true, attributes: nil)
+      } catch {
+      }
+    }
+    return dataDirUrl
+  }()
+  
+  static func getCharUrl(_ char: Char) -> URL? {
+    if let url = charDir?.appendingPathComponent("\(char).png"), url.exists() {
+      return url
+    } else {
+      return nil
+    }
+  }
+  
+  var printCharUrl: URL {
+    Self.charDir!.appendingPathComponent("new_\(self).png")
+  }
+  
+  func printCharSingle() -> BeitieSingle {
+    let c = self
+    JiziItem.generateCharBitmap(c)
+    let single = PreviewHelper.printSingle
+    single.chars = c.toString()
+    return single
+  }
+}
+
+extension BeitieSingle {
+  var isPrintChar: Boolean { self.workId == -1 }
+  var printChar: Char { chars.first() }
+  
+  var jiziUrl: URL? {
+    if isPrintChar {
+      return printChar.jiziCharUrl
+    } else {
+      return thumbnailUrl.url
+    }
+  }
+  
+}
+
+class PreviewHelper {
+  static var printSingle: BeitieSingle {
+      let json = """
+     {"brokenLevel":0,"chars":"王","fileName":"","font":"Others","id":0,"imageId":0,"imageName":"","index":0,"lian":false,"path":"","repeat":false,"strokeCount":0,"workId":-1}
+     """
+    return try! JSONDecoder().decode(BeitieSingle.self, from: json.utf8Data)
+  }
+  static let defaultWork: BeitieWork = {
+     let json = """
+{"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"印刷体","font":"Others","id":-1,"imageCount":1,"intro":"","introCht":"","isTrue":false,"name":"印刷体","nameCht":"印刷體","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
+"""
+    return try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
+  }()
 }

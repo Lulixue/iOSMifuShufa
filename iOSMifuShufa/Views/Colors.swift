@@ -24,6 +24,13 @@ extension Color {
   }
 }
 
+extension UIFont {
+  
+  static func getPrintFont(_ fontSize: CGFloat) -> UIFont? {
+    return UIFont(name: BeitieDbHelper.shared.FONT_FAMILY, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
+  }
+}
+
 
 extension UIColor {
   static private var colorMap = [UIColor: Color]()
@@ -129,6 +136,7 @@ class Colors {
   static let colorPrimary = UIColor.init(named: "ColorPrimary")!
   static let defaultText = UIColor.init(named: "DefaultTextColor")!
   static let bilibili = UIColor.init(named: "Bilibili")!
+  static let bitmapBg = UIColor.init(rgb: 0x2B2B2B)
   static let colorAccent = searchHeader
   static let darkSlateGray = UIColor.init(named: "DarkSlateGray")!
   static let itemSelectedColor = UIColor.init(named: "DarkBlue")!

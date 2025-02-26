@@ -131,6 +131,10 @@ class BeitieDbHelper {
   static let shared = BeitieDbHelper()
   let CALLIGRAPHER = "米芾"
   let DB_NAME = "beitie.db"
+  let FONT_FILE = "mifu.ttf"
+  let FONT_FAMILY = "书体坊米芾体"
+  let FONT_CHS_FIRST = true
+  let PRINT_CHAR_OFFSET: CGFloat = 10
   let SINGLE_HAS_ORIGINAL = true
   let SUPPORT_ORDER_TYPES = BeitieOrderType.entries
   

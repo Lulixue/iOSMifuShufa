@@ -201,6 +201,7 @@ class SplashViewModel: AlertViewModel {
           return
         }
       }
+      ResourceHelper.installCustomFonts()
       DispatchQueue.main.async {
         self.progress = 0.7
         self.finishResource()

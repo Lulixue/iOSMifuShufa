@@ -67,6 +67,31 @@ class ResourceHelper {
   private static let EXTRACT_FAIL = -1
   private static var manifestItems = [ManifestItem]()
   
+  @discardableResult
+  private static func installFont(_ fontUrl: URL) -> Bool {
+    let fontData = try! Data(contentsOf: fontUrl)
+    if let provider = CGDataProvider.init(data: fontData as CFData) {
+      var error: Unmanaged<CFError>?
+      let font: CGFont = CGFont(provider)!
+      if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+        print(error.debugDescription)
+        return false
+      } else {
+        return true
+      }
+    }
+    return false
+  }
+  
+  
+  public static func installCustomFonts() {
+    for font in ["fonts/" + BeitieDbHelper.shared.FONT_FILE] {
+      if let url = dataDir?.appendingPathComponent(font) {
+        installFont(url)
+      }
+    }
+  }
+  
   private static var resourceMd5: String = {
     let url = Bundle.main.url(forResource: "resource_version", withExtension:"txt")
     return readFileContents(fileURL: url!).trimEnd()

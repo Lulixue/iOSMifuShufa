@@ -196,7 +196,9 @@ struct JiziView : View {
           .font(.callout).bold()
         Divider()
         filterView(.Work, binding: $viewModel.workFilterType)
-        Divider()
+        HStack {
+          Spacer()
+        }.frame(height: 0.5).background(.gray.opacity(0.2)).padding(.leading, 10)
         filterView(.Font, binding: $viewModel.fontFilterType)
         8.VSpacer()
       }.frame(width: UIScreen.currentWidth * 0.75).background(.white)
@@ -215,6 +217,9 @@ struct JiziView : View {
     NavigationStack {
       content
     }.modifier(VipViewModifier(viewModel: viewModel))
+      .navigationDestination(isPresented: $naviVM.gotoPuzzleView) {
+        PuzzleView(viewModel: naviVM.puzzleVM!)
+      }
   }
   
   var content: some View {
@@ -251,9 +256,6 @@ struct JiziView : View {
         }
       }
     }.navigationBarHidden(true)
-      .navigationDestination(isPresented: $naviVM.gotoPuzzleView) {
-        PuzzleView(viewModel: naviVM.puzzleVM!)
-      }
       .onDisappear {
         let items = viewModel.jiziItems.map { item in
           let single = item.selected
@@ -315,7 +317,7 @@ struct JiziView : View {
                     viewModel.showConstraintVip("当前单字不支持集字，是否开通VIP继续？".orCht("當前單字不支持集字，是否開通VIP繼續？"))
                   }
                 } label: {
-                  WebImage(url: single.thumbnailUrl.url!) { img in
+                  WebImage(url: single.jiziUrl!) { img in
                     img.image?.resizable()
                       .aspectRatio(contentMode: .fit)
                       .frame(minWidth: 40, minHeight: 40)

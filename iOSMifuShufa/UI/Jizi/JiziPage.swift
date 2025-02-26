@@ -130,12 +130,12 @@ struct JiziPage : View {
       }.background(.white)
       .modifier(TapDismissModifier(show: $showDropdown))
       .modifier(DragDismissModifier(show: $showDropdown))
-        .navigationDestination(isPresented: $naviVM.gotoJiziView) {
-          if naviVM.gotoJiziView {
-            JiziView(viewModel: naviVM.jiziVM!)
-          }
-        }
     }.modifier(VipViewModifier(viewModel: viewModel))
+      .navigationDestination(isPresented: $naviVM.gotoJiziView) {
+        if naviVM.gotoJiziView {
+          JiziView(viewModel: naviVM.jiziVM!)
+        }
+      }
   }
   @State private var historyCollapsed = false
   
