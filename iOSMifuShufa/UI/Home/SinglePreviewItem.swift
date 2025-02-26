@@ -43,9 +43,11 @@ class MiGridZoomableViewModel: BaseObservableObject {
 }
 
 struct MiGridZoomableImageView: View {
-   
+  static let VIP_SINGLE_BLUR: CGFloat = 0
+  
   @ObservedObject var viewModel: MiGridZoomableViewModel
   var onTouchOutside: () -> Void = {}
+  var onGotoVip: () -> Void = {}
   var onClick: () -> Void = {}
 
   @State private var currentZoom = 0.0
@@ -66,6 +68,7 @@ struct MiGridZoomableImageView: View {
             .frame(minHeight: 20)
             .viewShape(RoundedRectangle(cornerRadius: 2))
             .scaleEffect(currentZoom + totalZoom)
+            .blur(radius: viewModel.single.work.matchVip ? 0 : Self.VIP_SINGLE_BLUR)
             .gesture(MagnificationGesture().onChanged({ offset in
               debugPrint("offset \(offset)")
               currentZoom = offset - 1
@@ -82,6 +85,13 @@ struct MiGridZoomableImageView: View {
             .onAppear {
               viewModel.loadImage()
             }
+        }
+        if Self.VIP_SINGLE_BLUR > 0 && viewModel.single.work.notMatchVip {
+          Button {
+            onGotoVip()
+          } label: {
+            ToastView(title: "VIP碑帖单字".orCht("VIP碑帖單字"))
+          }
         }
       }
   }

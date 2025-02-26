@@ -7,6 +7,45 @@
 
 import SwiftUI
 
+
+struct VipBackground: View {
+  let color = UIColor.init(argb: 0xFFFFA500)
+  let size = "VIP".calculateUITextViewFreeSize(font: .preferredFont(forTextStyle: .footnote))
+  let maxSize: CGFloat = 36
+  
+  var body: some View {
+    GeometryReader { geometry in
+      let width = geometry.size.width
+      let height = geometry.size.height
+      let vipBgWidth = min(width/2, maxSize)
+      let vipBgHeight = min(height/2, maxSize)
+      ZStack(alignment: .topLeading) {
+        Path { path in
+          path.moveTo(0, 0)
+          path.lineTo(0, vipBgHeight)
+          path.lineTo(vipBgWidth, 0)
+          path.lineTo(0, 0)
+        }
+        .fill(color.swiftColor)
+        let font = (size.width > (vipBgWidth*0.7)) ? Font.system(size: 6) : Font.footnote
+        let percent = (size.width > (vipBgWidth*0.7)) ? 1.1 : 0.7
+        Text("VIP").font(font).foregroundStyle(.white)
+          .rotationEffect(.degrees(-45))
+          .padding(.leading, max((vipBgWidth*percent-size.width)/2, 0))
+          .padding(.top, max((vipBgHeight*percent-size.height)/2, 0))
+        
+      }
+    }
+    .aspectRatio(1, contentMode: .fit)
+  }
+}
+
+#Preview {
+  ZStack(alignment: .topLeading) {
+    VipBackground()
+  }.frame(width: 100, height: 100)
+}
+
 struct TestView: View {
   @State private var currentZoom = 0.0
   @State private var totalZoom = 1.0
@@ -28,14 +67,21 @@ struct TestView: View {
     let size = img.size
     return size
   }()
+  
   @State var enabled = false
   var body: some View {
     ZStack {
       Color.white
+      ScrollView {
+        Spacer()
+      }.background {
+      }.padding()
+      VipBackground()
       ProgressView().progressViewStyle(.circular).tint(.red)
         .font(.title)
         .scaleEffect(2)
-      stackView
+//      stackView
+      
     }
   }
   

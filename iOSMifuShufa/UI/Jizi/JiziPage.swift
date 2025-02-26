@@ -21,7 +21,9 @@ class JiziPageViewModel: AlertViewModel {
   override init() {
     super.init()
 #if DEBUG
-    text = "寒雨连江夜入吴，平明送客楚山孤"
+    if text.isEmpty {
+      text = "寒雨连江夜入吴，平明送客楚山孤"
+    }
 #endif
   }
   

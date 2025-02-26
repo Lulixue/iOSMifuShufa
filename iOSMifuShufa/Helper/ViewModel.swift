@@ -80,7 +80,7 @@ class AlertViewModel: BaseObservableObject {
     toastTitle = title
     showToast = true
     Task {
-      try? await Task.sleep(nanoseconds: UInt64(delaySec * 1_000_000_000))
+      try? await Task.sleep(nanoseconds: UInt64(delaySec * 1_500_000_000))
       DispatchQueue.main.async {
         self.showToast = false
       }

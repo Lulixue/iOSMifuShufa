@@ -288,6 +288,10 @@ class MiGridViewModel: AlertViewModel {
     singleType.isVipProperty() || centroidMi
   }
   
+  var onlyVipSupported: Bool {
+    singleType != .Original
+  }
+  
   var centroidBinding: Binding<Bool> {
     Binding {
       self.centroidMi

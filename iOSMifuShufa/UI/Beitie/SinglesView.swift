@@ -22,6 +22,7 @@ extension BeitieSingle {
 class SingleViewModel: AlertViewModel {
   @Published var drawViewModel = DrawViewModel()
   let singles: List<BeitieSingle>
+  @Published var gotoAnalyze = false
   @Published var showDrawPanel = false
   @Published var currentIndex: Int = 0
   @Published var orientation = UIDeviceOrientation.unknown
@@ -65,6 +66,7 @@ class SingleViewModel: AlertViewModel {
     }
     DispatchQueue.main.async {
       self.singleViewModels = map
+      
     }
   }
   
@@ -136,6 +138,12 @@ struct SingleMiGridView: View {
   }
 }
 
+extension BeitieSingle {
+  var vipBeitie: String {
+    "【\(work.chineseFolder())】\("为VIP碑帖，是否开通VIP继续？".orCht("為VIP碑帖，是否開通VIP繼續？"))"
+  }
+}
+
 struct SinglesView: View {
   @Environment(\.presentationMode) var presentationMode
   @StateObject var viewModel: SingleViewModel
@@ -152,6 +160,17 @@ struct SinglesView: View {
     singles[viewModel.currentIndex]
   }
   private let bottomBarHeight: CGFloat = 80
+  
+  var vipBeitie: String {
+    currentSingle.vipBeitie
+  }
+  
+  
+  func syncVipToast(single: BeitieSingle) {
+    if miViewModel.onlyVipSupported && single.work.notMatchVip {
+      viewModel.showToast("碑帖「\(single.work.chineseFolder())」不支持当前米字格".orCht("碑帖「\(single.work.chineseFolder())」不支持當前米字格"))
+    }
+  }
   var naviView: some View {
     NaviView {
       let collected = collectVM.itemCollected(currentSingle)
@@ -187,15 +206,19 @@ struct SinglesView: View {
         if currentSingle.work.matchVip {
           naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
         } else {
-          viewModel.showConstraintVip("当前操作不支持，是否开通VIP继续？".orCht("當前操作不支持，是否開通VIP繼續？"))
+          viewModel.showConstraintVip(vipBeitie)
         }
       } label: {
         Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
           .foregroundStyle(Color.colorPrimary)
       }.buttonStyle(.plain)
       Button {
-        if let image = viewModel.singleViewModels[currentSingle]?.image {
-          viewModel.imageSaver.writeToPhotoAlbum(image: image)
+        if currentSingle.work.notMatchVip {
+          viewModel.showConstraintVip(vipBeitie)
+        } else {
+          if let image = viewModel.singleViewModels[currentSingle]?.image {
+            viewModel.imageSaver.writeToPhotoAlbum(image: image)
+          }
         }
       } label: {
         Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
@@ -230,6 +253,10 @@ struct SinglesView: View {
         }
     }.navigationDestination(isPresented: $viewModel.gotoVip) {
       VipPackagesView()
+    }.navigationDestination(isPresented: $viewModel.gotoAnalyze) {
+      if (viewModel.gotoAnalyze) {
+        AnalyzeView(viewModel: AnalyzeViewModel(currentSingle))
+      }
     }
   }
   
@@ -262,7 +289,9 @@ struct SinglesView: View {
             ZStack(alignment: .bottom) {
               Image("background").resizable().scaledToFill()
               if let vm = viewModel.singleViewModels[single] {
-                MiGridZoomableImageView(viewModel: vm)
+                MiGridZoomableImageView(viewModel: vm, onGotoVip: {
+                  viewModel.gotoVip = true
+                })
                   .padding(40)
                   .rotationEffect(.degrees(rotation))
               } else {
@@ -279,8 +308,12 @@ struct SinglesView: View {
         }
       }.onChange(of: miViewModel.singleType) { newValue in
         viewModel.syncViewModels()
+        syncVipToast(single: currentSingle)
       }.onChange(of: miViewModel.centroidMi) { newValue in
         viewModel.syncViewModels()
+        syncVipToast(single: currentSingle)
+      }.onChange(of: viewModel.currentIndex) { _ in
+        syncVipToast(single: currentSingle)
       }
       Divider()
       if showMiGrid {
@@ -311,8 +344,12 @@ struct SinglesView: View {
           Text(single.structure ?? UNKNOWN).padding(.leading, 5)
         }
         Spacer()
-        NavigationLink {
-          AnalyzeView(viewModel: AnalyzeViewModel(single))
+        Button {
+          if single.matchVip {
+            viewModel.gotoAnalyze = true
+          } else {
+            viewModel.showConstraintVip(vipBeitie)
+          }
         } label: {
           Image("analyze").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
         }.buttonStyle(.plain)
@@ -323,6 +360,7 @@ struct SinglesView: View {
           }
         } label: {
           Image("mi_mi").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
+            .opacity(showMiGrid ? 0.5 : 1)
         }.buttonStyle(.plain)
         vDivider
         Button {

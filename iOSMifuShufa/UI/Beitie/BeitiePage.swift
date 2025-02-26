@@ -92,12 +92,17 @@ struct VersionWorkView: View {
                   }
                 } label: {
                   HStack {
-                    WebImage(url: work.cover.url!) { img in
-                      img.image?.resizable()
-                        .aspectRatio(contentMode: .fill)
-                    }.frame(width: 50, alignment: .topTrailing)
-                      .frame(height: 40)
-                      .clipShape(RoundedRectangle(cornerRadius: 2))
+                    ZStack(alignment: .topLeading) {
+                      WebImage(url: work.cover.url!) { img in
+                        img.image?.resizable()
+                          .aspectRatio(contentMode: .fill)
+                      }.frame(width: 50, alignment: .topTrailing)
+                        .frame(height: 40)
+                        .clipShape(RoundedRectangle(cornerRadius: 2))
+                      if (work.vip) {
+                        VipBackground()
+                      }
+                    }.frame(width: 50, height: 40)
                     
                     VStack(alignment: .leading, spacing: 5) {
                       Text(name).foregroundStyle(Color.defaultText)
@@ -106,6 +111,9 @@ struct VersionWorkView: View {
                         Text(work.singleCount.toString() + "single_zi".localized)
                           .foregroundStyle(Color.darkSlateBlue)
                           .listItemBox()
+                      }
+                      if !work.isTrue() {
+                        FakeTagView(radius: 0)
                       }
                     }
                     Spacer()
@@ -264,12 +272,13 @@ struct WorkItem: View {
       let first = works.first()
       VStack(spacing: 2) {
         if let image = itemViewModel.image {
-          Image(uiImage: image).resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: Self.itemWidth-10)
-            .frame(height: Self.itemHeight-30)
-            .contentShape(RoundedRectangle(cornerRadius: 2))
-            .clipped()
+            Image(uiImage: image).resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(width: Self.itemWidth-10)
+              .frame(height: Self.itemHeight-30)
+              .contentShape(RoundedRectangle(cornerRadius: 2))
+              .clipped()
+              .modifier(BeitieModifier(work: first))
         } else {
           ProgressView().squareFrame(30)
             .progressViewStyle(.circular)
@@ -472,6 +481,40 @@ struct BeitieImageResultView : View {
     } footer: {
       if collapse {
         Divider.overlayColor(Color.gray.opacity(0.25))
+      }
+    }
+  }
+}
+
+struct FakeTagView: View {
+  var radius: CGFloat = 3
+  var body: some View {
+    Image("fake")
+      .renderingMode(.template)
+      .square(size: 15)
+      .foregroundStyle(.white)
+      .padding(2)
+      .background {
+        Circle().fill(.red)
+          .shadow(radius: radius)
+      }
+  }
+}
+
+struct BeitieModifier: ViewModifier {
+  let work: BeitieWork
+  var showFake: Bool = true
+  func body(content: Content) -> some View {
+    ZStack(alignment: .topLeading) {
+      content
+      if (work.vip) {
+        VipBackground()
+      }
+      if showFake && !work.isTrue() {
+        HStack {
+          Spacer()
+          FakeTagView()
+        }.padding(.trailing, 2)
       }
     }
   }

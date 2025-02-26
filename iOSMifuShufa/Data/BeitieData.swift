@@ -428,11 +428,7 @@ extension BeitieWork {
   
   var canSearch: Boolean {
     get {
-      if this.vip && !CurrentUser.isVip {
-        return true
-      } else {
-        return Settings.getBoolean(searchKey, true)
-      }
+      return Settings.getBoolean(searchKey, true)
     }
     set {
       Settings.putBoolean(searchKey, newValue)
@@ -633,5 +629,16 @@ extension BeitieDbHelper {
        }
      }
      return componentResult
+  }
+}
+
+
+extension BeitieSingle {
+  var matchVip: Bool {
+    work.matchVip
+  }
+  
+  var notMatchVip: Bool {
+    !matchVip
   }
 }

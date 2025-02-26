@@ -268,6 +268,7 @@ struct HomePage: View {
                   .aspectRatio(contentMode: .fit)
                   .frame(width: width - 2 * padding)
                   .viewShape(RoundedRectangle(cornerRadius: 2))
+                  .blur(radius: single.matchVip ? 0 : MiGridZoomableImageView.VIP_SINGLE_BLUR)
               }.padding(padding).overlay {
                 RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
               }
@@ -281,20 +282,24 @@ struct HomePage: View {
         }
       }
     } header: {
-      Button {
-        collapseBinding.wrappedValue.toggle()
-      } label: {
-        HStack {
-          Text(key.toString().smallSuffix("(\(singles.size))"))
-            .foregroundStyle(Color.colorPrimary)
-          Spacer()
-          Image(systemName: "chevron.down").square(size: 10)
-            .rotationEffect(.degrees(collapseBinding.wrappedValue ? -90: 0))
-        }.padding(.horizontal, 10).frame(height: 40).background(Colors.surfaceContainer.swiftColor)
-      }.buttonStyle(BgClickableButton())
+      if viewModel.order != .Tile {
+        Button {
+          collapseBinding.wrappedValue.toggle()
+        } label: {
+          HStack {
+            Text(key.toString().smallSuffix("(\(singles.size))"))
+              .foregroundStyle(Color.colorPrimary)
+            Spacer()
+            Image(systemName: "chevron.down").square(size: 10)
+              .rotationEffect(.degrees(collapseBinding.wrappedValue ? -90: 0))
+          }.padding(.horizontal, 10).frame(height: 40).background(Colors.surfaceContainer.swiftColor)
+        }.buttonStyle(BgClickableButton())
+      }
     } footer: {
-      if collapseBinding.wrappedValue {
-        Divider.overlayColor(Color.gray.opacity(0.35))
+      if viewModel.order != .Tile {
+        if collapseBinding.wrappedValue {
+          Divider.overlayColor(Color.gray.opacity(0.35))
+        }
       }
     }
   }
@@ -325,6 +330,14 @@ struct HomePage: View {
   @StateObject var miViewModel = MiGridViewModel.shared
   
   @State private var showMiGrids = false
+  
+  func syncVipToast(singles: List<BeitieSingle>) {
+    let single = singles[viewModel.selectedSingleIndex]
+    if miViewModel.onlyVipSupported && single.work.notMatchVip {
+      viewModel.showToast("碑帖「\(single.work.chineseFolder())」不支持当前米字格".orCht("碑帖「\(single.work.chineseFolder())」不支持當前米字格"))
+    }
+  }
+  
   var previewResult: some View {
     ZStack(alignment: .top) {
       let singles = viewModel.selectedSingleCollection
@@ -336,6 +349,8 @@ struct HomePage: View {
             if let vm = viewModel.singleViewModels[single] {
               MiGridZoomableImageView(viewModel: vm) {
                 hidePreview()
+              } onGotoVip: {
+                viewModel.gotoVip = true
               } onClick: {
                 navVM.gotoSingles(singles: singles, index: i)
               }.rotationEffect(.degrees(rotation))
@@ -345,11 +360,11 @@ struct HomePage: View {
       }.tabViewStyle(.page(indexDisplayMode: .never))
         .id(miViewModel.viewId)
         .onChange(of: viewModel.selectedSingleIndex, perform: { newValue in
-          let single = singles[newValue]
-          if miViewModel.isVipFeature && single.work.notMatchVip {
-            viewModel.showToast("碑帖「\(single.work.chineseFolder())」不支持当前米字格".orCht("碑帖「\(single.work.chineseFolder())」不支持當前米字格"))
-          }
+          syncVipToast(singles: singles)
         })
+        .onChange(of: miViewModel.singleType) { _ in
+          syncVipToast(singles: singles)
+        }
       
       VStack {
         let attr = {
@@ -365,8 +380,13 @@ struct HomePage: View {
         ZStack {
           VStack(spacing: 10) {
             HStack(spacing: 0) {
-              NavigationLink {
-                AnalyzeView(viewModel: AnalyzeViewModel(selectedSingle))
+              Button {
+                let single = previewSelectedSingle
+                if single.matchVip {
+                  viewModel.gotoAnalyze = true
+                } else {
+                  viewModel.showConstraintVip(single.vipBeitie)
+                }
               } label: {
                 Image("analyze").renderingMode(.template).square(size: 28).foregroundStyle(.white)
               }.buttonStyle(.plain)
@@ -377,6 +397,7 @@ struct HomePage: View {
                 }
               } label: {
                 Image("mi_mi").renderingMode(.template).square(size: 26).foregroundStyle(.white)
+                  .opacity(showMiGrids ? 0.5 : 1)
               }.buttonStyle(.plain)
               Spacer()
               Text("\(viewModel.selectedSingleIndex+1)/\(singles.size)")
@@ -580,6 +601,17 @@ struct HomePage: View {
           })
       }, viewModel: sideVM)
     }.modifier(VipViewModifier(viewModel: viewModel))
+      .navigationDestination(isPresented: $viewModel.gotoAnalyze) {
+        if viewModel.gotoAnalyze {
+          AnalyzeView(viewModel: AnalyzeViewModel(previewSelectedSingle))
+        }
+      }
+  }
+  
+  var previewSelectedSingle: BeitieSingle {
+    let singles = viewModel.selectedSingleCollection
+    let selectedSingle = singles[viewModel.selectedSingleIndex]
+    return selectedSingle
   }
   
   var otherwiseCharType: some View {

@@ -397,8 +397,17 @@ struct WorkView: View, SinglePreviewDelegate {
         presentationmode.wrappedValue.dismiss()
       }
       Spacer()
-      Text(work.workNameAttrStr(.body, smallerFont: .footnote, curves: false))
-        .foregroundStyle(work.btType.nameColor(baseColor: Color.colorPrimary))
+      HStack(spacing: 5) {
+        let color = work.btType.nameColor(baseColor: Color.colorPrimary)
+        if work.vip {
+          Image("vip_border")
+            .renderingMode(.template)
+            .square(size: 16)
+            .foregroundStyle(color)
+        }
+        Text(work.workNameAttrStr(.body, smallerFont: .footnote, curves: false))
+          .foregroundStyle(color)
+      }
       Spacer()
       if currentImage.singleCount > 0 {
         Button {

@@ -260,7 +260,7 @@ class BeitieDbHelper {
   }()
   
   func syncWorkRanges() {
-    let singleWorks = works.filter { it in it.hasSingle() && (!it.vip || CurrentUser.isVip) }
+    let singleWorks = works.filter { it in it.hasSingle()}
     searchWorks.clear()
     jiziWorks.clear()
     searchWorks.addAll(singleWorks.filter { it in it.canSearch }.map { it in it.id })

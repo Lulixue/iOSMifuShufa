@@ -172,7 +172,7 @@ enum SearchResultOrder: String, CaseIterable {
       charResults.values.forEach { it in
         all.addAll(it)
       }
-      result[""] = all
+      result[""] = all.sortedByDescending(mapper: { $0.matchVip })
       return result
     }
     charResults.values.forEach { list in
@@ -219,6 +219,7 @@ class HomeViewModel : AlertViewModel {
   @Published var showHistoryBar = false
   @Published var showDeleteAlert: Bool = false
   @Published var orientation = UIDeviceOrientation.unknown
+  @Published var gotoAnalyze = false
   private let page = SearchPage.Search
   
   @Published var showPreview = false
@@ -408,7 +409,7 @@ class HomeViewModel : AlertViewModel {
     singleResult = {
       var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
       orderResult.elements.forEach { it in
-        map[it.key] = it.value
+        map[it.key] = it.value.sortedByDescending(mapper: { $0.matchVip })
       }
       return map
     }()
@@ -631,13 +632,20 @@ extension Range where Element == Int {
 extension BeitieDbHelper {
   var orderedWork: HashMap<Int, Int> {
     var orderWorks = HashMap<Int, Int>()
-    
+    var vipWorks = List<BeitieWork>()
     getOrderTypeWorks(BeitieOrderType.orderType, BeitieOrderType.organizeStack).elements.forEach { it in
       for works in it.value {
         for work in works {
-          orderWorks[work.id] = orderWorks.size
+          if (work.matchVip) {
+            orderWorks[work.id] = orderWorks.size
+          } else {
+            vipWorks.add(work)
+          }
         }
       }
+    }
+    vipWorks.forEach { work in
+      orderWorks[work.id] = orderWorks.size
     }
     return orderWorks
   }
