@@ -105,7 +105,11 @@ class Utils {
   }
   
   static func gotoAppStore() {
-    let urlString = "itms-apps://itunes.apple.com/app/" + APP_ID
+    gotoAppInStore(APP_ID)
+  }
+  
+  static func gotoAppInStore(_ id: String) {
+    let urlString = "itms-apps://itunes.apple.com/app/" + id
     if let url = URL(string: urlString) {
         //根据iOS系统版本，分别处理
       if #available(iOS 10, *) {

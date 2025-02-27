@@ -489,7 +489,7 @@ extension BeitieSingle {
     let wc = writtenChar
     let stdCht = ChineseConverter.getStdCht(wc)
     let chs = ChineseConverter.getChs(wc)
-    let wcStr =  (stdCht != wc && chs.contains(stdCht)) ? "\(wc)[\(stdCht)]" : wc.toString()
+    let wcStr =  (stdCht != wc && (chs.contains(stdCht) || ChineseConverter.charForceShow(wc))) ? "\(wc)[\(stdCht)]" : wc.toString()
     if (!Settings.langChs) {
       return wc.toString()
     } else {

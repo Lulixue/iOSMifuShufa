@@ -139,6 +139,12 @@ class ChineseConverter {
   }
 
   
+  private static let FORCE_SHORT_CHARS = "冈"
+
+  static func charForceShow(_ char: Char) -> Boolean {
+    return FORCE_SHORT_CHARS.contains(char)
+  }
+  
   static func getChs(_ char: Char) -> String {
     if (chsChtMap.containsKey(char)) {
       return char.toString()

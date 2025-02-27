@@ -123,6 +123,13 @@ enum LoginSource: String {
     case .Unknown: return "未知账号".orCht("未知賬號")
     }
   }
+  
+  var canSync: Bool {
+    switch self {
+    case .Apple, .Phone: return true
+    default: return false
+    }
+  }
 }
 
 extension String {

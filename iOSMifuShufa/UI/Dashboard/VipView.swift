@@ -238,6 +238,54 @@ class PurchaseViewModel: NSObject, ObservableObject,
 }
 
 
+enum LirenApp: CaseIterable {
+  case Ouyx, Mifu, Wangxz, Yanzq
+
+  var pkg: String {
+    switch self {
+    case .Ouyx:
+      "com.lulixue.OuyangxunDict"
+    case .Mifu:
+      "com.lulixue.iOSMifuShufa"
+    case .Wangxz:
+      "com.lulixue.iOSWangxzShufa"
+    case .Yanzq:
+      "com.lulixue.iOSYanzqShufa"
+    }
+  }
+  
+  var appId: String {
+    switch self {
+    case .Ouyx:
+      "1499296451"
+    case .Mifu:
+      "6520390752"
+    case .Wangxz:
+      "6742651023"
+    case .Yanzq:
+      "6738764319"
+    }
+  }
+  
+  var icon: String {
+    switch (self) {
+    case .Yanzq: return "yzq_icon.png"
+    case .Mifu: return "mifu_logo.png"
+    case .Ouyx: return "oyx_icon.png"
+    case .Wangxz: return "wxz_icon.png"
+    }
+  }
+    
+  var url: String {
+    "https://appdatacontainer.blob.core.windows.net/liren/config/icons/\(icon)"
+  }
+    
+  static let anothersApps: Array<LirenApp> = {
+    let pkgName = Bundle.main.bundleIdentifier
+    return LirenApp.allCases.filter { $0.pkg != pkgName }
+  }()
+}
+
 struct VipPackagesView: View {
   @ObservedObject var viewModel = PurchaseViewModel()
   @ObservedObject var CurrentUser = UserViewModel.shared
@@ -260,7 +308,7 @@ struct VipPackagesView: View {
           ZStack {
             HStack {
               Spacer()
-              NaviTitle(text: "user_center".localized)
+              NaviTitle(text: "vip_service".localized)
               Spacer()
             }
             HStack {
@@ -302,6 +350,29 @@ struct VipPackagesView: View {
         }.buttonStyle(.plain)
       } else {
         Text(status as! String).font(UserViewModel.STATUS_FONT.swiftFont).foregroundColor(CurrentUser.currentStatusColor)
+      }
+      if CurrentUser.isVip && UserItem.source.canSync {
+        HStack(spacing: 4) {
+          Text("已同步").foregroundStyle(.searchHeader).font(.footnote)
+          let anotherApps = LirenApp.anothersApps
+          ForEach(anotherApps, id: \.self) { type in
+            Button {
+              Utils.gotoAppInStore(type.appId)
+            } label: {
+              AsyncImage(url: type.url.url!) { image in
+                image.image?.resizable()
+              }
+              .frame(width: 24, height: 24)
+              .aspectRatio(contentMode: .fit)
+              .clipShape(Circle())
+              .background {
+                Circle().stroke(.gray, lineWidth: 0.5)
+              }
+            }
+          }
+        }.padding(.horizontal, 4).padding(.vertical, 3).background {
+          RoundedRectangle(cornerRadius: 5).stroke(.gray, lineWidth: 0.5)
+        }.padding(.vertical, 5)
       }
       if let expired = CurrentUser.expiredTime {
         Text(expired.replace("-", "/")).font(.footnote).foregroundColor(Colors.purple.swiftColor).padding(.vertical, 5)
@@ -359,11 +430,19 @@ struct VipPackagesView: View {
         .padding(.top, 10)
         .disabled(CurrentUser.isForeverVip)
       Spacer()
+      NavigationLink {
+        VipPrivilegeView()
+      } label: {
+        Text(">> \(VipPrivilegeView.VIP_PRIVILEGE) >>")
+          .foregroundStyle(.blue)
+          .font(.callout)
+          .underline()
+      }.buttonStyle(.plain)
+      20.VSpacer()
       let width = min(geo.size.width-10, UserViewModel.KEFU_HTML.size.width+1)
       SelectableTextView(htmlText: UserViewModel.KEFU_HTML.html, fixedWidth: width).frame(width: width, height: UserViewModel.KEFU_HTML.size.height)
         .padding(.bottom, 15)
     }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Colors.second_background.swiftColor).cornerRadius(5).shadow(radius: 1)
-      
   }
 }
 
@@ -452,3 +531,76 @@ struct SelectableTextView: UIViewRepresentable {
     self.textViewModifier(textView)
   }
 }
+
+extension String {
+  func trimIndent() -> String {
+    self.trim()
+  }
+}
+
+struct VipPrivilegeView: View {
+  static var VIP_PRIVILEGE: String {
+    "VIP会员权益".orCht("VIP會員權益")
+  }
+  
+  
+  @Environment(\.presentationMode) var presentationMode
+  
+  @State var html: AttributedString? = nil
+  
+  static var contentHTML: AttributedString {
+    let contentChs = """
+      1. 更多汉字同时搜索和集字 <br />
+      2. 同时多个过滤器 <br />
+      3. 所有碑帖下载，且无水印 <br />
+      4. 无广告 <br />
+      5. 立人书法所有App，目前有欧阳询、王羲之、米芾、颜真卿App，手机和Google帐号通用VIP
+    """.trimIndent()
+    let contentCht = """
+      1. 更多漢字同時搜索和集字 <br />
+      2. 同時多個過濾器 <br />
+      3. 所有碑帖下載，且無水印 <br />
+      4. 無廣告 <br />
+      5. 立人書法所有App，目前有歐陽詢、王羲之、米芾、顏真卿App，手機和Google帳號通用VIP
+    """.trimIndent()
+    let text = contentChs.orCht(contentCht)
+    return text.toHtmlString(font: .preferredFont(forTextStyle: .body))!.swiftuiAttrString
+  }
+   
+  var body: some View {
+    VStack(spacing: 0) {
+      NaviView {
+        BackButtonView {
+          presentationMode.wrappedValue.dismiss()
+        }
+        Spacer()
+        NaviTitle(text: Self.VIP_PRIVILEGE)
+        Spacer()
+        CUSTOM_NAVI_BACK_SIZE.HSpacer()
+      }
+      Divider()
+      ScrollView {
+        if let html {
+          Text(html)
+            .multilineTextAlignment(.leading)
+            .lineSpacing(1.5)
+            .padding()
+        }
+      }
+    }.navigationBarBackButtonHidden()
+      .onAppear {
+        if html == nil {
+          Task {
+            let html = Self.contentHTML
+            DispatchQueue.main.async {
+              self.html = html
+            }
+          }
+        }
+      }
+  }
+}
+
+#Preview(body: {
+  VipPrivilegeView()
+})
