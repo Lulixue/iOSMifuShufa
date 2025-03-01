@@ -554,14 +554,14 @@ struct VipPrivilegeView: View {
       2. 同时多个过滤器 <br />
       3. 所有碑帖下载，且无水印 <br />
       4. 无广告 <br />
-      5. 立人书法所有App，目前有欧阳询、王羲之、米芾、颜真卿App，手机和Google帐号通用VIP
+      5. 立人书法所有App，目前有欧阳询、王羲之、米芾、颜真卿App，手机和苹果帐号通用VIP
     """.trimIndent()
     let contentCht = """
       1. 更多漢字同時搜索和集字 <br />
       2. 同時多個過濾器 <br />
       3. 所有碑帖下載，且無水印 <br />
       4. 無廣告 <br />
-      5. 立人書法所有App，目前有歐陽詢、王羲之、米芾、顏真卿App，手機和Google帳號通用VIP
+      5. 立人書法所有App，目前有歐陽詢、王羲之、米芾、顏真卿App，手機和蘋果帳號通用VIP
     """.trimIndent()
     let text = contentChs.orCht(contentCht)
     return text.toHtmlString(font: .preferredFont(forTextStyle: .body))!.swiftuiAttrString

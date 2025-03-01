@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="修复clipShape引发图片无法点击">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加VIP同步显示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource.zip" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource_version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource_version.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/VipView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/VipView.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,7 +397,79 @@
       <option name="project" value="LOCAL" />
       <updated>1734607407411</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="同步安卓功能">
+      <option name="closed" value="true" />
+      <created>1740551345849</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1740551345849</updated>
+    </task>
+    <task id="LOCAL-00042" summary="同步安卓功能">
+      <option name="closed" value="true" />
+      <created>1740552203955</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1740552203955</updated>
+    </task>
+    <task id="LOCAL-00043" summary="同步安卓功能">
+      <option name="closed" value="true" />
+      <created>1740552503641</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1740552503641</updated>
+    </task>
+    <task id="LOCAL-00044" summary="添加支付功能">
+      <option name="closed" value="true" />
+      <created>1740569889022</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1740569889022</updated>
+    </task>
+    <task id="LOCAL-00045" summary="集字添加字体兜底">
+      <option name="closed" value="true" />
+      <created>1740578036704</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1740578036704</updated>
+    </task>
+    <task id="LOCAL-00046" summary="添加VIP标识">
+      <option name="closed" value="true" />
+      <created>1740585049030</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1740585049030</updated>
+    </task>
+    <task id="LOCAL-00047" summary="VIP显示策略">
+      <option name="closed" value="true" />
+      <created>1740631466491</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1740631466491</updated>
+    </task>
+    <task id="LOCAL-00048" summary="添加VIP标识">
+      <option name="closed" value="true" />
+      <created>1740631753899</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1740631753899</updated>
+    </task>
+    <task id="LOCAL-00049" summary="添加VIP同步显示">
+      <option name="closed" value="true" />
+      <created>1740655909600</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1740655909600</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -408,11 +484,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="完善tab栏和VIP提示" />
-    <MESSAGE value="添加更多的碑帖排序" />
-    <MESSAGE value="添加登录和隐私政策" />
-    <MESSAGE value="解决碑帖页点击错误的问题" />
-    <MESSAGE value="添加PDF" />
     <MESSAGE value="显示生图" />
     <MESSAGE value="自己" />
     <MESSAGE value="抽出共同的部分" />
@@ -432,6 +503,12 @@
     <MESSAGE value="优化大小" />
     <MESSAGE value="优化动画" />
     <MESSAGE value="修复clipShape引发图片无法点击" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复clipShape引发图片无法点击" />
+    <MESSAGE value="同步安卓功能" />
+    <MESSAGE value="添加支付功能" />
+    <MESSAGE value="集字添加字体兜底" />
+    <MESSAGE value="VIP显示策略" />
+    <MESSAGE value="添加VIP标识" />
+    <MESSAGE value="添加VIP同步显示" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加VIP同步显示" />
   </component>
 </project>
