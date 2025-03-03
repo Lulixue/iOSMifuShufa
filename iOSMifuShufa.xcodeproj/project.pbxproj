@@ -59,9 +59,9 @@
 		F988205E2C3AC4520011DB04 /* iOSMifuShufaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988205D2C3AC4520011DB04 /* iOSMifuShufaTests.swift */; };
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
-		F989F4192D14399A0068CEFE /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F989F4182D14399A0068CEFE /* chinese.db */; };
-		F989F41A2D14399A0068CEFE /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F989F4172D14399A0068CEFE /* beitie.db */; };
 		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
+		F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F9C30AAC2D75D4F100A95B6F /* chinese.db */; };
+		F9C30AAE2D75D4F100A95B6F /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9C30AAB2D75D4F100A95B6F /* beitie.db */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -207,9 +207,9 @@
 		F98820632C3AC4520011DB04 /* iOSMifuShufaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSMifuShufaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F989F4172D14399A0068CEFE /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
-		F989F4182D14399A0068CEFE /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDbHelper.swift; sourceTree = "<group>"; };
+		F9C30AAB2D75D4F100A95B6F /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
+		F9C30AAC2D75D4F100A95B6F /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
@@ -394,8 +394,8 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F989F4172D14399A0068CEFE /* beitie.db */,
-				F989F4182D14399A0068CEFE /* chinese.db */,
+				F9C30AAB2D75D4F100A95B6F /* beitie.db */,
+				F9C30AAC2D75D4F100A95B6F /* chinese.db */,
 			);
 			path = DebugResources;
 			sourceTree = "<group>";
@@ -769,8 +769,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
-				F989F4192D14399A0068CEFE /* chinese.db in Resources */,
-				F989F41A2D14399A0068CEFE /* beitie.db in Resources */,
+				F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */,
+				F9C30AAE2D75D4F100A95B6F /* beitie.db in Resources */,
 				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
 				F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */,
@@ -1204,7 +1204,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1242,7 +1242,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
