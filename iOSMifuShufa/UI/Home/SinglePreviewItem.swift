@@ -30,7 +30,7 @@ class MiGridZoomableViewModel: BaseObservableObject {
     self.imageView = imgView
     debugPrint("download single \(single.fileName)")
     Task {
-      await imgView.sd_setImage(with: single.url.url!) { img, _, _, _ in
+      await imgView.sd_setImage(with: single.compatUrl.url!) { img, _, _, _ in
         if let img {
           DispatchQueue.main.async {
             let result = self.grid.applyAnalyze(img, self.single)
@@ -75,7 +75,7 @@ struct MiGridZoomableImageView: View {
             }).onEnded({ offset in
               totalZoom = max(min(totalZoom + currentZoom, maxZoom), minZoom)
               currentZoom = 0
-            })).onTapGesture {
+            }), isEnabled: viewModel.single.matchVip).onTapGesture {
               onClick()
             }.padding(10)
           
@@ -86,7 +86,7 @@ struct MiGridZoomableImageView: View {
               viewModel.loadImage()
             }
         }
-        if Self.VIP_SINGLE_BLUR > 0 && viewModel.single.work.notMatchVip {
+        if Self.VIP_SINGLE_BLUR > 0 && viewModel.single.notMatchVip {
           Button {
             onGotoVip()
           } label: {

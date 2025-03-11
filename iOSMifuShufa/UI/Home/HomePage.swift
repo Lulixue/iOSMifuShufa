@@ -374,6 +374,9 @@ struct HomePage: View {
           return charAttr + sub
         }()
         Spacer()
+        if selectedSingle.notMatchVip {
+          VipHdSingle(viewModel: viewModel)
+        }
         Text(attr).foregroundStyle(.white)
       }.padding(.bottom, 8)
       VStack {
@@ -740,3 +743,34 @@ extension UIDevice {
     }
   }
 }
+
+extension BeitieSingle {
+  var compatUrl: String {
+    let this = self
+    return (this.matchVip) ? this.url : this.thumbnailUrl
+  }
+
+}
+
+struct VipHdSingle: View {
+  @StateObject var viewModel: AlertViewModel
+  var body: some View {
+    Button {
+      viewModel.gotoVip = true
+    } label: {
+      HStack {
+        Text("开通VIP查看高清单字".orCht("開通VIP查看高清單字"))
+          .font(.footnote)
+          .foregroundStyle(Colors.iosBlue.swiftColor)
+          .padding(.horizontal, 8)
+          .padding(.vertical, 5)
+      }.background {
+        RoundedRectangle(cornerRadius: 5).stroke(Colors.iosBlue.swiftColor, lineWidth: 0.3)
+      }
+    }.buttonStyle(BgClickableButton())
+  }
+}
+
+#Preview(body: {
+  VipHdSingle(viewModel: AlertViewModel())
+})

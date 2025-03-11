@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加VIP同步显示">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="VIP图片显示缩略图">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource.zip" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource_version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/AppResources/resource_version.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/VipView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Dashboard/VipView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/SinglesView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Beitie/SinglesView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/HomePage.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/SinglePreviewItem.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/SinglePreviewItem.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,70 +75,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732265470829</updated>
-    </task>
-    <task id="LOCAL-00001" summary="优化显示">
-      <option name="closed" value="true" />
-      <created>1732265525211</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1732265525211</updated>
-    </task>
-    <task id="LOCAL-00002" summary="完善tab栏和VIP提示">
-      <option name="closed" value="true" />
-      <created>1732265536201</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1732265536201</updated>
-    </task>
-    <task id="LOCAL-00003" summary="添加更多的碑帖排序">
-      <option name="closed" value="true" />
-      <created>1732265544267</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1732265544267</updated>
-    </task>
-    <task id="LOCAL-00004" summary="添加登录和隐私政策">
-      <option name="closed" value="true" />
-      <created>1732265557527</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1732265557527</updated>
-    </task>
-    <task id="LOCAL-00005" summary="添加登录和隐私政策">
-      <option name="closed" value="true" />
-      <created>1732265891895</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1732265891895</updated>
-    </task>
-    <task id="LOCAL-00006" summary="添加登录和隐私政策">
-      <option name="closed" value="true" />
-      <created>1732273975274</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1732273975274</updated>
-    </task>
-    <task id="LOCAL-00007" summary="添加登录和隐私政策">
-      <option name="closed" value="true" />
-      <created>1732274543225</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1732274543225</updated>
-    </task>
-    <task id="LOCAL-00008" summary="添加登录和隐私政策">
-      <option name="closed" value="true" />
-      <created>1732275021849</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1732275021849</updated>
     </task>
     <task id="LOCAL-00009" summary="添加登录和隐私政策">
       <option name="closed" value="true" />
@@ -469,7 +404,71 @@
       <option name="project" value="LOCAL" />
       <updated>1740655909600</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="添加VIP同步显示">
+      <option name="closed" value="true" />
+      <created>1740742811425</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1740742811425</updated>
+    </task>
+    <task id="LOCAL-00051" summary="添加VIP同步显示">
+      <option name="closed" value="true" />
+      <created>1740745162478</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1740745162478</updated>
+    </task>
+    <task id="LOCAL-00052" summary="添加VIP同步显示">
+      <option name="closed" value="true" />
+      <created>1740746315982</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1740746315982</updated>
+    </task>
+    <task id="LOCAL-00053" summary="添加VIP同步显示">
+      <option name="closed" value="true" />
+      <created>1740813037910</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1740813037910</updated>
+    </task>
+    <task id="LOCAL-00054" summary="苹果帐号">
+      <option name="closed" value="true" />
+      <created>1740814323415</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1740814323415</updated>
+    </task>
+    <task id="LOCAL-00055" summary="苹果帐号">
+      <option name="closed" value="true" />
+      <created>1740815329252</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1740815329252</updated>
+    </task>
+    <task id="LOCAL-00056" summary="苹果帐号">
+      <option name="closed" value="true" />
+      <created>1740815338906</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1740815338906</updated>
+    </task>
+    <task id="LOCAL-00057" summary="更新版本">
+      <option name="closed" value="true" />
+      <created>1741004173317</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1741004173317</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -484,8 +483,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="显示生图" />
-    <MESSAGE value="自己" />
     <MESSAGE value="抽出共同的部分" />
     <MESSAGE value="优化图片加载和显示" />
     <MESSAGE value="修复AdID" />
@@ -509,6 +506,8 @@
     <MESSAGE value="VIP显示策略" />
     <MESSAGE value="添加VIP标识" />
     <MESSAGE value="添加VIP同步显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加VIP同步显示" />
+    <MESSAGE value="苹果帐号" />
+    <MESSAGE value="更新版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新版本" />
   </component>
 </project>

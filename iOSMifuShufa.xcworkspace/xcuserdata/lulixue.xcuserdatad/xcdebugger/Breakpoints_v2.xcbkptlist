@@ -1154,6 +1154,34 @@
             landmarkType = "24">
             <Locations>
                <Location
+                  uuid = "8BFD2DD6-C642-48CF-9BA6-82BE3E79C508 - dc866f2a205d5744"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.background&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ShapeStyle&gt;(_: &#x3c4;_1_0, ignoresSafeAreaEdges: SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.offset(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.offset(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Color, iOSMifuShufa.ToastView)&gt;&gt;&gt;)&gt; in iOSMifuShufa.BeitiePage.body.getter : some"
+                  moduleName = "iOSMifuShufa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lulixue/Projects/iOSMifuShufa/iOSMifuShufa/UI/Beitie/BeitiePage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "654"
+                  endingLineNumber = "654">
+               </Location>
+               <Location
+                  uuid = "8BFD2DD6-C642-48CF-9BA6-82BE3E79C508 - a5a2dffa88c6a59d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (iOSMifuShufa.BeitieOrderType) -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.background&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ShapeStyle&gt;(_: &#x3c4;_1_0, ignoresSafeAreaEdges: SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.offset(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.offset(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Color, iOSMifuShufa.ToastView)&gt;&gt;&gt;)&gt; in iOSMifuShufa.BeitiePage.body.getter : some"
+                  moduleName = "iOSMifuShufa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lulixue/Projects/iOSMifuShufa/iOSMifuShufa/UI/Beitie/BeitiePage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "654"
+                  endingLineNumber = "654">
+               </Location>
+               <Location
                   uuid = "8BFD2DD6-C642-48CF-9BA6-82BE3E79C508 - dd49854015de30f9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"

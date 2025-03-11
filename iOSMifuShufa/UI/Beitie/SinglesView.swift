@@ -297,8 +297,13 @@ struct SinglesView: View {
               } else {
                 Spacer()
               }
-              Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
-                .padding(.bottom, 14)
+              VStack {
+                if (single.notMatchVip) {
+                  VipHdSingle(viewModel: viewModel)
+                }
+                Text(single.work.workNameAttrStr(.system(size: 15))).foregroundStyle(.white)
+                  .padding(.bottom, 14)
+              }
             }.tag(i)
           }
         }.tabViewStyle(.page(indexDisplayMode: .never))
