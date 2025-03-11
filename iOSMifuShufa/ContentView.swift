@@ -71,9 +71,7 @@ struct ContentView: View {
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(Color.background, for: .tabBar)
       
-    }.modifier(WorkDestinationModifier(naviVM: navigationVM))
-      .modifier(WorkIntroDestinationModifier(naviVM: navigationVM))
-      .modifier(SingleDestinationModifier(naviVM: navigationVM)).environmentObject(navigationVM)
+    }
   }
   
   var body: some View {
@@ -94,7 +92,9 @@ struct ContentView: View {
             }
           }
         }
-    }
+    }.modifier(WorkDestinationModifier(naviVM: navigationVM))
+      .modifier(WorkIntroDestinationModifier(naviVM: navigationVM))
+      .modifier(SingleDestinationModifier(naviVM: navigationVM)).environmentObject(navigationVM)
   }
 }
 

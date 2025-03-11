@@ -34,6 +34,11 @@ struct WorkIntroView: View {
   }
   
   var body: some View {
+    NavigationStack {
+      contents
+    }.modifier(WorkDestinationModifier(naviVM: naviVM))
+  }
+  var contents: some View {
     VStack(spacing: 0) {
       NaviView {
         BackButtonView {
@@ -107,8 +112,7 @@ struct WorkIntroView: View {
           Spacer()
         }.padding(.vertical, 5).background(.white)
       }.buttonStyle(BgClickableButton())
-    }.modifier(WorkDestinationModifier(naviVM: naviVM))
-    .navigationBarHidden(true)
+    }.navigationBarHidden(true)
   }
 }
 

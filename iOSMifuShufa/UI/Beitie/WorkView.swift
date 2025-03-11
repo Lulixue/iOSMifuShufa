@@ -499,6 +499,8 @@ struct WorkView: View, SinglePreviewDelegate {
     NavigationStack {
       content
     }.modifier(VipViewModifier(viewModel: viewModel))
+      .modifier(SingleDestinationModifier(naviVM: naviVM))
+      .modifier(WorkIntroDestinationModifier(naviVM: naviVM))
   }
   var content: some View {
     ZStack(alignment: .topTrailing) {
@@ -573,8 +575,7 @@ struct WorkView: View, SinglePreviewDelegate {
           galleryScroll = true
           syncScroll(newIndex)
         }
-      }.modifier(SingleDestinationModifier(naviVM: naviVM))
-      .modifier(WorkIntroDestinationModifier(naviVM: naviVM))
+      }
         .ignoresSafeArea(edges: showBars ? [] : [.top, .bottom])
         .onDisappear {
           work.lastIndex = tabIndex

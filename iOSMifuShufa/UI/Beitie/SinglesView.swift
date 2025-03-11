@@ -246,7 +246,6 @@ struct SinglesView: View {
           ToastView(title: viewModel.toastTitle)
         }
       }.navigationBarHidden(true)
-        .modifier(WorkDestinationModifier(naviVM: naviVM))
         .modifier(AlertViewModifier(viewModel: viewModel))
         .onDisappear {
           miViewModel.reset()
@@ -258,6 +257,7 @@ struct SinglesView: View {
         AnalyzeView(viewModel: AnalyzeViewModel(currentSingle))
       }
     }
+    .modifier(WorkDestinationModifier(naviVM: naviVM))
   }
   
   var rotation: Double {

@@ -215,24 +215,25 @@ struct CollectionView: View {
     }
   }
   var body: some View {
-    VStack(spacing: 0) {
-      NaviView {
-        BackButtonView {
-          presentationMode.wrappedValue.dismiss()
+    NavigationStack {
+      VStack(spacing: 0) {
+        NaviView {
+          BackButtonView {
+            presentationMode.wrappedValue.dismiss()
+          }
+          Spacer()
+          NaviTitle(text: "collection".localized)
+          Spacer()
+          CUSTOM_NAVI_BACK_SIZE.HSpacer()
+        }.background(Colors.surfaceContainer.swiftColor)
+        Divider()
+        if types.isEmpty {
+          emptyView
+        } else {
+          content
         }
-        Spacer()
-        NaviTitle(text: "collection".localized)
-        Spacer()
-        CUSTOM_NAVI_BACK_SIZE.HSpacer()
-      }.background(Colors.surfaceContainer.swiftColor)
-      Divider()
-      if types.isEmpty {
-        emptyView
-      } else {
-        content
-      }
-    }.navigationBarHidden(true)
-      .modifier(SingleDestinationModifier(naviVM: naviVM))
+      }.navigationBarHidden(true)
+    }.modifier(SingleDestinationModifier(naviVM: naviVM))
       .modifier(WorkDestinationModifier(naviVM: naviVM))
   }
   
