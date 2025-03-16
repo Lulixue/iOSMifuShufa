@@ -132,6 +132,18 @@ extension Char {
   }
 }
 
+extension BeitieSingle {
+  
+  var charUrl: URL? {
+    let selected = self
+    if selected.isPrintChar {
+      return selected.printChar.printCharUrl
+    } else {
+      return selected.orgUrl?.url ?? selected.url.url
+    }
+  }
+}
+
 class JiziItem: BaseObservableObject {
   let char: Char
   var imageLoaded: Bool = false
@@ -169,16 +181,9 @@ class JiziItem: BaseObservableObject {
     }
   }
   
+  
   var charUrl: URL? {
-    if let selected {
-      if selected.isPrintChar {
-        return selected.printChar.printCharUrl
-      } else {
-        return selected.url.url
-      }
-    } else {
-      return char.jiziCharUrl
-    }
+    selected?.charUrl ?? char.jiziCharUrl
   }
   
   
@@ -304,7 +309,9 @@ class JiziItem: BaseObservableObject {
   
   private func applyPreferred(_ font: CalligraphyFont?,
                              _ author: Calligrapher?, _ work: BeitieWork?) -> List<BeitieSingle>? {
-    allResult.let { list in
+    let history = allResult.filter { $0.workId == PreviewHelper.RECENT_WORK_ID }
+    let anotherResults = allResult.filter { $0.workId != PreviewHelper.RECENT_WORK_ID }
+    let result = anotherResults.let { list in
       if (font != nil) {
         if (JiziOptionType.Font.value == JiziPreferType.Filter) {
           return list.filter { it in it.work.font == font }
@@ -334,9 +341,13 @@ class JiziItem: BaseObservableObject {
       } else {
         list
       }
-    }.sortedByDescending { it in it.work.matchVip }.ifEmpty {
+    }.sortedByDescending { it in it.work.matchVip }
+    var all = [BeitieSingle]()
+    all.addAll(history)
+    all.addAll(result)
+    return all.ifEmpty {
       return nil
-    }
+}
   }
 }
 
@@ -446,8 +457,11 @@ class JiziViewModel: AlertViewModel {
     }))
   }()
   
+  private var newLog: Bool = false
+  
   init(text: String, items: [JiziItem]) {
     self.text = text
+    self.newLog = items.isEmpty()
     self.jiziItems = items
     var count = [CalligraphyFont: Int]()
     var workCount = [BeitieWork: Int]()
@@ -513,7 +527,7 @@ class JiziViewModel: AlertViewModel {
   }
   
    
-  static func search(text: String) -> [JiziItem] {
+  static func search(text: String, newLog: Bool = true) -> [JiziItem] {
     let chars = text.filter { it in it.charIsChinesChar() }.toCharList
     var newItems = [JiziItem]()
     
@@ -521,10 +535,13 @@ class JiziViewModel: AlertViewModel {
     chars.forEach { it in
       let result = BeitieDbHelper.shared.search(it).matchJizi()
         .sortedBy { s in orderWorks[s.workId]! }
-      
+      let history = newLog ? JiziHistoryHelper.shared.searchChar(it).map { $0.toSingle() } : []
       let jiziItem = {
         if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
           var all = ArrayList<BeitieSingle>()
+          if (history.isNotEmpty()) {
+            all.addAll(history)
+          }
           if (result.count(where: { $0.work.matchVip }) < 1) {
             all.addAll(ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() }))
           }
@@ -537,6 +554,9 @@ class JiziViewModel: AlertViewModel {
             allComponents += ChineseDbHelper.dao.getChineseChar(i.utf8Code)?.mainComponents ?? ""
           }
           var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
+          if (history.isNotEmpty()) {
+            map[PreviewHelper.recentWork.chineseName()] = history
+          }
           map[PreviewHelper.defaultWork.chineseName()] = ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() })
           for c in allComponents.toCharList.distinct() {
             let singles = BeitieDbHelper.shared.getSinglesByComponent(char: c).matchJizi()
@@ -656,22 +676,41 @@ extension BeitieSingle {
     if isPrintChar {
       return printChar.jiziCharUrl
     } else {
-      return thumbnailUrl.url
+      return orgThumbnailUrl?.url ?? thumbnailUrl.url
     }
   }
   
 }
 
 class PreviewHelper {
+  
+  static func toCustomWork(_ id: Int) -> BeitieWork {
+    switch id {
+    case RECENT_WORK_ID:
+      return recentWork
+    default:
+      return defaultWork
+    }
+  }
+  
+  static let RECENT_WORK_ID = 123510
+  static let recentWork: BeitieWork = {
+       let json = """
+  {"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"最近使用","font":"Others","id":\(RECENT_WORK_ID),"imageCount":1,"intro":"","introCht":"","name":"最近使用","nameCht":"最近使用","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
+  """
+      return try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
+  }()
+  
   static var printSingle: BeitieSingle {
       let json = """
      {"brokenLevel":0,"chars":"王","fileName":"","font":"Others","id":0,"imageId":0,"imageName":"","index":0,"lian":false,"path":"","repeat":false,"strokeCount":0,"workId":-1}
      """
     return try! JSONDecoder().decode(BeitieSingle.self, from: json.utf8Data)
   }
+  
   static let defaultWork: BeitieWork = {
      let json = """
-{"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"印刷体","font":"Others","id":-1,"imageCount":1,"intro":"","introCht":"","isTrue":false,"name":"印刷体","nameCht":"印刷體","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
+{"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"印刷体","font":"Others","id":-1,"imageCount":1,"intro":"","introCht":"","name":"印刷体","nameCht":"印刷體","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
 """
     return try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
   }()

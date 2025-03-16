@@ -62,7 +62,7 @@ class NavigationViewModel : BaseObservableObject {
   
   func gotoJizi(_ text: String, _ puzzles: [PuzzleItem]?, after: @escaping () -> Void) {
     Task {
-      let items = JiziViewModel.search(text: text)
+      let items = JiziViewModel.search(text: text, newLog: false)
       DispatchQueue.main.async {
         if let puzzles {
           for i in 0..<items.size {
@@ -79,7 +79,7 @@ class NavigationViewModel : BaseObservableObject {
   
   func gotoJizi(_ text: String, after: @escaping () -> Void) {
     Task {
-      let items = JiziViewModel.search(text: text)
+      let items = JiziViewModel.search(text: text, newLog: true)
       DispatchQueue.main.async {
         let vm = JiziViewModel(text: text, items: items)
         self.jiziVM = vm

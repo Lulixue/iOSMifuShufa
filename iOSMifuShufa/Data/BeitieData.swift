@@ -306,6 +306,9 @@ class BeitieSingle: Decodable, Equatable, Hashable {
   var box: String? = nil
   var font: CalligraphyFont? = nil
   var matched: Char? = nil
+  var vip: Bool? = nil
+  var orgThumbnailUrl: String? = nil
+  var orgUrl: String? = nil
   
   enum CodingKeys: CodingKey {
     case id
@@ -368,7 +371,7 @@ class BeitieImage: Decodable, Hashable {
   var singleCount: Int
   var textCht: String? = nil
   
-  func chineseText() -> String? { text?.orChtNullable(textCht) }
+  func chineseText() -> String? { text?.orChtNullable(textCht)?.trim() }
   
   enum CodingKeys: CodingKey {
     case id
@@ -464,11 +467,11 @@ extension BeitieWork {
     }()
   }
    
-  func chineseText() -> String? { text?.orChtNullable(textCht) }
+  func chineseText() -> String? { text?.orChtNullable(textCht)?.trim() }
   
   func chineseYear() -> String? { year?.orChtNullable(yearCht) }
   
-  func chineseIntro() -> String? { intro?.orChtNullable(introCht) }
+  func chineseIntro() -> String? { intro?.orChtNullable(introCht)?.trim() }
   
   func chineseVersion() -> String? { version?.orChtNullable(versionCht) }
   
@@ -482,7 +485,7 @@ extension BeitieSingle {
     chars.first()
   }
   var work: BeitieWork {
-    BeitieDbHelper.shared.getWorkById(workId) ?? PreviewHelper.defaultWork
+    BeitieDbHelper.shared.getWorkById(workId) ?? PreviewHelper.toCustomWork(workId)
   }
   
   var showChars: String {
@@ -635,7 +638,8 @@ extension BeitieDbHelper {
 
 extension BeitieSingle {
   var matchVip: Bool {
-    work.matchVip
+    let isVip = self.vip ?? work.vip
+    return !isVip || CurrentUser.isVip
   }
   
   var notMatchVip: Bool {

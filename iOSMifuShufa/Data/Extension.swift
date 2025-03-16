@@ -154,6 +154,12 @@ extension Array {
     }
   }
   
+  func sortedByDescending(mapper: @escaping (Element) -> Date) -> Array {
+    sorted { l, r in
+      mapper(l) > mapper(r)
+    }
+  }
+  
   func sortedByDescending(mapper: @escaping (Element) -> Int) -> Array {
     sorted { l, r in
       mapper(l) > mapper(r)

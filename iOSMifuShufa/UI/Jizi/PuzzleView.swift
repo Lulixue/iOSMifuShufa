@@ -313,6 +313,7 @@ class PuzzleViewModel: AlertViewModel {
   let jiziItems: [JiziItem]
   private let imageViews: [UIImageView]
   @Published var images: [Int: UIImage] = [:]
+  @Published var loadingImages = true
   
   init(items: [JiziItem]) {
     jiziItems = items
@@ -362,6 +363,7 @@ class PuzzleViewModel: AlertViewModel {
         puzzleImages[type] = typeToImage(type, imgs: imgs)
       }
       DispatchQueue.main.async {
+        self.loadingImages = false
         self.puzzleImages = puzzleImages
         self.counter += 1
       }
@@ -369,11 +371,12 @@ class PuzzleViewModel: AlertViewModel {
   }
   
   private func initImages() {
+    self.loadingImages = true
     for i in 0..<imageViews.size {
       let view = imageViews[i]
       let item = jiziItems[i]
       let char = item.char
-      if let url = item.selected?.url.url {
+      if let url = item.selected?.charUrl {
         
         view.sd_setImage(with: url, placeholderImage: nil, options: [.highPriority],
                          progress: { (downloaded, total, url) in
@@ -475,6 +478,11 @@ struct PuzzleView: View {
                 .padding(.top, 20)
             }
           }
+        }
+        if viewModel.loadingImages {
+          ZStack(alignment: .center) {
+            LoadingView(title: .constant("正在加载图片，请耐心等待".orCht("正在加載圖片，請耐心等待")))
+          }.ignoresSafeArea()
         }
       }
     }.navigationBarHidden(true)

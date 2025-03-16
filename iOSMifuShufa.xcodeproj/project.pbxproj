@@ -50,6 +50,7 @@
 		F96E61762CD9C6DD007329DB /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61692CD9C6DD007329DB /* DropdownView.swift */; };
 		F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */; };
 		F96E61782CD9C6DD007329DB /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616B2CD9C6DD007329DB /* Loading.swift */; };
+		F96F9D9D2D86D45600DF6183 /* JiziHistoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F9D9C2D86D45600DF6183 /* JiziHistoryHelper.swift */; };
 		F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */; };
 		F988204A2C3AC4500011DB04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820492C3AC4500011DB04 /* ContentView.swift */; };
 		F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F988204B2C3AC4510011DB04 /* Assets.xcassets */; };
@@ -195,6 +196,7 @@
 		F96E61692CD9C6DD007329DB /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
 		F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBarView.swift; sourceTree = "<group>"; };
 		F96E616B2CD9C6DD007329DB /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
+		F96F9D9C2D86D45600DF6183 /* JiziHistoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziHistoryHelper.swift; sourceTree = "<group>"; };
 		F98820442C3AC4500011DB04 /* iOSMifuShufa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSMifuShufa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaApp.swift; sourceTree = "<group>"; };
 		F98820492C3AC4500011DB04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 		F96E61572CD9C6D1007329DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F96F9D9C2D86D45600DF6183 /* JiziHistoryHelper.swift */,
 				F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */,
 				F9C3A6192CEE0A390055ABA1 /* VerifyHelper.swift */,
 				F9E124AE2CE723D600BB8CD4 /* NetworkHelper.swift */,
@@ -996,6 +999,7 @@
 				F9ECB03E2CD26C600009C0DC /* HomeViewModel.swift in Sources */,
 				F9E124A62CE476E300BB8CD4 /* SettingsView.swift in Sources */,
 				F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */,
+				F96F9D9D2D86D45600DF6183 /* JiziHistoryHelper.swift in Sources */,
 				F9F97C7D2CDC7B0000096ED1 /* Zoomable.swift in Sources */,
 				F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */,
 				F96E615A2CD9C6D1007329DB /* KotlinBridge.swift in Sources */,

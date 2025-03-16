@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="24B91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CollectionItem" representedClassName="CollectionItem" syncable="YES" codeGenerationType="class">
         <attribute name="collectionId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
@@ -8,6 +8,12 @@
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="JiziHistory" representedClassName="JiziHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="c" optional="YES" attributeType="String"/>
+        <attribute name="logId" optional="YES" attributeType="String"/>
+        <attribute name="selected" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="SearchLog" representedClassName="SearchLog" syncable="YES" codeGenerationType="class">
         <attribute name="extra" optional="YES" attributeType="String"/>

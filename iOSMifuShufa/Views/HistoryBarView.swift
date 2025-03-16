@@ -52,8 +52,8 @@ class HistoryViewModel : BaseObservableObject {
     }
   }
   
-  func appendLog(_ page: SearchPage, _ text: String, _ extra: String? = nil) {
-    appendHistory(text: text, page: page, extra: extra)
+  func appendLog(_ page: SearchPage, _ text: String, _ extra: String? = nil) -> String {
+    return appendHistory(text: text, page: page, extra: extra)
   }
   
   func insertLog(log: SearchLog, page: SearchPage, new: Bool = false) {
@@ -114,12 +114,12 @@ class HistoryViewModel : BaseObservableObject {
     }
   }
   
-  func appendHistory(text: String, page: SearchPage, extra: String?=nil){
+  func appendHistory(text: String, page: SearchPage, extra: String?=nil) -> String {
     if let previous = hasSameBefore(text: text, page: page, extra: extra) {
       DispatchQueue.main.async {
         self.refreshLog(log: previous, page: page, extra: extra)
       }
-      return
+      return previous.id.toString()
     }
     let slog = SearchLog(context: managedContext)
     slog.text = text
@@ -134,6 +134,13 @@ class HistoryViewModel : BaseObservableObject {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+    return slog.id.toString()
+  }
+}
+
+extension ObjectIdentifier {
+  func toString() -> String {
+    UInt(bitPattern: self).description
   }
 }
 

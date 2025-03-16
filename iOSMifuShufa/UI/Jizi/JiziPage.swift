@@ -39,6 +39,17 @@ class JiziPageViewModel: AlertViewModel {
       showConstraintVip(ConstraintItem.JiziZiCount.topMostConstraintMessage)
       return
     }
+    let logs = HistoryViewModel.shared.getSearchLogs(.Jizi)
+    for log in logs {
+      if text.trim() == log.text!.trim() {
+        let items = log.extra?.toPuzzleItems()
+        navi.gotoJizi(text, items) { [weak self] in
+          self?.buttonEnabled = true
+        }
+        return
+      }
+    }
+    
     self.buttonEnabled = false
     navi.gotoJizi(text) { [weak self] in
       self?.buttonEnabled = true

@@ -148,8 +148,7 @@ struct JiziView : View {
           Image(systemName: "command").square(size: 11)
           Text("puzzle".localized).font(.system(size: 14))
         }
-      }.buttonStyle(PrimaryButton(enabled: viewModel.buttonEnabled, bgColor: .blue, horPadding: 8, verPadding: 6))
-        .disabled(!viewModel.buttonEnabled)
+      }.buttonStyle(PrimaryButton(enabled: true, bgColor: .blue, horPadding: 8, verPadding: 6))
     }.padding(.vertical, 10).padding(.horizontal, 14)
   }
   
@@ -262,7 +261,10 @@ struct JiziView : View {
           return PuzzleItem(char: item.char.toString(), id: single?.id ?? 0, thumbnailUrl: single?.thumbnailUrl ?? "", url: single?.url ?? "")
         }
         let extra = try? JSONEncoder().encode(items)
-        historyVM.appendLog(.Jizi, viewModel.text, extra?.utf8String)
+        let logId = historyVM.appendLog(.Jizi, viewModel.text, extra?.utf8String)
+        items.forEach { it in
+          JiziHistoryHelper.shared.insertItem(it, logId)
+        }
       }
       .modifier(TapDismissModifier(show: $showFonts))
       .modifier(TapDismissModifier(show: $showWorks))
@@ -307,7 +309,7 @@ struct JiziView : View {
             ForEach(0..<singles.size, id: \.self) { i in
               let single = singles[i]
               let selected = i == viewModel.singleIndex
-              let matchVip = single.work.matchVip
+              let matchVip = single.matchVip
               HStack {
                 Button {
                   if matchVip {
@@ -392,7 +394,7 @@ struct JiziView : View {
 #Preview {
   JiziView(viewModel: {
     let text = "可你分明在世上，更在我心尖"
-    let items = JiziViewModel.search(text: text)
+    let items = JiziViewModel.search(text: text, newLog: true)
     let vm = JiziViewModel(text: text, items: items)
     return vm
   }())
