@@ -4,21 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="优化集字">
-      <change afterPath="$PROJECT_DIR$/iOSMifuShufa/Helper/JiziHistoryHelper.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/iOSYanzqShufa/Helper/JiziHistoryHelper.swift" afterDir="false" />
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="修复集字错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Data/BeitieData.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Data/BeitieData.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Data/Extension.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Data/Extension.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/ShufaData.xcdatamodeld/ShufaData.xcdatamodel/contents" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/ShufaData.xcdatamodeld/ShufaData.xcdatamodel/contents" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/NavigationViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Home/NavigationViewModel.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziPage.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziPage.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/JiziViewModel.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/PuzzleView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/UI/Jizi/PuzzleView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iOSMifuShufa/Views/HistoryBarView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa/Views/HistoryBarView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,30 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732265470829</updated>
-    </task>
-    <task id="LOCAL-00011" summary="解决碑帖页点击错误的问题">
-      <option name="closed" value="true" />
-      <created>1732763962810</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1732763962810</updated>
-    </task>
-    <task id="LOCAL-00012" summary="优化显示">
-      <option name="closed" value="true" />
-      <created>1732767902437</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1732767902437</updated>
-    </task>
-    <task id="LOCAL-00013" summary="添加PDF">
-      <option name="closed" value="true" />
-      <created>1732772745650</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1732772745650</updated>
     </task>
     <task id="LOCAL-00014" summary="添加PDF">
       <option name="closed" value="true" />
@@ -476,7 +441,31 @@
       <option name="project" value="LOCAL" />
       <updated>1741710593283</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="优化集字">
+      <option name="closed" value="true" />
+      <created>1742118559734</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1742118559734</updated>
+    </task>
+    <task id="LOCAL-00061" summary="优化集字">
+      <option name="closed" value="true" />
+      <created>1742120514798</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1742120514798</updated>
+    </task>
+    <task id="LOCAL-00062" summary="修复集字错误">
+      <option name="closed" value="true" />
+      <created>1742141154693</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1742141154693</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -491,8 +480,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复AdID" />
-    <MESSAGE value="优化首页" />
     <MESSAGE value="聚焦时高亮编辑框" />
     <MESSAGE value="兼容按钮形状" />
     <MESSAGE value="更新AD版本" />
@@ -516,6 +503,8 @@
     <MESSAGE value="更新版本" />
     <MESSAGE value="非VIP显示缩略图" />
     <MESSAGE value="修复导航" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复导航" />
+    <MESSAGE value="优化集字" />
+    <MESSAGE value="修复集字错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复集字错误" />
   </component>
 </project>

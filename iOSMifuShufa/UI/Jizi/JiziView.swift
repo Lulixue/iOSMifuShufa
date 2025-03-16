@@ -258,7 +258,8 @@ struct JiziView : View {
       .onDisappear {
         let items = viewModel.jiziItems.map { item in
           let single = item.selected
-          return PuzzleItem(char: item.char.toString(), id: single?.id ?? 0, thumbnailUrl: single?.thumbnailUrl ?? "", url: single?.url ?? "")
+          return PuzzleItem(char: item.char.toString(), id: single?.id ?? 0, thumbnailUrl: single?.charThumbnailUrlPath ??
+                            "", url: single?.charUrlPath ?? "")
         }
         let extra = try? JSONEncoder().encode(items)
         let logId = historyVM.appendLog(.Jizi, viewModel.text, extra?.utf8String)

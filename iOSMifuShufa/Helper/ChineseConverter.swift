@@ -45,27 +45,29 @@ class ChineseConverter {
   private static var standardVariantsMap = HashMap<Char, Set<Char>>()
   private static let variants: [Char: Set<Char>] = {
     var variantsMap = HashMap<Char, Set<Char>>()
-    let contents = ResourceHelper.readFileContents(fileURL: Bundle.main.url(forResource: "variants", withExtension:"json")!)
-    do {
-      let collections = try JSONDecoder().decode([String: String].self, from: contents.utf8Data)
-      for key in collections.keys {
-        let fan = key.toString().first()
-        let value = collections[key]!.toString()
-        var variants = HashSet<Char>()
-        variants.add(fan)
-        value.forEach { it in
-          variants.add(it)
+    for file in ["variants", "sf_variants"] {
+      let contents = ResourceHelper.readFileContents(fileURL: Bundle.main.url(forResource: file, withExtension:"json")!)
+      do {
+        let collections = try JSONDecoder().decode([String: String].self, from: contents.utf8Data)
+        for key in collections.keys {
+          let fan = key.toString().first()
+          let value = collections[key]!.toString()
+          var variants = HashSet<Char>()
+          variants.add(fan)
+          value.forEach { it in
+            variants.add(it)
+          }
+          standardVariantsMap[fan] = variants
+          variantsMap[fan] = variants
+          for char in variants {
+            var resultSet = HashSet(variants)
+            resultSet.remove(char)
+            variantsMap[char] = resultSet
+          }
         }
-        standardVariantsMap[fan] = variants
-        variantsMap[fan] = variants
-        for char in variants {
-          var resultSet = HashSet(variants)
-          resultSet.remove(char)
-          variantsMap[char] = resultSet
-        }
+      } catch {
+        println("variants \(error)")
       }
-    } catch {
-      println("variants \(error)")
     }
     return variantsMap
   }()

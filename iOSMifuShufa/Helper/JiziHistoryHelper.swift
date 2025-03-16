@@ -11,15 +11,13 @@ import Foundation
 extension JiziHistory {
   func toSingle() -> BeitieSingle {
     let puzzle = try! JSONDecoder().decode(PuzzleItem.self, from: self.selected!.utf8Data)
-    if puzzle.thumbnailUrl.contains("http") {
-      guard let single = BeitieDbHelper.shared.getSingleById(puzzle.id) else { return puzzle.char.first().printCharSingle() }
-      single.vip = single.work.vip
-      single.orgUrl = puzzle.url
-      single.orgThumbnailUrl = puzzle.thumbnailUrl
-      single.workId = PreviewHelper.RECENT_WORK_ID
-      return single
-    }
-    return puzzle.char.first().printCharSingle()
+    let single = BeitieDbHelper.shared.getSingleById(puzzle.id) ?? puzzle.char.first().printCharSingle()
+    single.vip = single.work.vip
+    single.orgUrl = puzzle.url
+    single.orgThumbnailUrl = puzzle.thumbnailUrl
+    single.workId = PreviewHelper.RECENT_WORK_ID
+    debugPrint(puzzle.char, puzzle.thumbnailUrl)
+    return single
   }
 }
 
@@ -34,7 +32,8 @@ class JiziHistoryHelper {
     var newAll = [JiziHistory]()
     do {
       let json = try JSONEncoder().encode(puzzle).utf8String
-      if let it = history[puzzle.char] {
+      let it = getHistory(puzzle.char.first())
+      if it.isNotEmpty() {
         if let first = it.first(where: { $0.selected == json }) {
           first.time = Date()
           try managedContext.save()
@@ -59,13 +58,18 @@ class JiziHistoryHelper {
     }
   }
   
-  func searchChar(_ char: Char) -> List<JiziHistory> {
+  private func getHistory(_ char: Char) -> List<JiziHistory> {
     var result = history[char.toString()] ?? []
     if !history.containsKey(char.toString()) {
       let all = doSearchChar(char)
       history[char.toString()] = all
       result.addAll(all)
     }
+    return result
+  }
+  
+  func searchChar(_ char: Char) -> List<JiziHistory> {
+    let result = getHistory(char)
     if (result.size > 3) {
       return Array(result[0..<3])
     } else {
@@ -74,9 +78,8 @@ class JiziHistoryHelper {
   }
   
   private func doSearchChar(_ char: Char) -> List<JiziHistory> {
-    
     let fetchRequest = JiziHistory.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "c = '%@'", char.toString())
+    fetchRequest.predicate = NSPredicate(format: "c = %@", char.toString())
     do {
       let result = try managedContext.fetch(fetchRequest)
       let sorted = result.sortedByDescending(mapper: { $0.time! })

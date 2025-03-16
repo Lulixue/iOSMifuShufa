@@ -139,8 +139,22 @@ extension BeitieSingle {
     if selected.isPrintChar {
       return selected.printChar.printCharUrl
     } else {
-      return selected.orgUrl?.url ?? selected.url.url
+      if let orgUrl = selected.orgUrl {
+        if orgUrl.contains("/var") {
+          return selected.printChar.printCharUrl
+        }
+      }
+      let url = selected.orgUrl?.fileHttpUrl ?? selected.url.url
+      return url
     }
+  }
+  
+  var charThumbnailUrlPath: String {
+    isPrintChar ? charUrl!.path() : thumbnailUrl
+  }
+  
+  var charUrlPath: String {
+    isPrintChar ? charUrl!.path() : self.url
   }
 }
 
@@ -214,6 +228,7 @@ class JiziItem: BaseObservableObject {
     if url.exists() {
       return
     }
+    debugPrint("generate char bitmap", char)
     let newImage = getCharImage(char)
     
     try? newImage.pngData()?.write(to: url)
@@ -669,14 +684,20 @@ extension Char {
 }
 
 extension BeitieSingle {
-  var isPrintChar: Boolean { self.workId == -1 }
+  var isPrintChar: Boolean { self.workId == PreviewHelper.DEFAULT_WORK_ID }
   var printChar: Char { chars.first() }
   
   var jiziUrl: URL? {
     if isPrintChar {
       return printChar.jiziCharUrl
     } else {
-      return orgThumbnailUrl?.url ?? thumbnailUrl.url
+      if let orgThumb = orgThumbnailUrl {
+        if orgThumb.contains("/var") {
+          return printChar.jiziCharUrl
+        }
+      }
+      let url = orgThumbnailUrl?.fileHttpUrl ?? thumbnailUrl.url
+      return url
     }
   }
   
@@ -694,6 +715,7 @@ class PreviewHelper {
   }
   
   static let RECENT_WORK_ID = 123510
+  static let DEFAULT_WORK_ID = 123511
   static let recentWork: BeitieWork = {
        let json = """
   {"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"最近使用","font":"Others","id":\(RECENT_WORK_ID),"imageCount":1,"intro":"","introCht":"","name":"最近使用","nameCht":"最近使用","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
@@ -703,14 +725,14 @@ class PreviewHelper {
   
   static var printSingle: BeitieSingle {
       let json = """
-     {"brokenLevel":0,"chars":"王","fileName":"","font":"Others","id":0,"imageId":0,"imageName":"","index":0,"lian":false,"path":"","repeat":false,"strokeCount":0,"workId":-1}
+     {"brokenLevel":0,"chars":"王","fileName":"","font":"Others","id":0,"imageId":0,"imageName":"","index":0,"lian":false,"path":"","repeat":false,"strokeCount":0,"workId":\(DEFAULT_WORK_ID)}
      """
     return try! JSONDecoder().decode(BeitieSingle.self, from: json.utf8Data)
   }
   
   static let defaultWork: BeitieWork = {
      let json = """
-{"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"印刷体","font":"Others","id":-1,"imageCount":1,"intro":"","introCht":"","name":"印刷体","nameCht":"印刷體","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
+{"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"印刷体","font":"Others","id":\(DEFAULT_WORK_ID),"imageCount":1,"intro":"","introCht":"","name":"印刷体","nameCht":"印刷體","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
 """
     return try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
   }()

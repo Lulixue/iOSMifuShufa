@@ -259,4 +259,10 @@ struct TestImage: View {
 func globalTest() {
 //  let image = UIImage(named: "background")
 //  image?.addWaterMark("app_name".resString)
+  let char: Char = "中"
+  let url = char.printCharUrl
+  debugPrint(char, url.path())
+  debugPrint(char, url.absoluteURL.absoluteString)
+  let absoluteUrl = url.path().url
+  debugPrint(absoluteUrl)
 }

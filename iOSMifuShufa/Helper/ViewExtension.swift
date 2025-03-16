@@ -30,6 +30,14 @@ extension String {
     URL(string: self.getEncodedURL())
   }
   
+  var fileHttpUrl: URL? {
+    if contains("/var") {
+      URL(string: self)
+    } else {
+      self.url
+    }
+  }
+  
   func calculateUITextViewFreeSize(font: UIFont) -> CGSize {
     let size = self.boundingRect(
       with: CGSize(width: CGFloat.infinity, height: CGFloat.infinity),
