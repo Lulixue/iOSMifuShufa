@@ -60,33 +60,16 @@ class NavigationViewModel : BaseObservableObject {
     gotoWork(work: image.work, index: image.index-1)
   }
   
-  func gotoJizi(_ text: String, _ puzzles: [PuzzleItem]?, after: @escaping () -> Void) {
-    Task {
-      let items = JiziViewModel.search(text: text, newLog: false)
-      DispatchQueue.main.async {
-        if let puzzles {
-          for i in 0..<items.size {
-            items[i].syncWithPuzzleItem(puzzles[i])
-          }
-        }
-        let vm = JiziViewModel(text: text, items: items)
-        self.jiziVM = vm
-        after()
-        self.gotoJiziView = true
-      }
-    }
+  func gotoJizi(_ text: String, _ log: SearchLog, after: @escaping () -> Void) {
+    self.jiziVM = JiziViewModel(text: text, log: log)
+    after()
+    self.gotoJiziView = true
   }
   
   func gotoJizi(_ text: String, after: @escaping () -> Void) {
-    Task {
-      let items = JiziViewModel.search(text: text, newLog: true)
-      DispatchQueue.main.async {
-        let vm = JiziViewModel(text: text, items: items)
-        self.jiziVM = vm
-        after()
-        self.gotoJiziView = true
-      }
-    }
+    self.jiziVM = JiziViewModel(text: text)
+    after()
+    self.gotoJiziView = true
   }
   
   func gotoSingles(singles: [BeitieSingle], index: Int = 0) {

@@ -53,6 +53,12 @@ enum CalligraphyFont: String, CaseIterable {
     chinese.length == 2 ? chinese : "\(chinese)\("书".orCht("書"))"
   }
   
+  func matchJiziFont(_ jiziFont: CalligraphyFont) -> Boolean {
+    return chinese.contains(jiziFont.chinese)
+  }
+  
+  static let JIZI_FONTS: [CalligraphyFont] = [.Kai, .Xing, .Cao, .Li, .Zhuan]
+
   var padding: Int {
     switch self {
     case .Kai, .Xing: 2

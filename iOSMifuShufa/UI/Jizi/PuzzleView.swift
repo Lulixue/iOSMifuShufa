@@ -520,14 +520,14 @@ struct PuzzleView: View {
   }
 }
 
-#Preview {
-  let items = JiziViewModel.search(text: "寒雨连江夜入吴，平明送客楚山孤")
-  PuzzleView(viewModel: PuzzleViewModel(items: items))
-}
+//#Preview {
+//  let items = JiziViewModel(text: "寒雨连江夜入吴，平明送客楚山孤")
+//  PuzzleView(viewModel: PuzzleViewModel(items: items))
+//}
 
 
-#Preview("settings", body: {
-  
-  let items = JiziViewModel.search(text: "寒雨连江夜入吴，平明送客楚山孤")
-  PuzzleSettingsView().environmentObject(PuzzleViewModel(items: items))
-})
+//#Preview("settings", body: {
+//  
+//  let items = JiziViewModel(text: "寒雨连江夜入吴，平明送客楚山孤")
+//  PuzzleSettingsView().environmentObject(PuzzleViewModel(items: items))
+//})

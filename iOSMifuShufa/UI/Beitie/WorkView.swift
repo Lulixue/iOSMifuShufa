@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+
+import MijickPopupView
  
 extension CGFloat {
   static let KB: CGFloat = 1024
@@ -25,8 +27,23 @@ extension CGFloat {
 }
 
 enum WorkSettingsItem: String, CaseIterable {
-  case Save, Fullscreen, Thumnail, Info, Draw;
-    
+  case Save, Fullscreen, Thumnail, Info, Draw, Report;
+  
+  static var REPORT_ERROR: String {
+    "错误上报".orCht("錯誤上報")
+  }
+  
+  var padding: CGFloat {
+    switch self {
+    case .Draw:
+      1
+    case .Report:
+      1
+    default:
+      0
+    }
+  }
+  
   var enableString: String {
     switch self {
     case .Save:
@@ -39,6 +56,8 @@ enum WorkSettingsItem: String, CaseIterable {
       "查看详情".orCht("查看詳情")
     case .Draw:
       "handwriting_off".localized
+    case .Report:
+      Self.REPORT_ERROR
     }
   }
   
@@ -54,11 +73,15 @@ enum WorkSettingsItem: String, CaseIterable {
       "查看详情".orCht("查看詳情")
     case .Draw:
       "handwriting_on".localized
+    case .Report:
+      Self.REPORT_ERROR
     }
   }
   
   var disableIcon: String {
     switch self {
+    case .Report:
+      "questionmark.circle"
     case .Save:
       "download"
     case .Fullscreen:
@@ -71,8 +94,20 @@ enum WorkSettingsItem: String, CaseIterable {
       "handwriting"
     }
   }
+  
+  var systemIcon: Bool {
+    switch self {
+    case .Report:
+      true
+    default:
+      false
+    }
+  }
+  
   var enableIcon: String {
     switch self {
+    case .Report:
+      "questionmark.circle"
     case .Save:
       "download"
     case .Fullscreen:
@@ -159,7 +194,7 @@ class WorkViewModel: AlertViewModel {
   
   private func getItemEnabled(_ item: WorkSettingsItem) -> Bool {
     switch item {
-    case .Save:
+    case .Save, .Report:
       true
     case .Fullscreen:
       self.enterFullscreen
@@ -178,8 +213,9 @@ class WorkViewModel: AlertViewModel {
     }
     let icons = menuItems.map {
       item in
-      getItemEnabled(item) ? item.enableIcon : item.disableIcon
-    }.map { DropDownIcon(name: $0, isSystem: false, size: 20, totalSize: 22) }
+      let icon = getItemEnabled(item) ? item.enableIcon : item.disableIcon
+      return DropDownIcon(name: icon, isSystem: item.systemIcon, size: 20-item.padding, totalSize: 22)
+    }
     
     dropdownParam = DropDownParam(items: menuItems, texts: texts, colors: Colors.ICON_COLORS, images: icons, padding: DropDownPadding(itemVertical: 12, extraTop: 2, extraBottom: 4), bgColor: .white)
   }
@@ -405,7 +441,7 @@ struct WorkView: View, SinglePreviewDelegate {
             .square(size: 16)
             .foregroundStyle(color)
         }
-        Text(work.workNameAttrStr(.body, smallerFont: .footnote, curves: false))
+        Text(work.workNameAttrStr(.title3, smallerFont: .footnote, curves: false))
           .foregroundStyle(color)
       }
       Spacer()
@@ -498,6 +534,10 @@ struct WorkView: View, SinglePreviewDelegate {
   var body: some View {
     NavigationStack {
       content
+        .implementPopupView()
+        .onChange(of: viewModel.showFeedback) { newValue in
+          FeedbackPopup(initText: "\(viewModel.work.chineseFolder())-\(viewModel.pageIndex+1)\("页".orCht("頁"))\n").showAndStack()
+        }
     }.modifier(VipViewModifier(viewModel: viewModel))
       .modifier(SingleDestinationModifier(naviVM: naviVM))
       .modifier(WorkIntroDestinationModifier(naviVM: naviVM))
@@ -530,6 +570,8 @@ struct WorkView: View, SinglePreviewDelegate {
       if viewModel.showOverflowMenu {
         DropDownOptionsView(param: viewModel.dropdownParam!) { item in
           switch item {
+          case .Report:
+            viewModel.showFeedback = true
           case .Save:
             if work.notMatchVip {
               viewModel.showConstraintVip(
@@ -593,4 +635,99 @@ struct WorkView: View, SinglePreviewDelegate {
 
 #Preview {
   WorkView(viewModel: WorkViewModel(work: BeitieDbHelper.shared.works[0], pageIndex: 0))
+}
+
+
+struct FeedbackPopup: BottomPopup {
+  let initText: String
+  let bottomHeight: CGFloat
+  init(initText: String, bottomHeight: CGFloat = 0) {
+    self.initText = "[\("勘误".orCht("勘誤"))]" + initText
+    self.bottomHeight = bottomHeight
+  }
+  func createContent() -> some View {
+    feedbackView
+      .padding(.bottom, bottomHeight)
+  }
+  func configurePopup(popup: BottomPopupConfig) -> BottomPopupConfig {
+    popup
+      .cornerRadius(0)
+      .contentIgnoresSafeArea(true)
+  }
+  enum FocusField {
+    case text, contact
+  }
+  
+  private let height = UIHelper.screenHeight * 0.4
+  @State var text: String = ""
+  @State var contact: String = ""
+  @State var showAlert: Bool = false
+  @State var alertMessage: String = ""
+  @FocusState var textFocused: FocusField?
+  var feedbackView: some View {
+    VStack(alignment: .center, spacing: 0) {
+      HStack {
+        Button {
+          dismiss()
+        } label: {
+          Image(systemName: "xmark").resizable().scaledToFit()
+            .foregroundColor(Colors.colorPrimary.swiftColor)
+            .frame(width: 13, height: 13)
+        }.buttonStyle(.plain)
+        Text(WorkSettingsItem.REPORT_ERROR).font(.title3)
+          .padding(.vertical, 8)
+          .frame(maxWidth: .infinity)
+        
+        Button {
+          if initText.trim() == text.trim() {
+            let noKanwu = "检测到具体错误未填写，请填写后再提交！".orCht("檢測到具體錯誤未填寫，請填寫後再提交！")
+            self.alertMessage = noKanwu
+            self.showAlert = true
+            return
+          }
+          NetworkHelper.submitFeedback(feedback: text, contact: contact) { error in
+            if error == nil {
+              self.alertMessage = "反馈已经收到，感谢你的反馈!".orCht("反饋已經收到，感謝你的反饋!")
+            } else {
+              self.alertMessage = "发送反馈失败，请稍后重试!".orCht("發送反饋失敗，請稍後重試!")
+            }
+            self.showAlert = true
+          }
+        } label : {
+          Text("提交").font(.body).foregroundColor(.blue)
+        }.buttonStyle(.plain)
+      }.padding(.horizontal, 15)
+        .padding(.vertical, 5)
+      Divider()
+      VStack {
+        TextEditor(text: $text)
+          .padding(.all, 5)
+          .focused($textFocused, equals: .text)
+          .background(Color.white)
+          .colorMultiply(Colors.background.swiftColor)
+          .shadow(radius: 0)
+      }
+      .overlay(RoundedRectangle(cornerRadius: 5, style: .continuous)
+        .stroke(Color.gray, lineWidth: 0.5))
+      .cornerRadius(5)
+      .shadow(radius: textFocused == .text ? 5 : 0)
+      .padding(.horizontal, 15)
+      .padding(.top, 15)
+      .padding(.bottom, 15)
+      Spacer.height(25)
+    }
+    .alert(isPresented: $showAlert, content: {
+      Alert(title: Text(WorkSettingsItem.REPORT_ERROR), message: Text(alertMessage), dismissButton:
+          .default(Text("好"), action: {
+            self.dismiss()
+          }))
+    })
+    .frame(minHeight: height, maxHeight: height)
+    .task {
+      text = initText
+    }
+    .onDisappear {
+      dismissAll()
+    }
+  }
 }

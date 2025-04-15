@@ -110,16 +110,22 @@ class BeitieViewModel: AlertViewModel {
   
   @Published var searchResult = OrderedDictionary<String, Any>()
   @Published var showSearchResult = false
-  lazy var azOrderParam: DropDownParam<String> = {
-    let keys = BeitieDbHelper.shared.getOrderTypeWorks(.Az, true).keys.map { $0.toString() }
+  var orderParam: DropDownParam<String>!
+  
+  private func toOrderParam() -> DropDownParam<String> {
+    let keys = showMap.entries.map { keyToString(key: $0.key) + "(\($0.value.size))" }
     return DropDownParam(items: keys, texts: keys, colors: Colors.ICON_COLORS)
-  }()
+  }
   
   var SEARCH_RESULT: String { "匹配碑帖" }
   var BEITIE: String { "title_beitie".resString }
   var BEITIE_IMG: String { "beitie_img".resString }
   @Published var versionWorks = [BeitieWork]()
-  @Published var showMap: BeitieDbHelper.BeitieDictionary = BeitieDbHelper.shared.getDefaultTypeWorks()
+  @Published var showMap: BeitieDbHelper.BeitieDictionary = BeitieDbHelper.shared.getDefaultTypeWorks() {
+    didSet {
+      orderParam = toOrderParam()
+    }
+  }
   
   func onSearch() {
     let text = searchText.trim()
@@ -205,7 +211,7 @@ class BeitieViewModel: AlertViewModel {
   
   override init() {
     super.init()
-//    updateVersionWorks(works: showMap.elements.first!.value.first())
+    orderParam = toOrderParam()
   }
 }
 

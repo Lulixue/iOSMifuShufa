@@ -24,6 +24,7 @@ class SingleViewModel: AlertViewModel {
   let singles: List<BeitieSingle>
   @Published var gotoAnalyze = false
   @Published var showDrawPanel = false
+  @Published var showOverflow = false
   @Published var currentIndex: Int = 0
   @Published var orientation = UIDeviceOrientation.unknown
   @Published var singleViewModels = [BeitieSingle: MiGridZoomableViewModel]()
@@ -39,6 +40,17 @@ class SingleViewModel: AlertViewModel {
     }
     syncViewModels()
   }
+  
+  lazy var menuDropdown = {
+    let menuItems = [WorkSettingsItem.Save, WorkSettingsItem.Report]
+    let icons = menuItems.map {
+      item in
+      let icon = item.enableIcon
+      return DropDownIcon(name: icon, isSystem: item.systemIcon, size: 20-item.padding, totalSize: 22)
+    }
+    let texts = menuItems.map { $0.enableString }
+    return DropDownParam(items: menuItems, texts: texts, colors: Colors.ICON_COLORS, images: icons, padding: DropDownPadding(itemVertical: 12, extraTop: 2, extraBottom: 4), bgColor: .white)
+  }()
   
   func loadThumbnailImage(single: BeitieSingle) {
     if singleThumbnailViews[single] != nil {
@@ -188,46 +200,61 @@ struct SinglesView: View {
       Spacer()
       Text(title).foregroundStyle(.colorPrimary)
       Spacer()
-      Button {
-        let c = collected
-        collectVM.toggleItem(currentSingle)
-        viewModel.showToast(c ? "已取消收藏" : "已加入收藏")
-        Task {
-          try? await Task.sleep(nanoseconds: 2_000_000_000)
-          DispatchQueue.main.async {
-            viewModel.showToast = false
+      HStack(spacing: 0) {
+        Button {
+          let c = collected
+          collectVM.toggleItem(currentSingle)
+          viewModel.showToast(c ? "已取消收藏" : "已加入收藏")
+          Task {
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            DispatchQueue.main.async {
+              viewModel.showToast = false
+            }
           }
-        }
-      } label: {
-        Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
-          .foregroundStyle(Color.colorPrimary)
-      }.buttonStyle(.plain)
-      Button {
-        if currentSingle.work.matchVip {
-          naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
-        } else {
-          viewModel.showConstraintVip(vipBeitie)
-        }
-      } label: {
-        Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
-          .foregroundStyle(Color.colorPrimary)
-      }.buttonStyle(.plain)
-      Button {
-        if currentSingle.work.notMatchVip {
-          viewModel.showConstraintVip(vipBeitie)
-        } else {
-          if let image = viewModel.singleViewModels[currentSingle]?.image {
-            viewModel.imageSaver.writeToPhotoAlbum(image: image)
+        } label: {
+          Image(collected ? "collect_fill" : "collect").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE+1)
+            .foregroundStyle(Color.colorPrimary)
+        }.buttonStyle(.plain)
+        12.HSpacer()
+        Button {
+          if currentSingle.work.matchVip {
+            naviVM.gotoWork(work: currentSingle.work, index: (currentSingle.image?.index ?? 1) - 1)
+          } else {
+            viewModel.showConstraintVip(vipBeitie)
           }
-        }
-      } label: {
-        Image("download").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
-          .foregroundStyle(Color.colorPrimary)
-      }.buttonStyle(.plain)
+        } label: {
+          Image("big_image").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE)
+            .foregroundStyle(Color.colorPrimary)
+        }.buttonStyle(.plain)
+        8.HSpacer()
+        Button {
+          viewModel.showOverflow = true
+        } label: {
+          Image("overflow").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE-2)
+            .foregroundStyle(Color.colorPrimary)
+        }.buttonStyle(.plain).background(PositionReaderView(binding: $menuPosition))
+      }
     }
   }
+  @State private var menuPosition: CGRect = .zero
   @State private var scrollFixed = false
   @ScrollState private var scrollState
+  
+  
+  private func onMenuItem(item: WorkSettingsItem) {
+    switch item {
+    case .Report:
+      viewModel.showFeedback = true
+    default:
+      if currentSingle.work.notMatchVip {
+        viewModel.showConstraintVip(vipBeitie)
+      } else {
+        if let image = viewModel.singleViewModels[currentSingle]?.image {
+          viewModel.imageSaver.writeToPhotoAlbum(image: image)
+        }
+      }
+    }
+  }
   
   func syncScroll(_ index: Int) {
     let pageTo = index == singles.lastIndex ? index : (index - 1)
@@ -240,15 +267,27 @@ struct SinglesView: View {
   
   var body: some View {
     NavigationStack {
-      ZStack {
+      ZStack(alignment: .topTrailing) {
         content
         if viewModel.showToast {
           ToastView(title: viewModel.toastTitle)
+        }
+        if viewModel.showOverflow {
+          DropDownOptionsView(param: viewModel.menuDropdown) { item in
+            onMenuItem(item: item)
+            viewModel.showOverflow = false
+          }.offset(x: -5, y: (CUSTOM_NAVIGATION_HEIGHT - menuPosition.height) / 2  + menuPosition.height + 5)
         }
       }.navigationBarHidden(true)
         .modifier(AlertViewModifier(viewModel: viewModel))
         .onDisappear {
           miViewModel.reset()
+        }
+        .modifier(DragDismissModifier(show: $viewModel.showOverflow))
+        .modifier(TapDismissModifier(show: $viewModel.showOverflow))
+        .implementPopupView()
+        .onChange(of: viewModel.showFeedback) { newValue in
+          FeedbackPopup(initText: "\(currentSingle.work.chineseFolder())-\("单字".orCht("單字"))-\(currentSingle.index)-\(currentSingle.showChars)\n").showAndStack()
         }
     }.navigationDestination(isPresented: $viewModel.gotoVip) {
       VipPackagesView()

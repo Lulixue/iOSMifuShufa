@@ -17,6 +17,7 @@ import Alamofire
 import Zip
 
 class ResourceFiles {
+  static let font: CTFont = CTFontCreateWithGraphicsFont(ResourceHelper.printFont, 20, nil, nil)
 }
 
 
@@ -66,30 +67,32 @@ class ResourceHelper {
   private static let EXTRACT_OK = 1
   private static let EXTRACT_FAIL = -1
   private static var manifestItems = [ManifestItem]()
+  public static let printFont = {
+    let font = "fonts/" + BeitieDbHelper.shared.FONT_FILE
+    return installFont(dataDir!.appendingPathComponent(font))!
+  }()
   
   @discardableResult
-  private static func installFont(_ fontUrl: URL) -> Bool {
+  private static func installFont(_ fontUrl: URL) -> CGFont? {
     let fontData = try! Data(contentsOf: fontUrl)
     if let provider = CGDataProvider.init(data: fontData as CFData) {
       var error: Unmanaged<CFError>?
       let font: CGFont = CGFont(provider)!
       if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
         print(error.debugDescription)
-        return false
+        return nil
       } else {
-        return true
+        return font
       }
     }
-    return false
+    return nil
   }
   
   
   public static func installCustomFonts() {
-    for font in ["fonts/" + BeitieDbHelper.shared.FONT_FILE] {
-      if let url = dataDir?.appendingPathComponent(font) {
-        installFont(url)
-      }
-    }
+    _ = printFont
+    debugPrint("support: \(Character("她").supportTypeface(ResourceFiles.font))")
+    debugPrint("support: \(Character("是").supportTypeface(ResourceFiles.font))")
   }
   
   private static var resourceMd5: String = {

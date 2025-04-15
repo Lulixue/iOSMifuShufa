@@ -42,8 +42,7 @@ class JiziPageViewModel: AlertViewModel {
     let logs = HistoryViewModel.shared.getSearchLogs(.Jizi)
     for log in logs {
       if text.trim() == log.text!.trim() {
-        let items = log.extra?.toPuzzleItems()
-        navi.gotoJizi(text, items) { [weak self] in
+        navi.gotoJizi(text, log) { [weak self] in
           self?.buttonEnabled = true
         }
         return
@@ -175,7 +174,7 @@ struct JiziPage : View {
               ForEach(0..<logs.size, id: \.self) { i in
                 let log = logs[i]
                 let text = log.text!
-                let items = log.extra?.toPuzzleItems()
+                let items = log.extra?.toPuzzleLog().items
                 let binding = Binding {
                   self.historyExpanded[log] ?? false
                 } set: {
@@ -183,7 +182,7 @@ struct JiziPage : View {
                 }
                 Button {
                   viewModel.buttonEnabled = false
-                  naviVM.gotoJizi(text, items) {
+                  naviVM.gotoJizi(text, log) {
                     viewModel.buttonEnabled = true
                   }
                 } label: {
@@ -316,9 +315,9 @@ struct JiziPage : View {
           HStack(spacing: 4) {
             Image(systemName: "command").square(size: 12)
             Text("title_jizi".localized).font(.callout)
-          }.foregroundStyle(viewModel.buttonEnabled ? .white : .gray)
+          }.foregroundStyle(.white)
         }.buttonStyle(PrimaryButton(bgColor: .blue))
-          .disabled(!viewModel.buttonEnabled)
+
       }.padding(.horizontal, paddingHor)
       10.VSpacer()
       historyView
@@ -333,7 +332,14 @@ struct JiziPage : View {
 
 
 extension String {
-  func toPuzzleItems() -> [PuzzleItem] {
-    return (try? JSONDecoder().decode([PuzzleItem].self, from: self.utf8Data)) ?? []
+  func toPuzzleLog() -> PuzzleLog {
+    let log = try? JSONDecoder().decode(PuzzleLog.self, from: self.utf8Data)
+    if let log {
+      return log
+    }
+    let puzzleLog = PuzzleLog()
+    puzzleLog.items = (try? JSONDecoder().decode([PuzzleItem].self, from: self.utf8Data)) ?? []
+  
+    return puzzleLog
   }
 }

@@ -583,25 +583,16 @@ struct BeitiePage: View {
               viewModel.showSearchBar.toggle()
             } label: {
               Image(systemName: "magnifyingglass")
+                .square(size: 18)
                 .foregroundStyle(btnColor)
             }.buttonStyle(.plain)
             Button {
-              viewModel.organizeStack.toggle()
-              viewModel.showToast(viewModel.organizeStack ? "版本合一" : "版本分散")
+              showAzDropdown = true
             } label: {
-              Image(viewModel.organizeStack ? "stack" : "single").renderingMode(.template).square(size: 20)
+              Image(systemName: "arrow.down.to.line").square(size: 18)
                 .foregroundStyle(btnColor)
             }.buttonStyle(.plain)
             Spacer()
-            if viewModel.orderType == .Az {
-              Button {
-                showAzDropdown = true
-              } label: {
-                Image("order_pinyin").renderingMode(.template).square(size: 20)
-                  .foregroundStyle(btnColor)
-              }.background(PositionReaderView(binding: $orderPosition))
-            }
-            
             Button {
               viewModel.listView.toggle()
             } label: {
@@ -658,12 +649,13 @@ struct BeitiePage: View {
         .offset(x: -10, y: 36)
       }
       if showAzDropdown {
-        DropDownOptionsView(param: viewModel.azOrderParam, selected: nil, selectedDecoration: [], onClickItem: { t in
-          let index = viewModel.azOrderParam.items.indexOf(t)
+        let offsetX = viewModel.orderParam!.maxWidth+40
+        DropDownOptionsView(param: viewModel.orderParam!, selected: nil, selectedDecoration: [], onClickItem: { t in
+          let index = viewModel.orderParam.items.indexOf(t)
           scrollProxy?.scrollTo(index, anchor: .top)
           showAzDropdown = false
         })
-        .offset(x: -60, y: 36)
+        .offset(x: -UIHelper.screenWidth+offsetX, y: 36)
       }
       if viewModel.showToast {
         ZStack {

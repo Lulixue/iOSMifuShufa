@@ -80,7 +80,7 @@ struct JiziView : View {
                   .tint(.colorPrimary)
               }
             }.frame(height: size-16)
-            Text(item.char.toString() + "(\(item.results?.size ?? 0))").font(.callout)
+            Text(item.char.toString() + "(\(item.results.size))").font(.callout)
               .underline(item.jiziUseComponents).padding(.top, 5).padding(.bottom, 2)
               .foregroundStyle(single?.work.btType.nameColor(baseColor: defaultTextColor) ?? defaultTextColor)
             
@@ -100,7 +100,6 @@ struct JiziView : View {
   @State private var showWorks = false
   @State private var fontPosition = CGRect.zero
   @State private var worksPosition = CGRect.zero
-  @State private var showSettings = false
   
   private let scrollSettings = ScrollableBarSettings(
     textColors: [.gray, .white],
@@ -132,7 +131,7 @@ struct JiziView : View {
         debugPrint("fontPosition \(fontPosition)")
       } label: {
         HStack(spacing: 4) {
-          Image(JiziOptionType.Font.icon).renderingMode(.template).square(size: 16)
+          Image(JiziOptionType.Font.icon).renderingMode(.template).square(size: 18)
           if let selected = viewModel.selectedFont {
             Text(selected.longChinese)
           } else {
@@ -160,12 +159,7 @@ struct JiziView : View {
       Spacer()
       NaviTitle(text: "title_jizi".localized)
       Spacer()
-      Button {
-        showSettings = true
-      } label: {
-        Image("switches").renderingMode(.template).square(size: CUSTOM_NAVI_ICON_SIZE-2)
-          .foregroundStyle(Color.colorPrimary)
-      }.buttonStyle(.plain)
+      (CUSTOM_NAVI_ICON_SIZE-2).HSpacer()
     }.background(Colors.surfaceVariant.swiftColor)
   }
   
@@ -183,31 +177,6 @@ struct JiziView : View {
     }.padding(.horizontal, 15).padding(.vertical, 8)
   }
   
-  var settingsView: some View {
-    ZStack {
-      Color.black.opacity(0.75)
-        .onTapGesture {
-          showSettings = false
-        }
-      VStack(spacing: 0) {
-        5.VSpacer()
-        Text("settings".localized).padding(.vertical, 8)
-          .font(.callout).bold()
-        Divider()
-        filterView(.Work, binding: $viewModel.workFilterType)
-        HStack {
-          Spacer()
-        }.frame(height: 0.5).background(.gray.opacity(0.2)).padding(.leading, 10)
-        filterView(.Font, binding: $viewModel.fontFilterType)
-        8.VSpacer()
-      }.frame(width: UIScreen.currentWidth * 0.75).background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(.bottom, UIScreen.currentHeight * 0.5)
-    }.onDisappear {
-      viewModel.sync()
-    }.ignoresSafeArea()
-  }
-  
   func showPosition(_ pos: CGRect) -> CGSize {
     CGSize(width: pos.minX, height: pos.maxY - UIScreen.statusBarHeight + 3 - CUSTOM_NAVIGATION_HEIGHT)
   }
@@ -221,21 +190,29 @@ struct JiziView : View {
       }
   }
   
+  var jiziContents: some View {
+    VStack(spacing: 0) {
+      buttonView
+      Divider().padding(.horizontal, 10)
+      VStack(spacing: 0) {
+        candidatePanel
+        if let candidates = singleCharCandidates {
+          singleCandidates(candidates)
+        }
+      }.modifier(DragDismissModifier(show: $showFonts)).modifier(DragDismissModifier(show: $showWorks))
+    }
+  }
+  
   var content: some View {
     VStack(spacing: 0) {
       naviBar
       Divider()
       ZStack {
         ZStack(alignment: .topLeading) {
-          VStack(spacing: 0) {
-            buttonView
-            Divider().padding(.horizontal, 10)
-            VStack(spacing: 0) {
-              candidatePanel
-              if let candidates = singleCharCandidates {
-                singleCandidates(candidates)
-              }
-            }.modifier(DragDismissModifier(show: $showFonts)).modifier(DragDismissModifier(show: $showWorks))
+          if !viewModel.initializing {
+            jiziContents
+          } else {
+            LoadingView(title: .constant("正在加载...".orCht("正在加載...")))
           }
           if showFonts {
             DropDownOptionsView(param: viewModel.fontParam) { font in
@@ -249,23 +226,11 @@ struct JiziView : View {
               showWorks = false
             }.offset(showPosition(worksPosition))
           }
-        }.blur(radius: showSettings ? 5 : 0)
-        if showSettings {
-          settingsView
         }
       }
     }.navigationBarHidden(true)
       .onDisappear {
-        let items = viewModel.jiziItems.map { item in
-          let single = item.selected
-          return PuzzleItem(char: item.char.toString(), id: single?.id ?? 0, thumbnailUrl: single?.charThumbnailUrlPath ??
-                            "", url: single?.charUrlPath ?? "")
-        }
-        let extra = try? JSONEncoder().encode(items)
-        let logId = historyVM.appendLog(.Jizi, viewModel.text, extra?.utf8String)
-        items.forEach { it in
-          JiziHistoryHelper.shared.insertItem(it, logId)
-        }
+        viewModel.savePuzzleLog()
       }
       .modifier(TapDismissModifier(show: $showFonts))
       .modifier(TapDismissModifier(show: $showWorks))
@@ -276,7 +241,19 @@ struct JiziView : View {
   func singleCandidates(_ candidates: OrderedDictionary<AnyHashable, Array<BeitieSingle>>) -> some View {
     5.VSpacer()
     let keys = Array(candidates.keys)
-    let singles = currentItem.results ?? Array()
+    let singles = currentItem.results
+    let separators = {
+      var indices = [Int]()
+      var counter = 0
+      for (_, v) in candidates {
+        counter += v.size
+        indices.append(counter)
+      }
+      if (indices.isNotEmpty()) {
+        indices.remove(at: indices.lastIndex)
+      }
+      return indices
+    }()
     VStack(spacing: 0) {
       ScrollView(.horizontal, showsIndicators: false) {
         ScrollViewReader { proxy in
@@ -346,6 +323,11 @@ struct JiziView : View {
                     }
                 }.buttonStyle(.plain)
               }.id(i).padding(.horizontal, 5)
+              if separators.containsItem(i) {
+                Divider().frame(width: 1, height: 15)
+                  .clipShape(RoundedRectangle(cornerRadius: 3))
+                  .background(.gray)                  .padding(.horizontal, 1)
+              }
             }
           }.background(Color.singlePreviewBackground)
             .onAppear {
@@ -395,8 +377,7 @@ struct JiziView : View {
 #Preview {
   JiziView(viewModel: {
     let text = "可你分明在世上，更在我心尖"
-    let items = JiziViewModel.search(text: text, newLog: true)
-    let vm = JiziViewModel(text: text, items: items)
+    let vm = JiziViewModel(text: text)
     return vm
   }())
 }

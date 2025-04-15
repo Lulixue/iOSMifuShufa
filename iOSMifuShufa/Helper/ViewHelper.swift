@@ -135,3 +135,20 @@ extension NSAttributedString {
     try! AttributedString(self, including: \.uiKit)
   }
 }
+
+extension CGFont {
+  public func hasGlyph(_ char: Char) -> Bool {
+    let ctFont = CTFontCreateWithGraphicsFont(self, 20, nil, nil)
+    return ctFont.hasGlyph(char)
+  }
+}
+
+extension CTFont {
+  public func hasGlyph(_ char: Char) -> Bool {
+    let utf16 = Array(String(char).utf16)
+    var glyphs = [CGGlyph](repeating: 0, count: utf16.count)
+    let ctFont = self
+    let result = CTFontGetGlyphsForCharacters(ctFont, utf16, &glyphs, utf16.count)
+    return result
+  }
+}

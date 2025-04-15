@@ -89,6 +89,43 @@ enum JiziBgColor: String, CaseIterable {
   }
 }
 
+class PuzzleLog: Codable {
+  var items: [PuzzleItem] = []
+  var selectedFont: CalligraphyFont? = nil
+  var selectedWork: Int? = nil
+  
+  enum CodingKeys: CodingKey {
+    case items
+    case selectedFont
+    case selectedWork
+  }
+  
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.items, forKey: .items)
+    try container.encode(self.selectedWork, forKey: .selectedWork)
+    try container.encode(self.selectedFont?.rawValue, forKey: .selectedFont)
+  }
+  init() {
+    
+  }
+  
+  required init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: Self.CodingKeys)
+    self.items = try container.decode([PuzzleItem].self, forKey: .items)
+    self.selectedFont = {
+      let value = try! container.decodeIfPresent(String.self, forKey: .selectedFont)
+      if let value {
+        return CalligraphyFont(rawValue: value)
+      } else {
+        return nil
+      }
+    }()
+    self.selectedWork = try container.decodeIfPresent(Int.self, forKey: .selectedWork)
+  }
+  
+}
+
 struct PuzzleItem: Codable {
   var char: String = " "
   var id: Int = 0
@@ -106,6 +143,14 @@ struct PuzzleItem: Codable {
     self.id = id
     self.thumbnailUrl = thumbnailUrl
     self.url = url
+  }
+  
+  func matchSingle(_ single: BeitieSingle) -> Bool {
+    if (single.isPrintChar) {
+      return thumbnailUrl == single.orgThumbnailUrl
+    } else {
+      return single.id == id
+    }
   }
   
   func encode(to encoder: any Encoder) throws {
@@ -161,13 +206,13 @@ extension BeitieSingle {
 class JiziItem: BaseObservableObject {
   let char: Char
   var imageLoaded: Bool = false
-  var componentCandidates: OrderedDictionary<AnyHashable, List<BeitieSingle>>? = nil
   let allResult: [BeitieSingle]
+  let allComponentResult: [BeitieSingle]
   var presetSelected: BeitieSingle? = nil
   @Published var works: List<AnyHashable>? = nil
-  @Published var results: List<BeitieSingle>? = nil
+  @Published var results: List<BeitieSingle> = []
   @Published var resultWorkIndex = [(Int, Int)]()
-  @Published var selected: BeitieSingle? = nil
+  @Published var selected: BeitieSingle!
   @Published var candidates: OrderedDictionary<AnyHashable, List<BeitieSingle>>? = nil
   
   func getWorkStartIndex(_ workIndex: Int) -> Int {
@@ -179,6 +224,25 @@ class JiziItem: BaseObservableObject {
     return 0
   }
   
+  var thumbnailUrl: String {
+    let this = selected!
+    if (this.isPrintChar) {
+      return this.printChar.printCharUrl.absoluteString
+    } else {
+      return this.orgThumbnailUrl ?? this.thumbnailUrl
+    }
+  }
+  
+  var url: String {
+    let this = selected!
+    if (this.isPrintChar) {
+      return this.printChar.printCharUrl.absoluteString
+    } else {
+      return this.orgUrl ?? this.url
+    }
+  }
+
+  
   func getWorkIndex(_ singleIndex: Int) -> Int {
     if singleIndex < resultWorkIndex.count {
       resultWorkIndex[singleIndex].1
@@ -189,7 +253,7 @@ class JiziItem: BaseObservableObject {
   
   func getSelectedIndex() -> Int {
     if let selected = selected {
-      return max(results?.indexOf(selected) ?? 0, 0)
+      return max(results.indexOf(selected), 0)
     } else {
       return 0
     }
@@ -235,42 +299,36 @@ class JiziItem: BaseObservableObject {
   }
   
   init(char: Char, ziResult: List<BeitieSingle>,
-       componentCandidates: OrderedDictionary<AnyHashable, List<BeitieSingle>>? = nil) {
+       componentCandidates: OrderedDictionary<AnyHashable, List<BeitieSingle>> = [:]) {
     self.char = char
-    self.componentCandidates = componentCandidates
-    var all = [BeitieSingle]()
-    if ziResult.isEmpty {
-      componentCandidates?.values.forEach {
-        all.addAll($0)
+    
+    allResult = ziResult
+    allComponentResult = {
+      var all = [BeitieSingle]()
+      for (_, v) in componentCandidates {
+        all.addAll(v)
       }
-    } else {
-      all.addAll(ziResult)
-    }
-    allResult = all
-    if all.isEmpty {
-      Self.generateCharBitmap(char)
-    }
+      return all
+    }()
     super.init()
   }
   
-  var jiziUseComponents: Bool {
-    componentCandidates != nil
-  }
-  
-  func setJiziComponentCandidates() {
-    candidates = componentCandidates!
-    selected = componentCandidates!.values.first!.first()
-    var orderedResult = ArrayList<BeitieSingle>()
-    componentCandidates!.values.forEach { list in
-      orderedResult.addAll(list)
+  var jiziUseComponents: Bool = false
+   
+  func syncWithPuzzleItem(_ preset: PuzzleItem) {
+    let jiziItem = self
+    for it in [jiziItem.allResult, jiziItem.allComponentResult] {
+      let first = it.first { single in preset.matchSingle(single) }
+      if (first != nil) {
+        presetSelected = first
+        return
+      }
     }
-    results = orderedResult
-    initResultWorkIndex()
   }
-  
-  func syncWithPuzzleItem(_ puzzle: PuzzleItem) {
-    presetSelected = allResult.first(where: { $0.id == puzzle.id })
+  var currentAllResult: List<BeitieSingle> {
+    jiziUseComponents ? allComponentResult : allResult
   }
+
   
   private func initResultWorkIndex() {
     resultWorkIndex.clear()
@@ -284,15 +342,11 @@ class JiziItem: BaseObservableObject {
     }
   }
   
-  func syncWithPreferences(_ font: CalligraphyFont?,
-                          _ author: Calligrapher?, work: BeitieWork?) {
-    if (jiziUseComponents) {
-      setJiziComponentCandidates()
-      return
-    }
-    results = applyPreferred(font, author, work)
-    if (results?.isNotEmpty() == true) {
-      let ordered = results!.order()
+  private func syncSingles(_ allResult: List<BeitieSingle>, font: CalligraphyFont?,
+                          work: BeitieWork?) -> Boolean {
+    results = applyPreferred(allResult, font, work)
+    if (results.isNotEmpty()) {
+      let ordered = results.order()
       var orderedResult = Array<BeitieSingle>()
       ordered.values.forEach { list in
         orderedResult.addAll(list)
@@ -310,59 +364,70 @@ class JiziItem: BaseObservableObject {
       }
       results = orderedResult
       candidates = ordered
-      initResultWorkIndex()
+      return true
     } else {
-      if (componentCandidates?.isNotEmpty() == true) {
-        setJiziComponentCandidates()
-      } else {
-        candidates = nil
-        selected = nil
-        Self.generateCharBitmap(char)
-      }
+      return false
     }
   }
   
-  private func applyPreferred(_ font: CalligraphyFont?,
-                             _ author: Calligrapher?, _ work: BeitieWork?) -> List<BeitieSingle>? {
-    let history = allResult.filter { $0.workId == PreviewHelper.RECENT_WORK_ID }
-    let anotherResults = allResult.filter { $0.workId != PreviewHelper.RECENT_WORK_ID }
-    let result = anotherResults.let { list in
-      if (font != nil) {
-        if (JiziOptionType.Font.value == JiziPreferType.Filter) {
-          return list.filter { it in it.work.font == font }
-        } else {
-          return list.sortedByDescending { it in it.work.font == font }
-        }
-      } else {
-        return list
+  private lazy var defaultCharPrint = {
+    return char.printCharSingle()
+  }()
+  
+  func syncWithPreferences(_ font: CalligraphyFont?, work: BeitieWork?) {
+    candidates = nil
+    jiziUseComponents = !syncSingles(allResult, font: font, work: work)
+    if (jiziUseComponents) {
+      if (!syncSingles(allComponentResult, font: font, work: work)) {
+        selected = defaultCharPrint
       }
-    }.let { list in
-      if let author = author {
-        return if (JiziOptionType.Author.value == JiziPreferType.Filter) {
-          list.filter { it in it.work.from(author) }
-        } else {
-          list.sortedByDescending { it in it.work.from(author) }
-        }
-      } else {
-        return list
+    }
+    initResultWorkIndex()
+  }
+  
+  private func applyPreferred(_ allResult: List<BeitieSingle>, _ font: CalligraphyFont?, _ work: BeitieWork?) -> List<BeitieSingle> {
+    let recent = allResult.filter { $0.workId == PreviewHelper.RECENT_WORK_ID }
+    let all = allResult.filter { $0.workId != PreviewHelper.RECENT_WORK_ID }
+     
+    var allWorks = all.map { it in it.work }.distinct()
+    var vipWorks = allWorks.filter { it in it.notMatchVip }
+    var normalWorks = allWorks.filter { it in it.matchVip }
+
+    var allSingles = ArrayList<BeitieSingle>()
+
+    func addWorksSingle(_ works: List<BeitieWork>) {
+      for w in works {
+        allSingles.addAll(all.filter { it in it.workId == w.id })
       }
-    }.let { list in
-      if let work = work {
-        if (JiziOptionType.Work.value == JiziPreferType.Filter) {
-          list.filter { it in it.work.id == work.id }
-        } else {
-          list.sortedByDescending { it in it.work.id == work.id }
-        }
+    }
+    
+    allSingles.addAll(recent)
+    if let work = work {
+      var filtered = allWorks.filter { it in it.id == work.id }
+      if let font = font {
+        filtered = filtered.filter({ w in
+          w.font.matchJiziFont(font)
+        })
+      } 
+      if (filtered.isNotEmpty()) {
+        addWorksSingle(filtered)
+        return allSingles
       } else {
-        list
+        allWorks = allWorks.sortedByDescending { it in it.id == work.id }
+        vipWorks = allWorks.filter { it in it.notMatchVip }
+        normalWorks = allWorks.filter { it in it.matchVip }
       }
-    }.sortedByDescending { it in it.work.matchVip }
-    var all = [BeitieSingle]()
-    all.addAll(history)
-    all.addAll(result)
-    return all.ifEmpty {
-      return nil
-}
+    }
+
+    if let font = font {
+      vipWorks = vipWorks.filter { it in it.font.matchJiziFont(font) }
+      normalWorks = normalWorks.filter { it in it.font.matchJiziFont(font) }
+    }
+
+    addWorksSingle(normalWorks)
+    addWorksSingle(vipWorks)
+
+    return allSingles
   }
 }
 
@@ -404,12 +469,16 @@ class JiziViewModel: AlertViewModel {
   let text: String
   @Published var selectedWork: BeitieWork? = Settings.Jizi.lastPreferedWork {
     didSet {
-      Settings.Jizi.lastPreferedWork = selectedWork
+      if self.newLog {
+        Settings.Jizi.lastPreferedWork = selectedWork
+      }
     }
   }
   @Published var selectedFont: CalligraphyFont? = Settings.Jizi.lastPreferredFont {
     didSet {
-      Settings.Jizi.lastPreferredFont = selectedFont
+      if self.newLog {
+        Settings.Jizi.lastPreferredFont = selectedFont
+      }
     }
   }
   @Published var jiziItems: [JiziItem] = []
@@ -419,21 +488,10 @@ class JiziViewModel: AlertViewModel {
   @Published var workIndex = 0
   @Published var singleIndex = 0
   @Published var singleStartIndex = 0
-  var allFonts = OrderedDictionary<CalligraphyFont, Int>()
+  @Published var initializing = true
+  var allFonts = OrderedDictionary<CalligraphyFont?, Int>()
   var allWorks = OrderedDictionary<BeitieWork?, Int>()
-  @Published var fontFilterType = JiziOptionType.Font.value {
-    didSet {
-      var font = JiziOptionType.Font
-      font.value = fontFilterType
-    }
-  }
-  
-  @Published var workFilterType = JiziOptionType.Work.value {
-    didSet {
-      var font = JiziOptionType.Work
-      font.value = workFilterType
-    }
-  }
+
   
   func selectFont(_ font: CalligraphyFont?) {
     selectedFont = font
@@ -445,11 +503,10 @@ class JiziViewModel: AlertViewModel {
     sync()
   }
   
-  lazy var fontParam: DropDownParam<CalligraphyFont?> = {
+  var fontParam: DropDownParam<CalligraphyFont?>!
+  private func toFontParam() -> DropDownParam<CalligraphyFont?> {
     let total = allFonts.entries.sumOf { $0.value }
-    var all = [CalligraphyFont?]()
-    all.add(nil)
-    all.addAll(Array(allFonts.keys))
+    let all = Array(allFonts.keys)
     return DropDownParam(items: all, texts: all.map({ it in
       return if let it {
         "\(it.chinese)(\(allFonts[it] ?? 0))"
@@ -457,12 +514,13 @@ class JiziViewModel: AlertViewModel {
         "全部(\(total))"
       }
     }))
-  }()
-  lazy var workParam: DropDownParam<BeitieWork?> = {
+  }
+  
+  var workParam: DropDownParam<BeitieWork?>!
+  
+  private func toWorkParam() -> DropDownParam<BeitieWork?> {
     let total = allWorks.entries.sumOf { $0.value }
-    var all = [BeitieWork?]()
-    all.add(nil)
-    all.addAll(Array(allWorks.keys))
+    let all = Array(allWorks.keys)
     return DropDownParam(items: all, texts: all.map({ it in
       return if let it {
         "\(it.chineseFolder())(\(allWorks[it] ?? 0))"
@@ -470,42 +528,93 @@ class JiziViewModel: AlertViewModel {
         "全部(\(total))"
       }
     }))
-  }()
+  }
   
   private var newLog: Bool = false
   
-  init(text: String, items: [JiziItem]) {
-    self.text = text
-    self.newLog = items.isEmpty()
-    self.jiziItems = items
-    var count = [CalligraphyFont: Int]()
-    var workCount = [BeitieWork: Int]()
-    items.forEach { item in
-      item.allResult.forEach { single in
-        workCount[single.work] = (workCount[single.work] ?? 0) + 1
-        count[single.work.font] = (count[single.work.font] ?? 0) + 1
+  private func updateItems() {
+    let items = self.jiziItems
+    self.allFonts = [:]
+    self.allWorks = [:]
+    let allItemCandidates = items.map { it in it.currentAllResult }
+    
+    let total = allItemCandidates.sumOf(mapper: { $0.count })
+    self.allFonts[nil] = total
+    self.allWorks[nil] = total
+    
+    for font in CalligraphyFont.JIZI_FONTS {
+      let count = allItemCandidates.sumOf(mapper: { $0.filter { $0.work.font.matchJiziFont(font) }.size })
+      if (count > 0) {
+        self.allFonts[font] = count
       }
-    }
-    super.init()
-    for font in CalligraphyFont.allCases {
-      guard let fontCount = count[font] else { continue }
-      allFonts[font] = fontCount
     }
     
     for (_, v) in BeitieDbHelper.shared.getDefaultTypeWorks() {
       for works in v {
         for w in works {
-          if workCount.containsKey(w) {
-            allWorks[w] = workCount[w]!
+          let count = allItemCandidates.sumOf { $0.filter { $0.work.id == w.id }.size }
+          if count > 0 {
+            allWorks[w] = count
           }
         }
       }
     }
-    self.sync()
+    self.fontParam = toFontParam()
+    self.workParam = toWorkParam()
   }
   
+  func savePuzzleLog() {
+    let viewModel = self
+    let historyVM = HistoryViewModel.shared
+    let items = viewModel.jiziItems.map { item in
+      let single = item.selected
+      return PuzzleItem(char: item.char.toString(), id: single?.id ?? 0, thumbnailUrl: item.thumbnailUrl, url: item.url)
+    }
+    
+    let log = PuzzleLog()
+    log.items = items
+    log.selectedFont = viewModel.selectedFont
+    log.selectedWork = viewModel.selectedWork?.id
+    let extra = try? JSONEncoder().encode(log)
+    let logId = historyVM.appendLog(.Jizi, viewModel.text, extra?.utf8String)
+    items.forEach { it in
+      JiziHistoryHelper.shared.insertItem(it, logId)
+    }
+  }
+  
+  init(text: String, log: SearchLog? = nil) {
+    self.text = text
+    self.newLog = log == nil
+    super.init()
+    
+    Task {
+      let items = search(text: text, newLog: self.newLog)
+      let log = log?.extra?.toPuzzleLog()
+      if let log  {
+        let puzzleItems = log.items
+        for i in items.indices {
+          let item = items[i]
+          if puzzleItems.size > i {
+            item.syncWithPuzzleItem(puzzleItems[i])
+          }
+        }
+      }
+      DispatchQueue.main.async {
+        if let log {
+          self.selectedFont = log.selectedFont
+          self.selectedWork = log.selectedWork?.work
+        }
+        self.jiziItems = items
+        self.initializing = false
+        self.sync()
+      }
+    }
+  }
+   
+  
   func sync() {
-    self.jiziItems.forEach { $0.syncWithPreferences(selectedFont, nil, work: selectedWork) }
+    self.jiziItems.forEach { $0.syncWithPreferences(selectedFont, work: selectedWork) }
+    self.updateItems()
   }
   
   func loaded(index: Int) {
@@ -541,8 +650,7 @@ class JiziViewModel: AlertViewModel {
     workIndex = currentItem.getWorkIndex(index)
   }
   
-   
-  static func search(text: String, newLog: Bool = true) -> [JiziItem] {
+  func search(text: String, newLog: Bool = true) -> [JiziItem] {
     let chars = text.filter { it in it.charIsChinesChar() }.toCharList
     var newItems = [JiziItem]()
     
@@ -551,37 +659,47 @@ class JiziViewModel: AlertViewModel {
       let result = BeitieDbHelper.shared.search(it).matchJizi()
         .sortedBy { s in orderWorks[s.workId]! }
       let history = newLog ? JiziHistoryHelper.shared.searchChar(it).map { $0.toSingle() } : []
-      let jiziItem = {
-        if (result.isNotEmpty() || !SettingsItem.jiziCandidateEnable) {
-          var all = ArrayList<BeitieSingle>()
-          if (history.isNotEmpty()) {
-            all.addAll(history)
-          }
-          if (result.count(where: { $0.work.matchVip }) < 1) {
-            all.addAll(ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() }))
-          }
-          all.addAll(result)
-          return JiziItem(char: it, ziResult: all)
-        } else {
-          let cht = ChineseConverter.getCht(it)
-          var allComponents = "\(it)\(cht)"
-          for i in Array.arrayOf(cht, it).distinct() {
-            allComponents += ChineseDbHelper.dao.getChineseChar(i.utf8Code)?.mainComponents ?? ""
-          }
-          var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
-          if (history.isNotEmpty()) {
-            map[PreviewHelper.recentWork.chineseName()] = history
-          }
-          map[PreviewHelper.defaultWork.chineseName()] = ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() })
-          for c in allComponents.toCharList.distinct() {
+      let printChars = ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).filter { c in c.supportTypeface(ResourceFiles.font) }
+      
+      let candidatesMap = {
+        var map = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
+
+        if (history.isNotEmpty()) {
+          map[PreviewHelper.recentWork.chineseName()] = history
+        }
+        if (printChars.isNotEmpty()) {
+          map[PreviewHelper.defaultWork.chineseName()] = printChars.map { c in c.printCharSingle() }
+        }
+        if (SettingsItem.jiziCandidateEnable) {
+          let chtChars = ChineseConverter.getAllCandidateChars(it)
+          for c in chtChars {
             let singles = BeitieDbHelper.shared.getSinglesByComponent(char: c).matchJizi()
             if (singles.isNotEmpty()) {
-              let resultSingles = singles.sample(size: 50)!
-              map["部件「\(c)」"] = resultSingles.sortedBy { s in orderWorks[s.workId] ?? 0 }
+              let picked = singles.shuffled()
+              let key = "部件「${c}」"
+              picked.forEach { s in
+                s.orgUrl = s.url
+                s.vip = s.work.vip
+                s.orgThumbnailUrl = s.thumbnailUrl
+                s.workId = PreviewHelper.charComponentWork(c).id
+              }
+              map[key] = picked.sortedBy { s in orderWorks[s.workId] ?? 0 }
             }
           }
-          return JiziItem(char: it, ziResult: result, componentCandidates: map.isEmpty ? nil : map)
         }
+        return map
+      }()
+      
+      let jiziItem = {
+        var all = ArrayList<BeitieSingle>()
+        if (history.isNotEmpty()) {
+          all.addAll(history)
+        }
+        if (result.count(where: { $0.work.matchVip }) < 1) {
+          all.addAll(ChineseConverter.getPrintChars(it, BeitieDbHelper.shared.FONT_CHS_FIRST).map({ $0.printCharSingle() }))
+        }
+        all.addAll(result)
+        return JiziItem(char: it, ziResult: all, componentCandidates: candidatesMap)
       }()
       newItems.add(jiziItem)
     }
@@ -679,6 +797,8 @@ extension Char {
     JiziItem.generateCharBitmap(c)
     let single = PreviewHelper.printSingle
     single.chars = c.toString()
+    single.orgThumbnailUrl = c.printCharUrl.absoluteString
+    single.orgUrl = c.printCharUrl.absoluteString
     return single
   }
 }
@@ -709,9 +829,26 @@ class PreviewHelper {
     switch id {
     case RECENT_WORK_ID:
       return recentWork
-    default:
+    case DEFAULT_WORK_ID:
       return defaultWork
+    default:
+      return componentWorkMap.values.first(where: { it in it.id == id })!
     }
+  }
+  
+  private static var componentWorkMap = HashMap<Char, BeitieWork>()
+
+  static func charComponentWork(_ char: Char) -> BeitieWork {
+    if !componentWorkMap.containsKey(char) {
+      let folder = "部件「${char}」"
+      let json = """
+ {"articleAuthor":"","authenticity":"Unknown","author":"","authorCht":"","ceYear":0,"coverUrl":"","detailDynasty":"","detailFont":"","dynasty":"Unknown","folder":"\(folder)","font":"Others","id":\(DEFAULT_WORK_ID + componentWorkMap.size + 10),"imageCount":1,"intro":"","introCht":"","name":"\(folder)","nameCht":"\(folder)","primary":false,"shortName":"","shuType":"Short","singleCount":52,"text":"","textCht":"","type":"Unknown","urlPrefix":"","version":"","versionCht":"","vip":false,"year":"","yearCht":""}
+ """
+      let newWork = try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
+      componentWorkMap[char] = newWork
+      return newWork
+    }
+    return componentWorkMap[char]!
   }
   
   static let RECENT_WORK_ID = 123510
@@ -736,4 +873,16 @@ class PreviewHelper {
 """
     return try! JSONDecoder().decode(BeitieWork.self, from: json.utf8Data)
   }()
+}
+
+extension Char {
+  func supportTypeface(_ ctFont: CTFont?) -> Bool {
+    return ctFont?.hasGlyph(self) ?? true
+  }
+}
+
+extension Int {
+  var work: BeitieWork? {
+    BeitieDbHelper.shared.getWorkById(self)
+  }
 }

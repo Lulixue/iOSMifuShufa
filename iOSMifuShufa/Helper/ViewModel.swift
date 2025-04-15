@@ -22,7 +22,7 @@ open class BaseObservableObject: ObservableObject {
 class AlertViewModel: BaseObservableObject {
   @Published var showToast: Bool = false
   @Published var toastTitle: String = ""
-  
+  @Published var showFeedback: Bool = false
   @Published var nextAlert: Bool = false
   @Published var nextTitle: String = ""
   @Published var nextMessage: String = ""
