@@ -25,7 +25,7 @@ class AdViewController: UIViewController, BUSplashAdDelegate, BUSplashCardDelega
   private var splashAd: BUSplashAd! = nil
   
   func addSplashAD() {
-    let frame = UIScreen.main.bounds
+    let frame = view.frame
     let splashAd = BUSplashAd.init(slotID: CSJ_SPLASH_AD_ID, adSize: frame.size)
     splashAd.supportCardView = true
     splashAd.supportZoomOutView = true
@@ -138,6 +138,7 @@ struct AdView: UIViewControllerRepresentable {
       // Return MyViewController instance
     let vc = AdViewController()
     vc.finishAd = finishAd
+    
     return vc
   }
   
@@ -240,7 +241,23 @@ struct SplashView: View {
       }.frame(width: 200)
       
       if !CurrentUser.isVip && viewModel.showAd {
-        AdView(finishAd: onFinishAd)
+        VStack {
+          AdView(finishAd: onFinishAd)
+          20.VSpacer()
+          HStack {
+            Image(uiImage: Bundle.main.icon!).resizable()
+              .scaledToFit()
+              .frame(width: 35, height: 35)
+              .clipShape(Circle())
+            Text("app_name".resString)
+              .foregroundStyle(.black.opacity(0.75))
+          }.overlay(
+            Rectangle().fill(Colors.defaultText.swiftColor.opacity(0.55)).padding(.horizontal, 0).frame(height: 0.3).offset(y: 5), alignment: .bottom).padding(.vertical, 5)
+          Text("广告勿轻信，勿随意点击".orCht("廣告勿輕信，勿隨意點擊"))
+            .font(.footnote)
+            .foregroundStyle(.souyun)
+          40.VSpacer()
+        }.background(Color.background)
       }
     }.ignoresSafeArea()
       .navigationBarTitle("")
