@@ -286,7 +286,14 @@ enum LirenApp: CaseIterable {
   }()
 }
 
-struct VipPackagesView: View {
+@ViewBuilder
+func VipPackagesView() -> some View {
+  LazyView {
+    VipPackagesContentsView()
+  }
+}
+
+struct VipPackagesContentsView: View {
   @ObservedObject var viewModel = PurchaseViewModel()
   @ObservedObject var CurrentUser = UserViewModel.shared
   @ObservedObject var alertViewModel = PurchaseViewModel.sharedViewModel

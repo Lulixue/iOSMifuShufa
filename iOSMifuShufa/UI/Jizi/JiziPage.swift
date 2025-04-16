@@ -190,8 +190,12 @@ struct JiziPage : View {
                     HStack {
                       VStack(alignment: .leading, spacing: 4) {
                         Text(log.text!).font(.system(size: 16)).foregroundStyle(.darkSlateGray)
-                        Text(Utils.getNaturalTime(log.time!)).font(.footnote)
-                          .foregroundStyle(.gray)
+                        HStack {
+                          Text(Utils.getNaturalTime(log.time!))
+                          Spacer()
+                          Text("(\(log.text!.chineseCount)字)")
+                        }.font(.footnote)
+                          .foregroundStyle(.searchHeader)
                       }
                       Spacer()
                       Button {

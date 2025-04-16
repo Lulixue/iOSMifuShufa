@@ -95,7 +95,9 @@ struct ScrollableTabView<Data, ItemView: View> : View {
   }
   
   var width: CGFloat {
-    if activeIdx < w.size {
+    if activeIdx < 0 {
+      10
+    } else if activeIdx < w.size {
       w[activeIdx]
     } else {
       10

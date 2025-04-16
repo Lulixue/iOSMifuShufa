@@ -54,9 +54,15 @@ struct JiziView : View {
         let selected = i == viewModel.selectedIndex
         let single = item.selected
         Button {
-          workIndex = 0
-          singleIndex = 0
-          viewModel.selectChar(i)
+          if (viewModel.selectedIndex != i) {
+            workIndex = 0
+            singleIndex = -1
+            itemLoc.clear()
+            viewModel.selectChar(i) {
+              autoScroll = true
+              lastScrollDestination = viewModel.singleIndex
+            }
+          }
         } label: {
           VStack(spacing: 0) {
             ZStack {
@@ -197,7 +203,9 @@ struct JiziView : View {
       VStack(spacing: 0) {
         candidatePanel
         if let candidates = singleCharCandidates {
+          5.VSpacer()
           singleCandidates(candidates)
+            .id(viewModel.selectedIndex.toString() + viewModel.currentItem.char.toString())
         }
       }.modifier(DragDismissModifier(show: $showFonts)).modifier(DragDismissModifier(show: $showWorks))
     }
@@ -235,11 +243,50 @@ struct JiziView : View {
       .modifier(TapDismissModifier(show: $showFonts))
       .modifier(TapDismissModifier(show: $showWorks))
   }
+     
+  @ViewBuilder
+  func singleCandidate(_ i: Int, _ single: BeitieSingle) -> some View {
+    let matchVip = single.matchVip
+    let selected = i == viewModel.singleIndex
+    Button {
+      if matchVip {
+        singleIndex = i
+        viewModel.selectSingle(i, single)
+      } else {
+        viewModel.showConstraintVip("当前单字不支持集字，是否开通VIP继续？".orCht("當前單字不支持集字，是否開通VIP繼續？"))
+      }
+    } label: {
+      WebImage(url: single.jiziUrl!) { img in
+        img.image?.resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(minWidth: 40, minHeight: 40)
+          .contentShape(RoundedRectangle(cornerRadius: 2))
+          .clipped()
+          .padding(0.5)
+          .background {
+            RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
+          }.blur(radius: matchVip ? 0 : 1)
+      }
+      .onSuccess(perform: { _, _, _ in
+        if shouldAutoScroll {
+          scrollToIndex(lastScrollDestination)
+        }
+      })
+      .indicator(.activity)
+        .tint(.white)
+        .frame(minWidth: 40, minHeight: 40)
+        .onAppear {
+          if shouldAutoScroll {
+            scrollToIndex(lastScrollDestination)
+          }
+        }
+    }.buttonStyle(.plain)
+  }
   
+  @State var itemLoc = [Int: CGFloat]()
   
   @ViewBuilder
   func singleCandidates(_ candidates: OrderedDictionary<AnyHashable, Array<BeitieSingle>>) -> some View {
-    5.VSpacer()
     let keys = Array(candidates.keys)
     let singles = currentItem.results
     let separators = {
@@ -254,6 +301,7 @@ struct JiziView : View {
       }
       return indices
     }()
+    
     VStack(spacing: 0) {
       ScrollView(.horizontal, showsIndicators: false) {
         ScrollViewReader { proxy in
@@ -271,7 +319,7 @@ struct JiziView : View {
             }
           }.onAppear {
             workProxy = proxy
-          }.id(currentItem.char)
+          }
         }
       }.background(.blue)
         .onChange(of: viewModel.workIndex) { newValue in
@@ -280,61 +328,41 @@ struct JiziView : View {
             workProxy?.scrollTo(newValue, anchor: .leading)
           }
         }
-      
+       
       ScrollView([.horizontal], showsIndicators: true) {
         ScrollViewReader { proxy in
           LazyHStack(spacing: 0) {
             ForEach(0..<singles.size, id: \.self) { i in
               let single = singles[i]
-              let selected = i == viewModel.singleIndex
-              let matchVip = single.matchVip
               HStack {
-                Button {
-                  if matchVip {
-                    singleIndex = i
-                    viewModel.selectSingle(i, single)
-                  } else {
-                    viewModel.showConstraintVip("当前单字不支持集字，是否开通VIP继续？".orCht("當前單字不支持集字，是否開通VIP繼續？"))
-                  }
-                } label: {
-                  WebImage(url: single.jiziUrl!) { img in
-                    img.image?.resizable()
-                      .aspectRatio(contentMode: .fit)
-                      .frame(minWidth: 40, minHeight: 40)
-                      .contentShape(RoundedRectangle(cornerRadius: 2))
-                      .clipped()
-                      .padding(0.5)
-                      .background {
-                        RoundedRectangle(cornerRadius: 2).stroke(selected ? .red: .white, lineWidth: selected ? 4 : 0.5)
-                      }.blur(radius: matchVip ? 0 : 1)
-                  }
-                  .onSuccess(perform: { _, _, _ in
-                    if shouldAutoScroll {
-                      scrollToIndex(lastScrollDestination)
-                    }
-                  })
-                  .indicator(.activity)
-                    .tint(.white)
-                    .frame(minWidth: 40, minHeight: 40)
-                    .onAppear {
-                      if shouldAutoScroll {
-                        scrollToIndex(lastScrollDestination)
-                      }
-                    }
-                }.buttonStyle(.plain)
+                singleCandidate(i, single)
               }.id(i).padding(.horizontal, 5)
-              if separators.containsItem(i) {
+                .background(
+                  GeometryReader { reader in
+                    Color.clear
+                      .preference(
+                        key: WidthPreferenceKey.self,
+                        value: reader.frame(in: .named("frameLayer")).width
+                      )
+                  }.onPreferenceChange(WidthPreferenceKey.self) { h in
+                    itemLoc[i] = max(h, itemLoc[i] ?? 0)
+                    debugPrint("[\(i)] \(h)")
+                  }
+                )
+              if separators.containsItem(i+1) {
                 Divider().frame(width: 1, height: 15)
                   .clipShape(RoundedRectangle(cornerRadius: 3))
-                  .background(.gray)                  .padding(.horizontal, 1)
+                  .background(.gray)
+                  .padding(.horizontal, 1)
               }
             }
           }.background(Color.singlePreviewBackground)
             .onAppear {
               singleProxy = proxy
-            }.id(currentItem.char)
+            }
         }.padding(.top, 9).padding(.bottom, Device.hasTopNotch ? 0 : 9).padding(.horizontal, 5)
       }
+      .coordinateSpace(name: "frameLayer")
       .scrollViewStyle(.defaultStyle($candidateScrollState))
       .onChange(of: viewModel.singleIndex) { newValue in
         if singleIndex != newValue {
@@ -354,9 +382,32 @@ struct JiziView : View {
             autoScroll = false
           }
         }
+        .onChange(of: candidateScrollState.offset) { newValue in
+          debugPrint("offset x \(newValue.x)")
+          if (!autoScroll) {
+            let loc = itemLoc.sorted { $0.key < $1.key }
+            var last = -1
+            var offset: CGFloat = 0
+            for (k, v) in loc {
+              if (k - last != 1) {
+                break
+              }
+              last = k
+              offset += v
+              if abs(offset - newValue.x) < 20 {
+                viewModel.workIndex = currentItem.getWorkIndex(k)
+                debugPrint("workIndex \(viewModel.workIndex)")
+                break
+              }
+            }
+          }
+        }
     }
   }
   
+  @State private var visible: [Int] = []
+  
+
   var shouldAutoScroll: Bool {
     autoScroll && (lastScrollDestination == viewModel.singleStartIndex || lastScrollDestination == viewModel.singleIndex)
   }
@@ -367,6 +418,7 @@ struct JiziView : View {
   @State private var lastScrollDestination = -1
   private func scrollToIndex(_ index: Int) {
     DispatchQueue.main.async {
+      debugPrint("scrollToSingleIndex \(index)")
       self.lastScrollDestination = index
       singleProxy?.scrollTo(index, anchor: .leading)
     }

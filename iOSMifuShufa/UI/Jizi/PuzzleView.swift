@@ -369,6 +369,12 @@ class PuzzleViewModel: AlertViewModel {
       }
     }
   }
+  private func afterImageLoaded() {
+    let viewModel = self
+    if viewModel.images.size == viewModel.jiziItems.size {
+      viewModel.syncPuzzles()
+    }
+  }
   
   private func initImages() {
     self.loadingImages = true
@@ -382,10 +388,13 @@ class PuzzleViewModel: AlertViewModel {
                          progress: { (downloaded, total, url) in
           
         },  completed:  { (image, error, cacheType, url) in
+          debugPrint("image inited \(i)-\(char)")
           self.images[i] = image ?? char.charBitmap()
+          self.afterImageLoaded()
         })
       } else {
         self.images[i] = char.charBitmap()
+        self.afterImageLoaded()
       }
       
     }
@@ -487,11 +496,7 @@ struct PuzzleView: View {
       }
     }.navigationBarHidden(true)
       .ignoresSafeArea(edges: showSettings ? [.bottom]: [])
-      .onChange(of: viewModel.images) { newValue in
-        if viewModel.images.size == viewModel.jiziItems.size {
-          viewModel.syncPuzzles()
-        }
-      }.onChange(of: selection) { newValue in
+      .onChange(of: selection) { newValue in
         let index = viewModel.puzzleTypes.indexOf(newValue)
         if index != tabIndex {
           tabIndex = index

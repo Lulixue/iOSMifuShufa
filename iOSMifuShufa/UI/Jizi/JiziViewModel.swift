@@ -628,10 +628,17 @@ class JiziViewModel: AlertViewModel {
     jiziItems[selectedIndex]
   }
   
-  func selectChar(_ index: Int) {
+  func selectChar(_ index: Int, after: @escaping () -> Void) {
     selectedIndex = index
-    singleIndex = currentItem.getSelectedIndex()
-    workIndex = currentItem.getWorkIndex(singleIndex)
+    Task {
+      try await Task.sleep(nanoseconds: 300_000_000)
+      DispatchQueue.main.async {
+        self.singleIndex = self.currentItem.getSelectedIndex()
+        debugPrint("select char \(index), char index: \(self.singleIndex)")
+        self.workIndex = self.currentItem.getWorkIndex(self.singleIndex)
+        after()
+      }
+    }
   }
   
   func resetLoaded(_ index: Int) {

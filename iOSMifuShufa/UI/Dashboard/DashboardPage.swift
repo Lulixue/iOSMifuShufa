@@ -164,7 +164,7 @@ struct DashboardPage : View {
             }
             DashboardDivider()
             NavigationLink {
-              VipPackagesView()
+              VipPackagesView() 
             } label: {
               DashboardItemView(row: .vip) {
                 CurrentUser.userVipStatus
@@ -227,6 +227,15 @@ struct DashboardPage : View {
   }
 }
 
+public struct LazyView<Content: View>: View {
+    let build: () -> Content
+    public init(_ build: @escaping () -> Content) {
+        self.build = build
+    }
+    public var body: Content {
+        build()
+    }
+}
 #Preview {
   DashboardPage()
 }
