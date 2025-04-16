@@ -61,10 +61,16 @@ enum WorkCategory: String, CaseIterable {
   case Linben
   case Reference
   case Hua
+  case Miyouren
+  case Ba
   case Collection
   
   var chinese: String {
     switch self {
+    case .Miyouren:
+      "米友仁"
+    case .Ba:
+      "米芾题跋".orCht("米芾題跋")
     case .Boutique:
       "精品"
     case .Handu:
@@ -90,6 +96,7 @@ enum WorkCategory: String, CaseIterable {
     }
   }
   
+  static let TIBA = "褚遂良摹兰亭序跋赞、破羌帖跋赞、跋蔡襄赐御书诗卷、跋集古录跋、跋步辇图".split(separator: "、")
   static let HANDU_NINE = "来戏帖、伯修帖、晋纸帖、适意帖、贺铸帖、丹阳帖、业镜帖、惠柑帖、戏成诗帖".split(separator: "、")
   static let MOJI_XUAN = "三吴诗帖、伯充帖、彦和帖、乡石帖、岁丰帖、闻张都大宣德帖、论书帖、值雨帖、清和帖、临沂使君帖".split(separator: "、")
   static let SANZHA_SAN = "长至帖、韩马帖、新恩帖".split(separator: "、")
@@ -409,9 +416,12 @@ class BeitieDbHelper {
     let fake = left.filter { it in !it.isTrue() }.apply { it in
       left.removeAll { it.containsItem($0) }
     }.map({ Array.listOf($0)})
+    
     let linbens = left.filter { it in WorkCategory.LINBEN_SAN.contains(it.name) }.apply { it in
       left.removeAll { it.containsItem($0) }
     }.map({ Array.listOf($0)})
+    
+    
     let beis = left.filter { it in it.type == CalligraphyType.Bei }.apply { it in
       left.removeAll { it.containsItem($0) }
     }.map({ Array.listOf($0)})
@@ -442,12 +452,25 @@ class BeitieDbHelper {
       left.removeAll { it.containsItem($0) }
     }.map({ Array.listOf($0)})
     
+    let myr = left.filter { it in it.author == "米友仁" }.apply { it in
+      left.removeAll { it.containsItem($0) }
+    }.map({ Array.listOf($0)})
+    
+    let bas =  WorkCategory.TIBA.filter({ it in left.contains { $0.name == it } }).map { name in left.first { it in it.name == name }!
+    }.apply { it in
+      left.removeAll { it.containsItem($0) }
+    }.map({ Array.listOf($0)})
+    
     ordered[WorkCategory.Normal] = left.filter { it in !it.primary && it.hasSingle() }
       .apply { it in
         left.removeAll { it.containsItem($0) }
       }.map({ Array.listOf($0)})
     
     ordered[WorkCategory.Beikei] = beis
+    
+    
+    ordered[WorkCategory.Ba] = bas
+    ordered[WorkCategory.Miyouren] = myr
     ordered[WorkCategory.Collection] = left.map { it in Array.listOf(it) }
     ordered[WorkCategory.Linben] = linbens
     ordered[WorkCategory.Reference] = fake

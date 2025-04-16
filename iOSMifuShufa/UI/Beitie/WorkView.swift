@@ -494,6 +494,7 @@ struct WorkView: View, SinglePreviewDelegate {
             .multilineTextAlignment(.leading)
             .font(.callout)
             .padding(10)
+            .disabled(true)
             .foregroundStyle(.white)
         }.background(.black.opacity(0.55))
       }
@@ -658,7 +659,7 @@ struct FeedbackPopup: BottomPopup {
     case text, contact
   }
   
-  private let height = UIHelper.screenHeight * 0.4
+  private let height: CGFloat = min(UIHelper.screenHeight * 0.3, 200)
   @State var text: String = ""
   @State var contact: String = ""
   @State var showAlert: Bool = false
@@ -679,12 +680,6 @@ struct FeedbackPopup: BottomPopup {
           .frame(maxWidth: .infinity)
         
         Button {
-          if initText.trim() == text.trim() {
-            let noKanwu = "检测到具体错误未填写，请填写后再提交！".orCht("檢測到具體錯誤未填寫，請填寫後再提交！")
-            self.alertMessage = noKanwu
-            self.showAlert = true
-            return
-          }
           NetworkHelper.submitFeedback(feedback: text, contact: contact) { error in
             if error == nil {
               self.alertMessage = "反馈已经收到，感谢你的反馈!".orCht("反饋已經收到，感謝你的反饋!")

@@ -268,6 +268,7 @@ struct LoginView: View {
                 .focused($focused, equals: .verify)
               Button {
                 viewModel.sendVerfiyCode()
+                focused = .verify
               } label: {
                 Text(viewModel.verifyButtonText)
                   .font(.system(size: 14))
@@ -280,10 +281,10 @@ struct LoginView: View {
                 }
               }
             Divider()
-              Text("注：手机号仅支持中国大陆手机号，无须添加+86前缀，其他地区请使用苹果登录".orCht("注：手機號僅支持中國大陸手機號，無須添加+86前綴，其他地區請使用蘋果登錄"))
-                  .font(.footnote)
-                  .foregroundStyle(.gray.opacity(0.75))
-                  .padding(.top, 12)
+            Text("注：手机号仅支持中国大陆手机号，无须添加+86前缀，其他地区请使用苹果登录".orCht("注：手機號僅支持中國大陸手機號，無須添加+86前綴，其他地區請使用蘋果登錄"))
+                .font(.footnote)
+                .foregroundStyle(.gray.opacity(0.75))
+                .padding(.top, 12)
           }
         }
         

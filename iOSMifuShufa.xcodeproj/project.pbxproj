@@ -17,6 +17,10 @@
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
+		F9295B3B2DAEB821008E830B /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9295B3A2DAEB821008E830B /* beitie.db */; };
+		F9295B452DAEB864008E830B /* variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B442DAEB864008E830B /* variants.json */; };
+		F9295B462DAEB864008E830B /* sf_variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B432DAEB864008E830B /* sf_variants.json */; };
+		F9295B472DAEB864008E830B /* az.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B422DAEB864008E830B /* az.json */; };
 		F931CE732D6EC2B90040F8AB /* Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE722D6EC2B60040F8AB /* Characters.swift */; };
 		F931CE792D6F02460040F8AB /* VipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE782D6F02430040F8AB /* VipView.swift */; };
 		F931CE7B2D6F06450040F8AB /* Keychains.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE7A2D6F06430040F8AB /* Keychains.swift */; };
@@ -27,9 +31,7 @@
 		F96E60FF2CD85329007329DB /* BeitieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E60FE2CD85326007329DB /* BeitieViewModel.swift */; };
 		F96E61012CD8574D007329DB /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61002CD8574B007329DB /* CurrentUser.swift */; };
 		F96E61032CD858C9007329DB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61022CD858C7007329DB /* Utils.swift */; };
-		F96E61052CD87C33007329DB /* az.json in Resources */ = {isa = PBXBuildFile; fileRef = F96E61042CD87C33007329DB /* az.json */; };
 		F96E61072CD87C37007329DB /* chs_cht.json in Resources */ = {isa = PBXBuildFile; fileRef = F96E61062CD87C37007329DB /* chs_cht.json */; };
-		F96E61092CD87C3E007329DB /* variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F96E61082CD87C3E007329DB /* variants.json */; };
 		F96E61252CD91511007329DB /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = F96E61242CD91511007329DB /* Collections */; };
 		F96E61582CD9C6D1007329DB /* AnalyzeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */; };
 		F96E61592CD9C6D1007329DB /* BeitieDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */; };
@@ -51,7 +53,6 @@
 		F96E61772CD9C6DD007329DB /* HistoryBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */; };
 		F96E61782CD9C6DD007329DB /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E616B2CD9C6DD007329DB /* Loading.swift */; };
 		F96F9D9D2D86D45600DF6183 /* JiziHistoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F9D9C2D86D45600DF6183 /* JiziHistoryHelper.swift */; };
-		F96FA19B2D8730AC00DF6183 /* sf_variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F96FA19A2D8730AC00DF6183 /* sf_variants.json */; };
 		F98820482C3AC4500011DB04 /* iOSMifuShufaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */; };
 		F988204A2C3AC4500011DB04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820492C3AC4500011DB04 /* ContentView.swift */; };
 		F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F988204B2C3AC4510011DB04 /* Assets.xcassets */; };
@@ -63,7 +64,6 @@
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
 		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
 		F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F9C30AAC2D75D4F100A95B6F /* chinese.db */; };
-		F9C30AAE2D75D4F100A95B6F /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9C30AAB2D75D4F100A95B6F /* beitie.db */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -167,6 +167,10 @@
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
+		F9295B3A2DAEB821008E830B /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
+		F9295B422DAEB864008E830B /* az.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = az.json; sourceTree = "<group>"; };
+		F9295B432DAEB864008E830B /* sf_variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sf_variants.json; sourceTree = "<group>"; };
+		F9295B442DAEB864008E830B /* variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = variants.json; sourceTree = "<group>"; };
 		F931CE722D6EC2B60040F8AB /* Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters.swift; sourceTree = "<group>"; };
 		F931CE782D6F02430040F8AB /* VipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipView.swift; sourceTree = "<group>"; };
 		F931CE7A2D6F06430040F8AB /* Keychains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychains.swift; sourceTree = "<group>"; };
@@ -175,9 +179,7 @@
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
 		F96E61002CD8574B007329DB /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		F96E61022CD858C7007329DB /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		F96E61042CD87C33007329DB /* az.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = az.json; sourceTree = "<group>"; };
 		F96E61062CD87C37007329DB /* chs_cht.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = chs_cht.json; sourceTree = "<group>"; };
-		F96E61082CD87C3E007329DB /* variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = variants.json; sourceTree = "<group>"; };
 		F96E61502CD9C6D1007329DB /* AnalyzeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeHelper.swift; sourceTree = "<group>"; };
 		F96E61512CD9C6D1007329DB /* BeitieDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieDbHelper.swift; sourceTree = "<group>"; };
 		F96E61522CD9C6D1007329DB /* KotlinBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinBridge.swift; sourceTree = "<group>"; };
@@ -198,7 +200,6 @@
 		F96E616A2CD9C6DD007329DB /* HistoryBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBarView.swift; sourceTree = "<group>"; };
 		F96E616B2CD9C6DD007329DB /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		F96F9D9C2D86D45600DF6183 /* JiziHistoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiziHistoryHelper.swift; sourceTree = "<group>"; };
-		F96FA19A2D8730AC00DF6183 /* sf_variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sf_variants.json; sourceTree = "<group>"; };
 		F98820442C3AC4500011DB04 /* iOSMifuShufa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSMifuShufa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98820472C3AC4500011DB04 /* iOSMifuShufaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaApp.swift; sourceTree = "<group>"; };
 		F98820492C3AC4500011DB04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -212,7 +213,6 @@
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDbHelper.swift; sourceTree = "<group>"; };
-		F9C30AAB2D75D4F100A95B6F /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
 		F9C30AAC2D75D4F100A95B6F /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F9C30AAB2D75D4F100A95B6F /* beitie.db */,
+				F9295B3A2DAEB821008E830B /* beitie.db */,
 				F9C30AAC2D75D4F100A95B6F /* chinese.db */,
 			);
 			path = DebugResources;
@@ -490,12 +490,12 @@
 		F9DA35332CD2578800A880BC /* AppResources */ = {
 			isa = PBXGroup;
 			children = (
-				F96FA19A2D8730AC00DF6183 /* sf_variants.json */,
+				F9295B422DAEB864008E830B /* az.json */,
+				F9295B432DAEB864008E830B /* sf_variants.json */,
+				F9295B442DAEB864008E830B /* variants.json */,
 				F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */,
 				F928FA572CEF209400FF4F58 /* privacy.txt */,
-				F96E61042CD87C33007329DB /* az.json */,
 				F96E61062CD87C37007329DB /* chs_cht.json */,
-				F96E61082CD87C3E007329DB /* variants.json */,
 				F96E60F92CD7B0D4007329DB /* resource.zip */,
 				F9ECB0652CD778280009C0DC /* resource_version.txt */,
 				F9ECB0272CD25CD90009C0DC /* strings.xml */,
@@ -776,19 +776,19 @@
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
 				F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */,
-				F9C30AAE2D75D4F100A95B6F /* beitie.db in Resources */,
 				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
+				F9295B452DAEB864008E830B /* variants.json in Resources */,
+				F9295B462DAEB864008E830B /* sf_variants.json in Resources */,
+				F9295B472DAEB864008E830B /* az.json in Resources */,
 				F9ECB0292CD25CD90009C0DC /* strings_chs.xml in Resources */,
 				F9ECB02A2CD25CD90009C0DC /* strings.xml in Resources */,
 				F9FFC6B92CE230CD008AB5EE /* AlbumImageViewController.xib in Resources */,
 				F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */,
-				F96E61052CD87C33007329DB /* az.json in Resources */,
 				F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */,
 				F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */,
-				F96E61092CD87C3E007329DB /* variants.json in Resources */,
+				F9295B3B2DAEB821008E830B /* beitie.db in Resources */,
 				F9ECB0662CD778280009C0DC /* resource_version.txt in Resources */,
-				F96FA19B2D8730AC00DF6183 /* sf_variants.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,9 +839,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -856,9 +860,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -917,9 +925,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -934,9 +946,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1212,7 +1228,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1233,7 +1249,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1250,7 +1266,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1271,7 +1287,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

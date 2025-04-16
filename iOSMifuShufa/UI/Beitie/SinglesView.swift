@@ -395,7 +395,7 @@ struct SinglesView: View {
             viewModel.showConstraintVip(vipBeitie)
           }
         } label: {
-          Image("analyze").renderingMode(.template).square(size: 23).foregroundStyle(.blue)
+          Image("analyze").renderingMode(.template).square(size: 24).foregroundStyle(.blue)
         }.buttonStyle(.plain)
         vDivider
         Button {
@@ -410,7 +410,7 @@ struct SinglesView: View {
         Button {
           viewModel.toggleDrawPanel()
         } label: {
-          Image("handwriting").square(size: 16).foregroundStyle(.blue)
+          Image("handwriting").renderingMode(.template).square(size: 17).foregroundStyle(.blue)
         }.buttonStyle(.plain)
       }.padding(.horizontal, 10).padding(.vertical, 8).background(.white)
       Divider()

@@ -583,7 +583,7 @@ struct BeitiePage: View {
               viewModel.showSearchBar.toggle()
             } label: {
               Image(systemName: "magnifyingglass")
-                .square(size: 18)
+                .square(size: 18, padding: 0.8)
                 .foregroundStyle(btnColor)
             }.buttonStyle(.plain)
             Button {
