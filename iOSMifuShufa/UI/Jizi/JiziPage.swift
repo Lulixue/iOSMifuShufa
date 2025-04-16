@@ -160,9 +160,9 @@ struct JiziPage : View {
             historyCollapsed.toggle()
           }
         } label: {
-          HStack(spacing: 2) {
-            Text("history".localized).font(.system(size: 17)).foregroundStyle(.colorPrimary)
-            Text("(\(logs.size))").font(.system(size: 13)).foregroundStyle(.colorPrimary)
+          HStack(alignment: .firstTextBaseline, spacing: 2) {
+            Text("history".localized).font(.system(size: 16)).foregroundStyle(.searchHeader)
+            Text("(\(logs.size))").font(.system(size: 13)).foregroundStyle(.searchHeader)
             Spacer()
             Image(systemName: "chevron.right").square(size: 10)
               .foregroundStyle(.colorPrimary).rotationEffect(.degrees(historyCollapsed ? 0 : 90))

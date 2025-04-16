@@ -34,8 +34,10 @@ class JiziHistoryHelper {
       let json = try JSONEncoder().encode(puzzle).utf8String
       let it = getHistory(puzzle.char.first())
       if it.isNotEmpty() {
-        if let first = it.first(where: { $0.selected == json }) {
-          first.time = Date()
+        let puzzles = it.map { try! JSONDecoder().decode(PuzzleItem.self, from: $0.selected!.utf8Data) }
+        let index = puzzles.indexOf(puzzle)
+        if index >= 0 {
+          it[index].time = Date()
           try managedContext.save()
           return
         }
@@ -51,7 +53,7 @@ class JiziHistoryHelper {
       newHistory.time = Date()
       managedContext.insert(newHistory)
       newAll.add(newHistory)
-      history[puzzle.char] = newAll.sortedByDescending(mapper: { $0.time! })
+      history[puzzle.char] = newAll
       try managedContext.save()
     } catch {
       
@@ -65,7 +67,7 @@ class JiziHistoryHelper {
       history[char.toString()] = all
       result.addAll(all)
     }
-    return result
+    return result.sortedByDescending(mapper: { $0.time! })
   }
   
   func searchChar(_ char: Char) -> List<JiziHistory> {

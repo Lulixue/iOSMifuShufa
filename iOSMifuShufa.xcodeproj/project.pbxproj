@@ -17,7 +17,6 @@
 		F928FA582CEF209400FF4F58 /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA572CEF209400FF4F58 /* privacy.txt */; };
 		F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */ = {isa = PBXBuildFile; fileRef = F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */; };
 		F928FA5C2CEF448C00FF4F58 /* JfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F928FA5B2CEF448700FF4F58 /* JfConverter.swift */; };
-		F9295B3B2DAEB821008E830B /* beitie.db in Resources */ = {isa = PBXBuildFile; fileRef = F9295B3A2DAEB821008E830B /* beitie.db */; };
 		F9295B452DAEB864008E830B /* variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B442DAEB864008E830B /* variants.json */; };
 		F9295B462DAEB864008E830B /* sf_variants.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B432DAEB864008E830B /* sf_variants.json */; };
 		F9295B472DAEB864008E830B /* az.json in Resources */ = {isa = PBXBuildFile; fileRef = F9295B422DAEB864008E830B /* az.json */; };
@@ -63,7 +62,6 @@
 		F98820682C3AC4520011DB04 /* iOSMifuShufaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */; };
 		F988206A2C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */; };
 		F9988ADF2CF70F0C0038D32D /* ChineseDbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */; };
-		F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */ = {isa = PBXBuildFile; fileRef = F9C30AAC2D75D4F100A95B6F /* chinese.db */; };
 		F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */; };
 		F9C3A60F2CEDA5970055ABA1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A60E2CEDA5970055ABA1 /* Settings.swift */; };
 		F9C3A6122CEDBA3E0055ABA1 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */; };
@@ -167,7 +165,6 @@
 		F928FA572CEF209400FF4F58 /* privacy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		F928FA592CEF20EC00FF4F58 /* third_party_sdk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = third_party_sdk.txt; sourceTree = "<group>"; };
 		F928FA5B2CEF448700FF4F58 /* JfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JfConverter.swift; sourceTree = "<group>"; };
-		F9295B3A2DAEB821008E830B /* beitie.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = beitie.db; sourceTree = "<group>"; };
 		F9295B422DAEB864008E830B /* az.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = az.json; sourceTree = "<group>"; };
 		F9295B432DAEB864008E830B /* sf_variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sf_variants.json; sourceTree = "<group>"; };
 		F9295B442DAEB864008E830B /* variants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = variants.json; sourceTree = "<group>"; };
@@ -213,7 +210,6 @@
 		F98820672C3AC4520011DB04 /* iOSMifuShufaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITests.swift; sourceTree = "<group>"; };
 		F98820692C3AC4520011DB04 /* iOSMifuShufaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMifuShufaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F9988ADE2CF70F090038D32D /* ChineseDbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDbHelper.swift; sourceTree = "<group>"; };
-		F9C30AAC2D75D4F100A95B6F /* chinese.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.db; sourceTree = "<group>"; };
 		F9C3A6082CED9CA50055ABA1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		F9C3A60E2CEDA5970055ABA1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		F9C3A6112CEDBA390055ABA1 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
@@ -399,8 +395,6 @@
 		F96E617B2CD9C6E0007329DB /* DebugResources */ = {
 			isa = PBXGroup;
 			children = (
-				F9295B3A2DAEB821008E830B /* beitie.db */,
-				F9C30AAC2D75D4F100A95B6F /* chinese.db */,
 			);
 			path = DebugResources;
 			sourceTree = "<group>";
@@ -775,7 +769,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96E61072CD87C37007329DB /* chs_cht.json in Resources */,
-				F9C30AAD2D75D4F100A95B6F /* chinese.db in Resources */,
 				F928FA582CEF209400FF4F58 /* privacy.txt in Resources */,
 				F988204F2C3AC4510011DB04 /* Preview Assets.xcassets in Resources */,
 				F9295B452DAEB864008E830B /* variants.json in Resources */,
@@ -787,7 +780,6 @@
 				F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */,
 				F928FA5A2CEF20EC00FF4F58 /* third_party_sdk.txt in Resources */,
 				F988204C2C3AC4510011DB04 /* Assets.xcassets in Resources */,
-				F9295B3B2DAEB821008E830B /* beitie.db in Resources */,
 				F9ECB0662CD778280009C0DC /* resource_version.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1228,7 +1220,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1266,7 +1258,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;

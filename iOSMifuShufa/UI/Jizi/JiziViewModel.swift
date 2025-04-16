@@ -126,7 +126,7 @@ class PuzzleLog: Codable {
   
 }
 
-struct PuzzleItem: Codable {
+struct PuzzleItem: Codable, Equatable {
   var char: String = " "
   var id: Int = 0
   var thumbnailUrl: String = ""
@@ -509,7 +509,7 @@ class JiziViewModel: AlertViewModel {
     let all = Array(allFonts.keys)
     return DropDownParam(items: all, texts: all.map({ it in
       return if let it {
-        "\(it.chinese)(\(allFonts[it] ?? 0))"
+        "\(it.longChinese)(\(allFonts[it] ?? 0))"
       } else {
         "全部(\(total))"
       }
