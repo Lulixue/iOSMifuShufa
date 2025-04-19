@@ -24,6 +24,7 @@
 		F931CE792D6F02460040F8AB /* VipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE782D6F02430040F8AB /* VipView.swift */; };
 		F931CE7B2D6F06450040F8AB /* Keychains.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931CE7A2D6F06430040F8AB /* Keychains.swift */; };
 		F93375B42CF83AC00052C26F /* PdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93375B32CF83AC00052C26F /* PdfView.swift */; };
+		F944B3B32DB3E0F5002E406C /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F944B3B22DB3E0EC002E406C /* RecommendView.swift */; };
 		F95C68AA2CF58A5B00292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68A92CF58A5B00292A34 /* OpenCV */; };
 		F95C68AC2CF58BA500292A34 /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = F95C68AB2CF58BA500292A34 /* OpenCV */; };
 		F96E60FA2CD7B0D4007329DB /* resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = F96E60F92CD7B0D4007329DB /* resource.zip */; };
@@ -172,6 +173,7 @@
 		F931CE782D6F02430040F8AB /* VipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipView.swift; sourceTree = "<group>"; };
 		F931CE7A2D6F06430040F8AB /* Keychains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychains.swift; sourceTree = "<group>"; };
 		F93375B32CF83AC00052C26F /* PdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfView.swift; sourceTree = "<group>"; };
+		F944B3B22DB3E0EC002E406C /* RecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
 		F96E60F92CD7B0D4007329DB /* resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = resource.zip; sourceTree = "<group>"; };
 		F96E60FE2CD85326007329DB /* BeitieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeitieViewModel.swift; sourceTree = "<group>"; };
 		F96E61002CD8574B007329DB /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 		F9E124A02CE43D1A00BB8CD4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				F944B3B22DB3E0EC002E406C /* RecommendView.swift */,
 				F931CE7A2D6F06430040F8AB /* Keychains.swift */,
 				F931CE782D6F02430040F8AB /* VipView.swift */,
 				F928FA552CEF147E00FF4F58 /* PrivacyView.swift */,
@@ -831,13 +834,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -852,13 +851,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa/Pods-iOSMifuShufa-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -917,13 +912,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -938,13 +929,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSMifuShufa-iOSMifuShufaUITests/Pods-iOSMifuShufa-iOSMifuShufaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -997,6 +984,7 @@
 				F9C3A6162CEE02410055ABA1 /* LoginView.swift in Sources */,
 				F9E124952CE36D9200BB8CD4 /* ScrollContext.swift in Sources */,
 				F9E124962CE36D9200BB8CD4 /* DefaultScrollViewStyle.swift in Sources */,
+				F944B3B32DB3E0F5002E406C /* RecommendView.swift in Sources */,
 				F9C3A6092CED9CA80055ABA1 /* CollectionView.swift in Sources */,
 				F9E124972CE36D9200BB8CD4 /* VerticalCarouselView.swift in Sources */,
 				F931CE7B2D6F06450040F8AB /* Keychains.swift in Sources */,
@@ -1220,7 +1208,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1241,7 +1229,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1258,7 +1246,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSMifuShufa/iOSMifuShufa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSMifuShufa/Preview Content\"";
 				DEVELOPMENT_TEAM = 4GNBG3HZ87;
 				ENABLE_PREVIEWS = YES;
@@ -1279,7 +1267,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lulixue.iOSMifuShufa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

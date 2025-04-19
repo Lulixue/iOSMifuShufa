@@ -18,6 +18,7 @@ enum DashboardRow: String, CaseIterable, Identifiable {
   case feedback = "feedback"
   case settings = "general_settings"
   case sync = "cloud_sync"
+  case recommend = "app_recommend"
   
   var name: String {
     rawValue.localized
@@ -46,6 +47,7 @@ extension DashboardRow {
     case .collection: return Image(systemName: "suit.heart")
     case .settings: return Image(systemName: "hammer")
     case .vip: return Image(systemName: "v.circle")
+    case .recommend: return Image(systemName: "hand.thumbsup")
     default: return Image(systemName: "star")
     }
   }
@@ -208,6 +210,12 @@ struct DashboardPage : View {
               FeedbackView()
             } label: {
               DashboardItemView(row: .feedback)
+            }.buttonStyle(BgClickableButton())
+            Divider().padding(.leading, 46)
+            NavigationLink {
+              RecommendView()
+            } label: {
+              DashboardItemView(row: .recommend)
             }.buttonStyle(BgClickableButton())
             DashboardDivider()
           }.background(.white)

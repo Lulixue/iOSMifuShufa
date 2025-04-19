@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="修复集字错误">
+    <list default="true" id="57953096-b16c-405f-a47a-fce1bb60cc17" name="Changes" comment="添加应用推荐">
+      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/iOSMifuShufa.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcshareddata/swiftpm/Package.resolved" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/iOSMifuShufa.xcworkspace/xcuserdata/lulixue.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
     </list>
@@ -13,6 +18,11 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
@@ -49,7 +59,9 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
@@ -72,134 +84,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732265470829</updated>
-    </task>
-    <task id="LOCAL-00014" summary="添加PDF">
-      <option name="closed" value="true" />
-      <created>1732773789030</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1732773789030</updated>
-    </task>
-    <task id="LOCAL-00015" summary="显示生图">
-      <option name="closed" value="true" />
-      <created>1732792288592</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1732792288592</updated>
-    </task>
-    <task id="LOCAL-00016" summary="显示生图">
-      <option name="closed" value="true" />
-      <created>1732792415499</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1732792415499</updated>
-    </task>
-    <task id="LOCAL-00017" summary="抽出共同的部分">
-      <option name="closed" value="true" />
-      <created>1732803830661</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1732803830661</updated>
-    </task>
-    <task id="LOCAL-00018" summary="抽出共同的部分">
-      <option name="closed" value="true" />
-      <created>1732846361452</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1732846361452</updated>
-    </task>
-    <task id="LOCAL-00019" summary="优化图片加载和显示">
-      <option name="closed" value="true" />
-      <created>1732851892463</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1732851892463</updated>
-    </task>
-    <task id="LOCAL-00020" summary="优化图片加载和显示">
-      <option name="closed" value="true" />
-      <created>1732852254598</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1732852254598</updated>
-    </task>
-    <task id="LOCAL-00021" summary="修复AdID">
-      <option name="closed" value="true" />
-      <created>1732867881583</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1732867881583</updated>
-    </task>
-    <task id="LOCAL-00022" summary="优化首页">
-      <option name="closed" value="true" />
-      <created>1732868905563</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1732868905563</updated>
-    </task>
-    <task id="LOCAL-00023" summary="优化首页">
-      <option name="closed" value="true" />
-      <created>1732870046408</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1732870046408</updated>
-    </task>
-    <task id="LOCAL-00024" summary="聚焦时高亮编辑框">
-      <option name="closed" value="true" />
-      <created>1732874610357</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1732874610357</updated>
-    </task>
-    <task id="LOCAL-00025" summary="聚焦时高亮编辑框">
-      <option name="closed" value="true" />
-      <created>1732881950755</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1732881950755</updated>
-    </task>
-    <task id="LOCAL-00026" summary="兼容按钮形状">
-      <option name="closed" value="true" />
-      <created>1733278468210</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1733278468210</updated>
-    </task>
-    <task id="LOCAL-00027" summary="更新AD版本">
-      <option name="closed" value="true" />
-      <created>1733392416649</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1733392416649</updated>
-    </task>
-    <task id="LOCAL-00028" summary="修复米字格显示">
-      <option name="closed" value="true" />
-      <created>1733721446037</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1733721446037</updated>
-    </task>
-    <task id="LOCAL-00029" summary="优化显示">
-      <option name="closed" value="true" />
-      <created>1733823160113</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1733823160113</updated>
     </task>
     <task id="LOCAL-00030" summary="添加旧设备间隙">
       <option name="closed" value="true" />
@@ -465,7 +349,135 @@
       <option name="project" value="LOCAL" />
       <updated>1742141154693</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="修复集字错误">
+      <option name="closed" value="true" />
+      <created>1742141835326</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1742141835326</updated>
+    </task>
+    <task id="LOCAL-00064" summary="集字优化">
+      <option name="closed" value="true" />
+      <created>1744724230665</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1744724230665</updated>
+    </task>
+    <task id="LOCAL-00065" summary="集字优化">
+      <option name="closed" value="true" />
+      <created>1744731124715</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1744731124715</updated>
+    </task>
+    <task id="LOCAL-00066" summary="优化广告样式">
+      <option name="closed" value="true" />
+      <created>1744782611188</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1744782611189</updated>
+    </task>
+    <task id="LOCAL-00067" summary="更新资源和版本">
+      <option name="closed" value="true" />
+      <created>1744786136923</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1744786136923</updated>
+    </task>
+    <task id="LOCAL-00068" summary="更新资源和版本">
+      <option name="closed" value="true" />
+      <created>1744787054769</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1744787054769</updated>
+    </task>
+    <task id="LOCAL-00069" summary="更新资源和版本">
+      <option name="closed" value="true" />
+      <created>1744787660897</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1744787660897</updated>
+    </task>
+    <task id="LOCAL-00070" summary="更新资源和版本">
+      <option name="closed" value="true" />
+      <created>1744790225687</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1744790225687</updated>
+    </task>
+    <task id="LOCAL-00071" summary="修复集字自动定位">
+      <option name="closed" value="true" />
+      <created>1744813653299</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1744813653299</updated>
+    </task>
+    <task id="LOCAL-00072" summary="修复集字自动定位">
+      <option name="closed" value="true" />
+      <created>1744816586121</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1744816586121</updated>
+    </task>
+    <task id="LOCAL-00073" summary="修复集字自动定位">
+      <option name="closed" value="true" />
+      <created>1744819500362</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1744819500362</updated>
+    </task>
+    <task id="LOCAL-00074" summary="修复集字历史">
+      <option name="closed" value="true" />
+      <created>1744821497956</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1744821497956</updated>
+    </task>
+    <task id="LOCAL-00075" summary="修复集字历史">
+      <option name="closed" value="true" />
+      <created>1744821530651</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1744821530651</updated>
+    </task>
+    <task id="LOCAL-00076" summary="修复集字历史">
+      <option name="closed" value="true" />
+      <created>1744826630010</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1744826630010</updated>
+    </task>
+    <task id="LOCAL-00077" summary="修复集字历史">
+      <option name="closed" value="true" />
+      <created>1744827043888</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1744827043889</updated>
+    </task>
+    <task id="LOCAL-00078" summary="添加应用推荐">
+      <option name="closed" value="true" />
+      <created>1745076715061</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1745076715061</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -480,12 +492,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="聚焦时高亮编辑框" />
-    <MESSAGE value="兼容按钮形状" />
-    <MESSAGE value="更新AD版本" />
-    <MESSAGE value="修复米字格显示" />
-    <MESSAGE value="优化显示" />
-    <MESSAGE value="添加旧设备间隙" />
     <MESSAGE value="优化" />
     <MESSAGE value="显示优化r" />
     <MESSAGE value="解决碑帖页点击跳转错误的问题" />
@@ -505,6 +511,12 @@
     <MESSAGE value="修复导航" />
     <MESSAGE value="优化集字" />
     <MESSAGE value="修复集字错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复集字错误" />
+    <MESSAGE value="集字优化" />
+    <MESSAGE value="优化广告样式" />
+    <MESSAGE value="更新资源和版本" />
+    <MESSAGE value="修复集字自动定位" />
+    <MESSAGE value="修复集字历史" />
+    <MESSAGE value="添加应用推荐" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加应用推荐" />
   </component>
 </project>

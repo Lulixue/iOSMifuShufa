@@ -91,10 +91,10 @@ struct ContentView: View {
               }
             }
           }
-        }
+        }.environmentObject(navigationVM)
     }.modifier(WorkDestinationModifier(naviVM: navigationVM))
       .modifier(WorkIntroDestinationModifier(naviVM: navigationVM))
-      .modifier(SingleDestinationModifier(naviVM: navigationVM)).environmentObject(navigationVM)
+      .modifier(SingleDestinationModifier(naviVM: navigationVM))
   }
 }
 

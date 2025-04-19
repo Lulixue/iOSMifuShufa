@@ -262,6 +262,19 @@ class NetworkHelper {
     }
   }
   
+  static func getApps(after: @escaping ([LixueApp]) -> Void) {
+    let CONFIG_URL = STORAGE_URL + "/liren/config/apps.json"
+    URLCache.shared.removeAllCachedResponses()
+    AF.request(CONFIG_URL.getEncodedURL()).responseDecodable(of: [LixueApp].self) { response in
+      switch response.result {
+      case .success(let apps):
+        after(apps)
+      case .failure(let error):
+        println("syncConfig \(error)")
+      }
+    }
+  }
+  
   static func syncConfig(after: @escaping (AzureConfig) -> Void) {
     let CONFIG_URL = STORAGE_URL + "/liren/\(STORAGE_DIR)/config.json"
     URLCache.shared.removeAllCachedResponses()
