@@ -52,6 +52,7 @@ class HistoryViewModel : BaseObservableObject {
     }
   }
   
+  @discardableResult
   func appendLog(_ page: SearchPage, _ text: String, _ extra: String? = nil) -> String {
     return appendHistory(text: text, page: page, extra: extra)
   }

@@ -167,20 +167,30 @@ enum SearchResultOrder: String, CaseIterable {
       return charResults
     }
     var result = LinkedHashMap<AnyHashable, List<BeitieSingle>>()
+    var all = List<BeitieSingle>()
+    charResults.values.forEach { it in
+      all.addAll(it)
+    }
     if (resultOrder == .Tile) {
-      var all = List<BeitieSingle>()
-      charResults.values.forEach { it in
-        all.addAll(it)
-      }
       result[""] = all.sortedByDescending(mapper: { $0.matchVip })
       return result
-    }
-    charResults.values.forEach { list in
-      list.forEach { it in
-        let key = resultOrder.getOrderKey(it)
-        var singles = result[key] ?? []
-        singles.add(it)
-        result[key] = singles
+    } else if resultOrder == .Beitie {
+      let orderWorks = BeitieDbHelper.shared.orderedWork
+      for id in orderWorks.keys {
+
+        let workResults = all.filter { it in it.workId == id }
+        if (workResults.isNotEmpty()) {
+          result[BeitieDbHelper.shared.getWorkById(id)!.chineseFolder()] = workResults
+        }
+      }
+    } else {
+      charResults.values.forEach { list in
+        list.forEach { it in
+          let key = resultOrder.getOrderKey(it)
+          var singles = result[key] ?? []
+          singles.add(it)
+          result[key] = singles
+        }
       }
     }
     if (resultOrder == .Char) {
@@ -630,10 +640,10 @@ extension Range where Element == Int {
 
 
 extension BeitieDbHelper {
-  var orderedWork: HashMap<Int, Int> {
-    var orderWorks = HashMap<Int, Int>()
+  var orderedWork: LinkedHashMap<Int, Int> {
+    var orderWorks = LinkedHashMap<Int, Int>()
     var vipWorks = List<BeitieWork>()
-    getOrderTypeWorks(BeitieOrderType.orderType, BeitieOrderType.organizeStack).elements.forEach { it in
+    getOrderTypeWorks(BeitieOrderType.orderType).elements.forEach { it in
       for works in it.value {
         for work in works {
           if (work.matchVip) {

@@ -68,10 +68,7 @@ extension BeitieOrderType {
   
   static var organizeStack: Bool {
     get {
-      return Settings.getBoolean(Self.KEY_ORGANIZE_STACK, true)
-    }
-    set {
-      Settings.putBoolean(Self.KEY_ORGANIZE_STACK, newValue)
+      true
     }
   }
   
@@ -96,11 +93,7 @@ class BeitieViewModel: AlertViewModel {
       BeitieOrderType.listView = listView
     }
   }
-  @Published var organizeStack = BeitieOrderType.organizeStack {
-    didSet {
-      BeitieOrderType.organizeStack = organizeStack
-    }
-  }
+  @Published var organizeStack = true
   
   @Published var orderType = BeitieOrderType.orderType {
     didSet {

@@ -83,6 +83,8 @@ struct WorkIntroView: View {
           if let version = work.chineseVersion()?.emptyNull {
             ItemView(title: "版本".orCht("版本"), value: version)
           }
+          ItemView(title: "朝代", value: work.dynasty.chinese)
+          ItemView(title: "作者", value: work.chineseAuthor())
           if (work.ceYear > 0) {
             ItemView(title: "时间".orCht("時間"), value: "\(work.chineseYear() ?? "")(\(work.ceYear)年)")
           }

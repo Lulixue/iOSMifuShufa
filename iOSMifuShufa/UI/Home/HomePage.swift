@@ -124,7 +124,7 @@ struct HomePage: View {
         HStack {
           8.HSpacer()
           Button {
-            showCharType = true
+            showCharType.toggle()
           } label: {
             HStack(spacing: 0) {
               Text(viewModel.searchCharType.chinese).font(font)
@@ -463,7 +463,7 @@ struct HomePage: View {
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize)
                 .rotationEffect(.degrees(viewModel.showOrder ? 180 : 0))
             }.foregroundStyle(viewModel.showOrder ? clickedColor : Colors.colorPrimary.swiftColor)
-          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.orderWidth))
+          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.orderWidth)).disabled(viewModel.showOrder)
           Button {
             viewModel.showFastRedirect = true
           } label: {
@@ -472,7 +472,7 @@ struct HomePage: View {
               Text(fastResultKey).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFastRedirect ? 180 : 0))
             }.foregroundStyle(viewModel.showFastRedirect ? clickedColor : Colors.colorPrimary.swiftColor)
-          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.fastRedirectWidth))
+          }.buttonStyle(.plain).background(WidthReaderView(binding: $viewModel.fastRedirectWidth)).disabled(viewModel.showFastRedirect)
           
           Button {
             viewModel.showFont = true
@@ -481,7 +481,7 @@ struct HomePage: View {
               Text(viewModel.currentFontResultKey()).font(orderFont)
               Image(systemName: "arrowtriangle.down.fill").square(size: orderImgSize).rotationEffect(.degrees(viewModel.showFont ? 180 : 0))
             }.foregroundStyle(viewModel.showFont ? clickedColor : Colors.colorPrimary.swiftColor)
-          }.buttonStyle(.plain)
+          }.buttonStyle(.plain).disabled(viewModel.showFont)
           Spacer()
           Button {
             viewModel.toggleCollapseAll()

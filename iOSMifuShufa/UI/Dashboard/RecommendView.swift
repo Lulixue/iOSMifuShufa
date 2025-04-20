@@ -91,6 +91,8 @@ struct RecommendView : View {
                     }
                     Text(app.chineseName())
                         .foregroundStyle(Colors.iconColor(i))
+                        .font(.title3)
+                        .fontWeight(.regular)
                     Spacer()
                   }
                   Text(app.desc).font(.footnote).foregroundStyle(.defaultText).multilineTextAlignment(.leading)

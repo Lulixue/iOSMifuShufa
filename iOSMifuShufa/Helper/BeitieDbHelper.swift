@@ -297,7 +297,7 @@ class BeitieDbHelper {
     return toStack(ordered: azWorks)
   }()
   
-  func getDefaultTypeWorks(_ stack: Boolean = BeitieOrderType.organizeStack) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
+  func getDefaultTypeWorks(_ stack: Boolean = true) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
     return getOrderTypeWorks(BeitieOrderType.orderType, stack)
   }
   private lazy var worksByType = {
@@ -368,7 +368,7 @@ class BeitieDbHelper {
   }()
 
   typealias BeitieDictionary = OrderedDictionary<AnyHashable, List<List<BeitieWork>>>
-  func getOrderTypeWorks(_ orderType: BeitieOrderType, _ stack: Boolean = BeitieOrderType.organizeStack) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
+  func getOrderTypeWorks(_ orderType: BeitieOrderType, _ stack: Boolean = true) -> OrderedDictionary<AnyHashable, List<List<BeitieWork>>> {
     let result = switch orderType {
     case .Default:
       stack ? defaultWorksStack : defaultWorks
