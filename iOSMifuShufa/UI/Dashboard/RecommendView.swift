@@ -80,22 +80,22 @@ struct RecommendView : View {
               Button {
                 Utils.gotoAppInStore(app.appId)
               } label: {
-                HStack(spacing: 15) {
-                  WebImage(url: app.icon.url) { img in
-                    img.image?.resizable()
-                      .scaledToFill()
-                      .frame(width: 40, height: 40)
-                      .viewShape(Circle())
-                      .clipShape(Circle())
-                  }
-                  VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 6) {
+                  HStack {
+                    WebImage(url: app.icon.url) { img in
+                      img.image?.resizable()
+                        .scaledToFill()
+                        .frame(width: 26, height: 26)
+                        .viewShape(Circle())
+                        .clipShape(Circle())
+                    }
                     Text(app.chineseName())
-                      .foregroundStyle(Colors.iconColor(i))
-                    Text(app.desc).font(.footnote).foregroundStyle(.defaultText).multilineTextAlignment(.leading)
+                        .foregroundStyle(Colors.iconColor(i))
+                    Spacer()
                   }
-                  Spacer()
-                }.padding(.top, 10).padding(.bottom, 6).padding(.horizontal, 15)
-              }
+                  Text(app.desc).font(.footnote).foregroundStyle(.defaultText).multilineTextAlignment(.leading)
+                }.padding(.top, i == 0 ? 10 : 5).padding(.bottom, 6).padding(.horizontal, 15)
+              }.buttonStyle(.plain)
             } footer: {
               if i != apps.lastIndex {
                 Divider().padding(.leading, 15)

@@ -313,7 +313,7 @@ extension String {
       previous = char
     }
     do {
-      var ret = try this.substring(start, end + 1)
+      var ret = try this.substring(start, min(end + 1, length))
       
       if !SHICI_END_SEPARATORS.contains(ret.last()) {
         ret = ret.dropLast(1) + "..."

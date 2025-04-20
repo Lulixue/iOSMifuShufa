@@ -485,6 +485,15 @@ struct SettingsView: View {
     }
   }
   
+  func rowToValue(_ row: SettingRow) -> String {
+    switch row {
+    case .Language:
+      return Settings._languageVersion.name
+    default:
+      return ""
+    }
+  }
+  
   var contents: some View {
     VStack(spacing: 0) {
       NaviView {
@@ -502,7 +511,7 @@ struct SettingsView: View {
           ForEach(0..<cases.size, id: \.self) { i in
             let c = cases[i]
             NavigationLink(destination: SubSettingsView(settingsRow: c)) {
-              SettingItemView(icon: c.icon, title: c.chinese, color: Colors.iconColor(i))
+              SettingItemView(icon: c.icon, title: c.chinese, value: rowToValue(c), color: Colors.iconColor(i))
             }.buttonStyle(BgClickableButton())
             if i != cases.lastIndex {
               SettingDivider()
