@@ -98,7 +98,7 @@ struct VersionWorkView: View {
                           .aspectRatio(contentMode: .fill)
                       }.frame(width: 50, alignment: .topTrailing)
                         .frame(height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 2))
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                       if (work.vip) {
                         VipBackground()
                       }
@@ -276,8 +276,7 @@ struct WorkItem: View {
               .aspectRatio(contentMode: .fill)
               .frame(width: Self.itemWidth-10)
               .frame(height: Self.itemHeight-30)
-              .contentShape(RoundedRectangle(cornerRadius: 2))
-              .clipped()
+              .clipShape(RoundedRectangle(cornerRadius: 3))
               .modifier(BeitieModifier(work: first))
         } else {
           ProgressView().squareFrame(30)

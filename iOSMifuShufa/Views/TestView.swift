@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct VipBackground: View {
+  let cornerSize: CGFloat = 3
   let color = UIColor.init(argb: 0xFFFFA500)
   let size = "VIP".calculateUITextViewFreeSize(font: .preferredFont(forTextStyle: .footnote))
   let maxSize: CGFloat = 36
@@ -34,7 +35,7 @@ struct VipBackground: View {
           .padding(.leading, max((vipBgWidth*percent-size.width)/2, 0))
           .padding(.top, max((vipBgHeight*percent-size.height)/2, 0))
         
-      }
+      }.clipShape(RoundedRectangle(cornerRadius: cornerSize))
     }
     .aspectRatio(1, contentMode: .fit)
   }

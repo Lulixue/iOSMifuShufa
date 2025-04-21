@@ -181,16 +181,19 @@ struct HomePage: View {
       VStack(alignment: .center, spacing: 8) {
         HStack(alignment: .center) {
           Spacer()
-          WebImage(url: work.cover.url!) { img in
-            img.image?.resizable()
-              .scaledToFit()
-              .frame(height: 90)
-              .viewShape(RoundedRectangle(cornerRadius: 5))
-              .padding(3)
-              .background(content: {
-                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
-              })
+          HStack {
+            WebImage(url: work.cover.url!) { img in
+              img.image?.resizable()
+                .scaledToFit()
+                .frame(height: 90)
+                .viewShape(RoundedRectangle(cornerRadius: 5))
+            }
           }
+          .clipShape(RoundedRectangle(cornerRadius: 3))
+          .padding(3)
+          .background(content: {
+            RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
+          })
           Spacer()
         }.padding(.vertical, 5)
         
@@ -219,16 +222,19 @@ struct HomePage: View {
       VStack(alignment: .center) {
         HStack(alignment: .center) {
           Spacer()
-          WebImage(url: single.thumbnailUrl.url!) { img in
-            img.image?.resizable()
-              .scaledToFit()
-              .frame(height: 60)
-              .viewShape(RoundedRectangle(cornerRadius: 5))
-              .padding(3)
-              .background(content: {
-                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
-              })
+          HStack {
+            WebImage(url: single.thumbnailUrl.url!) { img in
+              img.image?.resizable()
+                .scaledToFit()
+                .frame(height: 60)
+                .viewShape(RoundedRectangle(cornerRadius: 5))
+                
+            }
           }
+          .clipShape(RoundedRectangle(cornerRadius: 3)).padding(3)
+          .background(content: {
+            RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 0.5)
+          })
           Spacer()
         }
         Text(single.showChars)
